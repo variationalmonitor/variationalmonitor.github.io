@@ -104,11 +104,14 @@ jobs:
             git commit -m "Update verified dashboard observations"
             git -c credential.helper= -c 'credential.helper=!gh auth git-credential' push origin HEAD:main
           fi
+      - name: Prepare browser assets
+        if: steps.decision.outputs.publish == 'true'
+        run: python3 tools/package_site.py --output "$RUNNER_TEMP/variational-site"
       - name: Package the static site
         if: steps.decision.outputs.publish == 'true'
         uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4.0.0
         with:
-          path: public/
+          path: ${{ runner.temp }}/variational-site
           retention-days: 1
   deploy:
     needs: prepare
