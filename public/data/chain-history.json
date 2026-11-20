@@ -477,15 +477,15 @@
     {
       "date": "2026-11-20",
       "kind": "safe_block_observation",
-      "observed_at": "2026-11-20T10:06:22Z",
-      "block_number": 525894234,
-      "block_hash": "0x1a76c3d46d437f752854ea5b7bd964d77255ce7ee8c70c7653627f09a2821fd8",
-      "block_timestamp": "2026-11-20T09:58:17Z",
+      "observed_at": "2026-11-20T10:17:22Z",
+      "block_number": 525895250,
+      "block_hash": "0xb19e288e482b60dc30989f10794aaf8157781c64c81c1f8ead622c56b69f03ae",
+      "block_timestamp": "2026-11-20T10:03:02Z",
       "usdc_decimals": 6,
-      "treasury_usdc": "13665472.468544",
-      "olp_usdc": "70593190.541878",
+      "treasury_usdc": "13665626.247088",
+      "olp_usdc": "70553560.008838",
       "rpc_url": "https://arb1.arbitrum.io/rpc",
-      "source_url": "https://arbiscan.io/block/525894234",
+      "source_url": "https://arbiscan.io/block/525895250",
       "upstream_source": "data/supplement.json"
     }
   ],
@@ -518,5 +518,5 @@
     "safe_observation_count": 1,
     "cadence": "Explicit dated closes plus daily safe-block observations; not a continuous daily closing series"
   },
-  "generated_at": "2026-11-20T10:06:22Z"
+  "generated_at": "2026-11-20T10:17:22Z"
 }
