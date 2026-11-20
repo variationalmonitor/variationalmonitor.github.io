@@ -161,6 +161,22 @@ def execution_snapshot(market_file, previous):
     return {**result, "last_attempt_at": result["observed_at"], "matched_on_last_attempt": len(result["rows"])}
 
 
+def validate_article_observations(rows):
+    if not isinstance(rows, list):
+        raise ValueError("Original research observations must be a list")
+    fields = {"metric", "value", "period", "source_url"}
+    for row in rows:
+        if not isinstance(row, dict) or set(row) != fields:
+            raise ValueError("Each original research observation needs its value, period and source")
+        if any(not isinstance(value, str) or not value.strip() for value in row.values()):
+            raise ValueError("Empty original research observation")
+        source = urlsplit(row["source_url"])
+        host = source.hostname or ""
+        private_note = host in {"notion.so", "notion.com"} or host.endswith((".notion.so", ".notion.com"))
+        if source.scheme != "https" or "." not in host or source.username is not None or private_note:
+            raise ValueError("Original research evidence requires a public HTTPS source")
+
+
 def public_research(catalog):
     """A scheduled entry admits public metadata only, even if a private key is added by mistake."""
     common = {"id", "title", "author", "publisher", "language", "status", "scheduled_date",
@@ -174,7 +190,8 @@ def public_research(catalog):
         if entry["id"] in seen:
             raise ValueError("Duplicate article identifier")
         seen.add(entry["id"])
-        allowed = common | ({"summary", "body", "data_as_of", "revision"} if state == "published" else set())
+        published_fields = {"summary", "body", "data_as_of", "revision", "original_observations"}
+        allowed = common | (published_fields if state == "published" else set())
         if set(entry) - allowed:
             raise ValueError("Unexpected research field for its publication status")
         if state == "scheduled":
@@ -185,6 +202,9 @@ def public_research(catalog):
             if (url.scheme != "https" or url.netloc not in {"4pillars.io", "www.4pillars.io"}
                     or url.path in {"", "/"} or not entry.get("published_at")):
                 raise ValueError("Published research needs a dated public publisher article")
+            if parse_time(entry["published_at"]) > now_utc():
+                raise ValueError("Publication time has not arrived")
+            validate_article_observations(entry.get("original_observations", []))
         result.append({k: v for k, v in entry.items() if k in allowed})
     return {"articles": result}
 

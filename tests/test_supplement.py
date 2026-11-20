@@ -40,6 +40,36 @@ class SupplementalDataTests(unittest.TestCase):
         self.assertIsNone(record["circulating_supply"])
         self.assertEqual(sum(r["percent"] for r in record["allocations"]), 100)
 
+    def test_original_research_observations_keep_each_window_and_require_publication(self):
+        record = self.catalog["research"]["articles"][0]
+        public_url = "https://4pillars.io/en/articles/public-article"
+        rows = [{"metric": "Observed markets", "period": "First observation window", "value": "10",
+                 "source_url": public_url},
+                {"metric": "Volume share", "period": "Second observation window", "value": "15%",
+                 "source_url": public_url}]
+        item = dict(record, status="scheduled", canonical_url=None, published_at=None, original_observations=rows)
+        with self.assertRaisesRegex(ValueError, "publication status"):
+            public_research({"research": {"articles": [item]}})
+        item.update(status="published", published_at="2020-04-03T12:00:00+09:00", canonical_url=public_url)
+        self.assertEqual(public_research({"research": {"articles": [item]}})["articles"][0]["original_observations"], rows)
+
+    def test_original_research_requires_a_source_and_its_observation_period(self):
+        public_url = "https://4pillars.io/en/articles/public-article"
+        item = dict(self.catalog["research"]["articles"][0], status="published", canonical_url=public_url,
+                    published_at="2020-04-03T12:00:00+09:00")
+        base = {"metric": "Observed markets", "period": "March 2020", "value": "10", "source_url": public_url}
+        for overrides in ({"period": ""}, {"source_url": "https://app.notion.com/p/private"},
+                          {"source_url": "https://viewer:password@example.com/source"}, {"private_note": "draft"}):
+            with self.subTest(overrides=overrides), self.assertRaises(ValueError):
+                public_research({"research": {"articles": [dict(item, original_observations=[base | overrides])]}})
+
+    def test_future_publication_time_cannot_publish_draft(self):
+        item = dict(self.catalog["research"]["articles"][0], status="published",
+                    canonical_url="https://4pillars.io/en/articles/public-article",
+                    published_at=(self.when + timedelta(days=1)).isoformat())
+        with self.assertRaisesRegex(ValueError, "Publication time"):
+            public_research({"research": {"articles": [item]}})
+
     def test_changed_chain_is_rejected(self):
         with patch("supplement.rpc", return_value="0x1"):
             with self.assertRaisesRegex(ValueError, "Unexpected chain"):

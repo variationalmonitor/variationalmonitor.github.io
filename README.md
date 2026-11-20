@@ -23,3 +23,5 @@ The workflow deploys the contents of `public/` through GitHub Pages after valida
 ## Research
 
 The article catalogue in `config/catalog.json` supports scheduled and published entries. Add the public version and its canonical URL after the publisher releases an article. A scheduled date alone does not publish a draft. Refresh the public catalogue with `python3 tools/supplement.py`.
+
+The daily job runs `python3 tools/research_baselines.py --data-dir public/data` after collecting observations. It preserves the available indicators for each article’s target date in Korea. Each indicator retains its source timestamp or report coverage. The article view compares subsequent observations with the recorded baseline. Missing observations stay blank. The first capture for a given article and date is retained on later runs.

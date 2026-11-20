@@ -9,15 +9,17 @@ from __future__ import annotations
 
 import argparse
 from datetime import datetime, timedelta, timezone
-from decimal import Decimal, InvalidOperation, localcontext
-from email.utils import parsedate_to_datetime
+from decimal import Decimal, InvalidOperation, ROUND_CEILING, localcontext
+from email.utils import format_datetime, parsedate_to_datetime
 import hashlib
 import json
+import math
 import os
 from pathlib import Path
 import re
 import sys
 import tempfile
+import time
 from urllib.error import HTTPError, URLError
 from urllib.request import HTTPRedirectHandler, Request, build_opener
 
@@ -31,6 +33,11 @@ COMPACT_HISTORY_DAYS = 365
 MAX_PARTITION_BYTES = 8_000_000
 MAX_INDEX_BYTES = 10_000_000
 MAX_MARKET_DATA_BYTES = 200_000_000
+MAX_RATE_LIMIT_BODY_BYTES = 16_384
+MAX_RETRY_HINT_SECONDS = 315_360_000
+REQUEST_TIMEOUT_SECONDS = 25
+MAX_SAME_JOB_RETRY_SECONDS = 30
+RETRY_RUNNER_BUDGET_SECONDS = 60
 QUOTE_KEYS = ("base", "size_1k", "size_100k", "size_1m")
 SOURCE = {
     "name": "Variational Omni public statistics API",
@@ -41,6 +48,7 @@ SOURCE = {
     "amount_unit": "USDC",
     "volume_window": "Rolling 24 hours, not a UTC calendar-day total",
     "total_oi_scope": "Traders and OLP",
+    "trader_oi_calculation": "Reported v2 double-sided OI divided by two; returned-listing sums are tracked separately and may have partial coverage",
     "market_oi_scope": "Trader long plus short positions; OLP mirror positions excluded",
     "quote_status": "Indicative; not executed trades or an order book",
     "quote_notional_convention": "Source dollar-notional convention; no currency conversion inferred",
@@ -55,9 +63,13 @@ class DataError(ValueError):
 
 
 class SourceError(RuntimeError):
-    def __init__(self, code: str, retry_after: str | None = None):
+    def __init__(self, code: str, retry_after: str | None = None, retry_after_seconds=None):
         self.code = code
-        self.retry_after = retry_after
+        self.retry_after = normalized_retry_header(retry_after)
+        self.retry_after_seconds = normalized_retry_seconds(retry_after_seconds)
+        self.received_at = None
+        self.last_attempt_at = None
+        self.fetch_attempts = 0
         super().__init__(code)
 
 
@@ -187,8 +199,9 @@ def normalize_snapshot(raw: bytes, observed_at: str, *, kind="live_public_api", 
     if not isinstance(listings, list) or not listings or len(listings) > 10000:
         raise DataError("missing_or_excessive_listings")
     reported_count = integer(data.get("num_markets"), minimum=1, maximum=10000)
-    if len(listings) != reported_count:
+    if len(listings) > reported_count:
         raise DataError("market_count_mismatch")
+    complete_coverage = len(listings) == reported_count
     cumulative_keys = [key for key in ("cumulative_total_volume", "cumulative_volume") if key in data]
     if not cumulative_keys:
         raise DataError("missing_cumulative_volume")
@@ -232,7 +245,7 @@ def normalize_snapshot(raw: bytes, observed_at: str, *, kind="live_public_api", 
         total_volume = number(data.get("total_volume_24h"), nonnegative=True)
         volume_sum = sum((Decimal(row["volume_24h_usdc"]) for row in markets), Decimal(0))
         residual = Decimal(total_volume) - volume_sum
-        if abs(residual) > Decimal("0.000001"):
+        if (complete_coverage and abs(residual) > Decimal("0.000001")) or residual < Decimal("-0.000001"):
             raise DataError("volume_total_mismatch")
         trader_oi = sum((Decimal(row["trader_open_interest_usdc"]) for row in markets), Decimal(0))
         total_oi = number(data.get("open_interest"), nonnegative=True)
@@ -249,11 +262,14 @@ def normalize_snapshot(raw: bytes, observed_at: str, *, kind="live_public_api", 
             raise DataError("invalid_loss_refund")
         totals = {"volume_24h_usdc": total_volume, "cumulative_total_volume_usdc": cumulative[0],
             "tvl_usdc": number(data.get("tvl"), nonnegative=True), "open_interest_total_usdc": total_oi,
-            "trader_open_interest_usdc": format(trader_oi, "f"), "num_markets_reported": reported_count,
-            "num_markets_observed": len(markets),
+            "trader_open_interest_usdc": format(Decimal(total_oi) / 2, "f"),
+            "trader_open_interest_basis": "Reported v2 double-sided open interest divided by two",
+            "observed_trader_open_interest_usdc": format(trader_oi, "f"), "num_markets_reported": reported_count,
+            "num_markets_observed": len(markets), "market_coverage_complete": complete_coverage,
             "loss_refund_pool_usdc": None if refund.get("pool_size") is None else number(refund["pool_size"], nonnegative=True),
             "loss_refunded_24h_usdc": None if refund.get("refunded_24h") is None else number(refund["refunded_24h"], nonnegative=True)}
         ratio = None if trader_oi == 0 else format((Decimal(total_oi) / trader_oi).quantize(Decimal("0.000000000001")), "f")
+        trader_oi_residual = Decimal(total_oi) / 2 - trader_oi
     return {"date": observed.date().isoformat(), "observed_at": observed_at,
         "provenance": {"kind": kind, "source_url": API_URL, "timestamp_basis": timestamp_basis,
             "timestamp_precision": "minute" if timestamp_basis == "archive_collection_label" else "source_recorded",
@@ -263,6 +279,9 @@ def normalize_snapshot(raw: bytes, observed_at: str, *, kind="live_public_api", 
         "totals": totals, "by_contract_type": products, "markets": markets,
         "validation": {"volume_24h_residual_usdc": format(residual, "f"),
             "reported_oi_to_trader_oi_ratio": ratio,
+            "trader_oi_residual_usdc": format(trader_oi_residual, "f"),
+            "market_coverage_complete": complete_coverage,
+            "coverage_note": "Market/product sums cover returned listings only; reported platform aggregates remain authoritative.",
             "oi_note": "Ratio is an observed diagnostic, not a hardcoded universal 2x assumption."}}
 
 
@@ -303,13 +322,52 @@ def coverage(snapshots: list[dict]) -> dict:
         "history_limit": "Dated observations only; gaps are not interpolated. These are not daily closes or calendar-day volume totals."}
 
 
+def normalized_retry_seconds(value) -> str | None:
+    if isinstance(value, bool) or not isinstance(value, (str, int, Decimal)):
+        return None
+    if isinstance(value, str) and not re.fullmatch(r"[0-9]{1,12}(?:\.[0-9]{1,12})?", value):
+        return None
+    try:
+        seconds = Decimal(value)
+        if not seconds.is_finite() or seconds < 0 or seconds > MAX_RETRY_HINT_SECONDS or seconds.as_tuple().exponent < -12:
+            return None
+        return format(seconds, "f")
+    except (InvalidOperation, ValueError, TypeError):
+        return None
+
+
+def normalized_retry_header(value) -> str | None:
+    if not isinstance(value, str) or len(value) > 100 or re.search(r"[\r\n<>]", value):
+        return None
+    value = value.strip()
+    if re.fullmatch(r"[0-9]{1,12}", value):
+        return normalized_retry_seconds(value)
+    try:
+        parsed = parsedate_to_datetime(value)
+        if parsed.tzinfo is None:
+            return None
+        return format_datetime(parsed.astimezone(timezone.utc), usegmt=True)
+    except (ValueError, TypeError, OverflowError):
+        return None
+
+
+def rate_limit_body_hint(raw: bytes) -> str | None:
+    """Extract only the documented numeric field; never retain an error body."""
+    if len(raw) > MAX_RATE_LIMIT_BODY_BYTES:
+        return None
+    try:
+        return normalized_retry_seconds(load_source_bytes(raw).get("retry_after_seconds"))
+    except (DataError, ValueError, RecursionError):
+        return None
+
+
 def fetch_public() -> tuple[bytes, str | None]:
     class NoRedirect(HTTPRedirectHandler):
         def redirect_request(self, request, fp, code, message, headers, newurl):
             raise SourceError("unexpected_source_redirect")
     request = Request(API_URL, headers={"Accept": "application/json", "User-Agent": "VariationalCommunityDashboard/0.1"})
     try:
-        with build_opener(NoRedirect).open(request, timeout=25) as response:
+        with build_opener(NoRedirect).open(request, timeout=REQUEST_TIMEOUT_SECONDS) as response:
             if response.geturl() != API_URL:
                 raise SourceError("unexpected_source_redirect")
             if "application/json" not in response.headers.get("Content-Type", ""):
@@ -319,13 +377,35 @@ def fetch_public() -> tuple[bytes, str | None]:
                 raise SourceError("response_too_large")
             return raw, response.headers.get("Date")
     except HTTPError as exc:
-        # No immediate retry: the next authorized run must honor Retry-After.
-        retry_after = exc.headers.get("Retry-After")
-        if retry_after and (len(retry_after) > 100 or re.search(r"[\r\n<>]", retry_after)):
-            retry_after = None
-        raise SourceError(f"http_{exc.code}", retry_after) from exc
+        retry_after = exc.headers.get("Retry-After") if exc.headers else None
+        seconds = None
+        try:
+            if exc.code == 429:
+                seconds = rate_limit_body_hint(exc.read(MAX_RATE_LIMIT_BODY_BYTES + 1))
+        except (OSError, ValueError):
+            pass
+        finally:
+            exc.close()
+        raise SourceError(f"http_{exc.code}", retry_after, seconds) from exc
     except (URLError, TimeoutError, OSError) as exc:
         raise SourceError("network_failure") from exc
+
+
+def instructed_retry_time(received_at: str, error: SourceError) -> datetime | None:
+    """Honor the latest valid instruction, measured from response receipt."""
+    received = parse_time(received_at)
+    deadlines = []
+    for value in (error.retry_after_seconds, error.retry_after):
+        seconds = normalized_retry_seconds(value)
+        if seconds is not None:
+            rounded = int(Decimal(seconds).to_integral_value(rounding=ROUND_CEILING))
+            deadlines.append(received + timedelta(seconds=rounded))
+    header = normalized_retry_header(error.retry_after)
+    if header is not None and not header.isdigit():
+        date = parsedate_to_datetime(header).astimezone(timezone.utc)
+        if date >= received:
+            deadlines.append(date)
+    return max(deadlines) if deadlines else None
 
 
 def retry_deadline(attempt_at: str, error: SourceError) -> str | None:
@@ -333,16 +413,34 @@ def retry_deadline(attempt_at: str, error: SourceError) -> str | None:
         return None
     attempted = parse_time(attempt_at)
     deadline = attempted + timedelta(minutes=5)
-    if error.retry_after:
-        try:
-            if error.retry_after.isdigit():
-                requested = attempted + timedelta(seconds=min(int(error.retry_after), 315360000))
-            else:
-                requested = parsedate_to_datetime(error.retry_after).astimezone(timezone.utc)
-            deadline = max(deadline, requested)
-        except (TypeError, ValueError, OverflowError):
-            pass
+    requested = instructed_retry_time(attempt_at, error)
+    if requested is not None:
+        deadline = max(deadline, requested)
     return deadline.isoformat(timespec="seconds").replace("+00:00", "Z")
+
+
+def fetch_with_short_retry(fetcher, *, clock, sleeper, monotonic):
+    """At most two requests and one short, source-directed wait per daily run."""
+    started = monotonic()
+    for attempt in range(2):
+        attempt_at = clock()
+        try:
+            raw, http_date = fetcher()
+            return raw, http_date, clock(), attempt_at, attempt + 1
+        except SourceError as error:
+            error.received_at = clock()
+            error.last_attempt_at = attempt_at
+            error.fetch_attempts = attempt + 1
+            instructed = instructed_retry_time(error.received_at, error)
+            if attempt or error.code != "http_429" or instructed is None:
+                raise
+            delay = max(1, math.ceil((instructed - parse_time(error.received_at)).total_seconds()))
+            if delay > MAX_SAME_JOB_RETRY_SECONDS or monotonic() - started + delay + REQUEST_TIMEOUT_SECONDS > RETRY_RUNNER_BUDGET_SECONDS:
+                raise
+            sleeper(delay)
+            # Interrupted waits or clock jumps must not send an early retry.
+            if parse_time(clock()) < instructed or monotonic() - started + REQUEST_TIMEOUT_SECONDS > RETRY_RUNNER_BUDGET_SECONDS:
+                raise
 
 
 def json_bytes(data: dict) -> bytes:
@@ -386,9 +484,10 @@ def validate_stored_rows(snapshot: dict) -> None:
         ctx.prec = 80
         volume = sum((Decimal(number(row["volume_24h_usdc"], nonnegative=True)) for row in rows), Decimal(0))
         oi = sum((Decimal(number(row["trader_open_interest_usdc"], nonnegative=True)) for row in rows), Decimal(0))
-        if abs(volume - Decimal(number(totals["volume_24h_usdc"], nonnegative=True))) > Decimal("0.000001"):
+        volume_residual = Decimal(number(totals["volume_24h_usdc"], nonnegative=True)) - volume
+        if (totals.get("market_coverage_complete", True) and abs(volume_residual) > Decimal("0.000001")) or volume_residual < Decimal("-0.000001"):
             raise DataError("invalid_historical_volume")
-        if oi != Decimal(number(totals["trader_open_interest_usdc"], nonnegative=True)):
+        if oi != Decimal(number(totals.get("observed_trader_open_interest_usdc", totals["trader_open_interest_usdc"]), nonnegative=True)):
             raise DataError("invalid_historical_oi")
 
 
@@ -530,8 +629,11 @@ def repack(output_dir: Path) -> dict:
     return latest
 
 
-def update(output_dir: Path, seeds=(), *, collect=True, fetcher=fetch_public, now=None) -> dict:
-    attempt_at = now or utc_now()
+def update(output_dir: Path, seeds=(), *, collect=True, fetcher=fetch_public, now=None, clock=None, sleeper=None, monotonic=None) -> dict:
+    clock = clock or ((lambda: now) if now is not None else utc_now)
+    sleeper = sleeper or time.sleep
+    monotonic = monotonic or time.monotonic
+    attempt_at = now or clock()
     snapshots = read_existing(output_dir)
     seeded = [normalize_snapshot(Path(path).read_bytes(), observed_at, kind="archived_public_api", timestamp_basis=basis)
         for path, observed_at, basis in seeds]
@@ -539,27 +641,32 @@ def update(output_dir: Path, seeds=(), *, collect=True, fetcher=fetch_public, no
     previous = snapshots[-1] if snapshots else None
     status = {"state": "last_known_good", "last_attempt_at": attempt_at if collect else None,
         "last_successful_observation_at": previous["observed_at"] if previous else None,
-        "error": None, "retry_after": None, "retry_not_before": None}
+        "error": None, "retry_after": None, "retry_after_seconds": None, "retry_not_before": None, "fetch_attempts": 0}
     if collect:
         try:
             latest_path = output_dir / "markets.json"
             prior_status = json.loads(latest_path.read_text()).get("status", {}) if latest_path.exists() else {}
             backoff = prior_status.get("retry_not_before")
             if not backoff and prior_status.get("error") in ("http_429", "http_503") and prior_status.get("last_attempt_at"):
-                backoff = retry_deadline(prior_status["last_attempt_at"], SourceError(prior_status["error"], prior_status.get("retry_after")))
+                backoff = retry_deadline(prior_status["last_attempt_at"], SourceError(prior_status["error"], prior_status.get("retry_after"), prior_status.get("retry_after_seconds")))
             if backoff and parse_time(attempt_at) < parse_time(backoff):
                 status["retry_not_before"] = backoff
-                raise SourceError("rate_limit_backoff", prior_status.get("retry_after"))
-            raw, http_date = fetcher()
-            current = normalize_snapshot(raw, now or utc_now(), http_date=http_date)
+                status["last_attempt_at"] = prior_status.get("last_attempt_at")
+                raise SourceError("rate_limit_backoff", prior_status.get("retry_after"), prior_status.get("retry_after_seconds"))
+            raw, http_date, received_at, last_attempt, attempts = fetch_with_short_retry(fetcher, clock=clock, sleeper=sleeper, monotonic=monotonic)
+            status.update(last_attempt_at=last_attempt, fetch_attempts=attempts)
+            current = normalize_snapshot(raw, received_at, http_date=http_date)
             ensure_nonregression(current, previous)
             snapshots = merge_history(snapshots, [current])
             status.update(state="ok", last_successful_observation_at=current["observed_at"])
         except (DataError, SourceError) as exc:
             status["error"] = exc.code if isinstance(exc, SourceError) else str(exc)
             status["retry_after"] = getattr(exc, "retry_after", None)
+            status["retry_after_seconds"] = getattr(exc, "retry_after_seconds", None)
+            if isinstance(exc, SourceError) and exc.last_attempt_at:
+                status.update(last_attempt_at=exc.last_attempt_at, fetch_attempts=exc.fetch_attempts)
             if isinstance(exc, SourceError) and status["retry_not_before"] is None:
-                status["retry_not_before"] = retry_deadline(attempt_at, exc)
+                status["retry_not_before"] = retry_deadline(exc.received_at or attempt_at, exc)
             if not snapshots:
                 raise
     elif snapshots:
@@ -569,7 +676,7 @@ def update(output_dir: Path, seeds=(), *, collect=True, fetcher=fetch_public, no
     newest = {key: value for key, value in snapshots[-1].items() if not key.startswith("partition_")}
     if "markets" not in newest:
         raise DataError("latest_requires_full_market_rows")
-    latest = {"schema_version": SCHEMA_VERSION, "generated_at": attempt_at, "source": SOURCE, "status": status,
+    latest = {"schema_version": SCHEMA_VERSION, "generated_at": clock(), "source": SOURCE, "status": status,
         "latest": newest, "history_url": "data/market-history.json", "coverage": coverage(snapshots)}
     history, writes, removals = prepare_publication(output_dir, snapshots, latest)
     publish_files(output_dir, latest, history, writes, removals)
