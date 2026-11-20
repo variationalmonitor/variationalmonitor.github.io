@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#010612">
+  <meta name="description" content="Independent Variational analytics. Omni markets, reported financial performance, protocol treasury, OLP and VAR data with source transparency.">
+  <title>Variational Analytics</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/styles.css">
+  <script type="module" src="assets/app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to dashboard</a>
+  <aside class="sidebar" id="sidebar" aria-label="Main navigation">
+    <a class="wordmark" href="#/overview"><span class="brand-mark" aria-hidden="true">v</span><span>Variational<small>ANALYTICS</small></span></a>
+    <nav aria-label="Analytics">
+      <span class="nav-group">PROTOCOL</span>
+      <a href="#/overview" data-nav="overview"><span class="nav-symbol" aria-hidden="true">◫</span>Overview</a>
+      <a href="#/omni" data-nav="omni"><span class="nav-symbol" aria-hidden="true">▤</span>Omni</a>
+      <a href="#/financials" data-nav="financials"><span class="nav-symbol" aria-hidden="true">▥</span>Financials</a>
+      <a href="#/olp" data-nav="olp"><span class="nav-symbol" aria-hidden="true">◈</span>OLP</a>
+      <span class="nav-group">ECOSYSTEM</span>
+      <a href="#/var" data-nav="var"><span class="nav-symbol" aria-hidden="true">◇</span>VAR</a>
+      <a href="#/pro" data-nav="pro"><span class="nav-symbol" aria-hidden="true">▧</span>Variational Pro</a>
+      <a href="#/research" data-nav="research"><span class="nav-symbol" aria-hidden="true">▱</span>Research</a>
+      <span class="nav-group">TOOLS</span>
+      <a href="#/explorer" data-nav="explorer"><span class="nav-symbol" aria-hidden="true">⌕</span>Data Explorer</a>
+    </nav>
+    <div class="sidebar-footer"><span>Independent analytics</span><a href="https://www.variational.io/" target="_blank" rel="noopener noreferrer">Variational website</a><button type="button" class="text-button" data-method="coverage">Data & methodology</button></div>
+  </aside>
+  <div class="mobile-scrim" id="mobile-scrim" hidden></div>
+  <div class="workspace">
+    <header class="topbar"><div class="topbar-left"><button type="button" class="menu-button" id="menu-toggle" aria-label="Open navigation" aria-controls="sidebar" aria-expanded="false">☰</button><span class="breadcrumb">VARIATIONAL <span>/</span> <strong id="breadcrumb-page">Overview</strong></span></div><div class="topbar-right"><span class="daily-label">Daily data updates</span><button type="button" class="source-status" data-method="freshness" id="source-status">Loading sources</button></div></header>
+    <main id="main" tabindex="-1"><div class="page-heading"><div><p class="eyebrow">PROTOCOL ACTIVITY</p><h1>Overview</h1></div></div><div class="loading-state" role="status"><span class="loading-line"></span>Loading source data…</div></main>
+    <footer class="page-footer"><span>Variational Analytics <span class="footer-divider">·</span> Independent community dashboard</span><div><button class="text-button" data-method="coverage" type="button">Methodology</button><a href="data/financials.json" download>Financial data</a><a href="data/markets.json" download>Market data</a></div></footer>
+  </div>
+  <dialog id="info-dialog" aria-labelledby="info-title"><div class="dialog-head"><h2 id="info-title">Metric information</h2><button type="button" class="icon-button" id="close-dialog" aria-label="Close information">×</button></div><div id="info-content"></div></dialog>
+  <div id="toast" class="toast" role="status" hidden></div>
+  <noscript><p class="noscript">Enable JavaScript to explore the dashboard. Source data is also available through the financial and market data links.</p></noscript>
+</body>
+</html>

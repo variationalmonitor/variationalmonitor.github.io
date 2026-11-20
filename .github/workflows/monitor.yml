@@ -1,0 +1,123 @@
+name: Variational Monitor
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '2-59/5 * * * *'
+    - cron: '15 19 * * *'
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: Update to run
+        type: choice
+        default: publish
+        options: [publish, daily, reports]
+
+permissions:
+  contents: read
+concurrency:
+  group: monitor-publication
+  cancel-in-progress: false
+
+jobs:
+  prepare:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    permissions:
+      contents: write
+    outputs:
+      publish: ${{ steps.decision.outputs.publish }}
+    steps:
+      - name: Select update
+        id: mode
+        env:
+          SCHEDULE: ${{ github.event.schedule }}
+          REQUESTED_MODE: ${{ inputs.mode }}
+        run: |
+          case "$SCHEDULE" in
+            '2-59/5 * * * *') mode=reports ;;
+            '15 19 * * *') mode=daily ;;
+            *) mode="${REQUESTED_MODE:-publish}" ;;
+          esac
+          echo "value=$mode" >> "$GITHUB_OUTPUT"
+      - name: Check out the latest project
+        if: steps.mode.outputs.value != 'reports'
+        uses: actions/checkout@9f698171ed81b15d1823a05fc7211befd50c8ae0 # v6.0.3
+        with:
+          ref: main
+          fetch-depth: 1
+          persist-credentials: false
+      - name: Check out the report reader and its history
+        if: steps.mode.outputs.value == 'reports'
+        uses: actions/checkout@9f698171ed81b15d1823a05fc7211befd50c8ae0 # v6.0.3
+        with:
+          ref: main
+          fetch-depth: 1
+          persist-credentials: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /tools/financials.py
+            /public/data/financials.json
+      - name: Check official financial reports
+        if: steps.mode.outputs.value == 'reports'
+        run: python3 tools/financials.py refresh --output public/data/financials.json
+      - name: Collect daily observations
+        if: steps.mode.outputs.value == 'daily'
+        env:
+          COINGECKO_DEMO_API_KEY: ${{ secrets.COINGECKO_DEMO_API_KEY }}
+        run: |
+          python3 tools/markets.py
+          python3 tools/supplement.py
+      - name: Determine whether to publish
+        id: decision
+        env:
+          MODE: ${{ steps.mode.outputs.value }}
+        run: |
+          if [[ "$MODE" == reports ]] && git diff --quiet -- public/data/financials.json; then
+            echo "publish=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "publish=true" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Restore the site for a changed report
+        if: steps.mode.outputs.value == 'reports' && steps.decision.outputs.publish == 'true'
+        run: git sparse-checkout disable
+      - name: Validate release
+        if: steps.decision.outputs.publish == 'true'
+        run: |
+          python3 -m unittest discover -s tests
+          python3 tools/financials.py verify --output public/data/financials.json
+          python3 tools/check_site.py
+      - name: Save validated observations
+        if: steps.decision.outputs.publish == 'true' && steps.mode.outputs.value != 'publish'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git add -A -- public/data
+          if ! git diff --cached --quiet; then
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git commit -m "Update verified dashboard observations"
+            git -c credential.helper= -c 'credential.helper=!gh auth git-credential' push origin HEAD:main
+          fi
+      - name: Package the static site
+        if: steps.decision.outputs.publish == 'true'
+        uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4.0.0
+        with:
+          path: public/
+          retention-days: 1
+  deploy:
+    needs: prepare
+    if: needs.prepare.outputs.publish == 'true'
+    environment:
+      name: github-pages
+      url: ${{ steps.publish.outputs.page_url }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    steps:
+      - name: Publish
+        id: publish
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1

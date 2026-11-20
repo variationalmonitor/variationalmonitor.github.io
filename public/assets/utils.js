@@ -1,0 +1,15 @@
+export const escapeHTML=value=>String(value??'').replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+export const number=value=>value===null||value===undefined||value===''?null:(Number.isFinite(Number(value))?Number(value):null);
+export const compact=(value,digits=2)=>{const n=number(value);if(n===null)return '—';const sign=n<0?'−':'';const a=Math.abs(n);for(const [scale,suffix]of[[1e12,'T'],[1e9,'B'],[1e6,'M'],[1e3,'K']])if(a>=scale)return sign+new Intl.NumberFormat('en-US',{maximumFractionDigits:digits,minimumFractionDigits:digits}).format(a/scale)+suffix;return sign+new Intl.NumberFormat('en-US',{maximumFractionDigits:digits}).format(a);};
+export const fixed=(value,digits=2)=>{const n=number(value);return n===null?'—':new Intl.NumberFormat('en-US',{maximumFractionDigits:digits,minimumFractionDigits:digits}).format(n);};
+export const cash=(value,digits=2)=>number(value)===null?'—':'$'+compact(value,digits);
+export const percent=(value,digits=1)=>number(value)===null?'—':fixed(number(value)*100,digits)+'%';
+export const ratio=(a,b)=>number(a)!==null&&number(b)!==null&&number(b)!==0?number(a)/number(b):null;
+export const date=value=>{const d=new Date(value);return Number.isFinite(d.getTime())?new Intl.DateTimeFormat('en-GB',{day:'numeric',month:'short',year:'numeric',timeZone:'UTC'}).format(d):'Unavailable';};
+export const shortDate=value=>{const d=new Date(value);return Number.isFinite(d.getTime())?new Intl.DateTimeFormat('en-GB',{day:'numeric',month:'short',timeZone:'UTC'}).format(d):'—';};
+export const timestamp=value=>{const d=new Date(value);return Number.isFinite(d.getTime())?new Intl.DateTimeFormat('en-GB',{day:'numeric',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit',hourCycle:'h23',timeZone:'UTC'}).format(d)+' UTC':'Unavailable';};
+export function safeURL(value){if(typeof value!=='string'||!value.trim())return null;try{const url=new URL(value,location.href);return ['https:','http:'].includes(url.protocol)?url.href:null;}catch{return null;}}
+export function sourceLink(url,label='Source'){const safe=safeURL(url);return safe?`<a class="inline-link" href="${escapeHTML(safe)}" target="_blank" rel="noopener noreferrer">${escapeHTML(label)}</a>`:'<span class="muted">Source unavailable</span>';}
+export function downloadCSV(name,columns,rows){const cell=value=>{let text=String(value??'');if(/^[=+@\-\t\r]/.test(text)&&!/^[-+]?\d+(?:\.\d+)?$/.test(text))text="'"+text;return '"'+text.replaceAll('"','""')+'"';};const content=[columns,...rows].map(row=>row.map(cell).join(',')).join('\r\n');const url=URL.createObjectURL(new Blob(['\uFEFF'+content],{type:'text/csv;charset=utf-8;'}));const a=document.createElement('a');a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);}
+export function sum(values){const present=values.map(number).filter(v=>v!==null);return present.length?present.reduce((a,b)=>a+b,0):null;}
+export function cumulative(values){let total=0;return values.map(v=>{const n=number(v);if(n===null)return null;total+=n;return total;});}

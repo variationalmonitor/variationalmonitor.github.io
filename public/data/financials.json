@@ -1,0 +1,1779 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-11-20T08:56:01Z",
+  "latest_report_id": "x:2121317860740063501",
+  "coverage": {
+    "first_report_published_at": "2026-03-06T18:12:38Z",
+    "last_report_published_at": "2026-11-13T18:51:03Z",
+    "report_count": 19,
+    "missing_period_boundaries": true,
+    "unresolved_warning_count": 3,
+    "history_note": "Covered public report publications, not a complete protocol-lifetime ledger. Publication dates are not exact accounting cutoffs.",
+    "discovery": {
+      "feed_url": "https://t.me/s/variational_io",
+      "initialized": true,
+      "last_successful_check_in_release": "2026-11-20T08:56:01Z",
+      "last_seen_message_id": "463",
+      "pages_read": 1,
+      "history_gap": null,
+      "revision_coverage": "Latest two known Telegram reports and bounded current-feed catch-up; older edits need explicit re-audit.",
+      "status_note": "Check recorded in this release, not live watcher status. Unchanged or failed checks do not update this static file."
+    }
+  },
+  "totals": {
+    "label": "Sum of covered reports",
+    "period_amounts": {
+      "gross_revenue": "64653135",
+      "market_making_costs": "-15488037",
+      "net_revenue": "30819751",
+      "rewards": "-3456245",
+      "net_profit": "27673543",
+      "treasury_inflow": "12530285",
+      "olp_pnl": "15143258"
+    },
+    "field_coverage": {
+      "gross_revenue": {
+        "reported_count": 19,
+        "report_count": 19,
+        "complete": true
+      },
+      "market_making_costs": {
+        "reported_count": 12,
+        "report_count": 19,
+        "complete": false
+      },
+      "net_revenue": {
+        "reported_count": 19,
+        "report_count": 19,
+        "complete": true
+      },
+      "rewards": {
+        "reported_count": 19,
+        "report_count": 19,
+        "complete": true
+      },
+      "net_profit": {
+        "reported_count": 19,
+        "report_count": 19,
+        "complete": true
+      },
+      "treasury_inflow": {
+        "reported_count": 19,
+        "report_count": 19,
+        "complete": true
+      },
+      "olp_pnl": {
+        "reported_count": 19,
+        "report_count": 19,
+        "complete": true
+      }
+    },
+    "note": "Sums preserve reported source amounts and their accounting discrepancies. Balances, cumulative volume and lifetime OLP PnL are never summed."
+  },
+  "source_identity_url": "https://docs.variational.io/getting-started/official-links",
+  "reports": [
+    {
+      "id": "x:2029983510824636491",
+      "published_at": "2026-03-06T18:12:38Z",
+      "period_label": "2w",
+      "period_start": null,
+      "period_end": null,
+      "source_urls": [
+        "https://x.com/variational_io/status/2029983510824636491"
+      ],
+      "sources": [
+        {
+          "platform": "x",
+          "id": "2029983510824636491",
+          "url": "https://x.com/variational_io/status/2029983510824636491",
+          "author": "variational_io",
+          "published_at": "2026-03-06T18:12:38Z",
+          "observed_at": "2026-11-20T08:56:01Z",
+          "retrieval_method": "saved FxTwitter replay of official X post",
+          "financial_sha256": "93a7f454384e91d43e7da886938b35fbb4c1a29dcf749d0fa7106da231c5cbef",
+          "matches_current": true
+        }
+      ],
+      "period_amounts": {
+        "gross_revenue": "1758330",
+        "market_making_costs": "-1140903",
+        "net_revenue": "617427",
+        "rewards": "-260884",
+        "net_profit": "356543",
+        "treasury_inflow": "175833",
+        "olp_pnl": "180710"
+      },
+      "snapshot": {
+        "cumulative_volume": "178520000000.00",
+        "dual_sided_oi": "673070000.00",
+        "tvl": "106880000.00",
+        "markets": null,
+        "tokens_listed": "470",
+        "lifetime_olp_pnl": "11529597",
+        "treasury_holdings": null,
+        "onchain_treasury_value": null
+      },
+      "labels": {
+        "cumulative_volume": "Total Volume Traded",
+        "dual_sided_oi": "Current Dual-Sided OI",
+        "tvl": "TVL (Excludes Some OLP Hedging Accounts)",
+        "tokens_listed": "Total Tokens Currently Listed",
+        "gross_revenue": "2w Spreads Paid (Gross Revenue)",
+        "market_making_costs": "2w Market Making Costs (Cost of Revenue)",
+        "net_revenue": "2w Net Revenue",
+        "rewards": "2w Rewards",
+        "net_profit": "2w Net Profit",
+        "treasury_inflow": "Protocol Treasury",
+        "olp_pnl": "OLP PnL",
+        "lifetime_olp_pnl": "Lifetime OLP PnL"
+      },
+      "units": {
+        "cumulative_volume": "$",
+        "dual_sided_oi": "$",
+        "tvl": "$",
+        "tokens_listed": "count",
+        "gross_revenue": "$",
+        "market_making_costs": "$",
+        "net_revenue": "$",
+        "rewards": "$",
+        "net_profit": "$",
+        "treasury_inflow": "$",
+        "olp_pnl": "$",
+        "lifetime_olp_pnl": "$"
+      },
+      "raw_values": {
+        "cumulative_volume": "$178.52B",
+        "dual_sided_oi": "$673.07M",
+        "tvl": "$106.88M",
+        "tokens_listed": "470",
+        "gross_revenue": "$1,758,330",
+        "market_making_costs": "($1,140,903)",
+        "net_revenue": "$617,427",
+        "rewards": "($260,884)",
+        "net_profit": "$356,543",
+        "treasury_inflow": "$175,833",
+        "olp_pnl": "$180,710",
+        "lifetime_olp_pnl": "$11,529,597"
+      },
+      "warnings": [],
+      "revisions": []
+    },
+    {
+      "id": "x:2035011447072440602",
+      "published_at": "2026-03-20T15:11:52Z",
+      "period_label": "2w",
+      "period_start": null,
+      "period_end": null,
+      "source_urls": [
+        "https://x.com/variational_io/status/2035011447072440602"
+      ],
+      "sources": [
+        {
+          "platform": "x",
+          "id": "2035011447072440602",
+          "url": "https://x.com/variational_io/status/2035011447072440602",
+          "author": "variational_io",
+          "published_at": "2026-03-20T15:11:52Z",
+          "observed_at": "2026-11-20T08:55:22Z",
+          "retrieval_method": "saved FxTwitter replay of official X post",
+          "financial_sha256": "b1ac5a93dd10ca23ba0f70b583e66f7dea164405bac4b37774a78fafb5e078f4",
+          "matches_current": true
+        }
+      ],
+      "period_amounts": {
+        "gross_revenue": "1763330",
+        "market_making_costs": "-755767",
+        "net_revenue": "1007563",
+        "rewards": "-262014",
+        "net_profit": "745549",
+        "treasury_inflow": "176333",
+        "olp_pnl": "569216"
+      },
+      "snapshot": {
+        "cumulative_volume": "189270000000.00",
+        "dual_sided_oi": "746870000.00",
+        "tvl": "111900000.00",
+        "markets": null,
+        "tokens_listed": "467",
+        "lifetime_olp_pnl": "12098813",
+        "treasury_holdings": null,
+        "onchain_treasury_value": null
+      },
+      "labels": {
+        "cumulative_volume": "Total Volume Traded",
+        "dual_sided_oi": "Current Dual-Sided OI",
+        "tvl": "TVL (Excludes Some OLP Hedging Accounts)",
+        "tokens_listed": "Total Tokens Currently Listed",
+        "gross_revenue": "2w Spreads Paid (Gross Revenue)",
+        "market_making_costs": "2w Market Making Costs (Cost of Revenue)",
+        "net_revenue": "2w Net Revenue",
+        "rewards": "2w Rewards",
+        "net_profit": "2w Net Profit",
+        "treasury_inflow": "Protocol Treasury",
+        "olp_pnl": "OLP PnL",
+        "lifetime_olp_pnl": "Lifetime OLP PnL"
+      },
+      "units": {
+        "cumulative_volume": "$",
+        "dual_sided_oi": "$",
+        "tvl": "$",
+        "tokens_listed": "count",
+        "gross_revenue": "$",
+        "market_making_costs": "$",
+        "net_revenue": "$",
+        "rewards": "$",
+        "net_profit": "$",
+        "treasury_inflow": "$",
+        "olp_pnl": "$",
+        "lifetime_olp_pnl": "$"
+      },
+      "raw_values": {
+        "cumulative_volume": "$189.27B",
+        "dual_sided_oi": "$746.87M",
+        "tvl": "$111.90M",
+        "tokens_listed": "467",
+        "gross_revenue": "$1,763,330",
+        "market_making_costs": "($755,767)",
+        "net_revenue": "$1,007,563",
+        "rewards": "($262,014)",
+        "net_profit": "$745,549",
+        "treasury_inflow": "$176,333",
+        "olp_pnl": "$569,216",
+        "lifetime_olp_pnl": "$12,098,813"
+      },
+      "warnings": [],
+      "revisions": []
+    },
+    {
+      "id": "x:2040164994764124195",
+      "published_at": "2026-04-03T20:30:13Z",
+      "period_label": "2w",
+      "period_start": null,
+      "period_end": null,
+      "source_urls": [
+        "https://x.com/variational_io/status/2040164994764124195"
+      ],
+      "sources": [
+        {
+          "platform": "x",
+          "id": "2040164994764124195",
+          "url": "https://x.com/variational_io/status/2040164994764124195",
+          "author": "variational_io",
+          "published_at": "2026-04-03T20:30:13Z",
+          "observed_at": "2026-11-20T08:55:22Z",
+          "retrieval_method": "saved FxTwitter replay of official X post",
+          "financial_sha256": "6255d803b0549968e4fb5b368cef98ea8a1335e32c65ece3346f78c5ffbee627",
+          "matches_current": true
+        }
+      ],
+      "period_amounts": {
+        "gross_revenue": "1556120",
+        "market_making_costs": "-717916",
+        "net_revenue": "838204",
+        "rewards": "-122261",
+        "net_profit": "715943",
+        "treasury_inflow": "263048",
+        "olp_pnl": "452895"
+      },
+      "snapshot": {
+        "cumulative_volume": "197280000000.00",
+        "dual_sided_oi": "637770000.00",
+        "tvl": "108520000.00",
+        "markets": null,
+        "tokens_listed": "462",
+        "lifetime_olp_pnl": "12551708",
+        "treasury_holdings": null,
+        "onchain_treasury_value": null
+      },
+      "labels": {
+        "cumulative_volume": "Total Volume Traded",
+        "dual_sided_oi": "Current Dual-Sided OI",
+        "tvl": "TVL (Excludes Some OLP Hedging Accounts)",
+        "tokens_listed": "Total Tokens Currently Listed",
+        "gross_revenue": "2w Spreads Paid (Gross Revenue)",
+        "market_making_costs": "2w Market Making Costs (Cost of Revenue)",
+        "net_revenue": "2w Net Revenue",
+        "rewards": "2w Rewards",
+        "net_profit": "2w Net Profit",
+        "treasury_inflow": "Protocol Treasury",
+        "olp_pnl": "OLP PnL",
+        "lifetime_olp_pnl": "Lifetime OLP PnL"
+      },
+      "units": {
+        "cumulative_volume": "$",
+        "dual_sided_oi": "$",
+        "tvl": "$",
+        "tokens_listed": "count",
+        "gross_revenue": "$",
+        "market_making_costs": "$",
+        "net_revenue": "$",
+        "rewards": "$",
+        "net_profit": "$",
+        "treasury_inflow": "$",
+        "olp_pnl": "$",
+        "lifetime_olp_pnl": "$"
+      },
+      "raw_values": {
+        "cumulative_volume": "$197.28B",
+        "dual_sided_oi": "$637.77M",
+        "tvl": "$108.52M",
+        "tokens_listed": "462",
+        "gross_revenue": "$1,556,120",
+        "market_making_costs": "($717,916)",
+        "net_revenue": "$838,204",
+        "rewards": "($122,261)",
+        "net_profit": "$715,943",
+        "treasury_inflow": "$263,048",
+        "olp_pnl": "$452,895",
+        "lifetime_olp_pnl": "$12,551,708"
+      },
+      "warnings": [],
+      "revisions": []
+    },
+    {
+      "id": "x:2045195227615613390",
+      "published_at": "2026-04-17T17:38:34Z",
+      "period_label": "2w",
+      "period_start": null,
+      "period_end": null,
+      "source_urls": [
+        "https://x.com/variational_io/status/2045195227615613390"
+      ],
+      "sources": [
+        {
+          "platform": "x",
+          "id": "2045195227615613390",
+          "url": "https://x.com/variational_io/status/2045195227615613390",
+          "author": "variational_io",
+          "published_at": "2026-04-17T17:38:34Z",
+          "observed_at": "2026-11-20T08:55:22Z",
+          "retrieval_method": "saved FxTwitter replay of official X post",
+          "financial_sha256": "4737f095629645be57673f4ba78c45e3348e81f2a5df0d0fe77225f5f2886d50",
+          "matches_current": true
+        }
+      ],
+      "period_amounts": {
+        "gross_revenue": "1563380",
+        "market_making_costs": "-966025",
+        "net_revenue": "597355",
+        "rewards": "-75856",
+        "net_profit": "521499",
+        "treasury_inflow": "312676",
+        "olp_pnl": "208823"
+      },
+      "snapshot": {
+        "cumulative_volume": "204200000000.00",
+        "dual_sided_oi": "733950000.00",
+        "tvl": "113670000.00",
+        "markets": null,
+        "tokens_listed": "459",
+        "lifetime_olp_pnl": "12760531",
+        "treasury_holdings": null,
+        "onchain_treasury_value": "1445862"
+      },
+      "labels": {
+        "cumulative_volume": "Total Volume Traded",
+        "dual_sided_oi": "Current Dual-Sided OI",
+        "tvl": "TVL (Excludes Some OLP Hedging Accounts)",
+        "tokens_listed": "Total Tokens Currently Listed",
+        "gross_revenue": "2w Spreads Paid (Gross Revenue)",
+        "market_making_costs": "2w Market Making Costs (Cost of Revenue)",
+        "net_revenue": "2w Net Revenue",
+        "rewards": "2w Rewards",
+        "net_profit": "2w Net Profit",
+        "treasury_inflow": "Protocol Treasury",
+        "olp_pnl": "OLP PnL",
+        "lifetime_olp_pnl": "Lifetime OLP PnL",
+        "onchain_treasury_value": "Total On-Chain Protocol Treasury Value"
+      },
+      "units": {
+        "cumulative_volume": "$",
+        "dual_sided_oi": "$",
+        "tvl": "$",
+        "tokens_listed": "count",
+        "gross_revenue": "$",
+        "market_making_costs": "$",
+        "net_revenue": "$",
+        "rewards": "$",
+        "net_profit": "$",
+        "treasury_inflow": "$",
+        "olp_pnl": "$",
+        "lifetime_olp_pnl": "$",
+        "onchain_treasury_value": "$"
+      },
+      "raw_values": {
+        "cumulative_volume": "$204.20B",
+        "dual_sided_oi": "$733.95M",
+        "tvl": "$113.67M",
+        "tokens_listed": "459",
+        "gross_revenue": "$1,563,380",
+        "market_making_costs": "($966,025)",
+        "net_revenue": "$597,355",
+        "rewards": "($75,856)",
+        "net_profit": "$521,499",
+        "treasury_inflow": "$312,676",
+        "olp_pnl": "$208,823",
+        "lifetime_olp_pnl": "$12,760,531",
+        "onchain_treasury_value": "$1,445,862"
+      },
+      "warnings": [],
+      "revisions": []
+    },
+    {
+      "id": "x:2050242620912537798",
+      "published_at": "2026-05-01T15:55:07Z",
+      "period_label": "2w",
+      "period_start": null,
+      "period_end": null,
+      "source_urls": [
+        "https://x.com/variational_io/status/2050242620912537798"
+      ],
+      "sources": [
+        {
+          "platform": "x",
+          "id": "2050242620912537798",
+          "url": "https://x.com/variational_io/status/2050242620912537798",
+          "author": "variational_io",
+          "published_at": "2026-05-01T15:55:07Z",
+          "observed_at": "2026-11-20T08:55:22Z",
+          "retrieval_method": "saved FxTwitter replay of official X post",
+          "financial_sha256": "2c6ef1e16a41e7a8ede8dfbff163affd11eb14590adfafd778704dc83114851a",
+          "matches_current": true
+        }
+      ],
+      "period_amounts": {
+        "gross_revenue": "1426600",
+        "market_making_costs": "-1108556",
+        "net_revenue": "318044",
+        "rewards": "-69545",
+        "net_profit": "248499",
+        "treasury_inflow": "285320",
+        "olp_pnl": "-36821"
+      },
+      "snapshot": {
+        "cumulative_volume": "211190000000.00",
+        "dual_sided_oi": "674880000.00",
+        "tvl": "109130000.00",
+        "markets": null,
+        "tokens_listed": "456",
+        "lifetime_olp_pnl": "12723710",
+        "treasury_holdings": null,
+        "onchain_treasury_value": null
+      },
+      "labels": {
+        "cumulative_volume": "Total Volume Traded",
+        "dual_sided_oi": "Current Dual-Sided OI",
+        "tvl": "TVL (Excludes Some OLP Hedging Accounts)",
+        "tokens_listed": "Total Tokens Currently Listed",
+        "gross_revenue": "2w Spreads Paid (Gross Revenue)",
+        "market_making_costs": "2w Market Making Costs (Cost of Revenue)",
+        "net_revenue": "2w Net Revenue",
+        "rewards": "2w Rewards",
+        "net_profit": "2w Net Profit",
+        "treasury_inflow": "Protocol Treasury",
+        "olp_pnl": "OLP PnL",
+        "lifetime_olp_pnl": "Lifetime OLP PnL"
+      },
+      "units": {
+        "cumulative_volume": "$",
+        "dual_sided_oi": "$",
+        "tvl": "$",
+        "tokens_listed": "count",
+        "gross_revenue": "$",
+        "market_making_costs": "$",
+        "net_revenue": "$",
+        "rewards": "$",
+        "net_profit": "$",
+        "treasury_inflow": "$",
+        "olp_pnl": "$",
+        "lifetime_olp_pnl": "$"
+      },
+      "raw_values": {
+        "cumulative_volume": "$211.19B",
+        "dual_sided_oi": "$674.88M",
+        "tvl": "$109.13M",
+        "tokens_listed": "456",
+        "gross_revenue": "$1,426,600",
+        "market_making_costs": "($1,108,556)",
+        "net_revenue": "$318,044",
+        "rewards": "($69,545)",
+        "net_profit": "$248,499",
+        "treasury_inflow": "$285,320",
+        "olp_pnl": "($36,821)",
+        "lifetime_olp_pnl": "$12,723,710"
+      },
+      "warnings": [],
+      "revisions": []
+    },
+    {
+      "id": "x:2055324287922507828",
+      "published_at": "2026-05-15T16:27:50Z",
+      "period_label": "2w",
+      "period_start": null,
+      "period_end": null,
+      "source_urls": [
+        "https://x.com/variational_io/status/2055324287922507828"
+      ],
+      "sources": [
+        {
+          "platform": "x",
+          "id": "2055324287922507828",
+          "url": "https://x.com/variational_io/status/2055324287922507828",
+          "author": "variational_io",
+          "published_at": "2026-05-15T16:27:50Z",
+          "observed_at": "2026-11-20T08:55:22Z",
+          "retrieval_method": "saved FxTwitter replay of official X post",
+          "financial_sha256": "d1e0f8d61cd1e85613fc39c76caa08601ac6893d36e64dea7aa8b5394fbd98c6",
+          "matches_current": true
+        }
+      ],
+      "period_amounts": {
+        "gross_revenue": "1687700",
+        "market_making_costs": "-1011619",
+        "net_revenue": "676081",
+        "rewards": "-81710",
+        "net_profit": "594371",
+        "treasury_inflow": "337540",
+        "olp_pnl": "256831"
+      },
+      "snapshot": {
+        "cumulative_volume": "219080000000.00",
+        "dual_sided_oi": "740070000.00",
+        "tvl": "104000000.0",
+        "markets": null,
+        "tokens_listed": "456",
+        "lifetime_olp_pnl": "12980541",
+        "treasury_holdings": "2070935",
+        "onchain_treasury_value": null
+      },
+      "labels": {
+        "cumulative_volume": "Total Volume Traded",
+        "dual_sided_oi": "Current Dual-Sided OI",
+        "tvl": "TVL (Excludes Some OLP Hedging Accounts)",
+        "tokens_listed": "Total Tokens Currently Listed",
+        "gross_revenue": "2w Spreads Paid (Gross Revenue)",
+        "market_making_costs": "2w Market Making Costs (Cost of Revenue)",
+        "net_revenue": "2w Net Revenue",
+        "rewards": "2w Rewards",
+        "net_profit": "2w Net Profit",
+        "treasury_inflow": "Protocol Treasury",
+        "olp_pnl": "OLP PnL",
+        "lifetime_olp_pnl": "Lifetime OLP PnL",
+        "treasury_holdings": "Current Protocol Treasury Holdings"
+      },
+      "units": {
+        "cumulative_volume": "$",
+        "dual_sided_oi": "$",
+        "tvl": "$",
+        "tokens_listed": "count",
+        "gross_revenue": "$",
+        "market_making_costs": "$",
+        "net_revenue": "$",
+        "rewards": "$",
+        "net_profit": "$",
+        "treasury_inflow": "$",
+        "olp_pnl": "$",
+        "lifetime_olp_pnl": "$",
+        "treasury_holdings": "USDC"
+      },
+      "raw_values": {
+        "cumulative_volume": "$219.08B",
+        "dual_sided_oi": "$740.07M",
+        "tvl": "$104.0M",
+        "tokens_listed": "456",
+        "gross_revenue": "$1,687,700",
+        "market_making_costs": "($1,011,619)",
+        "net_revenue": "$676,081",
+        "rewards": "($81,710)",
+        "net_profit": "$594,371",
+        "treasury_inflow": "$337,540",
+        "olp_pnl": "$256,831",
+        "lifetime_olp_pnl": "$12,980,541",
+        "treasury_holdings": "2,070,935 USDC"
+      },
+      "warnings": [],
+      "revisions": []
+    },
+    {
+      "id": "x:2060738032580567428",
+      "published_at": "2026-05-30T15:00:08Z",
+      "period_label": "2w",
+      "period_start": null,
+      "period_end": null,
+      "source_urls": [
+        "https://x.com/variational_io/status/2060738032580567428"
+      ],
+      "sources": [
+        {
+          "platform": "x",
+          "id": "2060738032580567428",
+          "url": "https://x.com/variational_io/status/2060738032580567428",
+          "author": "variational_io",
+          "published_at": "2026-05-30T15:00:08Z",
+          "observed_at": "2026-11-20T08:55:22Z",
+          "retrieval_method": "saved FxTwitter replay of official X post",
+          "financial_sha256": "23efb14a77ffd55ba48c8be760f2d2c1389d70f6866c553d2a0372431106f605",
+          "matches_current": true
+        }
+      ],
+      "period_amounts": {
+        "gross_revenue": "2243040",
+        "market_making_costs": "-1272376",
+        "net_revenue": "970664",
+        "rewards": "-107553",
+        "net_profit": "863111",
+        "treasury_inflow": "448608",
+        "olp_pnl": "414503"
+      },
+      "snapshot": {
+        "cumulative_volume": "229800000000.0",
+        "dual_sided_oi": "992750000.00",
+        "tvl": "122770000.00",
+        "markets": null,
+        "tokens_listed": "465",
+        "lifetime_olp_pnl": "13395044",
+        "treasury_holdings": "2522857",
+        "onchain_treasury_value": null
+      },
+      "labels": {
+        "cumulative_volume": "Total Volume Traded",
+        "dual_sided_oi": "Current Dual-Sided OI",
+        "tvl": "TVL (Excludes Some OLP Hedging Accounts)",
+        "tokens_listed": "Total Tokens Currently Listed",
+        "gross_revenue": "2w Spreads Paid (Gross Revenue)",
+        "market_making_costs": "2w Market Making Costs (Cost of Revenue)",
+        "net_revenue": "2w Net Revenue",
+        "rewards": "2w Rewards",
+        "net_profit": "2w Net Profit",
+        "treasury_inflow": "Protocol Treasury",
+        "olp_pnl": "OLP PnL",
+        "lifetime_olp_pnl": "Lifetime OLP PnL",
+        "treasury_holdings": "Current Protocol Treasury Holdings"
+      },
+      "units": {
+        "cumulative_volume": "$",
+        "dual_sided_oi": "$",
+        "tvl": "$",
+        "tokens_listed": "count",
+        "gross_revenue": "$",
+        "market_making_costs": "$",
+        "net_revenue": "$",
+        "rewards": "$",
+        "net_profit": "$",
+        "treasury_inflow": "$",
+        "olp_pnl": "$",
+        "lifetime_olp_pnl": "$",
+        "treasury_holdings": "USDC"
+      },
+      "raw_values": {
+        "cumulative_volume": "$229.8B",
+        "dual_sided_oi": "$992.75M",
+        "tvl": "$122.77M",
+        "tokens_listed": "465",
+        "gross_revenue": "$2,243,040",
+        "market_making_costs": "($1,272,376)",
+        "net_revenue": "$970,664",
+        "rewards": "($107,553)",
+        "net_profit": "$863,111",
+        "treasury_inflow": "$448,608",
+        "olp_pnl": "$414,503",
+        "lifetime_olp_pnl": "$13,395,044",
+        "treasury_holdings": "2,522,857 USDC"
+      },
+      "warnings": [],
+      "revisions": []
+    },
+    {
+      "id": "x:2065467514486993157",
+      "published_at": "2026-06-12T16:13:24Z",
+      "period_label": "2w",
+      "period_start": null,
+      "period_end": null,
+      "source_urls": [
+        "https://x.com/variational_io/status/2065467514486993157"
+      ],
+      "sources": [
+        {
+          "platform": "x",
+          "id": "2065467514486993157",
+          "url": "https://x.com/variational_io/status/2065467514486993157",
+          "author": "variational_io",
+          "published_at": "2026-06-12T16:13:24Z",
+          "observed_at": "2026-11-20T08:55:22Z",
+          "retrieval_method": "saved FxTwitter replay of official X post",
+          "financial_sha256": "b82466663ec5885d8aeb136ce6eab9f04189c031073c105555ff556910d89dee",
+          "matches_current": true
+        }
+      ],
+      "period_amounts": {
+        "gross_revenue": "4332160",
+        "market_making_costs": "-2156274",
+        "net_revenue": "2175886",
+        "rewards": "-209668",
+        "net_profit": "1966218",
+        "treasury_inflow": "866432",
+        "olp_pnl": "1099786"
+      },
+      "snapshot": {
+        "cumulative_volume": "244200000000.0",
+        "dual_sided_oi": "858600000.0",
+        "tvl": "137800000.0",
+        "markets": "478",
+        "tokens_listed": null,
+        "lifetime_olp_pnl": "14494830",
+        "treasury_holdings": "3400937",
+        "onchain_treasury_value": null
+      },
+      "labels": {
+        "cumulative_volume": "Total Volume Traded",
+        "dual_sided_oi": "Current Dual-Sided OI",
+        "tvl": "TVL (Excludes OLP Hedging Accounts)",
+        "markets": "Total Markets Currently Listed",
+        "gross_revenue": "2w Spreads Paid (Gross Revenue)",
+        "market_making_costs": "2w Market Making Costs (Cost of Revenue)",
+        "net_revenue": "2w Net Revenue",
+        "rewards": "2w Rewards",
+        "net_profit": "2w Net Profit",
+        "treasury_inflow": "Protocol Treasury",
+        "olp_pnl": "OLP PnL",
+        "lifetime_olp_pnl": "Lifetime OLP PnL",
+        "treasury_holdings": "Current Protocol Treasury Holdings"
+      },
+      "units": {
+        "cumulative_volume": "$",
+        "dual_sided_oi": "$",
+        "tvl": "$",
+        "markets": "count",
+        "gross_revenue": "$",
+        "market_making_costs": "$",
+        "net_revenue": "$",
+        "rewards": "$",
+        "net_profit": "$",
+        "treasury_inflow": "$",
+        "olp_pnl": "$",
+        "lifetime_olp_pnl": "$",
+        "treasury_holdings": "USDC"
+      },
+      "raw_values": {
+        "cumulative_volume": "$244.2B",
+        "dual_sided_oi": "$858.6M",
+        "tvl": "$137.8M",
+        "markets": "478",
+        "gross_revenue": "$4,332,160",
+        "market_making_costs": "($2,156,274)",
+        "net_revenue": "$2,175,886",
+        "rewards": "($209,668)",
+        "net_profit": "$1,966,218",
+        "treasury_inflow": "$866,432",
+        "olp_pnl": "$1,099,786",
+        "lifetime_olp_pnl": "$14,494,830",
+        "treasury_holdings": "3,400,937 USDC"
+      },
+      "warnings": [],
+      "revisions": []
+    },
+    {
+      "id": "x:2070877921158586432",
+      "published_at": "2026-06-27T14:32:26Z",
+      "period_label": "2w",
+      "period_start": null,
+      "period_end": null,
+      "source_urls": [
+        "https://x.com/variational_io/status/2070877921158586432"
+      ],
+      "sources": [
+        {
+          "platform": "x",
+          "id": "2070877921158586432",
+          "url": "https://x.com/variational_io/status/2070877921158586432",
+          "author": "variational_io",
+          "published_at": "2026-06-27T14:32:26Z",
+          "observed_at": "2026-11-20T08:55:22Z",
+          "retrieval_method": "saved FxTwitter replay of official X post",
+          "financial_sha256": "4cc4012fdf3db160244566d4cb7897d71f5922875971bf3f12132e701f923395",
+          "matches_current": true
+        }
+      ],
+      "period_amounts": {
+        "gross_revenue": "3216760",
+        "market_making_costs": "-1947440",
+        "net_revenue": "1269320",
+        "rewards": "-155995",
+        "net_profit": "1113325",
+        "treasury_inflow": "643352",
+        "olp_pnl": "469973"
+      },
+      "snapshot": {
+        "cumulative_volume": "255800000000.0",
+        "dual_sided_oi": "1100000000.0",
+        "tvl": "150300000.0",
+        "markets": "491",
+        "tokens_listed": null,
+        "lifetime_olp_pnl": "14964803",
+        "treasury_holdings": "4073913",
+        "onchain_treasury_value": null
+      },
+      "labels": {
+        "cumulative_volume": "Total Volume Traded",
+        "dual_sided_oi": "Current Dual-Sided OI",
+        "tvl": "TVL (Excludes OLP Hedging Accounts)",
+        "markets": "Total Markets Currently Listed",
+        "gross_revenue": "2w Spreads Paid (Gross Revenue)",
+        "market_making_costs": "2w Market Making Costs (Cost of Revenue)",
+        "net_revenue": "2w Net Revenue",
+        "rewards": "2w Rewards",
+        "net_profit": "2w Net Profit",
+        "treasury_inflow": "Protocol Treasury",
+        "olp_pnl": "OLP PnL",
+        "lifetime_olp_pnl": "Lifetime OLP PnL",
+        "treasury_holdings": "Current Protocol Treasury Holdings"
+      },
+      "units": {
+        "cumulative_volume": "$",
+        "dual_sided_oi": "$",
+        "tvl": "$",
+        "markets": "count",
+        "gross_revenue": "$",
+        "market_making_costs": "$",
+        "net_revenue": "$",
+        "rewards": "$",
+        "net_profit": "$",
+        "treasury_inflow": "$",
+        "olp_pnl": "$",
+        "lifetime_olp_pnl": "$",
+        "treasury_holdings": "USDC"
+      },
+      "raw_values": {
+        "cumulative_volume": "$255.8B",
+        "dual_sided_oi": "$1.1B",
+        "tvl": "$150.3M",
+        "markets": "491",
+        "gross_revenue": "$3,216,760",
+        "market_making_costs": "($1,947,440)",
+        "net_revenue": "$1,269,320",
+        "rewards": "($155,995)",
+        "net_profit": "$1,113,325",
+        "treasury_inflow": "$643,352",
+        "olp_pnl": "$469,973",
+        "lifetime_olp_pnl": "$14,964,803",
+        "treasury_holdings": "4,073,913 USDC"
+      },
+      "warnings": [],
+      "revisions": []
+    },
+    {
+      "id": "x:2075603602081824975",
+      "published_at": "2026-07-10T15:30:36Z",
+      "period_label": "2w",
+      "period_start": null,
+      "period_end": null,
+      "source_urls": [
+        "https://x.com/variational_io/status/2075603602081824975"
+      ],
+      "sources": [
+        {
+          "platform": "x",
+          "id": "2075603602081824975",
+          "url": "https://x.com/variational_io/status/2075603602081824975",
+          "author": "variational_io",
+          "published_at": "2026-07-10T15:30:36Z",
+          "observed_at": "2026-11-20T08:55:22Z",
+          "retrieval_method": "saved FxTwitter replay of official X post",
+          "financial_sha256": "b69b5b066800f3f331a5c7b7b832c34856691fca47391befcd8d0e89f6af4fd7",
+          "matches_current": true
+        }
+      ],
+      "period_amounts": {
+        "gross_revenue": "3069800",
+        "market_making_costs": "-1652505",
+        "net_revenue": "1417295",
+        "rewards": "-148583",
+        "net_profit": "1268712",
+        "treasury_inflow": "613960",
+        "olp_pnl": "654752"
+      },
+      "snapshot": {
+        "cumulative_volume": "266990000000.00",
+        "dual_sided_oi": "1260000000.00",
+        "tvl": "160500000.00",
+        "markets": "506",
+        "tokens_listed": null,
+        "lifetime_olp_pnl": "15619555",
+        "treasury_holdings": "4662552",
+        "onchain_treasury_value": null
+      },
+      "labels": {
+        "cumulative_volume": "Total Volume Traded",
+        "dual_sided_oi": "Current Dual-Sided OI",
+        "tvl": "TVL (Excludes OLP Hedging Accounts)",
+        "markets": "Total Markets Currently Listed",
+        "gross_revenue": "2w Spreads Paid (Gross Revenue)",
+        "market_making_costs": "2w Market Making Costs (Cost of Revenue)",
+        "net_revenue": "2w Net Revenue",
+        "rewards": "2w Rewards",
+        "net_profit": "2w Net Profit",
+        "treasury_inflow": "Protocol Treasury",
+        "olp_pnl": "OLP PnL",
+        "lifetime_olp_pnl": "Lifetime OLP PnL",
+        "treasury_holdings": "Current Protocol Treasury Holdings"
+      },
+      "units": {
+        "cumulative_volume": "$",
+        "dual_sided_oi": "$",
+        "tvl": "$",
+        "markets": "count",
+        "gross_revenue": "$",
+        "market_making_costs": "$",
+        "net_revenue": "$",
+        "rewards": "$",
+        "net_profit": "$",
+        "treasury_inflow": "$",
+        "olp_pnl": "$",
+        "lifetime_olp_pnl": "$",
+        "treasury_holdings": "USDC"
+      },
+      "raw_values": {
+        "cumulative_volume": "$266.99B",
+        "dual_sided_oi": "$1.26B",
+        "tvl": "$160.50M",
+        "markets": "506",
+        "gross_revenue": "$3,069,800",
+        "market_making_costs": "($1,652,505)",
+        "net_revenue": "$1,417,295",
+        "rewards": "($148,583)",
+        "net_profit": "$1,268,712",
+        "treasury_inflow": "$613,960",
+        "olp_pnl": "$654,752",
+        "lifetime_olp_pnl": "$15,619,555",
+        "treasury_holdings": "4,662,552 USDC"
+      },
+      "warnings": [],
+      "revisions": []
+    },
+    {
+      "id": "x:2080694730460151877",
+      "published_at": "2026-07-24T16:40:55Z",
+      "period_label": "2w",
+      "period_start": null,
+      "period_end": null,
+      "source_urls": [
+        "https://x.com/variational_io/status/2080694730460151877"
+      ],
+      "sources": [
+        {
+          "platform": "x",
+          "id": "2080694730460151877",
+          "url": "https://x.com/variational_io/status/2080694730460151877",
+          "author": "variational_io",
+          "published_at": "2026-07-24T16:40:55Z",
+          "observed_at": "2026-11-20T08:55:22Z",
+          "retrieval_method": "saved FxTwitter replay of official X post",
+          "financial_sha256": "bc97f3d0ae89eadd427b4c4d762cf000a54285fdf4d4061dd9b61487e74ee961",
+          "matches_current": true
+        }
+      ],
+      "period_amounts": {
+        "gross_revenue": "2380440",
+        "market_making_costs": "-1365199",
+        "net_revenue": "1015241",
+        "rewards": "-115932",
+        "net_profit": "899309",
+        "treasury_inflow": "476088",
+        "olp_pnl": "423221"
+      },
+      "snapshot": {
+        "cumulative_volume": "278100000000.00",
+        "dual_sided_oi": "1320000000.00",
+        "tvl": "158170000.00",
+        "markets": "517",
+        "tokens_listed": null,
+        "lifetime_olp_pnl": "16042776",
+        "treasury_holdings": "5144043",
+        "onchain_treasury_value": null
+      },
+      "labels": {
+        "cumulative_volume": "Total Volume Traded",
+        "dual_sided_oi": "Current Dual-Sided OI",
+        "tvl": "TVL (Excludes OLP Hedging Accounts)",
+        "markets": "Total Markets Currently Listed",
+        "gross_revenue": "2w Spreads Paid (Gross Revenue)",
+        "market_making_costs": "2w Market Making Costs (Cost of Revenue)",
+        "net_revenue": "2w Net Revenue",
+        "rewards": "2w Rewards",
+        "net_profit": "2w Net Profit",
+        "treasury_inflow": "Protocol Treasury",
+        "olp_pnl": "OLP PnL",
+        "lifetime_olp_pnl": "Lifetime OLP PnL",
+        "treasury_holdings": "Current Protocol Treasury Holdings"
+      },
+      "units": {
+        "cumulative_volume": "$",
+        "dual_sided_oi": "$",
+        "tvl": "$",
+        "markets": "count",
+        "gross_revenue": "$",
+        "market_making_costs": "$",
+        "net_revenue": "$",
+        "rewards": "$",
+        "net_profit": "$",
+        "treasury_inflow": "$",
+        "olp_pnl": "$",
+        "lifetime_olp_pnl": "$",
+        "treasury_holdings": "USDC"
+      },
+      "raw_values": {
+        "cumulative_volume": "$278.10B",
+        "dual_sided_oi": "$1.32B",
+        "tvl": "$158.17M",
+        "markets": "517",
+        "gross_revenue": "$2,380,440",
+        "market_making_costs": "($1,365,199)",
+        "net_revenue": "$1,015,241",
+        "rewards": "($115,932)",
+        "net_profit": "$899,309",
+        "treasury_inflow": "$476,088",
+        "olp_pnl": "$423,221",
+        "lifetime_olp_pnl": "$16,042,776",
+        "treasury_holdings": "5,144,043 USDC"
+      },
+      "warnings": [],
+      "revisions": []
+    },
+    {
+      "id": "x:2085772888293228829",
+      "published_at": "2026-08-07T16:59:43Z",
+      "period_label": "2w",
+      "period_start": null,
+      "period_end": null,
+      "source_urls": [
+        "https://x.com/variational_io/status/2085772888293228829"
+      ],
+      "sources": [
+        {
+          "platform": "x",
+          "id": "2085772888293228829",
+          "url": "https://x.com/variational_io/status/2085772888293228829",
+          "author": "variational_io",
+          "published_at": "2026-08-07T16:59:43Z",
+          "observed_at": "2026-11-20T08:55:22Z",
+          "retrieval_method": "saved FxTwitter replay of official X post",
+          "financial_sha256": "0ed9c5b5744cd18a44d860c623c715c8fd0693e7c34b8bfea7c0b674f9b44ad9",
+          "matches_current": true
+        }
+      ],
+      "period_amounts": {
+        "gross_revenue": "2768210",
+        "market_making_costs": "-1393457",
+        "net_revenue": "1374753",
+        "rewards": "-135371",
+        "net_profit": "1239387",
+        "treasury_inflow": "553642",
+        "olp_pnl": "685745"
+      },
+      "snapshot": {
+        "cumulative_volume": "289120000000.00",
+        "dual_sided_oi": "1420000000.00",
+        "tvl": "163020000.00",
+        "markets": "534",
+        "tokens_listed": null,
+        "lifetime_olp_pnl": "16728521",
+        "treasury_holdings": "5702102",
+        "onchain_treasury_value": null
+      },
+      "labels": {
+        "cumulative_volume": "Total Volume Traded",
+        "dual_sided_oi": "Current Dual-Sided OI",
+        "tvl": "TVL (Excludes OLP Hedging Accounts)",
+        "markets": "Total Markets Currently Listed",
+        "gross_revenue": "2w Spreads Paid (Gross Revenue)",
+        "market_making_costs": "2w Market Making Costs (Cost of Revenue)",
+        "net_revenue": "2w Net Revenue",
+        "rewards": "2w Rewards",
+        "net_profit": "2w Net Profit",
+        "treasury_inflow": "Protocol Treasury",
+        "olp_pnl": "OLP PnL",
+        "lifetime_olp_pnl": "Lifetime OLP PnL",
+        "treasury_holdings": "Current Protocol Treasury Holdings"
+      },
+      "units": {
+        "cumulative_volume": "$",
+        "dual_sided_oi": "$",
+        "tvl": "$",
+        "markets": "count",
+        "gross_revenue": "$",
+        "market_making_costs": "$",
+        "net_revenue": "$",
+        "rewards": "$",
+        "net_profit": "$",
+        "treasury_inflow": "$",
+        "olp_pnl": "$",
+        "lifetime_olp_pnl": "$",
+        "treasury_holdings": "USDC"
+      },
+      "raw_values": {
+        "cumulative_volume": "$289.12B",
+        "dual_sided_oi": "$1.42B",
+        "tvl": "$163.02M",
+        "markets": "534",
+        "gross_revenue": "$2,768,210",
+        "market_making_costs": "($1,393,457)",
+        "net_revenue": "$1,374,753",
+        "rewards": "($135,371)",
+        "net_profit": "$1,239,387",
+        "treasury_inflow": "$553,642",
+        "olp_pnl": "$685,745",
+        "lifetime_olp_pnl": "$16,728,521",
+        "treasury_holdings": "5,702,102 USDC"
+      },
+      "warnings": [
+        {
+          "code": "net_profit_identity",
+          "message": "Reported Net Revenue plus signed Rewards differs from reported Net Profit. Source values are preserved.",
+          "residual": "-5",
+          "unit": "$"
+        }
+      ],
+      "revisions": []
+    },
+    {
+      "id": "x:2090861899730812971",
+      "published_at": "2026-08-21T18:01:37Z",
+      "period_label": "2w",
+      "period_start": null,
+      "period_end": null,
+      "source_urls": [
+        "https://x.com/variational_io/status/2090861899730812971"
+      ],
+      "sources": [
+        {
+          "platform": "x",
+          "id": "2090861899730812971",
+          "url": "https://x.com/variational_io/status/2090861899730812971",
+          "author": "variational_io",
+          "published_at": "2026-08-21T18:01:37Z",
+          "observed_at": "2026-11-20T08:55:22Z",
+          "retrieval_method": "saved FxTwitter replay of official X post",
+          "financial_sha256": "86aa72ce1b4e27a4d476a7873382dcc63409aa935e1940d0f115dea3a8baafc9",
+          "matches_current": true
+        }
+      ],
+      "period_amounts": {
+        "gross_revenue": "3158920",
+        "market_making_costs": null,
+        "net_revenue": "1167121",
+        "rewards": "-155016",
+        "net_profit": "1322137",
+        "treasury_inflow": "631784",
+        "olp_pnl": "690353"
+      },
+      "snapshot": {
+        "cumulative_volume": "302230000000.00",
+        "dual_sided_oi": "1410000000.00",
+        "tvl": "177180000.00",
+        "markets": "543",
+        "tokens_listed": null,
+        "lifetime_olp_pnl": "17418874",
+        "treasury_holdings": "6336268",
+        "onchain_treasury_value": null
+      },
+      "labels": {
+        "cumulative_volume": "Total Volume Traded",
+        "dual_sided_oi": "Current Dual-Sided OI",
+        "tvl": "TVL (Excludes OLP Hedging Accounts)",
+        "markets": "Total Markets Currently Listed",
+        "gross_revenue": "2w Spreads Paid (Gross Revenue)",
+        "net_revenue": "2w Net Revenue",
+        "rewards": "2w Rewards",
+        "net_profit": "2w Net Profit",
+        "treasury_inflow": "Protocol Treasury",
+        "olp_pnl": "OLP PnL",
+        "lifetime_olp_pnl": "Lifetime OLP PnL",
+        "treasury_holdings": "Current Protocol Treasury Holdings"
+      },
+      "units": {
+        "cumulative_volume": "$",
+        "dual_sided_oi": "$",
+        "tvl": "$",
+        "markets": "count",
+        "gross_revenue": "$",
+        "net_revenue": "$",
+        "rewards": "$",
+        "net_profit": "$",
+        "treasury_inflow": "$",
+        "olp_pnl": "$",
+        "lifetime_olp_pnl": "$",
+        "treasury_holdings": "USDC"
+      },
+      "raw_values": {
+        "cumulative_volume": "$302.23B",
+        "dual_sided_oi": "$1.41B",
+        "tvl": "$177.18M",
+        "markets": "543",
+        "gross_revenue": "$3,158,920",
+        "net_revenue": "$1,167,121",
+        "rewards": "($155,016)",
+        "net_profit": "$1,322,137",
+        "treasury_inflow": "$631,784",
+        "olp_pnl": "$690,353",
+        "lifetime_olp_pnl": "$17,418,874",
+        "treasury_holdings": "6,336,268 USDC"
+      },
+      "warnings": [
+        {
+          "code": "net_profit_identity",
+          "message": "Reported Net Revenue plus signed Rewards differs from reported Net Profit. Source values are preserved.",
+          "residual": "-310032",
+          "unit": "$"
+        }
+      ],
+      "revisions": []
+    },
+    {
+      "id": "x:2095924511921336444",
+      "published_at": "2026-09-04T17:18:38Z",
+      "period_label": "2w",
+      "period_start": null,
+      "period_end": null,
+      "source_urls": [
+        "https://x.com/variational_io/status/2095924511921336444"
+      ],
+      "sources": [
+        {
+          "platform": "x",
+          "id": "2095924511921336444",
+          "url": "https://x.com/variational_io/status/2095924511921336444",
+          "author": "variational_io",
+          "published_at": "2026-09-04T17:18:38Z",
+          "observed_at": "2026-11-20T08:55:22Z",
+          "retrieval_method": "saved FxTwitter replay of official X post",
+          "financial_sha256": "0cc796abcf161113046a65097d85919b8b9b68a1e152ed5f41126d0282f8ef4e",
+          "matches_current": true
+        }
+      ],
+      "period_amounts": {
+        "gross_revenue": "5080820",
+        "market_making_costs": null,
+        "net_revenue": "2278641",
+        "rewards": "-247501",
+        "net_profit": "2031140",
+        "treasury_inflow": "1016164",
+        "olp_pnl": "1014976"
+      },
+      "snapshot": {
+        "cumulative_volume": "318680000000.00",
+        "dual_sided_oi": "1670000000.00",
+        "tvl": "208360000.00",
+        "markets": "551",
+        "tokens_listed": null,
+        "lifetime_olp_pnl": "18433850",
+        "treasury_holdings": "7361084",
+        "onchain_treasury_value": null
+      },
+      "labels": {
+        "cumulative_volume": "Total Volume Traded",
+        "dual_sided_oi": "Current Dual-Sided OI",
+        "tvl": "TVL (Excludes OLP Hedging Accounts)",
+        "markets": "Total Markets Currently Listed",
+        "gross_revenue": "2w Spreads Paid (Gross Revenue)",
+        "net_revenue": "2w Net Revenue",
+        "rewards": "2w Rewards",
+        "net_profit": "2w Net Profit",
+        "treasury_inflow": "Protocol Treasury",
+        "olp_pnl": "OLP PnL",
+        "lifetime_olp_pnl": "Lifetime OLP PnL",
+        "treasury_holdings": "Current Protocol Treasury Holdings"
+      },
+      "units": {
+        "cumulative_volume": "$",
+        "dual_sided_oi": "$",
+        "tvl": "$",
+        "markets": "count",
+        "gross_revenue": "$",
+        "net_revenue": "$",
+        "rewards": "$",
+        "net_profit": "$",
+        "treasury_inflow": "$",
+        "olp_pnl": "$",
+        "lifetime_olp_pnl": "$",
+        "treasury_holdings": "USDC"
+      },
+      "raw_values": {
+        "cumulative_volume": "$318.68B",
+        "dual_sided_oi": "$1.67B",
+        "tvl": "$208.36M",
+        "markets": "551",
+        "gross_revenue": "$5,080,820",
+        "net_revenue": "$2,278,641",
+        "rewards": "($247,501)",
+        "net_profit": "$2,031,140",
+        "treasury_inflow": "$1,016,164",
+        "olp_pnl": "$1,014,976",
+        "lifetime_olp_pnl": "$18,433,850",
+        "treasury_holdings": "7,361,084 USDC"
+      },
+      "warnings": [],
+      "revisions": []
+    },
+    {
+      "id": "x:2100975039118225440",
+      "published_at": "2026-09-18T15:47:38Z",
+      "period_label": "2w",
+      "period_start": null,
+      "period_end": null,
+      "source_urls": [
+        "https://x.com/variational_io/status/2100975039118225440"
+      ],
+      "sources": [
+        {
+          "platform": "x",
+          "id": "2100975039118225440",
+          "url": "https://x.com/variational_io/status/2100975039118225440",
+          "author": "variational_io",
+          "published_at": "2026-09-18T15:47:38Z",
+          "observed_at": "2026-11-20T08:55:22Z",
+          "retrieval_method": "saved FxTwitter replay of official X post",
+          "financial_sha256": "2435fa090de1e272efeff6c6873098ccacfafe7f9caa55afa804e318a973f794",
+          "matches_current": true
+        }
+      ],
+      "period_amounts": {
+        "gross_revenue": "4570970",
+        "market_making_costs": null,
+        "net_revenue": "2479527",
+        "rewards": "-211814",
+        "net_profit": "2267713",
+        "treasury_inflow": "914194",
+        "olp_pnl": "1353519"
+      },
+      "snapshot": {
+        "cumulative_volume": "339750000000.00",
+        "dual_sided_oi": "1830000000.00",
+        "tvl": "236120000.00",
+        "markets": "552",
+        "tokens_listed": null,
+        "lifetime_olp_pnl": "19787369",
+        "treasury_holdings": "8274637",
+        "onchain_treasury_value": null
+      },
+      "labels": {
+        "cumulative_volume": "Total Volume Traded",
+        "dual_sided_oi": "Current Dual-Sided OI",
+        "tvl": "TVL (Excludes OLP Hedging Accounts)",
+        "markets": "Total Markets Currently Listed",
+        "gross_revenue": "2w Spreads Paid (Gross Revenue)",
+        "net_revenue": "2w Net Revenue",
+        "rewards": "2w Rewards",
+        "net_profit": "2w Net Profit",
+        "treasury_inflow": "Protocol Treasury",
+        "olp_pnl": "OLP PnL",
+        "lifetime_olp_pnl": "Lifetime OLP PnL",
+        "treasury_holdings": "Current Protocol Treasury Holdings"
+      },
+      "units": {
+        "cumulative_volume": "$",
+        "dual_sided_oi": "$",
+        "tvl": "$",
+        "markets": "count",
+        "gross_revenue": "$",
+        "net_revenue": "$",
+        "rewards": "$",
+        "net_profit": "$",
+        "treasury_inflow": "$",
+        "olp_pnl": "$",
+        "lifetime_olp_pnl": "$",
+        "treasury_holdings": "USDC"
+      },
+      "raw_values": {
+        "cumulative_volume": "$339.75B",
+        "dual_sided_oi": "$1.83B",
+        "tvl": "$236.12M",
+        "markets": "552",
+        "gross_revenue": "$4,570,970",
+        "net_revenue": "$2,479,527",
+        "rewards": "($211,814)",
+        "net_profit": "$2,267,713",
+        "treasury_inflow": "$914,194",
+        "olp_pnl": "$1,353,519",
+        "lifetime_olp_pnl": "$19,787,369",
+        "treasury_holdings": "8,274,637 USDC"
+      },
+      "warnings": [],
+      "revisions": []
+    },
+    {
+      "id": "x:2106063274114723997",
+      "published_at": "2026-10-02T16:46:27Z",
+      "period_label": "2w",
+      "period_start": null,
+      "period_end": null,
+      "source_urls": [
+        "https://x.com/variational_io/status/2106063274114723997"
+      ],
+      "sources": [
+        {
+          "platform": "x",
+          "id": "2106063274114723997",
+          "url": "https://x.com/variational_io/status/2106063274114723997",
+          "author": "variational_io",
+          "published_at": "2026-10-02T16:46:27Z",
+          "observed_at": "2026-11-20T08:55:22Z",
+          "retrieval_method": "saved FxTwitter replay of official X post",
+          "financial_sha256": "c0701c4aa0d7c017256c84d3501ff38c0b768d98e20638d4c4e4c639289cfee7",
+          "matches_current": true
+        }
+      ],
+      "period_amounts": {
+        "gross_revenue": "7372480",
+        "market_making_costs": null,
+        "net_revenue": "3383789",
+        "rewards": "-337984",
+        "net_profit": "3045805",
+        "treasury_inflow": "1474496",
+        "olp_pnl": "1571309"
+      },
+      "snapshot": {
+        "cumulative_volume": "378540000000.00",
+        "dual_sided_oi": "2130000000.00",
+        "tvl": "298280000.00",
+        "markets": "560",
+        "tokens_listed": null,
+        "lifetime_olp_pnl": "21358678",
+        "treasury_holdings": "9758014",
+        "onchain_treasury_value": null
+      },
+      "labels": {
+        "cumulative_volume": "Total Volume Traded",
+        "dual_sided_oi": "Current Dual-Sided OI",
+        "tvl": "TVL (Excludes OLP Hedging Accounts)",
+        "markets": "Total Markets Currently Listed",
+        "gross_revenue": "2w Spreads Paid (Gross Revenue)",
+        "net_revenue": "2w Net Revenue",
+        "rewards": "2w Rewards",
+        "net_profit": "2w Net Profit",
+        "treasury_inflow": "Protocol Treasury",
+        "olp_pnl": "OLP PnL",
+        "lifetime_olp_pnl": "Lifetime OLP PnL",
+        "treasury_holdings": "Current Protocol Treasury Holdings"
+      },
+      "units": {
+        "cumulative_volume": "$",
+        "dual_sided_oi": "$",
+        "tvl": "$",
+        "markets": "count",
+        "gross_revenue": "$",
+        "net_revenue": "$",
+        "rewards": "$",
+        "net_profit": "$",
+        "treasury_inflow": "$",
+        "olp_pnl": "$",
+        "lifetime_olp_pnl": "$",
+        "treasury_holdings": "USDC"
+      },
+      "raw_values": {
+        "cumulative_volume": "$378.54B",
+        "dual_sided_oi": "$2.13B",
+        "tvl": "$298.28M",
+        "markets": "560",
+        "gross_revenue": "$7,372,480",
+        "net_revenue": "$3,383,789",
+        "rewards": "($337,984)",
+        "net_profit": "$3,045,805",
+        "treasury_inflow": "$1,474,496",
+        "olp_pnl": "$1,571,309",
+        "lifetime_olp_pnl": "$21,358,678",
+        "treasury_holdings": "9,758,014 USDC"
+      },
+      "warnings": [],
+      "revisions": []
+    },
+    {
+      "id": "x:2111139394547818854",
+      "published_at": "2026-10-16T16:57:09Z",
+      "period_label": "2w",
+      "period_start": null,
+      "period_end": null,
+      "source_urls": [
+        "https://x.com/variational_io/status/2111139394547818854"
+      ],
+      "sources": [
+        {
+          "platform": "x",
+          "id": "2111139394547818854",
+          "url": "https://x.com/variational_io/status/2111139394547818854",
+          "author": "variational_io",
+          "published_at": "2026-10-16T16:57:09Z",
+          "observed_at": "2026-11-20T08:55:22Z",
+          "retrieval_method": "saved FxTwitter replay of official X post",
+          "financial_sha256": "50488bfe853e19f845e7929e38e5a4a9280dd04f7fe0c8dd1b4792828dd8992f",
+          "matches_current": true
+        }
+      ],
+      "period_amounts": {
+        "gross_revenue": "6561755",
+        "market_making_costs": null,
+        "net_revenue": "3682137",
+        "rewards": "-303768",
+        "net_profit": "3378369",
+        "treasury_inflow": "1312351",
+        "olp_pnl": "2066018"
+      },
+      "snapshot": {
+        "cumulative_volume": "417920000000.00",
+        "dual_sided_oi": "2040000000.00",
+        "tvl": "290880000.00",
+        "markets": "575",
+        "tokens_listed": null,
+        "lifetime_olp_pnl": "23424969",
+        "treasury_holdings": "11077933",
+        "onchain_treasury_value": null
+      },
+      "labels": {
+        "cumulative_volume": "Total Volume Traded",
+        "dual_sided_oi": "Current Dual-Sided OI",
+        "tvl": "TVL (Excludes OLP Hedging Accounts)",
+        "markets": "Total Markets Currently Listed",
+        "gross_revenue": "2w Spreads Paid (Gross Revenue)",
+        "net_revenue": "2w Net Revenue",
+        "rewards": "2w Rewards",
+        "net_profit": "2w Net Profit",
+        "treasury_inflow": "2W Protocol Treasury Inflow",
+        "olp_pnl": "2W OLP PnL",
+        "lifetime_olp_pnl": "Lifetime OLP PnL",
+        "treasury_holdings": "Current Protocol Treasury Holdings"
+      },
+      "units": {
+        "cumulative_volume": "$",
+        "dual_sided_oi": "$",
+        "tvl": "$",
+        "markets": "count",
+        "gross_revenue": "$",
+        "net_revenue": "$",
+        "rewards": "$",
+        "net_profit": "$",
+        "treasury_inflow": "$",
+        "olp_pnl": "$",
+        "lifetime_olp_pnl": "$",
+        "treasury_holdings": "USDC"
+      },
+      "raw_values": {
+        "cumulative_volume": "$417.92B",
+        "dual_sided_oi": "$2.04B",
+        "tvl": "$290.88M",
+        "markets": "575",
+        "gross_revenue": "$6,561,755",
+        "net_revenue": "$3,682,137",
+        "rewards": "($303,768)",
+        "net_profit": "$3,378,369",
+        "treasury_inflow": "$1,312,351",
+        "olp_pnl": "$2,066,018",
+        "lifetime_olp_pnl": "$23,424,969",
+        "treasury_holdings": "11,077,933 USDC"
+      },
+      "warnings": [
+        {
+          "code": "lifetime_olp_change",
+          "message": "Change in reported Lifetime OLP PnL differs from the current report's OLP PnL; coverage or source discrepancy is unresolved.",
+          "residual": "273",
+          "unit": "$"
+        }
+      ],
+      "revisions": []
+    },
+    {
+      "id": "x:2116210079758524489",
+      "published_at": "2026-10-30T16:36:34Z",
+      "period_label": "2w",
+      "period_start": null,
+      "period_end": null,
+      "source_urls": [
+        "https://t.me/variational_io/446",
+        "https://x.com/variational_io/status/2116210079758524489"
+      ],
+      "sources": [
+        {
+          "platform": "x",
+          "id": "2116210079758524489",
+          "url": "https://x.com/variational_io/status/2116210079758524489",
+          "author": "variational_io",
+          "published_at": "2026-10-30T16:46:14Z",
+          "observed_at": "2026-11-20T08:55:22Z",
+          "retrieval_method": "saved FxTwitter replay of official X post",
+          "financial_sha256": "ad10caf8c7b3c10de6c7ac60e64c843022ba33e2716e17b36d2ebe4ea70b5573",
+          "matches_current": true
+        },
+        {
+          "platform": "telegram",
+          "id": "446",
+          "url": "https://t.me/variational_io/446",
+          "author": "variational_io",
+          "published_at": "2026-10-30T16:36:34Z",
+          "observed_at": "2026-11-20T08:56:01Z",
+          "retrieval_method": "official public Telegram announcements feed",
+          "financial_sha256": "ad10caf8c7b3c10de6c7ac60e64c843022ba33e2716e17b36d2ebe4ea70b5573",
+          "matches_current": true
+        }
+      ],
+      "period_amounts": {
+        "gross_revenue": "5233390",
+        "market_making_costs": null,
+        "net_revenue": "2341767",
+        "rewards": "-236977",
+        "net_profit": "2104790",
+        "treasury_inflow": "1046678",
+        "olp_pnl": "1058112"
+      },
+      "snapshot": {
+        "cumulative_volume": "449920000000.00",
+        "dual_sided_oi": "1780000000.00",
+        "tvl": "289970000.00",
+        "markets": "581",
+        "tokens_listed": null,
+        "lifetime_olp_pnl": "24483081",
+        "treasury_holdings": "12128702",
+        "onchain_treasury_value": null
+      },
+      "labels": {
+        "cumulative_volume": "Total Volume Traded",
+        "dual_sided_oi": "Current Dual-Sided OI",
+        "tvl": "TVL (Excludes OLP Hedging Accounts)",
+        "markets": "Total Markets Currently Listed",
+        "gross_revenue": "2w Spreads Paid (Gross Revenue)",
+        "net_revenue": "2w Net Revenue",
+        "rewards": "2w Rewards",
+        "net_profit": "2w Net Profit",
+        "treasury_inflow": "2W Protocol Treasury Inflow",
+        "olp_pnl": "2W OLP PnL",
+        "lifetime_olp_pnl": "Lifetime OLP PnL",
+        "treasury_holdings": "Current Protocol Treasury Holdings"
+      },
+      "units": {
+        "cumulative_volume": "$",
+        "dual_sided_oi": "$",
+        "tvl": "$",
+        "markets": "count",
+        "gross_revenue": "$",
+        "net_revenue": "$",
+        "rewards": "$",
+        "net_profit": "$",
+        "treasury_inflow": "$",
+        "olp_pnl": "$",
+        "lifetime_olp_pnl": "$",
+        "treasury_holdings": "USDC"
+      },
+      "raw_values": {
+        "cumulative_volume": "$449.92B",
+        "dual_sided_oi": "$1.78B",
+        "tvl": "$289.97M",
+        "markets": "581",
+        "gross_revenue": "$5,233,390",
+        "net_revenue": "$2,341,767",
+        "rewards": "($236,977)",
+        "net_profit": "$2,104,790",
+        "treasury_inflow": "$1,046,678",
+        "olp_pnl": "$1,058,112",
+        "lifetime_olp_pnl": "$24,483,081",
+        "treasury_holdings": "12,128,702 USDC"
+      },
+      "warnings": [],
+      "revisions": []
+    },
+    {
+      "id": "x:2121317860740063501",
+      "published_at": "2026-11-13T18:51:03Z",
+      "period_label": "2w",
+      "period_start": null,
+      "period_end": null,
+      "source_urls": [
+        "https://t.me/variational_io/459",
+        "https://x.com/variational_io/status/2121317860740063501"
+      ],
+      "sources": [
+        {
+          "platform": "x",
+          "id": "2121317860740063501",
+          "url": "https://x.com/variational_io/status/2121317860740063501",
+          "author": "variational_io",
+          "published_at": "2026-11-13T19:02:44Z",
+          "observed_at": "2026-11-20T08:55:22Z",
+          "retrieval_method": "saved FxTwitter replay of official X post",
+          "financial_sha256": "92ab3583b07a9f0c0712ecce07f030d1a8d1deea5ea3801396959047d9635cac",
+          "matches_current": true
+        },
+        {
+          "platform": "telegram",
+          "id": "459",
+          "url": "https://t.me/variational_io/459",
+          "author": "variational_io",
+          "published_at": "2026-11-13T18:51:03Z",
+          "observed_at": "2026-11-20T08:56:01Z",
+          "retrieval_method": "official public Telegram announcements feed",
+          "financial_sha256": "92ab3583b07a9f0c0712ecce07f030d1a8d1deea5ea3801396959047d9635cac",
+          "matches_current": true
+        }
+      ],
+      "period_amounts": {
+        "gross_revenue": "4908930",
+        "market_making_costs": null,
+        "net_revenue": "3208936",
+        "rewards": "-217813",
+        "net_profit": "2991123",
+        "treasury_inflow": "981786",
+        "olp_pnl": "2009337"
+      },
+      "snapshot": {
+        "cumulative_volume": "475770000000.00",
+        "dual_sided_oi": "1540000000.00",
+        "tvl": "269280000.00",
+        "markets": "589",
+        "tokens_listed": null,
+        "lifetime_olp_pnl": "26492418",
+        "treasury_holdings": "13121923",
+        "onchain_treasury_value": null
+      },
+      "labels": {
+        "cumulative_volume": "Total Volume Traded",
+        "dual_sided_oi": "Current Dual-Sided OI",
+        "tvl": "TVL (Excludes OLP Hedging Accounts)",
+        "markets": "Total Markets Currently Listed",
+        "gross_revenue": "2w Spreads Paid (Gross Revenue)",
+        "net_revenue": "2w Net Revenue",
+        "rewards": "2w Rewards",
+        "net_profit": "2w Net Profit",
+        "treasury_inflow": "2W Protocol Treasury Inflow",
+        "olp_pnl": "2W OLP PnL",
+        "lifetime_olp_pnl": "Lifetime OLP PnL",
+        "treasury_holdings": "Current Protocol Treasury Holdings"
+      },
+      "units": {
+        "cumulative_volume": "$",
+        "dual_sided_oi": "$",
+        "tvl": "$",
+        "markets": "count",
+        "gross_revenue": "$",
+        "net_revenue": "$",
+        "rewards": "$",
+        "net_profit": "$",
+        "treasury_inflow": "$",
+        "olp_pnl": "$",
+        "lifetime_olp_pnl": "$",
+        "treasury_holdings": "USDC"
+      },
+      "raw_values": {
+        "cumulative_volume": "$475.77B",
+        "dual_sided_oi": "$1.54B",
+        "tvl": "$269.28M",
+        "markets": "589",
+        "gross_revenue": "$4,908,930",
+        "net_revenue": "$3,208,936",
+        "rewards": "($217,813)",
+        "net_profit": "$2,991,123",
+        "treasury_inflow": "$981,786",
+        "olp_pnl": "$2,009,337",
+        "lifetime_olp_pnl": "$26,492,418",
+        "treasury_holdings": "13,121,923 USDC"
+      },
+      "warnings": [],
+      "revisions": []
+    }
+  ]
+}

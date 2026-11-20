@@ -1,0 +1,30 @@
+{
+  "research": {
+    "articles": [
+      {
+        "id": "robinhood-with-a-citadel-inside",
+        "title": "Variational: Robinhood with a Citadel Inside",
+        "author": "Jae (Ponyo)",
+        "publisher": "Four Pillars",
+        "language": "English",
+        "status": "scheduled",
+        "scheduled_date": "2026-11-24",
+        "published_at": null,
+        "canonical_url": null,
+        "topics": ["Omni", "OLP", "Variational Pro"],
+        "related": ["omni", "financials", "olp", "pro"]
+      }
+    ]
+  },
+  "token_policy": {
+    "policy_url": "https://docs.variational.io/token/usdvar",
+    "policy_as_of": "2026-11-20",
+    "target": "Q4 2026",
+    "allocations": [
+      {"label": "Genesis Distribution", "percent": 32, "terms": "Fully unlocked at TGE."},
+      {"label": "Ecosystem Reserve", "percent": 18, "terms": "Foundation allocation for ecosystem growth."},
+      {"label": "Team and Investors", "percent": 50, "terms": "12-month lock after TGE, followed by at least three years of unlocking."}
+    ]
+  },
+  "verified_var_contract": null
+}
