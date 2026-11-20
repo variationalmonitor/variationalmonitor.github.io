@@ -76,6 +76,51 @@ class MarketTests(unittest.TestCase):
         with self.assertRaisesRegex(markets.DataError, "conflicting_cumulative"):
             self.normalize(old)
 
+    def test_zero_indicative_bid_quarantines_only_that_quote_size(self):
+        data = fixture()
+        row = data["listings"][0]
+        row["ticker"] = "TOWNS-PERP"
+        row["quotes"]["size_100k"] = {"bid": "0", "ask": "0.001931"}
+        snapshot = self.normalize(data)
+        market = next(m for m in snapshot["markets"] if m["ticker"] == "TOWNS-PERP")
+        self.assertIsNone(market["quotes"]["size_100k"])
+        self.assertEqual(market["quotes"]["base"]["bid"], "99")
+        self.assertEqual(market["volume_24h_usdc"], "20")
+        self.assertEqual(market["trader_open_interest_usdc"], "15")
+        self.assertEqual(snapshot["totals"]["num_markets_observed"], 2)
+        self.assertTrue(snapshot["totals"]["market_coverage_complete"])
+        self.assertEqual(snapshot["validation"]["volume_24h_residual_usdc"], "0")
+        warning = snapshot["validation"]["warnings"][0]
+        self.assertEqual(warning["ticker"], "TOWNS-PERP")
+        self.assertEqual(warning["source_fields"], ["quotes.size_100k.bid"])
+        self.assertEqual(warning["source_values"], {"bid": "0", "ask": "0.001931"})
+        self.assertEqual(warning["action"], "quote_size_unavailable")
+        self.assertEqual(snapshot["validation"]["quote_size_coverage"]["size_100k"], {"available": 0, "unavailable": 2, "quarantined": 1})
+        self.assertEqual(markets.compact_snapshot(snapshot)["markets"][0]["source_warnings"], market["source_warnings"])
+        markets.validate_stored_rows(snapshot)
+
+    def test_quote_quarantine_does_not_relax_marks_negative_prices_or_accounting(self):
+        for mutation in (
+            lambda d: d["listings"][0].update(mark_price="0"),
+            lambda d: d["listings"][0]["quotes"].update(size_100k={"bid": "-1", "ask": "1"}),
+            lambda d: d["listings"][0].update(volume_24h="-1"),
+        ):
+            data = fixture();mutation(data)
+            with self.assertRaises(markets.DataError):
+                self.normalize(data)
+
+    def test_recoverable_quote_warning_allows_fresh_validated_observation(self):
+        with tempfile.TemporaryDirectory() as temp:
+            output = Path(temp)
+            previous = markets.update(output, fetcher=lambda: (encoded(), None), now="2026-11-20T07:01:00Z")
+            data = fixture()
+            data["listings"][0]["quotes"]["size_100k"] = {"bid": "0", "ask": "1"}
+            fresh = markets.update(output, fetcher=lambda: (encoded(data), None), now="2026-11-20T08:00:00Z")
+            self.assertEqual(fresh["status"]["state"], "ok")
+            self.assertEqual(fresh["latest"]["observed_at"], "2026-11-20T08:00:00Z")
+            self.assertEqual(fresh["latest"]["totals"], previous["latest"]["totals"])
+            self.assertEqual(fresh["latest"]["validation"]["quarantined_quote_sizes"], 1)
+
     def test_partial_duplicate_or_invalid_financial_payload_rejected(self):
         mutations = [
             lambda d: d.update(num_markets=1),

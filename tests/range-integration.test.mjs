@@ -109,3 +109,17 @@ test('the swap filter changes both market charts and the drilldown table to the 
     assert.equal(row.values.volume,snap.by_contract_type.find(i=>i.contract_type==='swap').volume_24h_usdc);
   }
 });
+
+test('individual quote exceptions carry through to the market view and quote CSV',()=>{
+  const h=harness('#/omni?range=7d');
+  h.run(`const testMarket=latestMarkets()[0];
+    testMarket.source_warnings=[{field:'quotes.size_100k',code:'zero_indicative_quote_price',source_fields:['quotes.size_100k.bid']}];
+    testMarket.quotes.size_100k=null;
+    globalThis.savedExport=null;downloadCSV=(name,columns,rows)=>globalThis.savedExport={columns,rows};
+    exportQuotes(marketKey(testMarket));`);
+  assert.match(h.run('marketDetail(testMarket)'),/Source reported zero bid/);
+  const report=h.context.savedExport;
+  assert.equal(report.columns.at(-1),'quote_status');
+  assert.equal(report.rows.find(row=>row[1]==='100000').at(-1),'Source reported zero bid');
+  assert.equal(report.rows.find(row=>row[1]==='100000')[4],undefined);
+});

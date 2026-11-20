@@ -176,8 +176,20 @@ def normalize_quotes(value, observed_at: str) -> dict:
             continue
         if not isinstance(pair, dict) or updated is None:
             raise DataError("quote_missing_price_or_timestamp")
-        bid = number(pair.get("bid"), positive=True)
-        ask = number(pair.get("ask"), positive=True)
+        bid = number(pair.get("bid"), nonnegative=True)
+        ask = number(pair.get("ask"), nonnegative=True)
+        if Decimal(bid) == 0 or Decimal(ask) == 0:
+            # A zero indicative price is not a validated executable quote.
+            # Quarantine only this optional size; preserve valid market accounting.
+            sides = [side for side, price in (("bid", bid), ("ask", ask)) if Decimal(price) == 0]
+            out.setdefault("warnings", []).append({
+                "code": "zero_indicative_quote_price", "field": "quotes." + key,
+                "source_fields": ["quotes." + key + "." + side for side in sides],
+                "source_values": {"bid": bid, "ask": ask}, "source_updated_at": updated,
+                "action": "quote_size_unavailable",
+                "message": "Source supplied a zero " + " and ".join(sides) + "; this quote size is unavailable and its spread is not calculated.",
+            })
+            continue
         if Decimal(ask) < Decimal(bid):
             raise DataError("crossed_quote")
         with localcontext() as ctx:
@@ -228,6 +240,7 @@ def normalize_snapshot(raw: bytes, observed_at: str, *, kind="live_public_api", 
                 raise DataError("missing_market_oi")
             long_oi = number(oi.get("long_open_interest"), nonnegative=True)
             short_oi = number(oi.get("short_open_interest"), nonnegative=True)
+            quotes = normalize_quotes(row.get("quotes"), observed_at)
             markets.append({
                 "ticker": ticker,
                 "name": text_field(row.get("name")),
@@ -239,7 +252,8 @@ def normalize_snapshot(raw: bytes, observed_at: str, *, kind="live_public_api", 
                 "trader_open_interest_usdc": format(Decimal(long_oi) + Decimal(short_oi), "f"),
                 "funding": normalize_funding(row.get("funding"), contract_type),
                 "base_spread_bps": None if row.get("base_spread_bps") is None else number(row["base_spread_bps"], nonnegative=True),
-                "quotes": normalize_quotes(row.get("quotes"), observed_at),
+                "quotes": quotes,
+                "source_warnings": [{"ticker": ticker, **warning} for warning in quotes.get("warnings", [])],
             })
         markets.sort(key=lambda row: row["ticker"])
         total_volume = number(data.get("total_volume_24h"), nonnegative=True)
@@ -270,6 +284,12 @@ def normalize_snapshot(raw: bytes, observed_at: str, *, kind="live_public_api", 
             "loss_refunded_24h_usdc": None if refund.get("refunded_24h") is None else number(refund["refunded_24h"], nonnegative=True)}
         ratio = None if trader_oi == 0 else format((Decimal(total_oi) / trader_oi).quantize(Decimal("0.000000000001")), "f")
         trader_oi_residual = Decimal(total_oi) / 2 - trader_oi
+        quote_warnings = [warning for row in markets for warning in row["source_warnings"]]
+        quote_coverage = {key: {
+            "available": sum(row["quotes"][key] is not None for row in markets),
+            "unavailable": sum(row["quotes"][key] is None for row in markets),
+            "quarantined": sum(warning["field"] == "quotes." + key for warning in quote_warnings),
+        } for key in QUOTE_KEYS}
     return {"date": observed.date().isoformat(), "observed_at": observed_at,
         "provenance": {"kind": kind, "source_url": API_URL, "timestamp_basis": timestamp_basis,
             "timestamp_precision": "minute" if timestamp_basis == "archive_collection_label" else "source_recorded",
@@ -281,6 +301,9 @@ def normalize_snapshot(raw: bytes, observed_at: str, *, kind="live_public_api", 
             "reported_oi_to_trader_oi_ratio": ratio,
             "trader_oi_residual_usdc": format(trader_oi_residual, "f"),
             "market_coverage_complete": complete_coverage,
+            "quote_size_coverage": quote_coverage,
+            "quarantined_quote_sizes": len(quote_warnings),
+            "warnings": quote_warnings,
             "coverage_note": "Market/product sums cover returned listings only; reported platform aggregates remain authoritative.",
             "oi_note": "Ratio is an observed diagnostic, not a hardcoded universal 2x assumption."}}
 
@@ -547,6 +570,8 @@ def compact_snapshot(snapshot: dict) -> dict:
         quotes = original["quotes"]
         row["quotes"] = {"updated_at": quotes["updated_at"], **{
             key: None if quotes[key] is None else {"full_spread_bps": quotes[key]["full_spread_bps"]} for key in QUOTE_KEYS}}
+        if original.get("source_warnings"):
+            row["source_warnings"] = original["source_warnings"]
         rows.append(row)
     result["markets"] = rows
     return result

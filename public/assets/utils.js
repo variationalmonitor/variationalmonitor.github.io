@@ -27,6 +27,14 @@ export function compact(value, digits = 2) {
   }
   return sign + formatNumber(amount, digits, false);
 }
+export function price(value) {
+  const amount = number(value);
+  if (amount === null) return '—';
+  if (amount === 0 || Math.abs(amount) >= 1) return formatNumber(amount, 2, true);
+  if (Math.abs(amount) < 1e-8) return amount.toExponential(4);
+  const digits = 5 - Math.floor(Math.log10(Math.abs(amount)));
+  return formatNumber(amount, digits, false);
+}
 export function axisNumber(value, step) {
   if (!Number.isFinite(value) || !Number.isFinite(step) || step <= 0) return '—';
   if (value === 0) return '0';
