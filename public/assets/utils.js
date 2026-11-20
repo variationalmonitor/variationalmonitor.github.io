@@ -44,7 +44,10 @@ export function axisNumber(value, step) {
   return formatNumber(value / scale, digits, false) + suffix;
 }
 export const fixed = (value, digits = 2) => number(value) === null ? '—' : formatNumber(number(value), digits, true);
-export const cash = (value, digits = 2) => number(value) === null ? '—' : '$' + compact(value, digits);
+export function cash(value, digits = 2) {
+  const amount = number(value);
+  return amount === null ? '—' : (amount < 0 ? '−$' : '$') + compact(Math.abs(amount), digits);
+}
 export const percent = (value, digits = 1) => number(value) === null ? '—' : fixed(number(value) * 100, digits) + '%';
 export const ratio = (a, b) => number(a) !== null && number(b) !== null && number(b) !== 0 ? number(a) / number(b) : null;
 

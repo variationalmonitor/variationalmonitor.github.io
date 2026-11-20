@@ -1,6 +1,12 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import {axisNumber, date, number, price, shortDate, timestamp} from '../public/assets/utils.js';
+import {axisNumber, cash, date, number, price, shortDate, timestamp} from '../public/assets/utils.js';
+
+test('dollar deductions use the sign before the currency symbol', () => {
+  assert.equal(cash('-3456245'), '−$3.46M');
+  assert.equal(cash('0'), '$0');
+  assert.equal(cash(null), '—');
+});
 
 test('financial axes preserve the actual interval at thousands, millions and billions', () => {
   assert.equal(axisNumber(1.5e9, 5e8), '1.5B');
