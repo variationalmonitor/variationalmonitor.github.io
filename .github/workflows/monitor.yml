@@ -69,6 +69,7 @@ jobs:
         run: |
           python3 tools/markets.py
           python3 tools/supplement.py
+          python3 tools/chain_history.py --data public/data
           python3 tools/research_baselines.py --data-dir public/data
       - name: Determine whether to publish
         id: decision
@@ -87,6 +88,7 @@ jobs:
         if: steps.decision.outputs.publish == 'true'
         run: |
           python3 -m unittest discover -s tests
+          node --test tests/*.test.mjs
           python3 tools/financials.py verify --output public/data/financials.json
           python3 tools/research_baselines.py verify --data-dir public/data
           python3 tools/check_site.py

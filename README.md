@@ -6,11 +6,15 @@
 
 The site in `public/` is static. Start it from the project directory with `python3 -m http.server 8000 --directory public` and open `http://localhost:8000`. Collectors use the Python standard library. Run their checks with `python3 -m unittest discover -s tests`.
 
+Run the chart and calendar-window tests with `node --test tests/*.test.mjs`. All historical pages share 7D, 30D, 90D, 180D, 1Y and All controls. The selected range travels with the link. Tables and CSVs use the displayed observations. Cumulative report charts preserve the amounts earned before the selected window.
+
 ## Sources and accounting
 
 - The [Omni API](https://docs.variational.io/technical-documentation/api) reports lifetime trading volume, rolling 24-hour volume, USDC balances and market statistics. Market rows carry the observation time. Public bid and ask prices are indicative quotes.
 - [Variational announcements](https://t.me/s/variational_io) supply the financial reports. Each record links to its source. Covered-period totals sum dated income and allocation lines. Stocks such as Protocol Treasury Holdings and Lifetime OLP PnL retain their individual observation dates. A missing field stays missing. Historical source discrepancies remain attached to the corresponding report.
 - The Arbitrum collector reads native USDC at the published [Protocol Treasury and Core OLP Vault addresses](https://docs.variational.io/technical-documentation/mainnet-contracts) at a common safe block. These balances describe the two wallets. External hedges and liabilities require other disclosures.
+- Historical wallet charts store the block hash, timestamp and native USDC balance for each observed address. Historical UTC closes verify the block on each side of midnight. The ordinary daily job appends the safe-block observation it already collected.
+- Cumulative volume and dual-sided open interest use Variational’s bi-weekly disclosures in USD. If a selected period has no disclosure, the charts can use actual Omni API observations of the same counter in USDC. The chart identifies the unit and source for its entire series. Between-report volume uses the change in successive disclosed counters and exports both publication dates.
 - [CoinGecko](https://www.coingecko.com/en/coins/variational) provides VAR listing status. A verified contract registry and a matching listing are required before market figures appear. [Variational's allocation policy](https://docs.variational.io/token/usdvar) is dated independently.
 - Comparable quote observations use a fixed size against the [Hyperliquid info endpoint](https://hyperliquid.gitbook.io/hyperliquid-docs/for-developers/api/info-endpoint), book depth and the published fee assumption. A match requires adequate depth and quotes within the specified age and time difference.
 
