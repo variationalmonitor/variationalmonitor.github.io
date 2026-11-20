@@ -30,11 +30,23 @@ export function chartDomain(rows,key,anchor){
 }
 const numeric=value=>value===null||value===undefined||value===''?null:Number.isFinite(Number(value))?Number(value):null;
 export function periodTotals(reports,keys){return Object.fromEntries(keys.map(key=>{const values=reports.map(report=>numeric(report.period_amounts?.[key])).filter(value=>value!==null);return [key,values.length?values.reduce((total,value)=>total+value,0):null];}));}
+const warningMetrics = {
+  net_profit_identity: ['net_revenue','rewards','net_profit'],
+  allocation_identity: ['treasury_inflow','olp_pnl','net_profit'],
+  net_revenue_identity: ['gross_revenue','market_making_costs','net_revenue'],
+  lifetime_olp_change: ['lifetime_olp_pnl','olp_pnl']
+};
+export function warningsForMetrics(report, keys) {
+  return (report.warnings || []).filter(warning => {
+    const affected = warningMetrics[warning.code];
+    return !affected || keys.some(key => affected.includes(key));
+  });
+}
 export function financialSeries(reports,keys,{mode='period',snapshot=false,range='all',anchor=null}={}){
   const running=Object.fromEntries(keys.map(key=>[key,0]));
   const ordered=[...reports].filter(report=>timeValue(report.published_at)!==null).sort((a,b)=>timeValue(a.published_at)-timeValue(b.published_at));
   // Accumulate from the archive's real beginning, then clip displayed publications.
-  const rows=ordered.map(report=>{const values={};for(const key of keys){const value=numeric((snapshot?report.snapshot:report.period_amounts)?.[key]);if(mode==='cumulative'&&!snapshot&&value!==null){running[key]+=value;values[key]=running[key];}else values[key]=value;}return {date:report.published_at,values,warnings:report.warnings||[],source:report.source_urls?.[0],id:report.id};});
+  const rows=ordered.map(report=>{const values={};for(const key of keys){const value=numeric((snapshot?report.snapshot:report.period_amounts)?.[key]);if(mode==='cumulative'&&!snapshot&&value!==null){running[key]+=value;values[key]=running[key];}else values[key]=value;}return {date:report.published_at,values,warnings:warningsForMetrics(report,keys),source:report.source_urls?.[0],id:report.id};});
   return filterRange(rows,range,anchor);
 }
 export function rangeHref(href,key){

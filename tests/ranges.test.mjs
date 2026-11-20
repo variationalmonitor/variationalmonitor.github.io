@@ -48,3 +48,12 @@ test('route links retain existing view parameters and explicit range for reload/
   assert.equal(rangeHref('https://example.com','7d'),'https://example.com');
   assert.equal(latestTimestamp([null,'invalid','2026-11-20T09:00:00Z','2026-11-19']),'2026-11-20T09:00:00.000Z');
 });
+
+test('chart exception markers reflect only the displayed financial measure', async () => {
+  const {warningsForMetrics} = await import('../public/assets/ranges.js');
+  const report = {warnings:[{code:'net_profit_identity'},{code:'lifetime_olp_change'}]};
+  assert.deepEqual(warningsForMetrics(report,['dual_sided_oi']),[]);
+  assert.deepEqual(warningsForMetrics(report,['net_profit']),[{code:'net_profit_identity'}]);
+  assert.deepEqual(warningsForMetrics(report,['olp_pnl']),[{code:'lifetime_olp_change'}]);
+  assert.equal(warningsForMetrics({warnings:[{code:'possible_report_gap'}]},['dual_sided_oi']).length,1);
+});
