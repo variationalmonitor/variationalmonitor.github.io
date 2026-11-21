@@ -25,6 +25,13 @@ Run the chart and calendar-window tests with `node --test tests/*.test.mjs`. All
 - Execution shows observed two-sided Omni quote availability at three sizes. The crypto comparison replays public-source captures with independently verified order-book coverage, a maximum 45-second source-time difference and 4.5 bps per side in Hyperliquid base-tier taker fees. It compares the median paired difference in indicative costs.
 - Rewards are recorded from official updates. Cumulative claims retain their reported precision. The signed period rewards are separate. Treasury wallet charts use verified USDC balances and differences between recorded blocks.
 
+## Historical backfill and onchain index
+
+- The official announcement archive extends lifetime volume and report-snapshot activity back into 2025. Published DAU is a weekly average, and published WAU is a point-in-time weekly count. Per-market volume, OI and financing still use independently saved API observations.
+- [Execution](https://variationalmonitor.github.io/#/execution) defaults to the latest saved observation with a benchmark swap quote within the range. Users can select a closed-date snapshot and inspect unavailable prices. Cross-venue estimates require timed, two-sided books and charge a stated taker fee. The public collector ships Hyperliquid, Lighter and Binance sample data. OKX and Bybit display a publication-permission status.
+- The local collector can refresh matched book data immediately after `python3 tools/markets.py`. Run `python3 tools/multi_venue.py refresh` in an eligible environment. The hosted daily collector samples Hyperliquid. Each venue row displays its actual latest matched date.
+- The [Accounts](https://variationalmonitor.github.io/#/accounts) pilot exports verified creation events as aggregate counts for a bounded block range. `python3 tools/arbitrum_index.py --help` lists the resumable local options. The SQLite checkpoint stays outside the published directory. The index still needs all historical factories, verified cash-transfer coverage, and a canonical referral claims source for a full backfill.
+
 ## Updates
 
 GitHub Actions schedules ordinary data collection at 19:15 UTC daily. A separate check within the same workflow scans the official announcement channel every five minutes. New or edited financial disclosures can publish between daily updates. Rewards refresh after an updated financial disclosure or during the daily job. Queue delays at GitHub and cross-posting times depend on the respective sources. See the [workflow history](https://github.com/variationalmonitor/variationalmonitor.github.io/actions) for actual run times.

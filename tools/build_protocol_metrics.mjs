@@ -28,7 +28,12 @@ for (const entry of index.snapshots) {
     const value = snapshot.markets.find(row=>row.ticker===ticker)?.quotes?.size_100k?.full_spread_bps;
     return [ticker, value === null || value === undefined ? null : Number(value)/2];
   }));
-  rows.push({observedAt,coverage,totals,byAssetClass,byInstrumentType,shares,halfSpreads});
+  const swapBenchmarks=['US100-SWAP','US30-SWAP','US500-SWAP','XAU-SWAP'];
+  const swapQuotes = swapBenchmarks.reduce((count,ticker)=>{
+    const entry=snapshot.markets.find(row=>row.ticker===ticker);
+    return count + ['size_1k','size_100k','size_1m'].filter(size=>entry?.quotes?.[size]?.full_spread_bps!=null).length;
+  },0);
+  rows.push({observedAt,coverage,totals,byAssetClass,byInstrumentType,shares,halfSpreads,swapQuotes});
 }
 const output = {schema_version:1,classificationObservedAt:classifications.observed_at,rows};
 const target = join(directory,'protocol-metrics-history.json');

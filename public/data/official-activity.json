@@ -1,0 +1,5125 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-11-21T15:13:29Z",
+  "coverage": {
+    "report_count": 44,
+    "first_report_published_at": "2025-02-24T17:23:35Z",
+    "last_report_published_at": "2026-11-13T18:51:03Z",
+    "field_counts": {
+      "cumulative_volume": 44,
+      "dual_sided_oi": 29,
+      "tvl": 22,
+      "tokens_listed": 31,
+      "markets": 12,
+      "total_trades_placed": 22,
+      "daily_active_users_week_average": 30,
+      "weekly_active_users": 30,
+      "total_rewards_claimed": 23,
+      "total_losses_refunded": 30,
+      "total_referral_rewards_claimed": 23
+    },
+    "possible_gaps": [
+      {
+        "after_report_id": "telegram:254",
+        "before_report_id": "telegram:262",
+        "reason": "More than21days between covered publications; missing coverage or publication gap unresolved."
+      },
+      {
+        "after_report_id": "telegram:277",
+        "before_report_id": "x:2029983510824636491",
+        "reason": "More than21days between covered publications; missing coverage or publication gap unresolved."
+      }
+    ],
+    "note": "Dated official disclosures, not daily observations or a complete ledger. Linked report dates are canonical financial cohort dates; source_published_at is original post publication. Conservative source_available_at is the earliest retained matching capture, not an assertion that an unversioned historical value was known at original publication. Publication dates are not exact accounting cutoffs. Active-user methodology is source-reported and distinct from on-chain active accounts. Legacy revenue labels are not modern Net Revenue or Net Profit."
+  },
+  "reports": [
+    {
+      "id": "telegram:144",
+      "published_at": "2025-02-24T17:23:35Z",
+      "financial_report_id": null,
+      "source_urls": [
+        "https://t.me/variational_io/144"
+      ],
+      "sources": [
+        {
+          "platform": "telegram",
+          "id": "144",
+          "url": "https://t.me/variational_io/144",
+          "author": "variational_io",
+          "published_at": "2025-02-24T17:23:35Z",
+          "observed_at": "2026-11-21T15:08:34Z",
+          "retrieval_method": "official public Telegram announcements feed",
+          "source_text_sha256": "28a947fe3fe5fa85ebde6a32f75800df8253dccea73ced3c74b9439c8aa9e867",
+          "normalized_sha256": "1f5dfdaae2f055636687f94c28c7e8e7065a386ae3c5ecad9aa83e9ac500d8d5",
+          "matches_current": true
+        }
+      ],
+      "period_start": null,
+      "period_end": null,
+      "metrics": {
+        "cumulative_volume": {
+          "value": "8856803",
+          "raw": "$8,856,803",
+          "label": "Total volume traded",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "dual_sided_oi": null,
+        "tvl": null,
+        "tokens_listed": null,
+        "markets": null,
+        "total_trades_placed": {
+          "value": "3947",
+          "raw": "3,947",
+          "label": "Total trades placed",
+          "unit": "count",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "daily_active_users_week_average": null,
+        "weekly_active_users": null,
+        "total_rewards_claimed": null,
+        "total_losses_refunded": null,
+        "total_referral_rewards_claimed": null
+      },
+      "legacy_financials": {
+        "revenue_2w": null,
+        "average_daily_revenue": null,
+        "revenue_directed_to_olp": null,
+        "revenue_directed_to_loss_refund_pool": null,
+        "revenue_directed_to_referral_rewards_pool": null,
+        "revenue_directed_to_protocol_treasury": null,
+        "total_olp_pnl": {
+          "value": "23654",
+          "raw": "$23,654",
+          "label": "Total OLP PnL",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        }
+      },
+      "reported_phase": "mainnet_private_beta",
+      "revisions": [],
+      "source_available_at": "2026-11-21T15:08:34Z",
+      "source_published_at": "2025-02-24T17:23:35Z"
+    },
+    {
+      "id": "telegram:149",
+      "published_at": "2025-03-07T21:39:38Z",
+      "financial_report_id": null,
+      "source_urls": [
+        "https://t.me/variational_io/149"
+      ],
+      "sources": [
+        {
+          "platform": "telegram",
+          "id": "149",
+          "url": "https://t.me/variational_io/149",
+          "author": "variational_io",
+          "published_at": "2025-03-07T21:39:38Z",
+          "observed_at": "2026-11-21T15:08:34Z",
+          "retrieval_method": "official public Telegram announcements feed",
+          "source_text_sha256": "25bc759ec8b35999bd231952e32832b9dff3e9f715eec0b1b1d3d11b36f7499b",
+          "normalized_sha256": "aafedbbf165a101c78243b525c9567312acc4ca971d4033a413bcf320a2ecd63",
+          "matches_current": true
+        }
+      ],
+      "period_start": null,
+      "period_end": null,
+      "metrics": {
+        "cumulative_volume": {
+          "value": "13521287",
+          "raw": "$13,521,287",
+          "label": "Total volume traded",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "dual_sided_oi": null,
+        "tvl": null,
+        "tokens_listed": {
+          "value": "1088",
+          "raw": "1,088",
+          "label": "Total tokens currently listed",
+          "unit": "count",
+          "kind": "reported_snapshot",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "markets": null,
+        "total_trades_placed": {
+          "value": "12250",
+          "raw": "12,250",
+          "label": "Total trades placed",
+          "unit": "count",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "daily_active_users_week_average": null,
+        "weekly_active_users": null,
+        "total_rewards_claimed": null,
+        "total_losses_refunded": null,
+        "total_referral_rewards_claimed": null
+      },
+      "legacy_financials": {
+        "revenue_2w": null,
+        "average_daily_revenue": null,
+        "revenue_directed_to_olp": null,
+        "revenue_directed_to_loss_refund_pool": null,
+        "revenue_directed_to_referral_rewards_pool": null,
+        "revenue_directed_to_protocol_treasury": null,
+        "total_olp_pnl": {
+          "value": "26008.32",
+          "raw": "$26,008.32",
+          "label": "Total OLP PnL",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "0.01",
+          "qualifier": null
+        }
+      },
+      "reported_phase": "mainnet_private_beta",
+      "revisions": [],
+      "source_available_at": "2026-11-21T15:08:34Z",
+      "source_published_at": "2025-03-07T21:39:38Z"
+    },
+    {
+      "id": "telegram:155",
+      "published_at": "2025-03-21T17:27:07Z",
+      "financial_report_id": null,
+      "source_urls": [
+        "https://t.me/variational_io/155"
+      ],
+      "sources": [
+        {
+          "platform": "telegram",
+          "id": "155",
+          "url": "https://t.me/variational_io/155",
+          "author": "variational_io",
+          "published_at": "2025-03-21T17:27:07Z",
+          "observed_at": "2026-11-21T15:08:34Z",
+          "retrieval_method": "official public Telegram announcements feed",
+          "source_text_sha256": "12e4e94e0b7a98c0506e808233e4bb3038cbafbb4dfcba9e2cc5e4286ed822f7",
+          "normalized_sha256": "88bf26fc480e1b7535ed20f41172bd80ac0e748e0211bae5a7043054ce0cc298",
+          "matches_current": true
+        }
+      ],
+      "period_start": null,
+      "period_end": null,
+      "metrics": {
+        "cumulative_volume": {
+          "value": "27937443",
+          "raw": "$27,937,443",
+          "label": "Total volume traded",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "dual_sided_oi": null,
+        "tvl": null,
+        "tokens_listed": {
+          "value": "974",
+          "raw": "974 *(Note: we’ve been tuning our automated listing/delisting engine so you may have seen large spikes or drops in the number of listed assets. This should be smoothed as the listing flow is refined.)",
+          "label": "Total tokens currently listed",
+          "unit": "count",
+          "kind": "reported_snapshot",
+          "precision_increment": "1",
+          "qualifier": "(Note: we’ve been tuning our automated listing/delisting engine so you may have seen large spikes or drops in the number of listed assets. This should be smoothed as the listing flow is refined.)"
+        },
+        "markets": null,
+        "total_trades_placed": {
+          "value": "24202",
+          "raw": "24,202",
+          "label": "Total trades placed",
+          "unit": "count",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "daily_active_users_week_average": null,
+        "weekly_active_users": null,
+        "total_rewards_claimed": null,
+        "total_losses_refunded": null,
+        "total_referral_rewards_claimed": null
+      },
+      "legacy_financials": {
+        "revenue_2w": null,
+        "average_daily_revenue": null,
+        "revenue_directed_to_olp": null,
+        "revenue_directed_to_loss_refund_pool": null,
+        "revenue_directed_to_referral_rewards_pool": null,
+        "revenue_directed_to_protocol_treasury": null,
+        "total_olp_pnl": {
+          "value": "65462",
+          "raw": "$65,462",
+          "label": "Total OLP PnL",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        }
+      },
+      "reported_phase": null,
+      "revisions": [],
+      "source_available_at": "2026-11-21T15:08:34Z",
+      "source_published_at": "2025-03-21T17:27:07Z"
+    },
+    {
+      "id": "telegram:158",
+      "published_at": "2025-04-04T20:10:07Z",
+      "financial_report_id": null,
+      "source_urls": [
+        "https://t.me/variational_io/158"
+      ],
+      "sources": [
+        {
+          "platform": "telegram",
+          "id": "158",
+          "url": "https://t.me/variational_io/158",
+          "author": "variational_io",
+          "published_at": "2025-04-04T20:10:07Z",
+          "observed_at": "2026-11-21T15:08:34Z",
+          "retrieval_method": "official public Telegram announcements feed",
+          "source_text_sha256": "65b5277d31ea742990637ad4ee079f74982585b0bec4d07596c11f254408efa8",
+          "normalized_sha256": "90bb539462b1670b1d43bfa7297958ebf3b28e12b84c129d0a7f891b8ffe3b93",
+          "matches_current": true
+        }
+      ],
+      "period_start": null,
+      "period_end": null,
+      "metrics": {
+        "cumulative_volume": {
+          "value": "37455273",
+          "raw": "$37,455,273",
+          "label": "Total volume traded",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "dual_sided_oi": null,
+        "tvl": null,
+        "tokens_listed": {
+          "value": "944",
+          "raw": "944",
+          "label": "Total tokens currently listed",
+          "unit": "count",
+          "kind": "reported_snapshot",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "markets": null,
+        "total_trades_placed": {
+          "value": "31361",
+          "raw": "31,361",
+          "label": "Total trades placed",
+          "unit": "count",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "daily_active_users_week_average": null,
+        "weekly_active_users": null,
+        "total_rewards_claimed": null,
+        "total_losses_refunded": null,
+        "total_referral_rewards_claimed": null
+      },
+      "legacy_financials": {
+        "revenue_2w": null,
+        "average_daily_revenue": null,
+        "revenue_directed_to_olp": null,
+        "revenue_directed_to_loss_refund_pool": null,
+        "revenue_directed_to_referral_rewards_pool": null,
+        "revenue_directed_to_protocol_treasury": null,
+        "total_olp_pnl": {
+          "value": "67227",
+          "raw": "$67,227",
+          "label": "Total OLP PnL",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        }
+      },
+      "reported_phase": null,
+      "revisions": [],
+      "source_available_at": "2026-11-21T15:08:34Z",
+      "source_published_at": "2025-04-04T20:10:07Z"
+    },
+    {
+      "id": "telegram:163",
+      "published_at": "2025-04-18T19:16:55Z",
+      "financial_report_id": null,
+      "source_urls": [
+        "https://t.me/variational_io/163"
+      ],
+      "sources": [
+        {
+          "platform": "telegram",
+          "id": "163",
+          "url": "https://t.me/variational_io/163",
+          "author": "variational_io",
+          "published_at": "2025-04-18T19:16:55Z",
+          "observed_at": "2026-11-21T15:07:23Z",
+          "retrieval_method": "official public Telegram announcements feed",
+          "source_text_sha256": "a6884ffc7c54546d79941bc0836e953ab9780556c529134735c2ef3eb9eee57c",
+          "normalized_sha256": "62b6ada8d85110797b960ba341af4aac03ce63be46afd91107d1bbb70fd8cf90",
+          "matches_current": true
+        }
+      ],
+      "period_start": null,
+      "period_end": null,
+      "metrics": {
+        "cumulative_volume": {
+          "value": "52477051",
+          "raw": "$52,477,051",
+          "label": "Total volume traded",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "dual_sided_oi": null,
+        "tvl": null,
+        "tokens_listed": {
+          "value": "789",
+          "raw": "789 (Note: This recent market downturn [particularly for memecoins] led to a decent number of tokens failing ongoing checks and being delisted. The number of listings on Omni will fluctuate as market liquidity expands and contracts.)",
+          "label": "Total tokens currently listed",
+          "unit": "count",
+          "kind": "reported_snapshot",
+          "precision_increment": "1",
+          "qualifier": "(Note: This recent market downturn [particularly for memecoins] led to a decent number of tokens failing ongoing checks and being delisted. The number of listings on Omni will fluctuate as market liquidity expands and contracts.)"
+        },
+        "markets": null,
+        "total_trades_placed": {
+          "value": "43293",
+          "raw": "43,293",
+          "label": "Total trades placed",
+          "unit": "count",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "daily_active_users_week_average": null,
+        "weekly_active_users": null,
+        "total_rewards_claimed": null,
+        "total_losses_refunded": null,
+        "total_referral_rewards_claimed": null
+      },
+      "legacy_financials": {
+        "revenue_2w": null,
+        "average_daily_revenue": null,
+        "revenue_directed_to_olp": null,
+        "revenue_directed_to_loss_refund_pool": null,
+        "revenue_directed_to_referral_rewards_pool": null,
+        "revenue_directed_to_protocol_treasury": null,
+        "total_olp_pnl": {
+          "value": "40094",
+          "raw": "$40,094 (Note: OLP PnL declined over the past two weeks. Variability in OLP PnL during these early stages is expected when we test new approaches and continue to refine quoting and external hedging strategies. Performance will stabilize as these systems are improved.)",
+          "label": "Total OLP PnL",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": "(Note: OLP PnL declined over the past two weeks. Variability in OLP PnL during these early stages is expected when we test new approaches and continue to refine quoting and external hedging strategies. Performance will stabilize as these systems are improved.)"
+        }
+      },
+      "reported_phase": null,
+      "revisions": [],
+      "source_available_at": "2026-11-21T15:07:23Z",
+      "source_published_at": "2025-04-18T19:16:55Z"
+    },
+    {
+      "id": "telegram:166",
+      "published_at": "2025-05-02T08:53:24Z",
+      "financial_report_id": null,
+      "source_urls": [
+        "https://t.me/variational_io/166"
+      ],
+      "sources": [
+        {
+          "platform": "telegram",
+          "id": "166",
+          "url": "https://t.me/variational_io/166",
+          "author": "variational_io",
+          "published_at": "2025-05-02T08:53:24Z",
+          "observed_at": "2026-11-21T15:07:23Z",
+          "retrieval_method": "official public Telegram announcements feed",
+          "source_text_sha256": "aec9155e46048d8a288f9e264aabc33a39e6af56b0ffd51b15079967e28b21d6",
+          "normalized_sha256": "0d4e8ac0d6daa7e87c192ae78e2230e6eac9acac453ef09d693aae88e8bae3f0",
+          "matches_current": true
+        }
+      ],
+      "period_start": null,
+      "period_end": null,
+      "metrics": {
+        "cumulative_volume": {
+          "value": "81351288",
+          "raw": "$81,351,288",
+          "label": "Total volume traded",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "dual_sided_oi": null,
+        "tvl": null,
+        "tokens_listed": {
+          "value": "650",
+          "raw": "650",
+          "label": "Total tokens currently listed",
+          "unit": "count",
+          "kind": "reported_snapshot",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "markets": null,
+        "total_trades_placed": {
+          "value": "56620",
+          "raw": "56,620",
+          "label": "Total trades placed",
+          "unit": "count",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "daily_active_users_week_average": null,
+        "weekly_active_users": null,
+        "total_rewards_claimed": null,
+        "total_losses_refunded": null,
+        "total_referral_rewards_claimed": null
+      },
+      "legacy_financials": {
+        "revenue_2w": null,
+        "average_daily_revenue": null,
+        "revenue_directed_to_olp": null,
+        "revenue_directed_to_loss_refund_pool": null,
+        "revenue_directed_to_referral_rewards_pool": null,
+        "revenue_directed_to_protocol_treasury": null,
+        "total_olp_pnl": {
+          "value": "68066",
+          "raw": "$68,066",
+          "label": "Total OLP PnL",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        }
+      },
+      "reported_phase": null,
+      "revisions": [],
+      "source_available_at": "2026-11-21T15:07:23Z",
+      "source_published_at": "2025-05-02T08:53:24Z"
+    },
+    {
+      "id": "telegram:173",
+      "published_at": "2025-05-16T18:02:21Z",
+      "financial_report_id": null,
+      "source_urls": [
+        "https://t.me/variational_io/173"
+      ],
+      "sources": [
+        {
+          "platform": "telegram",
+          "id": "173",
+          "url": "https://t.me/variational_io/173",
+          "author": "variational_io",
+          "published_at": "2025-05-16T18:02:21Z",
+          "observed_at": "2026-11-21T15:07:23Z",
+          "retrieval_method": "official public Telegram announcements feed",
+          "source_text_sha256": "f9e634d2ce03839169e1d21128a15b9488f0d63b4404574db9410af5c292f654",
+          "normalized_sha256": "1cc3883c8575d6bd14ca28d3e033b97e2d1c45d7d4004c2e32bbfbc82a6a86ef",
+          "matches_current": true
+        }
+      ],
+      "period_start": null,
+      "period_end": null,
+      "metrics": {
+        "cumulative_volume": {
+          "value": "115849398",
+          "raw": "$115,849,398",
+          "label": "Total volume traded",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "dual_sided_oi": null,
+        "tvl": null,
+        "tokens_listed": {
+          "value": "860",
+          "raw": "860",
+          "label": "Total tokens currently listed",
+          "unit": "count",
+          "kind": "reported_snapshot",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "markets": null,
+        "total_trades_placed": {
+          "value": "70666",
+          "raw": "70,666",
+          "label": "Total trades placed",
+          "unit": "count",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "daily_active_users_week_average": null,
+        "weekly_active_users": null,
+        "total_rewards_claimed": null,
+        "total_losses_refunded": null,
+        "total_referral_rewards_claimed": null
+      },
+      "legacy_financials": {
+        "revenue_2w": null,
+        "average_daily_revenue": null,
+        "revenue_directed_to_olp": null,
+        "revenue_directed_to_loss_refund_pool": null,
+        "revenue_directed_to_referral_rewards_pool": null,
+        "revenue_directed_to_protocol_treasury": null,
+        "total_olp_pnl": {
+          "value": "88000",
+          "raw": "$88,000",
+          "label": "Total OLP PnL",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        }
+      },
+      "reported_phase": null,
+      "revisions": [],
+      "source_available_at": "2026-11-21T15:07:23Z",
+      "source_published_at": "2025-05-16T18:02:21Z"
+    },
+    {
+      "id": "telegram:178",
+      "published_at": "2025-05-30T17:57:59Z",
+      "financial_report_id": null,
+      "source_urls": [
+        "https://t.me/variational_io/178"
+      ],
+      "sources": [
+        {
+          "platform": "telegram",
+          "id": "178",
+          "url": "https://t.me/variational_io/178",
+          "author": "variational_io",
+          "published_at": "2025-05-30T17:57:59Z",
+          "observed_at": "2026-11-21T15:07:23Z",
+          "retrieval_method": "official public Telegram announcements feed",
+          "source_text_sha256": "fdcae349ba1675d747a6041be01c734ec13395de1e4e57371efdf6547514adc8",
+          "normalized_sha256": "272a69eb36122d8d83f7b87ecf4d613b9aa6a14f4c531d60c0311267f4c0727b",
+          "matches_current": true
+        }
+      ],
+      "period_start": null,
+      "period_end": null,
+      "metrics": {
+        "cumulative_volume": {
+          "value": "163817395",
+          "raw": "$163,817,395",
+          "label": "Total volume traded",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "dual_sided_oi": null,
+        "tvl": null,
+        "tokens_listed": {
+          "value": "852",
+          "raw": "852",
+          "label": "Total tokens currently listed",
+          "unit": "count",
+          "kind": "reported_snapshot",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "markets": null,
+        "total_trades_placed": {
+          "value": "85055",
+          "raw": "85,055",
+          "label": "Total trades placed",
+          "unit": "count",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "daily_active_users_week_average": {
+          "value": "170",
+          "raw": "170",
+          "label": "Daily Active Users (avg over past week)",
+          "unit": "count",
+          "kind": "reported_daily_average_over_past_week",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "weekly_active_users": {
+          "value": "457",
+          "raw": "457",
+          "label": "Weekly Active Users",
+          "unit": "count",
+          "kind": "reported_weekly_users",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_rewards_claimed": null,
+        "total_losses_refunded": null,
+        "total_referral_rewards_claimed": null
+      },
+      "legacy_financials": {
+        "revenue_2w": null,
+        "average_daily_revenue": null,
+        "revenue_directed_to_olp": null,
+        "revenue_directed_to_loss_refund_pool": null,
+        "revenue_directed_to_referral_rewards_pool": null,
+        "revenue_directed_to_protocol_treasury": null,
+        "total_olp_pnl": {
+          "value": "144417",
+          "raw": "$144,417",
+          "label": "Total OLP PnL",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        }
+      },
+      "reported_phase": null,
+      "revisions": [],
+      "source_available_at": "2026-11-21T15:07:23Z",
+      "source_published_at": "2025-05-30T17:57:59Z"
+    },
+    {
+      "id": "telegram:181",
+      "published_at": "2025-06-13T17:45:18Z",
+      "financial_report_id": null,
+      "source_urls": [
+        "https://t.me/variational_io/181"
+      ],
+      "sources": [
+        {
+          "platform": "telegram",
+          "id": "181",
+          "url": "https://t.me/variational_io/181",
+          "author": "variational_io",
+          "published_at": "2025-06-13T17:45:18Z",
+          "observed_at": "2026-11-21T15:07:21Z",
+          "retrieval_method": "official public Telegram announcements feed",
+          "source_text_sha256": "a069c4a75fc9c2d1112e5c7da9b4b597fe142f9ce6a396d157e87534526da54e",
+          "normalized_sha256": "622ac80176c44d3cb6c3dc85898c6b22039b0f30ba81b428e52a3c5ddf357f70",
+          "matches_current": true
+        }
+      ],
+      "period_start": null,
+      "period_end": null,
+      "metrics": {
+        "cumulative_volume": {
+          "value": "295315364",
+          "raw": "$295,315,364",
+          "label": "Total volume traded",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "dual_sided_oi": null,
+        "tvl": null,
+        "tokens_listed": {
+          "value": "571",
+          "raw": "571",
+          "label": "Total tokens currently listed",
+          "unit": "count",
+          "kind": "reported_snapshot",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "markets": null,
+        "total_trades_placed": {
+          "value": "120957",
+          "raw": "120,957",
+          "label": "Total trades placed",
+          "unit": "count",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "daily_active_users_week_average": {
+          "value": "277",
+          "raw": "277",
+          "label": "Daily Active Users (avg over past week)",
+          "unit": "count",
+          "kind": "reported_daily_average_over_past_week",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "weekly_active_users": {
+          "value": "679",
+          "raw": "679",
+          "label": "Weekly Active Users",
+          "unit": "count",
+          "kind": "reported_weekly_users",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_rewards_claimed": null,
+        "total_losses_refunded": null,
+        "total_referral_rewards_claimed": null
+      },
+      "legacy_financials": {
+        "revenue_2w": null,
+        "average_daily_revenue": null,
+        "revenue_directed_to_olp": null,
+        "revenue_directed_to_loss_refund_pool": null,
+        "revenue_directed_to_referral_rewards_pool": null,
+        "revenue_directed_to_protocol_treasury": null,
+        "total_olp_pnl": {
+          "value": "125456",
+          "raw": "$125,456 *(OLP PnL declined slightly over the past two weeks. We continued to see very solid performance on all days and pairs, with the notable exception of a one-day decline due to data issues with a specific asset. We've taken steps to avoid these types of problems in the near term by delisting assets with a high risk of data issues, and will be adding them back as we refine our infrastructure.)",
+          "label": "Total OLP PnL",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": "(OLP PnL declined slightly over the past two weeks. We continued to see very solid performance on all days and pairs, with the notable exception of a one-day decline due to data issues with a specific asset. We've taken steps to avoid these types of problems in the near term by delisting assets with a high risk of data issues, and will be adding them back as we refine our infrastructure.)"
+        }
+      },
+      "reported_phase": null,
+      "revisions": [],
+      "source_available_at": "2026-11-21T15:07:21Z",
+      "source_published_at": "2025-06-13T17:45:18Z"
+    },
+    {
+      "id": "telegram:183",
+      "published_at": "2025-06-27T16:28:01Z",
+      "financial_report_id": null,
+      "source_urls": [
+        "https://t.me/variational_io/183"
+      ],
+      "sources": [
+        {
+          "platform": "telegram",
+          "id": "183",
+          "url": "https://t.me/variational_io/183",
+          "author": "variational_io",
+          "published_at": "2025-06-27T16:28:01Z",
+          "observed_at": "2026-11-21T15:07:21Z",
+          "retrieval_method": "official public Telegram announcements feed",
+          "source_text_sha256": "75fadeead6e5573151ef5d5097ea1d9560052429a34764e3b088a1a3234f0a15",
+          "normalized_sha256": "3781e09ea4a306f55bda04822ad8482c355a27eaf340b88831cae7dbdf07abb4",
+          "matches_current": true
+        }
+      ],
+      "period_start": null,
+      "period_end": null,
+      "metrics": {
+        "cumulative_volume": {
+          "value": "403771872",
+          "raw": "$403,771,872",
+          "label": "Total volume traded",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "dual_sided_oi": null,
+        "tvl": null,
+        "tokens_listed": {
+          "value": "536",
+          "raw": "536",
+          "label": "Total tokens currently listed",
+          "unit": "count",
+          "kind": "reported_snapshot",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "markets": null,
+        "total_trades_placed": {
+          "value": "181042",
+          "raw": "181,042",
+          "label": "Total trades placed",
+          "unit": "count",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "daily_active_users_week_average": {
+          "value": "227",
+          "raw": "227",
+          "label": "Daily Active Users (avg over past week)",
+          "unit": "count",
+          "kind": "reported_daily_average_over_past_week",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "weekly_active_users": {
+          "value": "633",
+          "raw": "633",
+          "label": "Weekly Active Users",
+          "unit": "count",
+          "kind": "reported_weekly_users",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_rewards_claimed": null,
+        "total_losses_refunded": null,
+        "total_referral_rewards_claimed": null
+      },
+      "legacy_financials": {
+        "revenue_2w": null,
+        "average_daily_revenue": null,
+        "revenue_directed_to_olp": null,
+        "revenue_directed_to_loss_refund_pool": null,
+        "revenue_directed_to_referral_rewards_pool": null,
+        "revenue_directed_to_protocol_treasury": null,
+        "total_olp_pnl": {
+          "value": "148844",
+          "raw": "$148,844",
+          "label": "Total OLP PnL",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        }
+      },
+      "reported_phase": null,
+      "revisions": [],
+      "source_available_at": "2026-11-21T15:07:21Z",
+      "source_published_at": "2025-06-27T16:28:01Z"
+    },
+    {
+      "id": "telegram:187",
+      "published_at": "2025-07-11T18:42:07Z",
+      "financial_report_id": null,
+      "source_urls": [
+        "https://t.me/variational_io/187"
+      ],
+      "sources": [
+        {
+          "platform": "telegram",
+          "id": "187",
+          "url": "https://t.me/variational_io/187",
+          "author": "variational_io",
+          "published_at": "2025-07-11T18:42:07Z",
+          "observed_at": "2026-11-21T15:07:21Z",
+          "retrieval_method": "official public Telegram announcements feed",
+          "source_text_sha256": "519bed3294daa7154bcc4a737e6df5c9c94278a24bca0e0b63f1b601470ac1dc",
+          "normalized_sha256": "dd6be9e7b83e76941e4d32591fee0873ffb965d2a97f81f669ce8e543d25c72e",
+          "matches_current": true
+        }
+      ],
+      "period_start": null,
+      "period_end": null,
+      "metrics": {
+        "cumulative_volume": {
+          "value": "548254070",
+          "raw": "$548,254,070",
+          "label": "Total volume traded",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "dual_sided_oi": null,
+        "tvl": null,
+        "tokens_listed": {
+          "value": "528",
+          "raw": "528",
+          "label": "Total tokens currently listed",
+          "unit": "count",
+          "kind": "reported_snapshot",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "markets": null,
+        "total_trades_placed": {
+          "value": "234248",
+          "raw": "234,248",
+          "label": "Total trades placed",
+          "unit": "count",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "daily_active_users_week_average": {
+          "value": "222",
+          "raw": "222",
+          "label": "Daily Active Users (avg over past week)",
+          "unit": "count",
+          "kind": "reported_daily_average_over_past_week",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "weekly_active_users": {
+          "value": "632",
+          "raw": "632",
+          "label": "Weekly Active Users",
+          "unit": "count",
+          "kind": "reported_weekly_users",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_rewards_claimed": null,
+        "total_losses_refunded": null,
+        "total_referral_rewards_claimed": null
+      },
+      "legacy_financials": {
+        "revenue_2w": null,
+        "average_daily_revenue": null,
+        "revenue_directed_to_olp": null,
+        "revenue_directed_to_loss_refund_pool": null,
+        "revenue_directed_to_referral_rewards_pool": null,
+        "revenue_directed_to_protocol_treasury": null,
+        "total_olp_pnl": {
+          "value": "167076",
+          "raw": "$167,076",
+          "label": "Total OLP PnL",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        }
+      },
+      "reported_phase": null,
+      "revisions": [],
+      "source_available_at": "2026-11-21T15:07:21Z",
+      "source_published_at": "2025-07-11T18:42:07Z"
+    },
+    {
+      "id": "telegram:192",
+      "published_at": "2025-07-25T17:44:27Z",
+      "financial_report_id": null,
+      "source_urls": [
+        "https://t.me/variational_io/192"
+      ],
+      "sources": [
+        {
+          "platform": "telegram",
+          "id": "192",
+          "url": "https://t.me/variational_io/192",
+          "author": "variational_io",
+          "published_at": "2025-07-25T17:44:27Z",
+          "observed_at": "2026-11-21T15:07:21Z",
+          "retrieval_method": "official public Telegram announcements feed",
+          "source_text_sha256": "5572fd75c433c0de05eb1fb8c5ad8cf5634d9d1e34fdb950552eb04e23743daa",
+          "normalized_sha256": "5771e1ce1bcf783e4e139eb065887750b35339ac5c85354ed6dfee1c9465bf89",
+          "matches_current": true
+        }
+      ],
+      "period_start": null,
+      "period_end": null,
+      "metrics": {
+        "cumulative_volume": {
+          "value": "1022683265",
+          "raw": "$1,022,683,265",
+          "label": "Total volume traded",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "dual_sided_oi": null,
+        "tvl": null,
+        "tokens_listed": {
+          "value": "522",
+          "raw": "522",
+          "label": "Total tokens currently listed",
+          "unit": "count",
+          "kind": "reported_snapshot",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "markets": null,
+        "total_trades_placed": {
+          "value": "287943",
+          "raw": "287,943",
+          "label": "Total trades placed",
+          "unit": "count",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "daily_active_users_week_average": {
+          "value": "296",
+          "raw": "296",
+          "label": "Daily Active Users (avg over past week)",
+          "unit": "count",
+          "kind": "reported_daily_average_over_past_week",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "weekly_active_users": {
+          "value": "755",
+          "raw": "755",
+          "label": "Weekly Active Users",
+          "unit": "count",
+          "kind": "reported_weekly_users",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_rewards_claimed": null,
+        "total_losses_refunded": null,
+        "total_referral_rewards_claimed": null
+      },
+      "legacy_financials": {
+        "revenue_2w": null,
+        "average_daily_revenue": null,
+        "revenue_directed_to_olp": null,
+        "revenue_directed_to_loss_refund_pool": null,
+        "revenue_directed_to_referral_rewards_pool": null,
+        "revenue_directed_to_protocol_treasury": null,
+        "total_olp_pnl": {
+          "value": "515038",
+          "raw": "$515,038",
+          "label": "Total OLP PnL",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        }
+      },
+      "reported_phase": null,
+      "revisions": [],
+      "source_available_at": "2026-11-21T15:07:21Z",
+      "source_published_at": "2025-07-25T17:44:27Z"
+    },
+    {
+      "id": "telegram:199",
+      "published_at": "2025-08-08T17:20:53Z",
+      "financial_report_id": null,
+      "source_urls": [
+        "https://t.me/variational_io/199"
+      ],
+      "sources": [
+        {
+          "platform": "telegram",
+          "id": "199",
+          "url": "https://t.me/variational_io/199",
+          "author": "variational_io",
+          "published_at": "2025-08-08T17:20:53Z",
+          "observed_at": "2026-11-21T15:07:21Z",
+          "retrieval_method": "official public Telegram announcements feed",
+          "source_text_sha256": "7f0ca0b1f366016178cfcd5349fb343fa2a098727c76cbc04557b101ce140871",
+          "normalized_sha256": "356e8ea0798505b60f1210acb6068e1d8ee513c2c8dc39b75d2c4fb6abf9f32c",
+          "matches_current": true
+        }
+      ],
+      "period_start": null,
+      "period_end": null,
+      "metrics": {
+        "cumulative_volume": {
+          "value": "1282814746",
+          "raw": "$1,282,814,746",
+          "label": "Total volume traded",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "dual_sided_oi": null,
+        "tvl": null,
+        "tokens_listed": {
+          "value": "515",
+          "raw": "515",
+          "label": "Total tokens currently listed",
+          "unit": "count",
+          "kind": "reported_snapshot",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "markets": null,
+        "total_trades_placed": {
+          "value": "337191",
+          "raw": "337,191",
+          "label": "Total trades placed",
+          "unit": "count",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "daily_active_users_week_average": {
+          "value": "228",
+          "raw": "228",
+          "label": "Daily Active Users (avg over past week)",
+          "unit": "count",
+          "kind": "reported_daily_average_over_past_week",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "weekly_active_users": {
+          "value": "624",
+          "raw": "624",
+          "label": "Weekly Active Users",
+          "unit": "count",
+          "kind": "reported_weekly_users",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_rewards_claimed": null,
+        "total_losses_refunded": null,
+        "total_referral_rewards_claimed": null
+      },
+      "legacy_financials": {
+        "revenue_2w": null,
+        "average_daily_revenue": null,
+        "revenue_directed_to_olp": null,
+        "revenue_directed_to_loss_refund_pool": null,
+        "revenue_directed_to_referral_rewards_pool": null,
+        "revenue_directed_to_protocol_treasury": null,
+        "total_olp_pnl": {
+          "value": "536552",
+          "raw": "$536,552",
+          "label": "Total OLP PnL",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        }
+      },
+      "reported_phase": null,
+      "revisions": [],
+      "source_available_at": "2026-11-21T15:07:21Z",
+      "source_published_at": "2025-08-08T17:20:53Z"
+    },
+    {
+      "id": "telegram:204",
+      "published_at": "2025-08-22T19:59:13Z",
+      "financial_report_id": null,
+      "source_urls": [
+        "https://t.me/variational_io/204"
+      ],
+      "sources": [
+        {
+          "platform": "telegram",
+          "id": "204",
+          "url": "https://t.me/variational_io/204",
+          "author": "variational_io",
+          "published_at": "2025-08-22T19:59:13Z",
+          "observed_at": "2026-11-21T15:07:20Z",
+          "retrieval_method": "official public Telegram announcements feed",
+          "source_text_sha256": "b61b26ae257b859bb1fad546b47b0de31e09428a80324496c1547be1185bba91",
+          "normalized_sha256": "30f85e09342cb2ee239c7bf08d3be67e1706d465bca5aa27c3a40531fbe87f4d",
+          "matches_current": true
+        }
+      ],
+      "period_start": null,
+      "period_end": null,
+      "metrics": {
+        "cumulative_volume": {
+          "value": "1970922466",
+          "raw": "$1,970,922,466",
+          "label": "Total volume traded",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "dual_sided_oi": null,
+        "tvl": null,
+        "tokens_listed": {
+          "value": "512",
+          "raw": "512",
+          "label": "Total tokens currently listed",
+          "unit": "count",
+          "kind": "reported_snapshot",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "markets": null,
+        "total_trades_placed": {
+          "value": "401082",
+          "raw": "401,082",
+          "label": "Total trades placed",
+          "unit": "count",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "daily_active_users_week_average": {
+          "value": "304",
+          "raw": "304",
+          "label": "Daily Active Users (avg. over past week)",
+          "unit": "count",
+          "kind": "reported_daily_average_over_past_week",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "weekly_active_users": {
+          "value": "915",
+          "raw": "915",
+          "label": "Weekly Active Users",
+          "unit": "count",
+          "kind": "reported_weekly_users",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_rewards_claimed": null,
+        "total_losses_refunded": null,
+        "total_referral_rewards_claimed": null
+      },
+      "legacy_financials": {
+        "revenue_2w": null,
+        "average_daily_revenue": null,
+        "revenue_directed_to_olp": null,
+        "revenue_directed_to_loss_refund_pool": null,
+        "revenue_directed_to_referral_rewards_pool": null,
+        "revenue_directed_to_protocol_treasury": null,
+        "total_olp_pnl": {
+          "value": "703279",
+          "raw": "$703,279",
+          "label": "Total OLP PnL",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        }
+      },
+      "reported_phase": null,
+      "revisions": [],
+      "source_available_at": "2026-11-21T15:07:20Z",
+      "source_published_at": "2025-08-22T19:59:13Z"
+    },
+    {
+      "id": "telegram:208",
+      "published_at": "2025-09-05T17:57:52Z",
+      "financial_report_id": null,
+      "source_urls": [
+        "https://t.me/variational_io/208"
+      ],
+      "sources": [
+        {
+          "platform": "telegram",
+          "id": "208",
+          "url": "https://t.me/variational_io/208",
+          "author": "variational_io",
+          "published_at": "2025-09-05T17:57:52Z",
+          "observed_at": "2026-11-21T15:07:20Z",
+          "retrieval_method": "official public Telegram announcements feed",
+          "source_text_sha256": "6b5190ce6c1755b56cf6456363119d30544629f0617114a9425191055f17c460",
+          "normalized_sha256": "d1ff7b6b6be6e3b4f4aa154601f2b6e7ee2a15f09c20afc46076193f0d6c062e",
+          "matches_current": true
+        }
+      ],
+      "period_start": null,
+      "period_end": null,
+      "metrics": {
+        "cumulative_volume": {
+          "value": "2213309674",
+          "raw": "$2,213,309,674",
+          "label": "Total volume traded",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "dual_sided_oi": null,
+        "tvl": null,
+        "tokens_listed": {
+          "value": "516",
+          "raw": "516",
+          "label": "Total tokens currently listed",
+          "unit": "count",
+          "kind": "reported_snapshot",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "markets": null,
+        "total_trades_placed": {
+          "value": "445040",
+          "raw": "445,040",
+          "label": "Total trades placed",
+          "unit": "count",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "daily_active_users_week_average": {
+          "value": "199",
+          "raw": "199",
+          "label": "Daily Active Users (avg. over past week)",
+          "unit": "count",
+          "kind": "reported_daily_average_over_past_week",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "weekly_active_users": {
+          "value": "547",
+          "raw": "547",
+          "label": "Weekly Active Users",
+          "unit": "count",
+          "kind": "reported_weekly_users",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_rewards_claimed": null,
+        "total_losses_refunded": {
+          "value": "14.36",
+          "raw": "$14.36",
+          "label": "Total Losses Refunded",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "0.01",
+          "qualifier": null
+        },
+        "total_referral_rewards_claimed": null
+      },
+      "legacy_financials": {
+        "revenue_2w": null,
+        "average_daily_revenue": null,
+        "revenue_directed_to_olp": null,
+        "revenue_directed_to_loss_refund_pool": null,
+        "revenue_directed_to_referral_rewards_pool": null,
+        "revenue_directed_to_protocol_treasury": null,
+        "total_olp_pnl": {
+          "value": "870282",
+          "raw": "$870,282",
+          "label": "Total OLP PnL",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        }
+      },
+      "reported_phase": null,
+      "revisions": [],
+      "source_available_at": "2026-11-21T15:07:20Z",
+      "source_published_at": "2025-09-05T17:57:52Z"
+    },
+    {
+      "id": "telegram:210",
+      "published_at": "2025-09-20T09:21:06Z",
+      "financial_report_id": null,
+      "source_urls": [
+        "https://t.me/variational_io/210"
+      ],
+      "sources": [
+        {
+          "platform": "telegram",
+          "id": "210",
+          "url": "https://t.me/variational_io/210",
+          "author": "variational_io",
+          "published_at": "2025-09-20T09:21:06Z",
+          "observed_at": "2026-11-21T15:07:20Z",
+          "retrieval_method": "official public Telegram announcements feed",
+          "source_text_sha256": "6a5ec1d44b4fb4dcf6954d08eab9ed0e2733ebc855538a1ef79b7c162956b192",
+          "normalized_sha256": "b4cdf88af7ca5121345ed856105711b5ddc2511f4dbf8e480be3b51c79fb4c9d",
+          "matches_current": true
+        }
+      ],
+      "period_start": null,
+      "period_end": null,
+      "metrics": {
+        "cumulative_volume": {
+          "value": "2598809568",
+          "raw": "$2,598,809,568",
+          "label": "Total Volume Traded",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "dual_sided_oi": {
+          "value": "39800000.0",
+          "raw": "$39.8M",
+          "label": "Current Dual-Sided OI",
+          "unit": "$",
+          "kind": "reported_snapshot",
+          "precision_increment": "100000",
+          "qualifier": null
+        },
+        "tvl": null,
+        "tokens_listed": {
+          "value": "520",
+          "raw": "520",
+          "label": "Total Tokens Currently Listed",
+          "unit": "count",
+          "kind": "reported_snapshot",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "markets": null,
+        "total_trades_placed": {
+          "value": "500612",
+          "raw": "500,612",
+          "label": "Total Trades Placed",
+          "unit": "count",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "daily_active_users_week_average": {
+          "value": "346",
+          "raw": "346",
+          "label": "Daily Active Users (avg. over past week)",
+          "unit": "count",
+          "kind": "reported_daily_average_over_past_week",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "weekly_active_users": {
+          "value": "890",
+          "raw": "890",
+          "label": "Weekly Active Users",
+          "unit": "count",
+          "kind": "reported_weekly_users",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_rewards_claimed": null,
+        "total_losses_refunded": {
+          "value": "18771",
+          "raw": "$18,771",
+          "label": "Total Losses Refunded",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_referral_rewards_claimed": null
+      },
+      "legacy_financials": {
+        "revenue_2w": {
+          "value": "143070",
+          "raw": "$143,070",
+          "label": "2w Revenue",
+          "unit": "$",
+          "kind": "legacy_reported_2w_amount",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "average_daily_revenue": null,
+        "revenue_directed_to_olp": {
+          "value": "101127",
+          "raw": "$101,127",
+          "label": "Revenue Directed to OLP",
+          "unit": "$",
+          "kind": "legacy_reported_2w_amount",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "revenue_directed_to_loss_refund_pool": {
+          "value": "41943",
+          "raw": "$41,943",
+          "label": "Revenue Directed to Loss Refund Pool",
+          "unit": "$",
+          "kind": "legacy_reported_2w_amount",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "revenue_directed_to_referral_rewards_pool": null,
+        "revenue_directed_to_protocol_treasury": null,
+        "total_olp_pnl": {
+          "value": "971409",
+          "raw": "$971,409",
+          "label": "Total OLP PnL",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        }
+      },
+      "reported_phase": null,
+      "revisions": [],
+      "source_available_at": "2026-11-21T15:07:20Z",
+      "source_published_at": "2025-09-20T09:21:06Z"
+    },
+    {
+      "id": "telegram:217",
+      "published_at": "2025-10-03T12:00:36Z",
+      "financial_report_id": null,
+      "source_urls": [
+        "https://t.me/variational_io/217"
+      ],
+      "sources": [
+        {
+          "platform": "telegram",
+          "id": "217",
+          "url": "https://t.me/variational_io/217",
+          "author": "variational_io",
+          "published_at": "2025-10-03T12:00:36Z",
+          "observed_at": "2026-11-21T15:07:20Z",
+          "retrieval_method": "official public Telegram announcements feed",
+          "source_text_sha256": "10e42afe0176fde32477f900e13191358dad06e6b925296419d4d1a0e36e18ed",
+          "normalized_sha256": "c273d02a18c10e121fd0b4fc788a01fc98c2fb1386a19177f59a8be77b3be0bd",
+          "matches_current": true
+        }
+      ],
+      "period_start": null,
+      "period_end": null,
+      "metrics": {
+        "cumulative_volume": {
+          "value": "3770529241",
+          "raw": "$3,770,529,241",
+          "label": "Total Volume Traded",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "dual_sided_oi": {
+          "value": "68820000.00",
+          "raw": "$68.82M",
+          "label": "Current Dual-Sided OI",
+          "unit": "$",
+          "kind": "reported_snapshot",
+          "precision_increment": "10000",
+          "qualifier": null
+        },
+        "tvl": null,
+        "tokens_listed": {
+          "value": "516",
+          "raw": "516",
+          "label": "Total Tokens Currently Listed",
+          "unit": "count",
+          "kind": "reported_snapshot",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "markets": null,
+        "total_trades_placed": {
+          "value": "674962",
+          "raw": "674,962",
+          "label": "Total Trades Placed",
+          "unit": "count",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "daily_active_users_week_average": {
+          "value": "632",
+          "raw": "632",
+          "label": "Daily Active Users (avg. over past week)",
+          "unit": "count",
+          "kind": "reported_daily_average_over_past_week",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "weekly_active_users": {
+          "value": "1580",
+          "raw": "1,580",
+          "label": "Weekly Active Users",
+          "unit": "count",
+          "kind": "reported_weekly_users",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_rewards_claimed": null,
+        "total_losses_refunded": {
+          "value": "187969",
+          "raw": "$187,969",
+          "label": "Total Losses Refunded",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_referral_rewards_claimed": null
+      },
+      "legacy_financials": {
+        "revenue_2w": {
+          "value": "416315",
+          "raw": "$416,315",
+          "label": "2w Revenue",
+          "unit": "$",
+          "kind": "legacy_reported_2w_amount",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "average_daily_revenue": null,
+        "revenue_directed_to_olp": {
+          "value": "277545",
+          "raw": "$277,545",
+          "label": "Revenue Directed to OLP",
+          "unit": "$",
+          "kind": "legacy_reported_2w_amount",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "revenue_directed_to_loss_refund_pool": {
+          "value": "138770",
+          "raw": "$138,770 (plus $95,000 in manual deposits for boost campaign)",
+          "label": "Revenue Directed to Loss Refund Pool",
+          "unit": "$",
+          "kind": "legacy_reported_2w_amount",
+          "precision_increment": "1",
+          "qualifier": "(plus $95,000 in manual deposits for boost campaign)"
+        },
+        "revenue_directed_to_referral_rewards_pool": null,
+        "revenue_directed_to_protocol_treasury": null,
+        "total_olp_pnl": {
+          "value": "1248954",
+          "raw": "$1,248,954",
+          "label": "Total OLP PnL",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        }
+      },
+      "reported_phase": null,
+      "revisions": [],
+      "source_available_at": "2026-11-21T15:07:20Z",
+      "source_published_at": "2025-10-03T12:00:36Z"
+    },
+    {
+      "id": "telegram:225",
+      "published_at": "2025-10-17T15:24:16Z",
+      "financial_report_id": null,
+      "source_urls": [
+        "https://t.me/variational_io/225"
+      ],
+      "sources": [
+        {
+          "platform": "telegram",
+          "id": "225",
+          "url": "https://t.me/variational_io/225",
+          "author": "variational_io",
+          "published_at": "2025-10-17T15:24:16Z",
+          "observed_at": "2026-11-21T15:07:01Z",
+          "retrieval_method": "official public Telegram announcements feed",
+          "source_text_sha256": "a068f76599a90543ffdfd5f0c9497d22c86acc9fe1932a6919f0fef716101b96",
+          "normalized_sha256": "325b6c2b494679132459cefade5c403421ab59e164e72df678df9a82dd12030a",
+          "matches_current": true
+        }
+      ],
+      "period_start": null,
+      "period_end": null,
+      "metrics": {
+        "cumulative_volume": {
+          "value": "7837480311",
+          "raw": "$7,837,480,311",
+          "label": "Total Volume Traded",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "dual_sided_oi": {
+          "value": "94450000.00",
+          "raw": "$94.45M",
+          "label": "Current Dual-Sided OI",
+          "unit": "$",
+          "kind": "reported_snapshot",
+          "precision_increment": "10000",
+          "qualifier": null
+        },
+        "tvl": null,
+        "tokens_listed": {
+          "value": "509",
+          "raw": "509",
+          "label": "Total Tokens Currently Listed",
+          "unit": "count",
+          "kind": "reported_snapshot",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "markets": null,
+        "total_trades_placed": {
+          "value": "1033687",
+          "raw": "1,033,687",
+          "label": "Total Trades Placed",
+          "unit": "count",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "daily_active_users_week_average": {
+          "value": "1223",
+          "raw": "1,223",
+          "label": "Daily Active Users (avg. over past week)",
+          "unit": "count",
+          "kind": "reported_daily_average_over_past_week",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "weekly_active_users": {
+          "value": "3251",
+          "raw": "3,251",
+          "label": "Weekly Active Users",
+          "unit": "count",
+          "kind": "reported_weekly_users",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_rewards_claimed": null,
+        "total_losses_refunded": {
+          "value": "1048964",
+          "raw": "$1,048,964",
+          "label": "Total Losses Refunded",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_referral_rewards_claimed": null
+      },
+      "legacy_financials": {
+        "revenue_2w": {
+          "value": "1880784",
+          "raw": "$1,880,784",
+          "label": "2w Revenue",
+          "unit": "$",
+          "kind": "legacy_reported_2w_amount",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "average_daily_revenue": null,
+        "revenue_directed_to_olp": {
+          "value": "1320448",
+          "raw": "$1,320,448",
+          "label": "Revenue Directed to OLP",
+          "unit": "$",
+          "kind": "legacy_reported_2w_amount",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "revenue_directed_to_loss_refund_pool": {
+          "value": "560336",
+          "raw": "$560,336 (plus $260,000 in manual deposits for boost campaign)",
+          "label": "Revenue Directed to Loss Refund Pool",
+          "unit": "$",
+          "kind": "legacy_reported_2w_amount",
+          "precision_increment": "1",
+          "qualifier": "(plus $260,000 in manual deposits for boost campaign)"
+        },
+        "revenue_directed_to_referral_rewards_pool": null,
+        "revenue_directed_to_protocol_treasury": null,
+        "total_olp_pnl": {
+          "value": "2569402",
+          "raw": "$2,569,402",
+          "label": "Total OLP PnL",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        }
+      },
+      "reported_phase": null,
+      "revisions": [],
+      "source_available_at": "2026-11-21T15:07:01Z",
+      "source_published_at": "2025-10-17T15:24:16Z"
+    },
+    {
+      "id": "telegram:235",
+      "published_at": "2025-10-31T15:26:54Z",
+      "financial_report_id": null,
+      "source_urls": [
+        "https://t.me/variational_io/235"
+      ],
+      "sources": [
+        {
+          "platform": "telegram",
+          "id": "235",
+          "url": "https://t.me/variational_io/235",
+          "author": "variational_io",
+          "published_at": "2025-10-31T15:26:54Z",
+          "observed_at": "2026-11-21T15:07:01Z",
+          "retrieval_method": "official public Telegram announcements feed",
+          "source_text_sha256": "c5d493ba1c58b65732889221515162cea5de9d4d12755e59761ca84b70026276",
+          "normalized_sha256": "4df3c2df5af8d727dec1fdbf0c9fac9d6b5dcc2be9437276417f58f19df80d79",
+          "matches_current": true
+        }
+      ],
+      "period_start": null,
+      "period_end": null,
+      "metrics": {
+        "cumulative_volume": {
+          "value": "29040357513",
+          "raw": "$29,040,357,513",
+          "label": "Total Volume Traded",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "dual_sided_oi": {
+          "value": "370890000.00",
+          "raw": "$370.89M",
+          "label": "Current Dual-Sided OI",
+          "unit": "$",
+          "kind": "reported_snapshot",
+          "precision_increment": "10000",
+          "qualifier": null
+        },
+        "tvl": null,
+        "tokens_listed": {
+          "value": "490",
+          "raw": "490",
+          "label": "Total Tokens Currently Listed",
+          "unit": "count",
+          "kind": "reported_snapshot",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "markets": null,
+        "total_trades_placed": {
+          "value": "7114383",
+          "raw": "7,114,383",
+          "label": "Total Trades Placed",
+          "unit": "count",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "daily_active_users_week_average": {
+          "value": "3725",
+          "raw": "3,725",
+          "label": "Daily Active Users (avg. over past week)",
+          "unit": "count",
+          "kind": "reported_daily_average_over_past_week",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "weekly_active_users": {
+          "value": "7751",
+          "raw": "7,751",
+          "label": "Weekly Active Users",
+          "unit": "count",
+          "kind": "reported_weekly_users",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_rewards_claimed": null,
+        "total_losses_refunded": {
+          "value": "1540364",
+          "raw": "$1,540,364",
+          "label": "Total Losses Refunded",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_referral_rewards_claimed": null
+      },
+      "legacy_financials": {
+        "revenue_2w": {
+          "value": "3239199",
+          "raw": "$3,239,199",
+          "label": "2w Revenue",
+          "unit": "$",
+          "kind": "legacy_reported_2w_amount",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "average_daily_revenue": null,
+        "revenue_directed_to_olp": {
+          "value": "2799036",
+          "raw": "$2,799,036",
+          "label": "Revenue Directed to OLP",
+          "unit": "$",
+          "kind": "legacy_reported_2w_amount",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "revenue_directed_to_loss_refund_pool": {
+          "value": "440163",
+          "raw": "$440,163",
+          "label": "Revenue Directed to Loss Refund Pool",
+          "unit": "$",
+          "kind": "legacy_reported_2w_amount",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "revenue_directed_to_referral_rewards_pool": null,
+        "revenue_directed_to_protocol_treasury": null,
+        "total_olp_pnl": {
+          "value": "5368438",
+          "raw": "$5,368,438",
+          "label": "Total OLP PnL",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        }
+      },
+      "reported_phase": null,
+      "revisions": [],
+      "source_available_at": "2026-11-21T15:07:01Z",
+      "source_published_at": "2025-10-31T15:26:54Z"
+    },
+    {
+      "id": "telegram:243",
+      "published_at": "2025-11-14T17:39:37Z",
+      "financial_report_id": null,
+      "source_urls": [
+        "https://t.me/variational_io/243"
+      ],
+      "sources": [
+        {
+          "platform": "telegram",
+          "id": "243",
+          "url": "https://t.me/variational_io/243",
+          "author": "variational_io",
+          "published_at": "2025-11-14T17:39:37Z",
+          "observed_at": "2026-11-21T15:06:31Z",
+          "retrieval_method": "official public Telegram announcements feed",
+          "source_text_sha256": "91aaca1dad5c1b81f34c762d1e87f77c9bb20466100b1a1ec23bdb024b3ab96b",
+          "normalized_sha256": "1b8725f90b15ba106945dc659b13c294b0c1305fe774f3ec38052cb384cf2484",
+          "matches_current": true
+        }
+      ],
+      "period_start": null,
+      "period_end": null,
+      "metrics": {
+        "cumulative_volume": {
+          "value": "44252040160",
+          "raw": "$44,252,040,160",
+          "label": "Total Volume Traded",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "dual_sided_oi": {
+          "value": "385350000.00",
+          "raw": "$385.35M",
+          "label": "Current Dual-Sided OI",
+          "unit": "$",
+          "kind": "reported_snapshot",
+          "precision_increment": "10000",
+          "qualifier": null
+        },
+        "tvl": null,
+        "tokens_listed": {
+          "value": "494",
+          "raw": "494",
+          "label": "Total Tokens Currently Listed",
+          "unit": "count",
+          "kind": "reported_snapshot",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "markets": null,
+        "total_trades_placed": {
+          "value": "13270043",
+          "raw": "13,270,043",
+          "label": "Total Trades Placed",
+          "unit": "count",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "daily_active_users_week_average": {
+          "value": "3861",
+          "raw": "3861",
+          "label": "Daily Active Users (avg. over past week)",
+          "unit": "count",
+          "kind": "reported_daily_average_over_past_week",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "weekly_active_users": {
+          "value": "8054",
+          "raw": "8,054",
+          "label": "Weekly Active Users",
+          "unit": "count",
+          "kind": "reported_weekly_users",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_rewards_claimed": null,
+        "total_losses_refunded": {
+          "value": "1955410",
+          "raw": "$1,955,410",
+          "label": "Total Losses Refunded",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_referral_rewards_claimed": null
+      },
+      "legacy_financials": {
+        "revenue_2w": {
+          "value": "1044461",
+          "raw": "$1,044,461",
+          "label": "2w Revenue",
+          "unit": "$",
+          "kind": "legacy_reported_2w_amount",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "average_daily_revenue": null,
+        "revenue_directed_to_olp": {
+          "value": "636462",
+          "raw": "$636,462",
+          "label": "Revenue Directed to OLP",
+          "unit": "$",
+          "kind": "legacy_reported_2w_amount",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "revenue_directed_to_loss_refund_pool": {
+          "value": "407999",
+          "raw": "$407,999",
+          "label": "Revenue Directed to Loss Refund Pool",
+          "unit": "$",
+          "kind": "legacy_reported_2w_amount",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "revenue_directed_to_referral_rewards_pool": null,
+        "revenue_directed_to_protocol_treasury": null,
+        "total_olp_pnl": {
+          "value": "6004900",
+          "raw": "$6,004,900",
+          "label": "Total OLP PnL",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        }
+      },
+      "reported_phase": null,
+      "revisions": [],
+      "source_available_at": "2026-11-21T15:06:31Z",
+      "source_published_at": "2025-11-14T17:39:37Z"
+    },
+    {
+      "id": "telegram:249",
+      "published_at": "2025-11-28T16:34:45Z",
+      "financial_report_id": null,
+      "source_urls": [
+        "https://t.me/variational_io/249"
+      ],
+      "sources": [
+        {
+          "platform": "telegram",
+          "id": "249",
+          "url": "https://t.me/variational_io/249",
+          "author": "variational_io",
+          "published_at": "2025-11-28T16:34:45Z",
+          "observed_at": "2026-11-21T15:06:31Z",
+          "retrieval_method": "official public Telegram announcements feed",
+          "source_text_sha256": "ac7e88b25e1cf12e41f2af380f9f61002201c372cefac76e3a944ff8afab5201",
+          "normalized_sha256": "0ae4dacf5a01b8e91d084c1e212a77899888881b5090da4c79ea65a6fc9e3d0a",
+          "matches_current": true
+        }
+      ],
+      "period_start": null,
+      "period_end": null,
+      "metrics": {
+        "cumulative_volume": {
+          "value": "61054525224",
+          "raw": "$61,054,525,224",
+          "label": "Total Volume Traded",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "dual_sided_oi": {
+          "value": "387880000.00",
+          "raw": "$387.88M",
+          "label": "Current Dual-Sided OI",
+          "unit": "$",
+          "kind": "reported_snapshot",
+          "precision_increment": "10000",
+          "qualifier": null
+        },
+        "tvl": null,
+        "tokens_listed": {
+          "value": "489",
+          "raw": "489",
+          "label": "Total Tokens Currently Listed",
+          "unit": "count",
+          "kind": "reported_snapshot",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "markets": null,
+        "total_trades_placed": {
+          "value": "23439493",
+          "raw": "23,439,493",
+          "label": "Total Trades Placed",
+          "unit": "count",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "daily_active_users_week_average": {
+          "value": "5003",
+          "raw": "5,003",
+          "label": "Daily Active Users (avg. over past week)",
+          "unit": "count",
+          "kind": "reported_daily_average_over_past_week",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "weekly_active_users": {
+          "value": "12136",
+          "raw": "12,136",
+          "label": "Weekly Active Users",
+          "unit": "count",
+          "kind": "reported_weekly_users",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_rewards_claimed": null,
+        "total_losses_refunded": {
+          "value": "2549095",
+          "raw": "$2,549,095",
+          "label": "Total Losses Refunded",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_referral_rewards_claimed": null
+      },
+      "legacy_financials": {
+        "revenue_2w": {
+          "value": "1498692",
+          "raw": "$1,498,692",
+          "label": "2w Revenue",
+          "unit": "$",
+          "kind": "legacy_reported_2w_amount",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "average_daily_revenue": null,
+        "revenue_directed_to_olp": {
+          "value": "986035",
+          "raw": "$986,035",
+          "label": "Revenue Directed to OLP",
+          "unit": "$",
+          "kind": "legacy_reported_2w_amount",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "revenue_directed_to_loss_refund_pool": {
+          "value": "303886",
+          "raw": "$303,886",
+          "label": "Revenue Directed to Loss Refund Pool",
+          "unit": "$",
+          "kind": "legacy_reported_2w_amount",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "revenue_directed_to_referral_rewards_pool": {
+          "value": "208771",
+          "raw": "$208,771 (excluding ~$1.1M backfill)",
+          "label": "Revenue Directed to Referral Rewards Pool",
+          "unit": "$",
+          "kind": "legacy_reported_2w_amount",
+          "precision_increment": "1",
+          "qualifier": "(excluding ~$1.1M backfill)"
+        },
+        "revenue_directed_to_protocol_treasury": null,
+        "total_olp_pnl": {
+          "value": "6990935",
+          "raw": "$6,990,935",
+          "label": "Total OLP PnL",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        }
+      },
+      "reported_phase": null,
+      "revisions": [],
+      "source_available_at": "2026-11-21T15:06:31Z",
+      "source_published_at": "2025-11-28T16:34:45Z"
+    },
+    {
+      "id": "telegram:254",
+      "published_at": "2025-12-12T22:12:42Z",
+      "financial_report_id": null,
+      "source_urls": [
+        "https://t.me/variational_io/254"
+      ],
+      "sources": [
+        {
+          "platform": "telegram",
+          "id": "254",
+          "url": "https://t.me/variational_io/254",
+          "author": "variational_io",
+          "published_at": "2025-12-12T22:12:42Z",
+          "observed_at": "2026-11-21T15:06:31Z",
+          "retrieval_method": "official public Telegram announcements feed",
+          "source_text_sha256": "385383938aa43af6c4b586c10aee28f590fe0baf6299ac28fca561dcb418cd18",
+          "normalized_sha256": "e44a873896452d01bcdb13f5f856f7e492505f4b64cfa718fbb26126015c9a5e",
+          "matches_current": true
+        }
+      ],
+      "period_start": null,
+      "period_end": null,
+      "metrics": {
+        "cumulative_volume": {
+          "value": "79363450016",
+          "raw": "$79,363,450,016",
+          "label": "Total Volume Traded",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "dual_sided_oi": {
+          "value": "351070000.00",
+          "raw": "$351.07M",
+          "label": "Current Dual-Sided OI",
+          "unit": "$",
+          "kind": "reported_snapshot",
+          "precision_increment": "10000",
+          "qualifier": null
+        },
+        "tvl": null,
+        "tokens_listed": {
+          "value": "485",
+          "raw": "485",
+          "label": "Total Tokens Currently Listed",
+          "unit": "count",
+          "kind": "reported_snapshot",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "markets": null,
+        "total_trades_placed": {
+          "value": "39050893",
+          "raw": "39,050,893",
+          "label": "Total Trades Placed",
+          "unit": "count",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "daily_active_users_week_average": {
+          "value": "4403",
+          "raw": "4,403",
+          "label": "Daily Active Users (avg. over past week)",
+          "unit": "count",
+          "kind": "reported_daily_average_over_past_week",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "weekly_active_users": {
+          "value": "10280",
+          "raw": "10,280",
+          "label": "Weekly Active Users",
+          "unit": "count",
+          "kind": "reported_weekly_users",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_rewards_claimed": {
+          "value": "3706514",
+          "raw": "$3,706,514",
+          "label": "Total Rewards Claimed",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_losses_refunded": {
+          "value": "2550044",
+          "raw": "$2,550,044",
+          "label": "Total Losses Refunded",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_referral_rewards_claimed": {
+          "value": "1156470",
+          "raw": "$1,156,470",
+          "label": "Total Referral Rewards Claimed",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        }
+      },
+      "legacy_financials": {
+        "revenue_2w": {
+          "value": "717249",
+          "raw": "$717,249",
+          "label": "2w Revenue",
+          "unit": "$",
+          "kind": "legacy_reported_2w_amount",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "average_daily_revenue": null,
+        "revenue_directed_to_olp": {
+          "value": "349246",
+          "raw": "$349,246",
+          "label": "Revenue Directed to OLP",
+          "unit": "$",
+          "kind": "legacy_reported_2w_amount",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "revenue_directed_to_loss_refund_pool": {
+          "value": "221668",
+          "raw": "$221,668 (excluding $100,000 manually deposited)",
+          "label": "Revenue Directed to Loss Refund Pool",
+          "unit": "$",
+          "kind": "legacy_reported_2w_amount",
+          "precision_increment": "1",
+          "qualifier": "(excluding $100,000 manually deposited)"
+        },
+        "revenue_directed_to_referral_rewards_pool": {
+          "value": "146335",
+          "raw": "$146,335 (paused for maintenance since 12/5)",
+          "label": "Revenue Directed to Referral Rewards Pool",
+          "unit": "$",
+          "kind": "legacy_reported_2w_amount",
+          "precision_increment": "1",
+          "qualifier": "(paused for maintenance since 12/5)"
+        },
+        "revenue_directed_to_protocol_treasury": null,
+        "total_olp_pnl": {
+          "value": "7340181",
+          "raw": "$7,340,181",
+          "label": "Total OLP PnL",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        }
+      },
+      "reported_phase": null,
+      "revisions": [],
+      "source_available_at": "2026-11-21T15:06:31Z",
+      "source_published_at": "2025-12-12T22:12:42Z"
+    },
+    {
+      "id": "telegram:262",
+      "published_at": "2026-01-09T04:22:03Z",
+      "financial_report_id": null,
+      "source_urls": [
+        "https://t.me/variational_io/262"
+      ],
+      "sources": [
+        {
+          "platform": "telegram",
+          "id": "262",
+          "url": "https://t.me/variational_io/262",
+          "author": "variational_io",
+          "published_at": "2026-01-09T04:22:03Z",
+          "observed_at": "2026-11-21T15:05:35Z",
+          "retrieval_method": "official public Telegram announcements feed",
+          "source_text_sha256": "8f5e93f96a442387e8498ddceed474a494ff227c32fd1bf9a9d8acd183006cb8",
+          "normalized_sha256": "c1a7d9a16dc2faa3958ba7a89cb12e29b8780223b61297185a340c4d34540c6a",
+          "matches_current": true
+        }
+      ],
+      "period_start": null,
+      "period_end": null,
+      "metrics": {
+        "cumulative_volume": {
+          "value": "113950000000.00",
+          "raw": "$113.95B",
+          "label": "Total Volume Traded",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "10000000",
+          "qualifier": null
+        },
+        "dual_sided_oi": {
+          "value": "1030000000.00",
+          "raw": "$1.03B",
+          "label": "Current Dual-Sided OI",
+          "unit": "$",
+          "kind": "reported_snapshot",
+          "precision_increment": "10000000",
+          "qualifier": null
+        },
+        "tvl": {
+          "value": "119620000.00",
+          "raw": "$119.62M",
+          "label": "TVL (Excludes Some OLP Hedging Accounts)",
+          "unit": "$",
+          "kind": "reported_snapshot",
+          "precision_increment": "10000",
+          "qualifier": null
+        },
+        "tokens_listed": {
+          "value": "487",
+          "raw": "487",
+          "label": "Total Tokens Currently Listed",
+          "unit": "count",
+          "kind": "reported_snapshot",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "markets": null,
+        "total_trades_placed": null,
+        "daily_active_users_week_average": {
+          "value": "10906",
+          "raw": "10,906",
+          "label": "Daily Active Users (avg. over past week)",
+          "unit": "count",
+          "kind": "reported_daily_average_over_past_week",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "weekly_active_users": {
+          "value": "22830",
+          "raw": "22,830",
+          "label": "Weekly Active Users",
+          "unit": "count",
+          "kind": "reported_weekly_users",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_rewards_claimed": {
+          "value": "4526173",
+          "raw": "$4,526,173",
+          "label": "Total Rewards Claimed",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_losses_refunded": {
+          "value": "3050594",
+          "raw": "$3,050,594",
+          "label": "Total Losses Refunded",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_referral_rewards_claimed": {
+          "value": "1475579",
+          "raw": "$1,475,579",
+          "label": "Total Referral Rewards Claimed",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        }
+      },
+      "legacy_financials": {
+        "revenue_2w": {
+          "value": "1700724",
+          "raw": "$1,700,724",
+          "label": "2w Revenue",
+          "unit": "$",
+          "kind": "legacy_reported_2w_amount",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "average_daily_revenue": {
+          "value": "121480",
+          "raw": "$121,480",
+          "label": "Average Daily Revenue",
+          "unit": "$",
+          "kind": "legacy_reported_daily_average",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "revenue_directed_to_olp": {
+          "value": "1160534",
+          "raw": "$1,160,534",
+          "label": "Revenue Directed to OLP",
+          "unit": "$",
+          "kind": "legacy_reported_2w_amount",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "revenue_directed_to_loss_refund_pool": {
+          "value": "367214",
+          "raw": "$367,214",
+          "label": "Revenue Directed to Loss Refund Pool",
+          "unit": "$",
+          "kind": "legacy_reported_2w_amount",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "revenue_directed_to_referral_rewards_pool": {
+          "value": "172976",
+          "raw": "$172,976",
+          "label": "Revenue Directed to Referral Rewards Pool",
+          "unit": "$",
+          "kind": "legacy_reported_2w_amount",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "revenue_directed_to_protocol_treasury": null,
+        "total_olp_pnl": {
+          "value": "8766259",
+          "raw": "$8,766,259",
+          "label": "Total OLP PnL",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        }
+      },
+      "reported_phase": null,
+      "revisions": [],
+      "source_available_at": "2026-11-21T15:05:35Z",
+      "source_published_at": "2026-01-09T04:22:03Z"
+    },
+    {
+      "id": "telegram:266",
+      "published_at": "2026-01-23T17:07:18Z",
+      "financial_report_id": null,
+      "source_urls": [
+        "https://t.me/variational_io/266"
+      ],
+      "sources": [
+        {
+          "platform": "telegram",
+          "id": "266",
+          "url": "https://t.me/variational_io/266",
+          "author": "variational_io",
+          "published_at": "2026-01-23T17:07:18Z",
+          "observed_at": "2026-11-21T15:05:01Z",
+          "retrieval_method": "official public Telegram announcements feed",
+          "source_text_sha256": "73edc432e09c358a7a99bc127979a70b588d9bba684d2997e5a9c603896cece4",
+          "normalized_sha256": "4b7fa2a3f4b959f8be0e201d75c23907ad4b5ee33699152922ac91f8b3e87b62",
+          "matches_current": true
+        }
+      ],
+      "period_start": null,
+      "period_end": null,
+      "metrics": {
+        "cumulative_volume": {
+          "value": "136250000000.00",
+          "raw": "$136.25B",
+          "label": "Total Volume Traded",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "10000000",
+          "qualifier": null
+        },
+        "dual_sided_oi": {
+          "value": "1090000000.00",
+          "raw": "$1.09B",
+          "label": "Current Dual-Sided OI",
+          "unit": "$",
+          "kind": "reported_snapshot",
+          "precision_increment": "10000000",
+          "qualifier": null
+        },
+        "tvl": {
+          "value": "133810000.00",
+          "raw": "$133.81M",
+          "label": "TVL (Excludes Some OLP Hedging Accounts)",
+          "unit": "$",
+          "kind": "reported_snapshot",
+          "precision_increment": "10000",
+          "qualifier": null
+        },
+        "tokens_listed": {
+          "value": "492",
+          "raw": "492",
+          "label": "Total Tokens Currently Listed",
+          "unit": "count",
+          "kind": "reported_snapshot",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "markets": null,
+        "total_trades_placed": null,
+        "daily_active_users_week_average": {
+          "value": "14016",
+          "raw": "14,016",
+          "label": "Daily Active Users (avg. over past week)",
+          "unit": "count",
+          "kind": "reported_daily_average_over_past_week",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "weekly_active_users": {
+          "value": "28017",
+          "raw": "28,017",
+          "label": "Weekly Active Users",
+          "unit": "count",
+          "kind": "reported_weekly_users",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_rewards_claimed": {
+          "value": "5378024",
+          "raw": "$5,378,024",
+          "label": "Total Rewards Claimed",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_losses_refunded": {
+          "value": "3671444",
+          "raw": "$3,671,444",
+          "label": "Total Losses Refunded",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_referral_rewards_claimed": {
+          "value": "1706580",
+          "raw": "$1,706,580",
+          "label": "Total Referral Rewards Claimed",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        }
+      },
+      "legacy_financials": {
+        "revenue_2w": {
+          "value": "2729731",
+          "raw": "$2,729,731",
+          "label": "2w Revenue",
+          "unit": "$",
+          "kind": "legacy_reported_2w_amount",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "average_daily_revenue": {
+          "value": "194981",
+          "raw": "$194,981",
+          "label": "Average Daily Revenue",
+          "unit": "$",
+          "kind": "legacy_reported_daily_average",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "revenue_directed_to_olp": {
+          "value": "2034390",
+          "raw": "$2,034,390",
+          "label": "Revenue Directed to OLP",
+          "unit": "$",
+          "kind": "legacy_reported_2w_amount",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "revenue_directed_to_loss_refund_pool": {
+          "value": "457079",
+          "raw": "$457,079",
+          "label": "Revenue Directed to Loss Refund Pool",
+          "unit": "$",
+          "kind": "legacy_reported_2w_amount",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "revenue_directed_to_referral_rewards_pool": {
+          "value": "220806",
+          "raw": "$220,806",
+          "label": "Revenue Directed to Referral Rewards Pool",
+          "unit": "$",
+          "kind": "legacy_reported_2w_amount",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "revenue_directed_to_protocol_treasury": {
+          "value": "17456",
+          "raw": "$17,456",
+          "label": "Revenue Directed to Protocol Treasury (just deployed for testing yesterday, numbers under construction, docs soon)",
+          "unit": "$",
+          "kind": "legacy_reported_2w_amount",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_olp_pnl": {
+          "value": "10800649",
+          "raw": "$10,800,649",
+          "label": "Total OLP PnL",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        }
+      },
+      "reported_phase": null,
+      "revisions": [],
+      "source_available_at": "2026-11-21T15:05:01Z",
+      "source_published_at": "2026-01-23T17:07:18Z"
+    },
+    {
+      "id": "telegram:277",
+      "published_at": "2026-02-06T22:23:06Z",
+      "financial_report_id": null,
+      "source_urls": [
+        "https://t.me/variational_io/277"
+      ],
+      "sources": [
+        {
+          "platform": "telegram",
+          "id": "277",
+          "url": "https://t.me/variational_io/277",
+          "author": "variational_io",
+          "published_at": "2026-02-06T22:23:06Z",
+          "observed_at": "2026-11-21T15:06:31Z",
+          "retrieval_method": "official public Telegram announcements feed",
+          "source_text_sha256": "6179c577cc6cdaf06323e1b55d222c7c94a02ad701235d12e407dcdf8242ee72",
+          "normalized_sha256": "7cf0eb1bd5e750b150832cdf590a803c074fbb358ad2a56d34117fb85dbff097",
+          "matches_current": true
+        }
+      ],
+      "period_start": null,
+      "period_end": null,
+      "metrics": {
+        "cumulative_volume": {
+          "value": "151540000000.00",
+          "raw": "$151.54B",
+          "label": "Total Volume Traded",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "10000000",
+          "qualifier": null
+        },
+        "dual_sided_oi": {
+          "value": "590760000.00",
+          "raw": "$590.76M",
+          "label": "Current Dual-Sided OI",
+          "unit": "$",
+          "kind": "reported_snapshot",
+          "precision_increment": "10000",
+          "qualifier": null
+        },
+        "tvl": {
+          "value": "110190000.00",
+          "raw": "$110.19M",
+          "label": "TVL (Excludes Some OLP Hedging Accounts)",
+          "unit": "$",
+          "kind": "reported_snapshot",
+          "precision_increment": "10000",
+          "qualifier": null
+        },
+        "tokens_listed": {
+          "value": "477",
+          "raw": "477",
+          "label": "Total Tokens Currently Listed",
+          "unit": "count",
+          "kind": "reported_snapshot",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "markets": null,
+        "total_trades_placed": null,
+        "daily_active_users_week_average": {
+          "value": "11504",
+          "raw": "11,504",
+          "label": "Daily Active Users (avg. over past week)",
+          "unit": "count",
+          "kind": "reported_daily_average_over_past_week",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "weekly_active_users": {
+          "value": "22380",
+          "raw": "22,380",
+          "label": "Weekly Active Users",
+          "unit": "count",
+          "kind": "reported_weekly_users",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_rewards_claimed": {
+          "value": "5869951",
+          "raw": "$5,869,951",
+          "label": "Total Rewards Claimed",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_losses_refunded": {
+          "value": "4013508",
+          "raw": "$4,013,508",
+          "label": "Total Losses Refunded",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_referral_rewards_claimed": {
+          "value": "1856443",
+          "raw": "$1,856,443",
+          "label": "Total Referral Rewards Claimed",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        }
+      },
+      "legacy_financials": {
+        "revenue_2w": {
+          "value": "1732280",
+          "raw": "$1,732,280",
+          "label": "2w Revenue",
+          "unit": "$",
+          "kind": "legacy_reported_2w_amount",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "average_daily_revenue": {
+          "value": "123734",
+          "raw": "$123,734",
+          "label": "Average Daily Revenue",
+          "unit": "$",
+          "kind": "legacy_reported_daily_average",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "revenue_directed_to_olp": {
+          "value": "927837",
+          "raw": "$927,837",
+          "label": "Revenue Directed to OLP",
+          "unit": "$",
+          "kind": "legacy_reported_2w_amount",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "revenue_directed_to_loss_refund_pool": {
+          "value": "324614",
+          "raw": "$324,614",
+          "label": "Revenue Directed to Loss Refund Pool",
+          "unit": "$",
+          "kind": "legacy_reported_2w_amount",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "revenue_directed_to_referral_rewards_pool": {
+          "value": "155215",
+          "raw": "$155,215",
+          "label": "Revenue Directed to Referral Rewards Pool",
+          "unit": "$",
+          "kind": "legacy_reported_2w_amount",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "revenue_directed_to_protocol_treasury": {
+          "value": "324614",
+          "raw": "$324,614",
+          "label": "Revenue Directed to Protocol Treasury",
+          "unit": "$",
+          "kind": "legacy_reported_2w_amount",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_olp_pnl": {
+          "value": "11728486",
+          "raw": "$11,728,486",
+          "label": "Total OLP PnL",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        }
+      },
+      "reported_phase": null,
+      "revisions": [],
+      "source_available_at": "2026-11-21T15:06:31Z",
+      "source_published_at": "2026-02-06T22:23:06Z"
+    },
+    {
+      "id": "x:2029983510824636491",
+      "published_at": "2026-03-06T18:12:38Z",
+      "financial_report_id": "x:2029983510824636491",
+      "source_urls": [
+        "https://x.com/variational_io/status/2029983510824636491"
+      ],
+      "sources": [
+        {
+          "platform": "x",
+          "id": "2029983510824636491",
+          "url": "https://x.com/variational_io/status/2029983510824636491",
+          "author": "variational_io",
+          "published_at": "2026-03-06T18:12:38Z",
+          "observed_at": "2026-11-21T15:13:05Z",
+          "retrieval_method": "saved FxTwitter replay of official X post",
+          "source_text_sha256": "d621f6054d7a08297f680602df448f38c66b024cc639c5c90b0f2d0e11074b0d",
+          "normalized_sha256": "6920903303d70e506e0e3bc874b230ca7ce7f18395d5b2b2531b0155305cc3a9",
+          "matches_current": true
+        }
+      ],
+      "period_start": null,
+      "period_end": null,
+      "metrics": {
+        "cumulative_volume": {
+          "value": "178520000000.00",
+          "raw": "$178.52B",
+          "label": "Total Volume Traded",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "10000000",
+          "qualifier": null
+        },
+        "dual_sided_oi": {
+          "value": "673070000.00",
+          "raw": "$673.07M",
+          "label": "Current Dual-Sided OI",
+          "unit": "$",
+          "kind": "reported_snapshot",
+          "precision_increment": "10000",
+          "qualifier": null
+        },
+        "tvl": {
+          "value": "106880000.00",
+          "raw": "$106.88M",
+          "label": "TVL (Excludes Some OLP Hedging Accounts)",
+          "unit": "$",
+          "kind": "reported_snapshot",
+          "precision_increment": "10000",
+          "qualifier": null
+        },
+        "tokens_listed": {
+          "value": "470",
+          "raw": "470",
+          "label": "Total Tokens Currently Listed",
+          "unit": "count",
+          "kind": "reported_snapshot",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "markets": null,
+        "total_trades_placed": null,
+        "daily_active_users_week_average": {
+          "value": "10954",
+          "raw": "10,954",
+          "label": "Daily Active Users (avg. over past week)",
+          "unit": "count",
+          "kind": "reported_daily_average_over_past_week",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "weekly_active_users": {
+          "value": "19071",
+          "raw": "19,071",
+          "label": "Weekly Active Users",
+          "unit": "count",
+          "kind": "reported_weekly_users",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_rewards_claimed": {
+          "value": "6392067",
+          "raw": "$6,392,067",
+          "label": "Total Rewards Claimed",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_losses_refunded": {
+          "value": "4381625",
+          "raw": "$4,381,625",
+          "label": "Total Losses Refunded",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_referral_rewards_claimed": {
+          "value": "2010442",
+          "raw": "$2,010,442",
+          "label": "Total Referral Rewards Claimed",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        }
+      },
+      "legacy_financials": {
+        "revenue_2w": null,
+        "average_daily_revenue": null,
+        "revenue_directed_to_olp": null,
+        "revenue_directed_to_loss_refund_pool": null,
+        "revenue_directed_to_referral_rewards_pool": null,
+        "revenue_directed_to_protocol_treasury": null,
+        "total_olp_pnl": null
+      },
+      "reported_phase": null,
+      "revisions": [],
+      "source_available_at": "2026-11-21T15:13:05Z",
+      "source_published_at": "2026-03-06T18:12:38Z"
+    },
+    {
+      "id": "x:2035011447072440602",
+      "published_at": "2026-03-20T15:11:52Z",
+      "financial_report_id": "x:2035011447072440602",
+      "source_urls": [
+        "https://x.com/variational_io/status/2035011447072440602"
+      ],
+      "sources": [
+        {
+          "platform": "x",
+          "id": "2035011447072440602",
+          "url": "https://x.com/variational_io/status/2035011447072440602",
+          "author": "variational_io",
+          "published_at": "2026-03-20T15:11:52Z",
+          "observed_at": "2026-11-21T15:13:05Z",
+          "retrieval_method": "saved FxTwitter replay of official X post",
+          "source_text_sha256": "1c7470b366f25690066e6c24b3936552944f9cc5001d5a135a3b66f47be3a92c",
+          "normalized_sha256": "afe164fcf059461b60bf5f7f66b4fd862e9bfcf3d507a836bb80cba6f613b53d",
+          "matches_current": true
+        }
+      ],
+      "period_start": null,
+      "period_end": null,
+      "metrics": {
+        "cumulative_volume": {
+          "value": "189270000000.00",
+          "raw": "$189.27B",
+          "label": "Total Volume Traded",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "10000000",
+          "qualifier": null
+        },
+        "dual_sided_oi": {
+          "value": "746870000.00",
+          "raw": "$746.87M",
+          "label": "Current Dual-Sided OI",
+          "unit": "$",
+          "kind": "reported_snapshot",
+          "precision_increment": "10000",
+          "qualifier": null
+        },
+        "tvl": {
+          "value": "111900000.00",
+          "raw": "$111.90M",
+          "label": "TVL (Excludes Some OLP Hedging Accounts)",
+          "unit": "$",
+          "kind": "reported_snapshot",
+          "precision_increment": "10000",
+          "qualifier": null
+        },
+        "tokens_listed": {
+          "value": "467",
+          "raw": "467",
+          "label": "Total Tokens Currently Listed",
+          "unit": "count",
+          "kind": "reported_snapshot",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "markets": null,
+        "total_trades_placed": null,
+        "daily_active_users_week_average": {
+          "value": "11352",
+          "raw": "11,352",
+          "label": "Daily Active Users (avg. over past week)",
+          "unit": "count",
+          "kind": "reported_daily_average_over_past_week",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "weekly_active_users": {
+          "value": "19381",
+          "raw": "19,381",
+          "label": "Weekly Active Users",
+          "unit": "count",
+          "kind": "reported_weekly_users",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_rewards_claimed": {
+          "value": "6653401",
+          "raw": "$6,653,401",
+          "label": "Total Rewards Claimed",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_losses_refunded": {
+          "value": "4559196",
+          "raw": "$4,559,196",
+          "label": "Total Losses Refunded",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_referral_rewards_claimed": {
+          "value": "2094205",
+          "raw": "$2,094,205",
+          "label": "Total Referral Rewards Claimed",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        }
+      },
+      "legacy_financials": {
+        "revenue_2w": null,
+        "average_daily_revenue": null,
+        "revenue_directed_to_olp": null,
+        "revenue_directed_to_loss_refund_pool": null,
+        "revenue_directed_to_referral_rewards_pool": null,
+        "revenue_directed_to_protocol_treasury": null,
+        "total_olp_pnl": null
+      },
+      "reported_phase": null,
+      "revisions": [],
+      "source_available_at": "2026-11-21T15:13:05Z",
+      "source_published_at": "2026-03-20T15:11:52Z"
+    },
+    {
+      "id": "x:2040164994764124195",
+      "published_at": "2026-04-03T20:30:13Z",
+      "financial_report_id": "x:2040164994764124195",
+      "source_urls": [
+        "https://x.com/variational_io/status/2040164994764124195"
+      ],
+      "sources": [
+        {
+          "platform": "x",
+          "id": "2040164994764124195",
+          "url": "https://x.com/variational_io/status/2040164994764124195",
+          "author": "variational_io",
+          "published_at": "2026-04-03T20:30:13Z",
+          "observed_at": "2026-11-21T15:13:05Z",
+          "retrieval_method": "saved FxTwitter replay of official X post",
+          "source_text_sha256": "72565100cbeb814cd8cc1fb4c4b558bd38ff9288548c3207f42fead426039ba7",
+          "normalized_sha256": "d2c79b4f410c12c7065421ce68af889ac9a6388b117feecef11108f67773ec70",
+          "matches_current": true
+        }
+      ],
+      "period_start": null,
+      "period_end": null,
+      "metrics": {
+        "cumulative_volume": {
+          "value": "197280000000.00",
+          "raw": "$197.28B",
+          "label": "Total Volume Traded",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "10000000",
+          "qualifier": null
+        },
+        "dual_sided_oi": {
+          "value": "637770000.00",
+          "raw": "$637.77M",
+          "label": "Current Dual-Sided OI",
+          "unit": "$",
+          "kind": "reported_snapshot",
+          "precision_increment": "10000",
+          "qualifier": null
+        },
+        "tvl": {
+          "value": "108520000.00",
+          "raw": "$108.52M",
+          "label": "TVL (Excludes Some OLP Hedging Accounts)",
+          "unit": "$",
+          "kind": "reported_snapshot",
+          "precision_increment": "10000",
+          "qualifier": null
+        },
+        "tokens_listed": {
+          "value": "462",
+          "raw": "462",
+          "label": "Total Tokens Currently Listed",
+          "unit": "count",
+          "kind": "reported_snapshot",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "markets": null,
+        "total_trades_placed": null,
+        "daily_active_users_week_average": {
+          "value": "10243",
+          "raw": "10,243",
+          "label": "Daily Active Users (avg. over past week)",
+          "unit": "count",
+          "kind": "reported_daily_average_over_past_week",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "weekly_active_users": {
+          "value": "16902",
+          "raw": "16,902",
+          "label": "Weekly Active Users",
+          "unit": "count",
+          "kind": "reported_weekly_users",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_rewards_claimed": {
+          "value": "6728461",
+          "raw": "$6,728,461",
+          "label": "Total Rewards Claimed",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_losses_refunded": {
+          "value": "4559196",
+          "raw": "$4,559,196",
+          "label": "Total Losses Refunded (Sunset)",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_referral_rewards_claimed": {
+          "value": "2169265",
+          "raw": "$2,169,265",
+          "label": "Total Referral Rewards Claimed",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        }
+      },
+      "legacy_financials": {
+        "revenue_2w": null,
+        "average_daily_revenue": null,
+        "revenue_directed_to_olp": null,
+        "revenue_directed_to_loss_refund_pool": null,
+        "revenue_directed_to_referral_rewards_pool": null,
+        "revenue_directed_to_protocol_treasury": null,
+        "total_olp_pnl": null
+      },
+      "reported_phase": null,
+      "revisions": [],
+      "source_available_at": "2026-11-21T15:13:05Z",
+      "source_published_at": "2026-04-03T20:30:13Z"
+    },
+    {
+      "id": "x:2045195227615613390",
+      "published_at": "2026-04-17T17:38:34Z",
+      "financial_report_id": "x:2045195227615613390",
+      "source_urls": [
+        "https://x.com/variational_io/status/2045195227615613390"
+      ],
+      "sources": [
+        {
+          "platform": "x",
+          "id": "2045195227615613390",
+          "url": "https://x.com/variational_io/status/2045195227615613390",
+          "author": "variational_io",
+          "published_at": "2026-04-17T17:38:34Z",
+          "observed_at": "2026-11-21T15:13:05Z",
+          "retrieval_method": "saved FxTwitter replay of official X post",
+          "source_text_sha256": "4a56088413b4ae5016418899cff258cc6580c2f71402d9cfc39370d067969784",
+          "normalized_sha256": "004af7fb9bf05240630ac74359e7061981ed915fd13253fd31a180837222a880",
+          "matches_current": true
+        }
+      ],
+      "period_start": null,
+      "period_end": null,
+      "metrics": {
+        "cumulative_volume": {
+          "value": "204200000000.00",
+          "raw": "$204.20B",
+          "label": "Total Volume Traded",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "10000000",
+          "qualifier": null
+        },
+        "dual_sided_oi": {
+          "value": "733950000.00",
+          "raw": "$733.95M",
+          "label": "Current Dual-Sided OI",
+          "unit": "$",
+          "kind": "reported_snapshot",
+          "precision_increment": "10000",
+          "qualifier": null
+        },
+        "tvl": {
+          "value": "113670000.00",
+          "raw": "$113.67M",
+          "label": "TVL (Excludes Some OLP Hedging Accounts)",
+          "unit": "$",
+          "kind": "reported_snapshot",
+          "precision_increment": "10000",
+          "qualifier": null
+        },
+        "tokens_listed": {
+          "value": "459",
+          "raw": "459",
+          "label": "Total Tokens Currently Listed",
+          "unit": "count",
+          "kind": "reported_snapshot",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "markets": null,
+        "total_trades_placed": null,
+        "daily_active_users_week_average": {
+          "value": "8259",
+          "raw": "8,259",
+          "label": "Daily Active Users (avg. over past week)",
+          "unit": "count",
+          "kind": "reported_daily_average_over_past_week",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "weekly_active_users": {
+          "value": "15013",
+          "raw": "15,013",
+          "label": "Weekly Active Users",
+          "unit": "count",
+          "kind": "reported_weekly_users",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_rewards_claimed": {
+          "value": "6799825",
+          "raw": "$6,799,825",
+          "label": "Total Rewards Claimed",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_losses_refunded": {
+          "value": "4559196",
+          "raw": "$4,559,196",
+          "label": "Total Losses Refunded (Sunset)",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_referral_rewards_claimed": {
+          "value": "2240629",
+          "raw": "$2,240,629",
+          "label": "Total Referral Rewards Claimed",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        }
+      },
+      "legacy_financials": {
+        "revenue_2w": null,
+        "average_daily_revenue": null,
+        "revenue_directed_to_olp": null,
+        "revenue_directed_to_loss_refund_pool": null,
+        "revenue_directed_to_referral_rewards_pool": null,
+        "revenue_directed_to_protocol_treasury": null,
+        "total_olp_pnl": null
+      },
+      "reported_phase": null,
+      "revisions": [],
+      "source_available_at": "2026-11-21T15:13:05Z",
+      "source_published_at": "2026-04-17T17:38:34Z"
+    },
+    {
+      "id": "x:2050242620912537798",
+      "published_at": "2026-05-01T15:55:07Z",
+      "financial_report_id": "x:2050242620912537798",
+      "source_urls": [
+        "https://x.com/variational_io/status/2050242620912537798"
+      ],
+      "sources": [
+        {
+          "platform": "x",
+          "id": "2050242620912537798",
+          "url": "https://x.com/variational_io/status/2050242620912537798",
+          "author": "variational_io",
+          "published_at": "2026-05-01T15:55:07Z",
+          "observed_at": "2026-11-21T15:13:05Z",
+          "retrieval_method": "saved FxTwitter replay of official X post",
+          "source_text_sha256": "1ea0cafe82a2c0db00ea0f1c1fc44bc4ac5815f4bc9d046b15e20708502760fd",
+          "normalized_sha256": "ed436c99b681fc30a2d19ade323d2d3d0d64ef9530b2b997a346f6bdcf73b06d",
+          "matches_current": true
+        }
+      ],
+      "period_start": null,
+      "period_end": null,
+      "metrics": {
+        "cumulative_volume": {
+          "value": "211190000000.00",
+          "raw": "$211.19B",
+          "label": "Total Volume Traded",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "10000000",
+          "qualifier": null
+        },
+        "dual_sided_oi": {
+          "value": "674880000.00",
+          "raw": "$674.88M",
+          "label": "Current Dual-Sided OI",
+          "unit": "$",
+          "kind": "reported_snapshot",
+          "precision_increment": "10000",
+          "qualifier": null
+        },
+        "tvl": {
+          "value": "109130000.00",
+          "raw": "$109.13M",
+          "label": "TVL (Excludes Some OLP Hedging Accounts)",
+          "unit": "$",
+          "kind": "reported_snapshot",
+          "precision_increment": "10000",
+          "qualifier": null
+        },
+        "tokens_listed": {
+          "value": "456",
+          "raw": "456",
+          "label": "Total Tokens Currently Listed",
+          "unit": "count",
+          "kind": "reported_snapshot",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "markets": null,
+        "total_trades_placed": null,
+        "daily_active_users_week_average": {
+          "value": "7139",
+          "raw": "7,139",
+          "label": "Daily Active Users (avg. over past week)",
+          "unit": "count",
+          "kind": "reported_daily_average_over_past_week",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "weekly_active_users": {
+          "value": "12723",
+          "raw": "12,723",
+          "label": "Weekly Active Users",
+          "unit": "count",
+          "kind": "reported_weekly_users",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_rewards_claimed": {
+          "value": "6871220",
+          "raw": "$6,871,220",
+          "label": "Total Rewards Claimed",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_losses_refunded": {
+          "value": "4559196",
+          "raw": "$4,559,196",
+          "label": "Total Losses Refunded (Sunset)",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_referral_rewards_claimed": {
+          "value": "2312024",
+          "raw": "$2,312,024",
+          "label": "Total Referral Rewards Claimed",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        }
+      },
+      "legacy_financials": {
+        "revenue_2w": null,
+        "average_daily_revenue": null,
+        "revenue_directed_to_olp": null,
+        "revenue_directed_to_loss_refund_pool": null,
+        "revenue_directed_to_referral_rewards_pool": null,
+        "revenue_directed_to_protocol_treasury": null,
+        "total_olp_pnl": null
+      },
+      "reported_phase": null,
+      "revisions": [],
+      "source_available_at": "2026-11-21T15:13:05Z",
+      "source_published_at": "2026-05-01T15:55:07Z"
+    },
+    {
+      "id": "x:2055324287922507828",
+      "published_at": "2026-05-15T16:27:50Z",
+      "financial_report_id": "x:2055324287922507828",
+      "source_urls": [
+        "https://x.com/variational_io/status/2055324287922507828"
+      ],
+      "sources": [
+        {
+          "platform": "x",
+          "id": "2055324287922507828",
+          "url": "https://x.com/variational_io/status/2055324287922507828",
+          "author": "variational_io",
+          "published_at": "2026-05-15T16:27:50Z",
+          "observed_at": "2026-11-21T15:13:05Z",
+          "retrieval_method": "saved FxTwitter replay of official X post",
+          "source_text_sha256": "3489bf5a62e5dcda9bdf00bf90e502724d35426aabb65da36ab52e102eb57139",
+          "normalized_sha256": "f276d2205b381852c9f97b0402507b41caeabcf70916816c053b1ba5727bef17",
+          "matches_current": true
+        }
+      ],
+      "period_start": null,
+      "period_end": null,
+      "metrics": {
+        "cumulative_volume": {
+          "value": "219080000000.00",
+          "raw": "$219.08B",
+          "label": "Total Volume Traded",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "10000000",
+          "qualifier": null
+        },
+        "dual_sided_oi": {
+          "value": "740070000.00",
+          "raw": "$740.07M",
+          "label": "Current Dual-Sided OI",
+          "unit": "$",
+          "kind": "reported_snapshot",
+          "precision_increment": "10000",
+          "qualifier": null
+        },
+        "tvl": {
+          "value": "104000000.0",
+          "raw": "$104.0M",
+          "label": "TVL (Excludes Some OLP Hedging Accounts)",
+          "unit": "$",
+          "kind": "reported_snapshot",
+          "precision_increment": "100000",
+          "qualifier": null
+        },
+        "tokens_listed": {
+          "value": "456",
+          "raw": "456",
+          "label": "Total Tokens Currently Listed",
+          "unit": "count",
+          "kind": "reported_snapshot",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "markets": null,
+        "total_trades_placed": null,
+        "daily_active_users_week_average": {
+          "value": "8389",
+          "raw": "8,389",
+          "label": "Daily Active Users (avg. over past week)",
+          "unit": "count",
+          "kind": "reported_daily_average_over_past_week",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "weekly_active_users": {
+          "value": "14773",
+          "raw": "14,773",
+          "label": "Weekly Active Users",
+          "unit": "count",
+          "kind": "reported_weekly_users",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_rewards_claimed": {
+          "value": "6945522",
+          "raw": "$6,945,522",
+          "label": "Total Rewards Claimed",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_losses_refunded": {
+          "value": "4559196",
+          "raw": "$4,559,196",
+          "label": "Total Losses Refunded (Sunset)",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_referral_rewards_claimed": {
+          "value": "2386326",
+          "raw": "$2,386,326",
+          "label": "Total Referral Rewards Claimed",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        }
+      },
+      "legacy_financials": {
+        "revenue_2w": null,
+        "average_daily_revenue": null,
+        "revenue_directed_to_olp": null,
+        "revenue_directed_to_loss_refund_pool": null,
+        "revenue_directed_to_referral_rewards_pool": null,
+        "revenue_directed_to_protocol_treasury": null,
+        "total_olp_pnl": null
+      },
+      "reported_phase": null,
+      "revisions": [],
+      "source_available_at": "2026-11-21T15:13:05Z",
+      "source_published_at": "2026-05-15T16:27:50Z"
+    },
+    {
+      "id": "x:2060738032580567428",
+      "published_at": "2026-05-30T15:00:08Z",
+      "financial_report_id": "x:2060738032580567428",
+      "source_urls": [
+        "https://x.com/variational_io/status/2060738032580567428"
+      ],
+      "sources": [
+        {
+          "platform": "x",
+          "id": "2060738032580567428",
+          "url": "https://x.com/variational_io/status/2060738032580567428",
+          "author": "variational_io",
+          "published_at": "2026-05-30T15:00:08Z",
+          "observed_at": "2026-11-21T15:13:05Z",
+          "retrieval_method": "saved FxTwitter replay of official X post",
+          "source_text_sha256": "6d9e5236a1f9b3e61ac54bbfabb29dff150aa5ae67725984f4b7e7a2f55ecfd6",
+          "normalized_sha256": "e3b1fca6bfdac6ee9c33d56747cb1d15b878d6eebf8e965e7a79396ba56d1289",
+          "matches_current": true
+        }
+      ],
+      "period_start": null,
+      "period_end": null,
+      "metrics": {
+        "cumulative_volume": {
+          "value": "229800000000.0",
+          "raw": "$229.8B",
+          "label": "Total Volume Traded",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "100000000",
+          "qualifier": null
+        },
+        "dual_sided_oi": {
+          "value": "992750000.00",
+          "raw": "$992.75M",
+          "label": "Current Dual-Sided OI",
+          "unit": "$",
+          "kind": "reported_snapshot",
+          "precision_increment": "10000",
+          "qualifier": null
+        },
+        "tvl": {
+          "value": "122770000.00",
+          "raw": "$122.77M",
+          "label": "TVL (Excludes Some OLP Hedging Accounts)",
+          "unit": "$",
+          "kind": "reported_snapshot",
+          "precision_increment": "10000",
+          "qualifier": null
+        },
+        "tokens_listed": {
+          "value": "465",
+          "raw": "465",
+          "label": "Total Tokens Currently Listed",
+          "unit": "count",
+          "kind": "reported_snapshot",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "markets": null,
+        "total_trades_placed": null,
+        "daily_active_users_week_average": {
+          "value": "10805",
+          "raw": "10,805",
+          "label": "Daily Active Users (avg. over past week)",
+          "unit": "count",
+          "kind": "reported_daily_average_over_past_week",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "weekly_active_users": {
+          "value": "20082",
+          "raw": "20,082",
+          "label": "Weekly Active Users",
+          "unit": "count",
+          "kind": "reported_weekly_users",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_rewards_claimed": {
+          "value": "7042844",
+          "raw": "$7,042,844",
+          "label": "Total Rewards Claimed",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_losses_refunded": {
+          "value": "4559196",
+          "raw": "$4,559,196",
+          "label": "Total Losses Refunded (Sunset)",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_referral_rewards_claimed": {
+          "value": "2483648",
+          "raw": "$2,483,648",
+          "label": "Total Referral Rewards Claimed",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        }
+      },
+      "legacy_financials": {
+        "revenue_2w": null,
+        "average_daily_revenue": null,
+        "revenue_directed_to_olp": null,
+        "revenue_directed_to_loss_refund_pool": null,
+        "revenue_directed_to_referral_rewards_pool": null,
+        "revenue_directed_to_protocol_treasury": null,
+        "total_olp_pnl": null
+      },
+      "reported_phase": null,
+      "revisions": [],
+      "source_available_at": "2026-11-21T15:13:05Z",
+      "source_published_at": "2026-05-30T15:00:08Z"
+    },
+    {
+      "id": "x:2065467514486993157",
+      "published_at": "2026-06-12T16:13:24Z",
+      "financial_report_id": "x:2065467514486993157",
+      "source_urls": [
+        "https://x.com/variational_io/status/2065467514486993157"
+      ],
+      "sources": [
+        {
+          "platform": "x",
+          "id": "2065467514486993157",
+          "url": "https://x.com/variational_io/status/2065467514486993157",
+          "author": "variational_io",
+          "published_at": "2026-06-12T16:13:24Z",
+          "observed_at": "2026-11-21T15:13:05Z",
+          "retrieval_method": "saved FxTwitter replay of official X post",
+          "source_text_sha256": "b64bc10ad71bd89c0ded2341839f21e62a11c738992c51559e52459e5caa0cf4",
+          "normalized_sha256": "dea2aecda53a1b05fceba5f63d9ed1f10779b0fdebad5d3732b79abc656bd083",
+          "matches_current": true
+        }
+      ],
+      "period_start": null,
+      "period_end": null,
+      "metrics": {
+        "cumulative_volume": {
+          "value": "244200000000.0",
+          "raw": "$244.2B",
+          "label": "Total Volume Traded",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "100000000",
+          "qualifier": null
+        },
+        "dual_sided_oi": {
+          "value": "858600000.0",
+          "raw": "$858.6M",
+          "label": "Current Dual-Sided OI",
+          "unit": "$",
+          "kind": "reported_snapshot",
+          "precision_increment": "100000",
+          "qualifier": null
+        },
+        "tvl": {
+          "value": "137800000.0",
+          "raw": "$137.8M",
+          "label": "TVL (Excludes OLP Hedging Accounts)",
+          "unit": "$",
+          "kind": "reported_snapshot",
+          "precision_increment": "100000",
+          "qualifier": null
+        },
+        "tokens_listed": null,
+        "markets": {
+          "value": "478",
+          "raw": "478",
+          "label": "Total Markets Currently Listed",
+          "unit": "count",
+          "kind": "reported_snapshot",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_trades_placed": null,
+        "daily_active_users_week_average": {
+          "value": "10858",
+          "raw": "10,858",
+          "label": "Daily Active Users (avg. over past week)",
+          "unit": "count",
+          "kind": "reported_daily_average_over_past_week",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "weekly_active_users": {
+          "value": "19456",
+          "raw": "19,456",
+          "label": "Weekly Active Users",
+          "unit": "count",
+          "kind": "reported_weekly_users",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_rewards_claimed": {
+          "value": "7238105",
+          "raw": "$7,238,105",
+          "label": "Total Rewards Claimed",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_losses_refunded": {
+          "value": "4559196",
+          "raw": "$4,559,196",
+          "label": "Total Losses Refunded (Sunset)",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_referral_rewards_claimed": {
+          "value": "2678909",
+          "raw": "$2,678,909",
+          "label": "Total Referral Rewards Claimed",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        }
+      },
+      "legacy_financials": {
+        "revenue_2w": null,
+        "average_daily_revenue": null,
+        "revenue_directed_to_olp": null,
+        "revenue_directed_to_loss_refund_pool": null,
+        "revenue_directed_to_referral_rewards_pool": null,
+        "revenue_directed_to_protocol_treasury": null,
+        "total_olp_pnl": null
+      },
+      "reported_phase": null,
+      "revisions": [],
+      "source_available_at": "2026-11-21T15:13:05Z",
+      "source_published_at": "2026-06-12T16:13:24Z"
+    },
+    {
+      "id": "x:2070877921158586432",
+      "published_at": "2026-06-27T14:32:26Z",
+      "financial_report_id": "x:2070877921158586432",
+      "source_urls": [
+        "https://x.com/variational_io/status/2070877921158586432"
+      ],
+      "sources": [
+        {
+          "platform": "x",
+          "id": "2070877921158586432",
+          "url": "https://x.com/variational_io/status/2070877921158586432",
+          "author": "variational_io",
+          "published_at": "2026-06-27T14:32:26Z",
+          "observed_at": "2026-11-21T15:13:05Z",
+          "retrieval_method": "saved FxTwitter replay of official X post",
+          "source_text_sha256": "fc4db6541f5a2ade5469caab0d8f0909febd071bf071fc5d6e39973357dd5c52",
+          "normalized_sha256": "03f7fafbe0740292feb0dababd8b829878a68db57d50c3766ddce99c758ac5be",
+          "matches_current": true
+        }
+      ],
+      "period_start": null,
+      "period_end": null,
+      "metrics": {
+        "cumulative_volume": {
+          "value": "255800000000.0",
+          "raw": "$255.8B",
+          "label": "Total Volume Traded",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "100000000",
+          "qualifier": null
+        },
+        "dual_sided_oi": {
+          "value": "1100000000.0",
+          "raw": "$1.1B",
+          "label": "Current Dual-Sided OI",
+          "unit": "$",
+          "kind": "reported_snapshot",
+          "precision_increment": "100000000",
+          "qualifier": null
+        },
+        "tvl": {
+          "value": "150300000.0",
+          "raw": "$150.3M",
+          "label": "TVL (Excludes OLP Hedging Accounts)",
+          "unit": "$",
+          "kind": "reported_snapshot",
+          "precision_increment": "100000",
+          "qualifier": null
+        },
+        "tokens_listed": null,
+        "markets": {
+          "value": "491",
+          "raw": "491",
+          "label": "Total Markets Currently Listed",
+          "unit": "count",
+          "kind": "reported_snapshot",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_trades_placed": null,
+        "daily_active_users_week_average": {
+          "value": "10603",
+          "raw": "10,603",
+          "label": "Daily Active Users (avg. over past week)",
+          "unit": "count",
+          "kind": "reported_daily_average_over_past_week",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "weekly_active_users": {
+          "value": "17610",
+          "raw": "17,610",
+          "label": "Weekly Active Users",
+          "unit": "count",
+          "kind": "reported_weekly_users",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_rewards_claimed": {
+          "value": "7366115",
+          "raw": "$7,366,115",
+          "label": "Total Rewards Claimed",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_losses_refunded": {
+          "value": "4559196",
+          "raw": "$4,559,196",
+          "label": "Total Losses Refunded (Sunset)",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_referral_rewards_claimed": {
+          "value": "2806919",
+          "raw": "$2,806,919",
+          "label": "Total Referral Rewards Claimed",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        }
+      },
+      "legacy_financials": {
+        "revenue_2w": null,
+        "average_daily_revenue": null,
+        "revenue_directed_to_olp": null,
+        "revenue_directed_to_loss_refund_pool": null,
+        "revenue_directed_to_referral_rewards_pool": null,
+        "revenue_directed_to_protocol_treasury": null,
+        "total_olp_pnl": null
+      },
+      "reported_phase": null,
+      "revisions": [],
+      "source_available_at": "2026-11-21T15:13:05Z",
+      "source_published_at": "2026-06-27T14:32:26Z"
+    },
+    {
+      "id": "x:2075603602081824975",
+      "published_at": "2026-07-10T15:30:36Z",
+      "financial_report_id": "x:2075603602081824975",
+      "source_urls": [
+        "https://x.com/variational_io/status/2075603602081824975"
+      ],
+      "sources": [
+        {
+          "platform": "x",
+          "id": "2075603602081824975",
+          "url": "https://x.com/variational_io/status/2075603602081824975",
+          "author": "variational_io",
+          "published_at": "2026-07-10T15:30:36Z",
+          "observed_at": "2026-11-21T15:13:05Z",
+          "retrieval_method": "saved FxTwitter replay of official X post",
+          "source_text_sha256": "dbc109946a5232dc4eb1c6cc831bf9b1bbb1e19d8dffb5523bcd04cf9f1e5cbf",
+          "normalized_sha256": "bbad0d37a9a8c511749765b392bbcdcb584fd588287e1d4d085399df8b592510",
+          "matches_current": true
+        }
+      ],
+      "period_start": null,
+      "period_end": null,
+      "metrics": {
+        "cumulative_volume": {
+          "value": "266990000000.00",
+          "raw": "$266.99B",
+          "label": "Total Volume Traded",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "10000000",
+          "qualifier": null
+        },
+        "dual_sided_oi": {
+          "value": "1260000000.00",
+          "raw": "$1.26B",
+          "label": "Current Dual-Sided OI",
+          "unit": "$",
+          "kind": "reported_snapshot",
+          "precision_increment": "10000000",
+          "qualifier": null
+        },
+        "tvl": {
+          "value": "160500000.00",
+          "raw": "$160.50M",
+          "label": "TVL (Excludes OLP Hedging Accounts)",
+          "unit": "$",
+          "kind": "reported_snapshot",
+          "precision_increment": "10000",
+          "qualifier": null
+        },
+        "tokens_listed": null,
+        "markets": {
+          "value": "506",
+          "raw": "506",
+          "label": "Total Markets Currently Listed",
+          "unit": "count",
+          "kind": "reported_snapshot",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_trades_placed": null,
+        "daily_active_users_week_average": {
+          "value": "9820",
+          "raw": "9,820",
+          "label": "Daily Active Users (avg. over past week)",
+          "unit": "count",
+          "kind": "reported_daily_average_over_past_week",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "weekly_active_users": {
+          "value": "16636",
+          "raw": "16,636",
+          "label": "Weekly Active Users",
+          "unit": "count",
+          "kind": "reported_weekly_users",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_rewards_claimed": {
+          "value": "7507896",
+          "raw": "$7,507,896",
+          "label": "Total Rewards Claimed",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_losses_refunded": {
+          "value": "4559196",
+          "raw": "$4,559,196",
+          "label": "Total Losses Refunded (Sunset)",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_referral_rewards_claimed": {
+          "value": "2948700",
+          "raw": "$2,948,700",
+          "label": "Total Referral Rewards Claimed",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        }
+      },
+      "legacy_financials": {
+        "revenue_2w": null,
+        "average_daily_revenue": null,
+        "revenue_directed_to_olp": null,
+        "revenue_directed_to_loss_refund_pool": null,
+        "revenue_directed_to_referral_rewards_pool": null,
+        "revenue_directed_to_protocol_treasury": null,
+        "total_olp_pnl": null
+      },
+      "reported_phase": null,
+      "revisions": [],
+      "source_available_at": "2026-11-21T15:13:05Z",
+      "source_published_at": "2026-07-10T15:30:36Z"
+    },
+    {
+      "id": "x:2080694730460151877",
+      "published_at": "2026-07-24T16:40:55Z",
+      "financial_report_id": "x:2080694730460151877",
+      "source_urls": [
+        "https://x.com/variational_io/status/2080694730460151877"
+      ],
+      "sources": [
+        {
+          "platform": "x",
+          "id": "2080694730460151877",
+          "url": "https://x.com/variational_io/status/2080694730460151877",
+          "author": "variational_io",
+          "published_at": "2026-07-24T16:40:55Z",
+          "observed_at": "2026-11-21T15:13:05Z",
+          "retrieval_method": "saved FxTwitter replay of official X post",
+          "source_text_sha256": "f23d2832cecfa82a4a67d1122ee50252d22a82e15ec773f00880bb81ef46a6c6",
+          "normalized_sha256": "ef93828461b1526279c1d3b2bf2cb95de0a97f3c12b0ecbe9ff23a38a4f5de8c",
+          "matches_current": true
+        }
+      ],
+      "period_start": null,
+      "period_end": null,
+      "metrics": {
+        "cumulative_volume": {
+          "value": "278100000000.00",
+          "raw": "$278.10B",
+          "label": "Total Volume Traded",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "10000000",
+          "qualifier": null
+        },
+        "dual_sided_oi": {
+          "value": "1320000000.00",
+          "raw": "$1.32B",
+          "label": "Current Dual-Sided OI",
+          "unit": "$",
+          "kind": "reported_snapshot",
+          "precision_increment": "10000000",
+          "qualifier": null
+        },
+        "tvl": {
+          "value": "158170000.00",
+          "raw": "$158.17M",
+          "label": "TVL (Excludes OLP Hedging Accounts)",
+          "unit": "$",
+          "kind": "reported_snapshot",
+          "precision_increment": "10000",
+          "qualifier": null
+        },
+        "tokens_listed": null,
+        "markets": {
+          "value": "517",
+          "raw": "517",
+          "label": "Total Markets Currently Listed",
+          "unit": "count",
+          "kind": "reported_snapshot",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_trades_placed": null,
+        "daily_active_users_week_average": {
+          "value": "9798",
+          "raw": "9,798",
+          "label": "Daily Active Users (avg. over past week)",
+          "unit": "count",
+          "kind": "reported_daily_average_over_past_week",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "weekly_active_users": {
+          "value": "16932",
+          "raw": "16,932",
+          "label": "Weekly Active Users",
+          "unit": "count",
+          "kind": "reported_weekly_users",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_rewards_claimed": {
+          "value": "7600341",
+          "raw": "$7,600,341",
+          "label": "Total Rewards Claimed",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_losses_refunded": {
+          "value": "4559196",
+          "raw": "$4,559,196",
+          "label": "Total Losses Refunded (Sunset)",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_referral_rewards_claimed": {
+          "value": "3041145",
+          "raw": "$3,041,145",
+          "label": "Total Referral Rewards Claimed",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        }
+      },
+      "legacy_financials": {
+        "revenue_2w": null,
+        "average_daily_revenue": null,
+        "revenue_directed_to_olp": null,
+        "revenue_directed_to_loss_refund_pool": null,
+        "revenue_directed_to_referral_rewards_pool": null,
+        "revenue_directed_to_protocol_treasury": null,
+        "total_olp_pnl": null
+      },
+      "reported_phase": null,
+      "revisions": [],
+      "source_available_at": "2026-11-21T15:13:05Z",
+      "source_published_at": "2026-07-24T16:40:55Z"
+    },
+    {
+      "id": "x:2085772888293228829",
+      "published_at": "2026-08-07T16:59:43Z",
+      "financial_report_id": "x:2085772888293228829",
+      "source_urls": [
+        "https://x.com/variational_io/status/2085772888293228829"
+      ],
+      "sources": [
+        {
+          "platform": "x",
+          "id": "2085772888293228829",
+          "url": "https://x.com/variational_io/status/2085772888293228829",
+          "author": "variational_io",
+          "published_at": "2026-08-07T16:59:43Z",
+          "observed_at": "2026-11-21T15:13:05Z",
+          "retrieval_method": "saved FxTwitter replay of official X post",
+          "source_text_sha256": "42b278b1ed7f00c8a44acc6152915ae22e730476670cdcbbb0c182d1ecdbcdfc",
+          "normalized_sha256": "beec12dfcc2285d1c0407176e130269cc3b3652cbe6ca03ea599f94da2d7bbe9",
+          "matches_current": true
+        }
+      ],
+      "period_start": null,
+      "period_end": null,
+      "metrics": {
+        "cumulative_volume": {
+          "value": "289120000000.00",
+          "raw": "$289.12B",
+          "label": "Total Volume Traded",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "10000000",
+          "qualifier": null
+        },
+        "dual_sided_oi": {
+          "value": "1420000000.00",
+          "raw": "$1.42B",
+          "label": "Current Dual-Sided OI",
+          "unit": "$",
+          "kind": "reported_snapshot",
+          "precision_increment": "10000000",
+          "qualifier": null
+        },
+        "tvl": {
+          "value": "163020000.00",
+          "raw": "$163.02M",
+          "label": "TVL (Excludes OLP Hedging Accounts)",
+          "unit": "$",
+          "kind": "reported_snapshot",
+          "precision_increment": "10000",
+          "qualifier": null
+        },
+        "tokens_listed": null,
+        "markets": {
+          "value": "534",
+          "raw": "534",
+          "label": "Total Markets Currently Listed",
+          "unit": "count",
+          "kind": "reported_snapshot",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_trades_placed": null,
+        "daily_active_users_week_average": {
+          "value": "10005",
+          "raw": "10,005",
+          "label": "Daily Active Users (avg. over past week)",
+          "unit": "count",
+          "kind": "reported_daily_average_over_past_week",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "weekly_active_users": {
+          "value": "16206",
+          "raw": "16,206",
+          "label": "Weekly Active Users",
+          "unit": "count",
+          "kind": "reported_weekly_users",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_rewards_claimed": {
+          "value": "7750040",
+          "raw": "$7,750,040",
+          "label": "Total Rewards Claimed",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_losses_refunded": {
+          "value": "4559196",
+          "raw": "$4,559,196",
+          "label": "Total Losses Refunded (Sunset)",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_referral_rewards_claimed": {
+          "value": "3190844",
+          "raw": "$3,190,844",
+          "label": "Total Referral Rewards Claimed",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        }
+      },
+      "legacy_financials": {
+        "revenue_2w": null,
+        "average_daily_revenue": null,
+        "revenue_directed_to_olp": null,
+        "revenue_directed_to_loss_refund_pool": null,
+        "revenue_directed_to_referral_rewards_pool": null,
+        "revenue_directed_to_protocol_treasury": null,
+        "total_olp_pnl": null
+      },
+      "reported_phase": null,
+      "revisions": [],
+      "source_available_at": "2026-11-21T15:13:05Z",
+      "source_published_at": "2026-08-07T16:59:43Z"
+    },
+    {
+      "id": "x:2090861899730812971",
+      "published_at": "2026-08-21T18:01:37Z",
+      "financial_report_id": "x:2090861899730812971",
+      "source_urls": [
+        "https://x.com/variational_io/status/2090861899730812971"
+      ],
+      "sources": [
+        {
+          "platform": "x",
+          "id": "2090861899730812971",
+          "url": "https://x.com/variational_io/status/2090861899730812971",
+          "author": "variational_io",
+          "published_at": "2026-08-21T18:01:37Z",
+          "observed_at": "2026-11-21T15:13:05Z",
+          "retrieval_method": "saved FxTwitter replay of official X post",
+          "source_text_sha256": "7a8f94a8f24e84b37dbdc3c6450286b1aa835e3d9db1abd706ef42b48e05e8b5",
+          "normalized_sha256": "6a9539887fab7ced9ac03d4b72d073f90ffdb9c503497f54518cef3b7538c18d",
+          "matches_current": true
+        }
+      ],
+      "period_start": null,
+      "period_end": null,
+      "metrics": {
+        "cumulative_volume": {
+          "value": "302230000000.00",
+          "raw": "$302.23B",
+          "label": "Total Volume Traded",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "10000000",
+          "qualifier": null
+        },
+        "dual_sided_oi": {
+          "value": "1410000000.00",
+          "raw": "$1.41B",
+          "label": "Current Dual-Sided OI",
+          "unit": "$",
+          "kind": "reported_snapshot",
+          "precision_increment": "10000000",
+          "qualifier": null
+        },
+        "tvl": {
+          "value": "177180000.00",
+          "raw": "$177.18M",
+          "label": "TVL (Excludes OLP Hedging Accounts)",
+          "unit": "$",
+          "kind": "reported_snapshot",
+          "precision_increment": "10000",
+          "qualifier": null
+        },
+        "tokens_listed": null,
+        "markets": {
+          "value": "543",
+          "raw": "543",
+          "label": "Total Markets Currently Listed",
+          "unit": "count",
+          "kind": "reported_snapshot",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_trades_placed": null,
+        "daily_active_users_week_average": null,
+        "weekly_active_users": null,
+        "total_rewards_claimed": {
+          "value": "7870436",
+          "raw": "$7,870,436",
+          "label": "Total Rewards Claimed",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_losses_refunded": {
+          "value": "4559196",
+          "raw": "$4,559,196",
+          "label": "Total Losses Refunded (Sunset)",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_referral_rewards_claimed": {
+          "value": "3311240",
+          "raw": "$3,311,240",
+          "label": "Total Referral Rewards Claimed",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        }
+      },
+      "legacy_financials": {
+        "revenue_2w": null,
+        "average_daily_revenue": null,
+        "revenue_directed_to_olp": null,
+        "revenue_directed_to_loss_refund_pool": null,
+        "revenue_directed_to_referral_rewards_pool": null,
+        "revenue_directed_to_protocol_treasury": null,
+        "total_olp_pnl": null
+      },
+      "reported_phase": null,
+      "revisions": [],
+      "source_available_at": "2026-11-21T15:13:05Z",
+      "source_published_at": "2026-08-21T18:01:37Z"
+    },
+    {
+      "id": "x:2095924511921336444",
+      "published_at": "2026-09-04T17:18:38Z",
+      "financial_report_id": "x:2095924511921336444",
+      "source_urls": [
+        "https://x.com/variational_io/status/2095924511921336444"
+      ],
+      "sources": [
+        {
+          "platform": "x",
+          "id": "2095924511921336444",
+          "url": "https://x.com/variational_io/status/2095924511921336444",
+          "author": "variational_io",
+          "published_at": "2026-09-04T17:18:38Z",
+          "observed_at": "2026-11-21T15:13:05Z",
+          "retrieval_method": "saved FxTwitter replay of official X post",
+          "source_text_sha256": "e3a451ffec82889e51f1cb6c6c3f41bcb1d0ca891ccbfa794077964dc219c9fc",
+          "normalized_sha256": "0dc913e4b8f18164d39285135b102f01d9a8e57fa3d5da5d0248300335f6646e",
+          "matches_current": true
+        }
+      ],
+      "period_start": null,
+      "period_end": null,
+      "metrics": {
+        "cumulative_volume": {
+          "value": "318680000000.00",
+          "raw": "$318.68B",
+          "label": "Total Volume Traded",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "10000000",
+          "qualifier": null
+        },
+        "dual_sided_oi": {
+          "value": "1670000000.00",
+          "raw": "$1.67B",
+          "label": "Current Dual-Sided OI",
+          "unit": "$",
+          "kind": "reported_snapshot",
+          "precision_increment": "10000000",
+          "qualifier": null
+        },
+        "tvl": {
+          "value": "208360000.00",
+          "raw": "$208.36M",
+          "label": "TVL (Excludes OLP Hedging Accounts)",
+          "unit": "$",
+          "kind": "reported_snapshot",
+          "precision_increment": "10000",
+          "qualifier": null
+        },
+        "tokens_listed": null,
+        "markets": {
+          "value": "551",
+          "raw": "551",
+          "label": "Total Markets Currently Listed",
+          "unit": "count",
+          "kind": "reported_snapshot",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_trades_placed": null,
+        "daily_active_users_week_average": null,
+        "weekly_active_users": null,
+        "total_rewards_claimed": {
+          "value": "8094935",
+          "raw": "$8,094,935",
+          "label": "Total Rewards Claimed",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_losses_refunded": {
+          "value": "4559196",
+          "raw": "$4,559,196",
+          "label": "Total Losses Refunded (Sunset)",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_referral_rewards_claimed": {
+          "value": "3535739",
+          "raw": "$3,535,739",
+          "label": "Total Referral Rewards Claimed",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        }
+      },
+      "legacy_financials": {
+        "revenue_2w": null,
+        "average_daily_revenue": null,
+        "revenue_directed_to_olp": null,
+        "revenue_directed_to_loss_refund_pool": null,
+        "revenue_directed_to_referral_rewards_pool": null,
+        "revenue_directed_to_protocol_treasury": null,
+        "total_olp_pnl": null
+      },
+      "reported_phase": null,
+      "revisions": [],
+      "source_available_at": "2026-11-21T15:13:05Z",
+      "source_published_at": "2026-09-04T17:18:38Z"
+    },
+    {
+      "id": "x:2100975039118225440",
+      "published_at": "2026-09-18T15:47:38Z",
+      "financial_report_id": "x:2100975039118225440",
+      "source_urls": [
+        "https://x.com/variational_io/status/2100975039118225440"
+      ],
+      "sources": [
+        {
+          "platform": "x",
+          "id": "2100975039118225440",
+          "url": "https://x.com/variational_io/status/2100975039118225440",
+          "author": "variational_io",
+          "published_at": "2026-09-18T15:47:38Z",
+          "observed_at": "2026-11-21T15:13:05Z",
+          "retrieval_method": "saved FxTwitter replay of official X post",
+          "source_text_sha256": "8f7763a39c028e65d5c4e556c477132e46046369012654c7efbf00a366f14f0c",
+          "normalized_sha256": "922ec94248be57eefb7bb784909c04fde1ef870cfd2b17b7d6586c2ed203bf2b",
+          "matches_current": true
+        }
+      ],
+      "period_start": null,
+      "period_end": null,
+      "metrics": {
+        "cumulative_volume": {
+          "value": "339750000000.00",
+          "raw": "$339.75B",
+          "label": "Total Volume Traded",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "10000000",
+          "qualifier": null
+        },
+        "dual_sided_oi": {
+          "value": "1830000000.00",
+          "raw": "$1.83B",
+          "label": "Current Dual-Sided OI",
+          "unit": "$",
+          "kind": "reported_snapshot",
+          "precision_increment": "10000000",
+          "qualifier": null
+        },
+        "tvl": {
+          "value": "236120000.00",
+          "raw": "$236.12M",
+          "label": "TVL (Excludes OLP Hedging Accounts)",
+          "unit": "$",
+          "kind": "reported_snapshot",
+          "precision_increment": "10000",
+          "qualifier": null
+        },
+        "tokens_listed": null,
+        "markets": {
+          "value": "552",
+          "raw": "552",
+          "label": "Total Markets Currently Listed",
+          "unit": "count",
+          "kind": "reported_snapshot",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_trades_placed": null,
+        "daily_active_users_week_average": null,
+        "weekly_active_users": null,
+        "total_rewards_claimed": {
+          "value": "8275215",
+          "raw": "$8,275,215",
+          "label": "Total Rewards Claimed",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_losses_refunded": {
+          "value": "4559196",
+          "raw": "$4,559,196",
+          "label": "Total Losses Refunded (Sunset)",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_referral_rewards_claimed": {
+          "value": "3716019",
+          "raw": "$3,716,019",
+          "label": "Total Referral Rewards Claimed",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        }
+      },
+      "legacy_financials": {
+        "revenue_2w": null,
+        "average_daily_revenue": null,
+        "revenue_directed_to_olp": null,
+        "revenue_directed_to_loss_refund_pool": null,
+        "revenue_directed_to_referral_rewards_pool": null,
+        "revenue_directed_to_protocol_treasury": null,
+        "total_olp_pnl": null
+      },
+      "reported_phase": null,
+      "revisions": [],
+      "source_available_at": "2026-11-21T15:13:05Z",
+      "source_published_at": "2026-09-18T15:47:38Z"
+    },
+    {
+      "id": "x:2106063274114723997",
+      "published_at": "2026-10-02T16:46:27Z",
+      "financial_report_id": "x:2106063274114723997",
+      "source_urls": [
+        "https://x.com/variational_io/status/2106063274114723997"
+      ],
+      "sources": [
+        {
+          "platform": "x",
+          "id": "2106063274114723997",
+          "url": "https://x.com/variational_io/status/2106063274114723997",
+          "author": "variational_io",
+          "published_at": "2026-10-02T16:46:27Z",
+          "observed_at": "2026-11-21T15:13:05Z",
+          "retrieval_method": "saved FxTwitter replay of official X post",
+          "source_text_sha256": "00e442dbe32759684f632bddfdde1c3eeb3b8baa96b66347906da349320cf820",
+          "normalized_sha256": "8a8d5cf7d8f5fc108d7cd8ad4d2ce18bb4bba0ba8fb49c776af0b61f046d9564",
+          "matches_current": true
+        }
+      ],
+      "period_start": null,
+      "period_end": null,
+      "metrics": {
+        "cumulative_volume": {
+          "value": "378540000000.00",
+          "raw": "$378.54B",
+          "label": "Total Volume Traded",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "10000000",
+          "qualifier": null
+        },
+        "dual_sided_oi": {
+          "value": "2130000000.00",
+          "raw": "$2.13B",
+          "label": "Current Dual-Sided OI",
+          "unit": "$",
+          "kind": "reported_snapshot",
+          "precision_increment": "10000000",
+          "qualifier": null
+        },
+        "tvl": {
+          "value": "298280000.00",
+          "raw": "$298.28M",
+          "label": "TVL (Excludes OLP Hedging Accounts)",
+          "unit": "$",
+          "kind": "reported_snapshot",
+          "precision_increment": "10000",
+          "qualifier": null
+        },
+        "tokens_listed": null,
+        "markets": {
+          "value": "560",
+          "raw": "560",
+          "label": "Total Markets Currently Listed",
+          "unit": "count",
+          "kind": "reported_snapshot",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_trades_placed": null,
+        "daily_active_users_week_average": null,
+        "weekly_active_users": null,
+        "total_rewards_claimed": {
+          "value": "8564196",
+          "raw": "$8,564,196",
+          "label": "Total Rewards Claimed",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_losses_refunded": {
+          "value": "4559196",
+          "raw": "$4,559,196",
+          "label": "Total Losses Refunded (Sunset)",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_referral_rewards_claimed": {
+          "value": "4005000",
+          "raw": "$4,005,000",
+          "label": "Total Referral Rewards Claimed",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        }
+      },
+      "legacy_financials": {
+        "revenue_2w": null,
+        "average_daily_revenue": null,
+        "revenue_directed_to_olp": null,
+        "revenue_directed_to_loss_refund_pool": null,
+        "revenue_directed_to_referral_rewards_pool": null,
+        "revenue_directed_to_protocol_treasury": null,
+        "total_olp_pnl": null
+      },
+      "reported_phase": null,
+      "revisions": [],
+      "source_available_at": "2026-11-21T15:13:05Z",
+      "source_published_at": "2026-10-02T16:46:27Z"
+    },
+    {
+      "id": "x:2111139394547818854",
+      "published_at": "2026-10-16T16:57:09Z",
+      "financial_report_id": "x:2111139394547818854",
+      "source_urls": [
+        "https://x.com/variational_io/status/2111139394547818854"
+      ],
+      "sources": [
+        {
+          "platform": "x",
+          "id": "2111139394547818854",
+          "url": "https://x.com/variational_io/status/2111139394547818854",
+          "author": "variational_io",
+          "published_at": "2026-10-16T16:57:09Z",
+          "observed_at": "2026-11-21T15:13:05Z",
+          "retrieval_method": "saved FxTwitter replay of official X post",
+          "source_text_sha256": "8568e46bdb6a10da9362316913df242d52acd0e6f59c8556bc2c8770964166cc",
+          "normalized_sha256": "4e89ba5652313b97a537e4758d8016fd50fb877741a38ba0875ec3bc571cd979",
+          "matches_current": true
+        }
+      ],
+      "period_start": null,
+      "period_end": null,
+      "metrics": {
+        "cumulative_volume": {
+          "value": "417920000000.00",
+          "raw": "$417.92B",
+          "label": "Total Volume Traded",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "10000000",
+          "qualifier": null
+        },
+        "dual_sided_oi": {
+          "value": "2040000000.00",
+          "raw": "$2.04B",
+          "label": "Current Dual-Sided OI",
+          "unit": "$",
+          "kind": "reported_snapshot",
+          "precision_increment": "10000000",
+          "qualifier": null
+        },
+        "tvl": {
+          "value": "290880000.00",
+          "raw": "$290.88M",
+          "label": "TVL (Excludes OLP Hedging Accounts)",
+          "unit": "$",
+          "kind": "reported_snapshot",
+          "precision_increment": "10000",
+          "qualifier": null
+        },
+        "tokens_listed": null,
+        "markets": {
+          "value": "575",
+          "raw": "575",
+          "label": "Total Markets Currently Listed",
+          "unit": "count",
+          "kind": "reported_snapshot",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_trades_placed": null,
+        "daily_active_users_week_average": null,
+        "weekly_active_users": null,
+        "total_rewards_claimed": {
+          "value": "8831643",
+          "raw": "$8,831,643",
+          "label": "Total Rewards Claimed",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_losses_refunded": {
+          "value": "4559196",
+          "raw": "$4,559,196",
+          "label": "Total Losses Refunded (Sunset)",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_referral_rewards_claimed": {
+          "value": "4272447",
+          "raw": "$4,272,447",
+          "label": "Total Referral Rewards Claimed",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "1",
+          "qualifier": null
+        }
+      },
+      "legacy_financials": {
+        "revenue_2w": null,
+        "average_daily_revenue": null,
+        "revenue_directed_to_olp": null,
+        "revenue_directed_to_loss_refund_pool": null,
+        "revenue_directed_to_referral_rewards_pool": null,
+        "revenue_directed_to_protocol_treasury": null,
+        "total_olp_pnl": null
+      },
+      "reported_phase": null,
+      "revisions": [],
+      "source_available_at": "2026-11-21T15:13:05Z",
+      "source_published_at": "2026-10-16T16:57:09Z"
+    },
+    {
+      "id": "x:2116210079758524489",
+      "published_at": "2026-10-30T16:36:34Z",
+      "financial_report_id": "x:2116210079758524489",
+      "source_urls": [
+        "https://x.com/variational_io/status/2116210079758524489"
+      ],
+      "sources": [
+        {
+          "platform": "x",
+          "id": "2116210079758524489",
+          "url": "https://x.com/variational_io/status/2116210079758524489",
+          "author": "variational_io",
+          "published_at": "2026-10-30T16:46:14Z",
+          "observed_at": "2026-11-21T15:13:05Z",
+          "retrieval_method": "saved FxTwitter replay of official X post",
+          "source_text_sha256": "17ce20a5c3ef6aac9ef667977fd896abd12f8ebd65d0ecbfeb33381bbda17edb",
+          "normalized_sha256": "2b5c7f152a8939f43d193ac8e1502ecc74bd3efa2d2576d4d17405630b0894c4",
+          "matches_current": true
+        }
+      ],
+      "period_start": null,
+      "period_end": null,
+      "metrics": {
+        "cumulative_volume": {
+          "value": "449920000000.00",
+          "raw": "$449.92B",
+          "label": "Total Volume Traded",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "10000000",
+          "qualifier": null
+        },
+        "dual_sided_oi": {
+          "value": "1780000000.00",
+          "raw": "$1.78B",
+          "label": "Current Dual-Sided OI",
+          "unit": "$",
+          "kind": "reported_snapshot",
+          "precision_increment": "10000000",
+          "qualifier": null
+        },
+        "tvl": {
+          "value": "289970000.00",
+          "raw": "$289.97M",
+          "label": "TVL (Excludes OLP Hedging Accounts)",
+          "unit": "$",
+          "kind": "reported_snapshot",
+          "precision_increment": "10000",
+          "qualifier": null
+        },
+        "tokens_listed": null,
+        "markets": {
+          "value": "581",
+          "raw": "581",
+          "label": "Total Markets Currently Listed",
+          "unit": "count",
+          "kind": "reported_snapshot",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_trades_placed": null,
+        "daily_active_users_week_average": null,
+        "weekly_active_users": null,
+        "total_rewards_claimed": {
+          "value": "9080000.00",
+          "raw": "$9.08M",
+          "label": "Total Rewards Claimed",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "10000",
+          "qualifier": null
+        },
+        "total_losses_refunded": {
+          "value": "4560000.00",
+          "raw": "$4.56M",
+          "label": "Total Losses Refunded (Sunset)",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "10000",
+          "qualifier": null
+        },
+        "total_referral_rewards_claimed": {
+          "value": "4520000.00",
+          "raw": "$4.52M",
+          "label": "Total Referral Rewards Claimed",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "10000",
+          "qualifier": null
+        }
+      },
+      "legacy_financials": {
+        "revenue_2w": null,
+        "average_daily_revenue": null,
+        "revenue_directed_to_olp": null,
+        "revenue_directed_to_loss_refund_pool": null,
+        "revenue_directed_to_referral_rewards_pool": null,
+        "revenue_directed_to_protocol_treasury": null,
+        "total_olp_pnl": null
+      },
+      "reported_phase": null,
+      "revisions": [],
+      "source_available_at": "2026-11-21T15:13:05Z",
+      "source_published_at": "2026-10-30T16:46:14Z"
+    },
+    {
+      "id": "x:2121317860740063501",
+      "published_at": "2026-11-13T18:51:03Z",
+      "financial_report_id": "x:2121317860740063501",
+      "source_urls": [
+        "https://x.com/variational_io/status/2121317860740063501"
+      ],
+      "sources": [
+        {
+          "platform": "x",
+          "id": "2121317860740063501",
+          "url": "https://x.com/variational_io/status/2121317860740063501",
+          "author": "variational_io",
+          "published_at": "2026-11-13T19:02:44Z",
+          "observed_at": "2026-11-21T15:13:05Z",
+          "retrieval_method": "saved FxTwitter replay of official X post",
+          "source_text_sha256": "be1e5f51715699cde4370dbe1cd88bd75d03716a6d98bee31fafc66a9b421941",
+          "normalized_sha256": "b1898b762b4d9b4aff0bd9b6b19ebbfc71756fba187bfba8036c2178c04d3271",
+          "matches_current": true
+        }
+      ],
+      "period_start": null,
+      "period_end": null,
+      "metrics": {
+        "cumulative_volume": {
+          "value": "475770000000.00",
+          "raw": "$475.77B",
+          "label": "Total Volume Traded",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "10000000",
+          "qualifier": null
+        },
+        "dual_sided_oi": {
+          "value": "1540000000.00",
+          "raw": "$1.54B",
+          "label": "Current Dual-Sided OI",
+          "unit": "$",
+          "kind": "reported_snapshot",
+          "precision_increment": "10000000",
+          "qualifier": null
+        },
+        "tvl": {
+          "value": "269280000.00",
+          "raw": "$269.28M",
+          "label": "TVL (Excludes OLP Hedging Accounts)",
+          "unit": "$",
+          "kind": "reported_snapshot",
+          "precision_increment": "10000",
+          "qualifier": null
+        },
+        "tokens_listed": null,
+        "markets": {
+          "value": "589",
+          "raw": "589",
+          "label": "Total Markets Currently Listed",
+          "unit": "count",
+          "kind": "reported_snapshot",
+          "precision_increment": "1",
+          "qualifier": null
+        },
+        "total_trades_placed": null,
+        "daily_active_users_week_average": null,
+        "weekly_active_users": null,
+        "total_rewards_claimed": {
+          "value": "9310000.00",
+          "raw": "$9.31M",
+          "label": "Total Rewards Claimed",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "10000",
+          "qualifier": null
+        },
+        "total_losses_refunded": {
+          "value": "4600000.00",
+          "raw": "$4.60M",
+          "label": "Total Losses Refunded (Sunset)",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "10000",
+          "qualifier": null
+        },
+        "total_referral_rewards_claimed": {
+          "value": "4710000.00",
+          "raw": "$4.71M",
+          "label": "Total Referral Rewards Claimed",
+          "unit": "$",
+          "kind": "cumulative_reported",
+          "precision_increment": "10000",
+          "qualifier": null
+        }
+      },
+      "legacy_financials": {
+        "revenue_2w": null,
+        "average_daily_revenue": null,
+        "revenue_directed_to_olp": null,
+        "revenue_directed_to_loss_refund_pool": null,
+        "revenue_directed_to_referral_rewards_pool": null,
+        "revenue_directed_to_protocol_treasury": null,
+        "total_olp_pnl": null
+      },
+      "reported_phase": null,
+      "revisions": [],
+      "source_available_at": "2026-11-21T15:13:05Z",
+      "source_published_at": "2026-11-13T19:02:44Z"
+    }
+  ]
+}

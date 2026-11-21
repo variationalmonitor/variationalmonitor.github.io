@@ -1,14 +1,14 @@
 {
   "schema_version": 1,
-  "classificationObservedAt": "2026-11-21T14:48:50Z",
+  "classificationObservedAt": "2026-11-21T15:18:55Z",
   "rows": [
     {
       "observedAt": "2026-11-02T02:46:00Z",
       "coverage": {
         "observedMarkets": 581,
         "reportedMarkets": 581,
-        "classifiedMarkets": 32,
-        "unclassifiedMarkets": 549,
+        "classifiedMarkets": 59,
+        "unclassifiedMarkets": 522,
         "listingCoverageComplete": true,
         "classificationCoverageComplete": false,
         "shareCoverageComplete": false
@@ -28,13 +28,13 @@
         "tradfi": {
           "id": "tradfi",
           "label": "TradFi",
-          "marketCount": 28,
-          "volume24hUsdc": "201893473.971042",
-          "traderOpenInterestUsdc": "244576632.18010586433614664",
-          "longOpenInterestUsdc": "170068743.10018868879338864",
-          "shortOpenInterestUsdc": "74507889.079917175542758",
-          "longShortRatio": 2.2825602120840243,
-          "turnover24h": 0.8254814541005208
+          "marketCount": 55,
+          "volume24hUsdc": "220056333.396617",
+          "traderOpenInterestUsdc": "294677922.60498476135483767",
+          "longOpenInterestUsdc": "210175410.65196549894923157",
+          "shortOpenInterestUsdc": "84502511.9530192624056061",
+          "longShortRatio": 2.4872090283992554,
+          "turnover24h": 0.7467689857838523
         },
         "crypto": {
           "id": "crypto",
@@ -50,26 +50,26 @@
         "unclassified": {
           "id": "unclassified",
           "label": "Unclassified",
-          "marketCount": 549,
-          "volume24hUsdc": "111977510.916743",
-          "traderOpenInterestUsdc": "277872970.0226847267463864512",
-          "longOpenInterestUsdc": "192877689.2347045507917389639",
-          "shortOpenInterestUsdc": "84995280.7879801759546474873",
-          "longShortRatio": 2.2692752755983703,
-          "turnover24h": 0.4029809409227586
+          "marketCount": 522,
+          "volume24hUsdc": "93814651.491168",
+          "traderOpenInterestUsdc": "227771679.5978058297276954212",
+          "longOpenInterestUsdc": "152771021.6829277406358960339",
+          "shortOpenInterestUsdc": "75000657.9148780890917993873",
+          "longShortRatio": 2.03692908742634,
+          "turnover24h": 0.41188022873091085
         }
       },
       "byAssetClass": [
         {
           "id": "equity",
           "label": "Equities",
-          "marketCount": 0,
-          "volume24hUsdc": "0",
-          "traderOpenInterestUsdc": "0",
-          "longOpenInterestUsdc": "0",
-          "shortOpenInterestUsdc": "0",
-          "longShortRatio": null,
-          "turnover24h": null
+          "marketCount": 27,
+          "volume24hUsdc": "18162859.425575",
+          "traderOpenInterestUsdc": "50101290.42487889701869103",
+          "longOpenInterestUsdc": "40106667.55177681015584293",
+          "shortOpenInterestUsdc": "9994622.8731020868628481",
+          "longShortRatio": 4.012824501834222,
+          "turnover24h": 0.36252278676949673
         },
         {
           "id": "etf",
@@ -129,26 +129,26 @@
         {
           "id": "unclassified",
           "label": "Unclassified",
-          "marketCount": 549,
-          "volume24hUsdc": "111977510.916743",
-          "traderOpenInterestUsdc": "277872970.0226847267463864512",
-          "longOpenInterestUsdc": "192877689.2347045507917389639",
-          "shortOpenInterestUsdc": "84995280.7879801759546474873",
-          "longShortRatio": 2.2692752755983703,
-          "turnover24h": 0.4029809409227586
+          "marketCount": 522,
+          "volume24hUsdc": "93814651.491168",
+          "traderOpenInterestUsdc": "227771679.5978058297276954212",
+          "longOpenInterestUsdc": "152771021.6829277406358960339",
+          "shortOpenInterestUsdc": "75000657.9148780890917993873",
+          "longShortRatio": 2.03692908742634,
+          "turnover24h": 0.41188022873091085
         }
       ],
       "byInstrumentType": [
         {
           "id": "perpetual",
           "label": "Perpetuals",
-          "marketCount": 10,
-          "volume24hUsdc": "25697925.117423",
-          "traderOpenInterestUsdc": "86340403.15190620433614664",
-          "longOpenInterestUsdc": "47182354.88409021879338864",
-          "shortOpenInterestUsdc": "39158048.267815985542758",
-          "longShortRatio": 1.204921005290997,
-          "turnover24h": 0.29763499102743823
+          "marketCount": 37,
+          "volume24hUsdc": "43860784.542998",
+          "traderOpenInterestUsdc": "136441693.57678510135483767",
+          "longOpenInterestUsdc": "87289022.43586702894923157",
+          "shortOpenInterestUsdc": "49152671.1409180724056061",
+          "longShortRatio": 1.7758754592525414,
+          "turnover24h": 0.3214617423252265
         },
         {
           "id": "swap",
@@ -171,15 +171,16 @@
         "ETH-PERP": 0.7205853773575,
         "SOL-PERP": 2.4192617509445,
         "HYPE-PERP": 5.246822599351
-      }
+      },
+      "swapQuotes": 12
     },
     {
       "observedAt": "2026-11-04T05:20:00Z",
       "coverage": {
         "observedMarkets": 584,
         "reportedMarkets": 584,
-        "classifiedMarkets": 32,
-        "unclassifiedMarkets": 552,
+        "classifiedMarkets": 59,
+        "unclassifiedMarkets": 525,
         "listingCoverageComplete": true,
         "classificationCoverageComplete": false,
         "shareCoverageComplete": false
@@ -199,13 +200,13 @@
         "tradfi": {
           "id": "tradfi",
           "label": "TradFi",
-          "marketCount": 28,
-          "volume24hUsdc": "1797699651.293479",
-          "traderOpenInterestUsdc": "273329748.29089198780177938",
-          "longOpenInterestUsdc": "182763300.83801851996917271",
-          "shortOpenInterestUsdc": "90566447.45287346783260667",
-          "longShortRatio": 2.0180023173937562,
-          "turnover24h": 6.577036208222282
+          "marketCount": 55,
+          "volume24hUsdc": "1845002965.641464",
+          "traderOpenInterestUsdc": "323067853.6278988900965158",
+          "longOpenInterestUsdc": "222841621.58556135110736125",
+          "shortOpenInterestUsdc": "100226232.04233753898915455",
+          "longShortRatio": 2.2233862038376206,
+          "turnover24h": 5.7108837816048705
         },
         "crypto": {
           "id": "crypto",
@@ -221,26 +222,26 @@
         "unclassified": {
           "id": "unclassified",
           "label": "Unclassified",
-          "marketCount": 552,
-          "volume24hUsdc": "194626308.632355",
-          "traderOpenInterestUsdc": "267035922.05765849652402199495",
-          "longOpenInterestUsdc": "184721331.155053414627016087",
-          "shortOpenInterestUsdc": "82314590.90260508189700590795",
-          "longShortRatio": 2.2440897674340183,
-          "turnover24h": 0.7288394277917831
+          "marketCount": 525,
+          "volume24hUsdc": "147322994.28437",
+          "traderOpenInterestUsdc": "217297816.72065159422928557495",
+          "longOpenInterestUsdc": "144643010.407510583488827547",
+          "shortOpenInterestUsdc": "72654806.31314101074045802795",
+          "longShortRatio": 1.9908250774780347,
+          "turnover24h": 0.6779773331720212
         }
       },
       "byAssetClass": [
         {
           "id": "equity",
           "label": "Equities",
-          "marketCount": 0,
-          "volume24hUsdc": "0",
-          "traderOpenInterestUsdc": "0",
-          "longOpenInterestUsdc": "0",
-          "shortOpenInterestUsdc": "0",
-          "longShortRatio": null,
-          "turnover24h": null
+          "marketCount": 27,
+          "volume24hUsdc": "47303314.347985",
+          "traderOpenInterestUsdc": "49738105.33700690229473642",
+          "longOpenInterestUsdc": "40078320.74754283113818854",
+          "shortOpenInterestUsdc": "9659784.58946407115654788",
+          "longShortRatio": 4.148987006527689,
+          "turnover24h": 0.9510477736832823
         },
         {
           "id": "etf",
@@ -300,26 +301,26 @@
         {
           "id": "unclassified",
           "label": "Unclassified",
-          "marketCount": 552,
-          "volume24hUsdc": "194626308.632355",
-          "traderOpenInterestUsdc": "267035922.05765849652402199495",
-          "longOpenInterestUsdc": "184721331.155053414627016087",
-          "shortOpenInterestUsdc": "82314590.90260508189700590795",
-          "longShortRatio": 2.2440897674340183,
-          "turnover24h": 0.7288394277917831
+          "marketCount": 525,
+          "volume24hUsdc": "147322994.28437",
+          "traderOpenInterestUsdc": "217297816.72065159422928557495",
+          "longOpenInterestUsdc": "144643010.407510583488827547",
+          "shortOpenInterestUsdc": "72654806.31314101074045802795",
+          "longShortRatio": 1.9908250774780347,
+          "turnover24h": 0.6779773331720212
         }
       ],
       "byInstrumentType": [
         {
           "id": "perpetual",
           "label": "Perpetuals",
-          "marketCount": 10,
-          "volume24hUsdc": "45196472.162914",
-          "traderOpenInterestUsdc": "83892375.91626591284771347",
-          "longOpenInterestUsdc": "45104631.97707242998729472",
-          "shortOpenInterestUsdc": "38787743.93919348286041875",
-          "longShortRatio": 1.1628578359128536,
-          "turnover24h": 0.5387434992665506
+          "marketCount": 37,
+          "volume24hUsdc": "92499786.510899",
+          "traderOpenInterestUsdc": "133630481.25327281514244989",
+          "longOpenInterestUsdc": "85182952.72461526112548326",
+          "shortOpenInterestUsdc": "48447528.52865755401696663",
+          "longShortRatio": 1.758251768699162,
+          "turnover24h": 0.692205742607348
         },
         {
           "id": "swap",
@@ -342,15 +343,16 @@
         "ETH-PERP": 0.657623611318,
         "SOL-PERP": 2.0973120263775,
         "HYPE-PERP": 2.075899867107
-      }
+      },
+      "swapQuotes": 12
     },
     {
       "observedAt": "2026-11-11T19:00:00Z",
       "coverage": {
         "observedMarkets": 590,
         "reportedMarkets": 590,
-        "classifiedMarkets": 32,
-        "unclassifiedMarkets": 558,
+        "classifiedMarkets": 59,
+        "unclassifiedMarkets": 531,
         "listingCoverageComplete": true,
         "classificationCoverageComplete": false,
         "shareCoverageComplete": false
@@ -370,13 +372,13 @@
         "tradfi": {
           "id": "tradfi",
           "label": "TradFi",
-          "marketCount": 28,
-          "volume24hUsdc": "1392448200.145863",
-          "traderOpenInterestUsdc": "270488043.31437648410500994",
-          "longOpenInterestUsdc": "169413923.91254050235752554",
-          "shortOpenInterestUsdc": "101074119.4018359817474844",
-          "longShortRatio": 1.6761355420669948,
-          "turnover24h": 5.147910358933985
+          "marketCount": 55,
+          "volume24hUsdc": "1437139092.017606",
+          "traderOpenInterestUsdc": "318020946.03735625699494898",
+          "longOpenInterestUsdc": "206634371.9996383438413104",
+          "shortOpenInterestUsdc": "111386574.03771791315363858",
+          "longShortRatio": 1.8551102211804043,
+          "turnover24h": 4.519007662623558
         },
         "crypto": {
           "id": "crypto",
@@ -392,26 +394,26 @@
         "unclassified": {
           "id": "unclassified",
           "label": "Unclassified",
-          "marketCount": 558,
-          "volume24hUsdc": "189956032.702493",
-          "traderOpenInterestUsdc": "248974300.89632703159196369048",
-          "longOpenInterestUsdc": "164198145.92217676447482851312",
-          "shortOpenInterestUsdc": "84776154.97415026711713517736",
-          "longShortRatio": 1.9368435142198142,
-          "turnover24h": 0.7629543772937062
+          "marketCount": 531,
+          "volume24hUsdc": "145265140.83075",
+          "traderOpenInterestUsdc": "201441398.17334725870202465048",
+          "longOpenInterestUsdc": "126977697.83507892299104365312",
+          "shortOpenInterestUsdc": "74463700.33826833571098099736",
+          "longShortRatio": 1.7052294911245853,
+          "turnover24h": 0.721128537371173
         }
       },
       "byAssetClass": [
         {
           "id": "equity",
           "label": "Equities",
-          "marketCount": 0,
-          "volume24hUsdc": "0",
-          "traderOpenInterestUsdc": "0",
-          "longOpenInterestUsdc": "0",
-          "shortOpenInterestUsdc": "0",
-          "longShortRatio": null,
-          "turnover24h": null
+          "marketCount": 27,
+          "volume24hUsdc": "44690891.871743",
+          "traderOpenInterestUsdc": "47532902.72297977288993904",
+          "longOpenInterestUsdc": "37220448.08709784148378486",
+          "shortOpenInterestUsdc": "10312454.63588193140615418",
+          "longShortRatio": 3.609271449068024,
+          "turnover24h": 0.940209608746179
         },
         {
           "id": "etf",
@@ -471,26 +473,26 @@
         {
           "id": "unclassified",
           "label": "Unclassified",
-          "marketCount": 558,
-          "volume24hUsdc": "189956032.702493",
-          "traderOpenInterestUsdc": "248974300.89632703159196369048",
-          "longOpenInterestUsdc": "164198145.92217676447482851312",
-          "shortOpenInterestUsdc": "84776154.97415026711713517736",
-          "longShortRatio": 1.9368435142198142,
-          "turnover24h": 0.7629543772937062
+          "marketCount": 531,
+          "volume24hUsdc": "145265140.83075",
+          "traderOpenInterestUsdc": "201441398.17334725870202465048",
+          "longOpenInterestUsdc": "126977697.83507892299104365312",
+          "shortOpenInterestUsdc": "74463700.33826833571098099736",
+          "longShortRatio": 1.7052294911245853,
+          "turnover24h": 0.721128537371173
         }
       ],
       "byInstrumentType": [
         {
           "id": "perpetual",
           "label": "Perpetuals",
-          "marketCount": 10,
-          "volume24hUsdc": "43449652.578921",
-          "traderOpenInterestUsdc": "85633755.31892526410500994",
-          "longOpenInterestUsdc": "48870723.82525591235752554",
-          "shortOpenInterestUsdc": "36763031.4936693517474844",
-          "longShortRatio": 1.3293442308660406,
-          "turnover24h": 0.5073893164804197
+          "marketCount": 37,
+          "volume24hUsdc": "88140544.450664",
+          "traderOpenInterestUsdc": "133166658.04190503699494898",
+          "longOpenInterestUsdc": "86091171.9123537538413104",
+          "shortOpenInterestUsdc": "47075486.12955128315363858",
+          "longShortRatio": 1.8287898647595837,
+          "turnover24h": 0.6618814780418071
         },
         {
           "id": "swap",
@@ -513,15 +515,16 @@
         "ETH-PERP": 0.720506083473,
         "SOL-PERP": 1.849517593978,
         "HYPE-PERP": 5.389710156397
-      }
+      },
+      "swapQuotes": 12
     },
     {
       "observedAt": "2026-11-20T10:08:42Z",
       "coverage": {
         "observedMarkets": 595,
         "reportedMarkets": 595,
-        "classifiedMarkets": 33,
-        "unclassifiedMarkets": 562,
+        "classifiedMarkets": 60,
+        "unclassifiedMarkets": 535,
         "listingCoverageComplete": true,
         "classificationCoverageComplete": false,
         "shareCoverageComplete": false
@@ -541,13 +544,13 @@
         "tradfi": {
           "id": "tradfi",
           "label": "TradFi",
-          "marketCount": 29,
-          "volume24hUsdc": "1667026193.369637",
-          "traderOpenInterestUsdc": "247450216.8584312961893058",
-          "longOpenInterestUsdc": "171789872.77681269890954185",
-          "shortOpenInterestUsdc": "75660344.08161859727976395",
-          "longShortRatio": 2.270540464255547,
-          "turnover24h": 6.7368144369958625
+          "marketCount": 56,
+          "volume24hUsdc": "1726478812.77048",
+          "traderOpenInterestUsdc": "288697098.79723891676941837",
+          "longOpenInterestUsdc": "201446486.94349993067847561",
+          "shortOpenInterestUsdc": "87250611.85373898609094276",
+          "longShortRatio": 2.3088260662422764,
+          "turnover24h": 5.980243029678107
         },
         "crypto": {
           "id": "crypto",
@@ -563,26 +566,26 @@
         "unclassified": {
           "id": "unclassified",
           "label": "Unclassified",
-          "marketCount": 562,
-          "volume24hUsdc": "203926571.35984",
-          "traderOpenInterestUsdc": "206093044.5262647464262351215",
-          "longOpenInterestUsdc": "121812274.80140970907615215668",
-          "shortOpenInterestUsdc": "84280769.72485503735008296482",
-          "longShortRatio": 1.4453151673754392,
-          "turnover24h": 0.9894878880002733
+          "marketCount": 535,
+          "volume24hUsdc": "144473951.958997",
+          "traderOpenInterestUsdc": "164846162.5874571258461225515",
+          "longOpenInterestUsdc": "92155660.63472247730721839668",
+          "shortOpenInterestUsdc": "72690501.95273464853890415482",
+          "longShortRatio": 1.26778132161812,
+          "turnover24h": 0.8764168342854091
         }
       },
       "byAssetClass": [
         {
           "id": "equity",
           "label": "Equities",
-          "marketCount": 0,
-          "volume24hUsdc": "0",
-          "traderOpenInterestUsdc": "0",
-          "longOpenInterestUsdc": "0",
-          "shortOpenInterestUsdc": "0",
-          "longShortRatio": null,
-          "turnover24h": null
+          "marketCount": 27,
+          "volume24hUsdc": "59452619.400843",
+          "traderOpenInterestUsdc": "41246881.93880762058011257",
+          "longOpenInterestUsdc": "29656614.16668723176893376",
+          "shortOpenInterestUsdc": "11590267.77212038881117881",
+          "longShortRatio": 2.558751424020093,
+          "turnover24h": 1.4413845751793979
         },
         {
           "id": "etf",
@@ -642,26 +645,26 @@
         {
           "id": "unclassified",
           "label": "Unclassified",
-          "marketCount": 562,
-          "volume24hUsdc": "203926571.35984",
-          "traderOpenInterestUsdc": "206093044.5262647464262351215",
-          "longOpenInterestUsdc": "121812274.80140970907615215668",
-          "shortOpenInterestUsdc": "84280769.72485503735008296482",
-          "longShortRatio": 1.4453151673754392,
-          "turnover24h": 0.9894878880002733
+          "marketCount": 535,
+          "volume24hUsdc": "144473951.958997",
+          "traderOpenInterestUsdc": "164846162.5874571258461225515",
+          "longOpenInterestUsdc": "92155660.63472247730721839668",
+          "shortOpenInterestUsdc": "72690501.95273464853890415482",
+          "longShortRatio": 1.26778132161812,
+          "turnover24h": 0.8764168342854091
         }
       ],
       "byInstrumentType": [
         {
           "id": "perpetual",
           "label": "Perpetuals",
-          "marketCount": 11,
-          "volume24hUsdc": "118731972.958952",
-          "traderOpenInterestUsdc": "79911667.195836674429966",
-          "longOpenInterestUsdc": "46167339.28492013759416134",
-          "shortOpenInterestUsdc": "33744327.91091653683580466",
-          "longShortRatio": 1.3681510980689786,
-          "turnover24h": 1.4857902121849087
+          "marketCount": 38,
+          "volume24hUsdc": "178184592.359795",
+          "traderOpenInterestUsdc": "121158549.13464429501007857",
+          "longOpenInterestUsdc": "75823953.4516073693630951",
+          "shortOpenInterestUsdc": "45334595.68303692564698347",
+          "longShortRatio": 1.672540635009541,
+          "turnover24h": 1.4706728797303217
         },
         {
           "id": "swap",
@@ -684,15 +687,16 @@
         "ETH-PERP": 2.0010863039935,
         "SOL-PERP": 2.1364705229495,
         "HYPE-PERP": 6.6568643635095
-      }
+      },
+      "swapQuotes": 12
     },
     {
-      "observedAt": "2026-11-21T14:40:29Z",
+      "observedAt": "2026-11-21T15:12:08Z",
       "coverage": {
         "observedMarkets": 595,
         "reportedMarkets": 595,
-        "classifiedMarkets": 33,
-        "unclassifiedMarkets": 562,
+        "classifiedMarkets": 60,
+        "unclassifiedMarkets": 535,
         "listingCoverageComplete": true,
         "classificationCoverageComplete": false,
         "shareCoverageComplete": false
@@ -702,91 +706,91 @@
           "id": "all",
           "label": "All markets",
           "marketCount": 595,
-          "volume24hUsdc": "2497463915.557391",
-          "traderOpenInterestUsdc": "606301919.5788067564561934137",
-          "longOpenInterestUsdc": "367902590.56450487956223925254",
-          "shortOpenInterestUsdc": "238399329.01430187689395416116",
-          "longShortRatio": 1.543219907898457,
-          "turnover24h": 4.119175339725726
+          "volume24hUsdc": "2450392155.499625",
+          "traderOpenInterestUsdc": "607242838.95214441619240276365",
+          "longOpenInterestUsdc": "372323997.5703849579349658758",
+          "shortOpenInterestUsdc": "234918841.38175945825743688785",
+          "longShortRatio": 1.584904792567628,
+          "turnover24h": 4.035275508111403
         },
         "tradfi": {
           "id": "tradfi",
           "label": "TradFi",
-          "marketCount": 29,
-          "volume24hUsdc": "1010478199.837774",
-          "traderOpenInterestUsdc": "205384804.27802981525114587",
-          "longOpenInterestUsdc": "138610383.39093815666505363",
-          "shortOpenInterestUsdc": "66774420.88709165858609224",
-          "longShortRatio": 2.0758006067220465,
-          "turnover24h": 4.91992678518654
+          "marketCount": 56,
+          "volume24hUsdc": "1050165177.339923",
+          "traderOpenInterestUsdc": "244980424.08772483637325273",
+          "longOpenInterestUsdc": "167599048.37029616303517766",
+          "shortOpenInterestUsdc": "77381375.71742867333807507",
+          "longShortRatio": 2.1658835451867997,
+          "turnover24h": 4.2867309959585596
         },
         "crypto": {
           "id": "crypto",
           "label": "Crypto",
           "marketCount": 4,
-          "volume24hUsdc": "1261986465.815521",
-          "traderOpenInterestUsdc": "208444828.38585095455408213",
-          "longOpenInterestUsdc": "112786472.80871819473978366",
-          "shortOpenInterestUsdc": "95658355.57713275981429847",
-          "longShortRatio": 1.179055108445539,
-          "turnover24h": 6.054294921049639
+          "volume24hUsdc": "1245674120.480389",
+          "traderOpenInterestUsdc": "209075462.5605026223773854",
+          "longOpenInterestUsdc": "117127552.86289465783152225",
+          "shortOpenInterestUsdc": "91947909.69760796454586315",
+          "longShortRatio": 1.2738468253176802,
+          "turnover24h": 5.958012026972863
         },
         "unclassified": {
           "id": "unclassified",
           "label": "Unclassified",
-          "marketCount": 562,
-          "volume24hUsdc": "224999249.904096",
-          "traderOpenInterestUsdc": "192472286.9149259866509654137",
-          "longOpenInterestUsdc": "116505734.36484852815740196254",
-          "shortOpenInterestUsdc": "75966552.55007745849356345116",
-          "longShortRatio": 1.5336451432101974,
-          "turnover24h": 1.168995565598216
+          "marketCount": 535,
+          "volume24hUsdc": "154552857.679313",
+          "traderOpenInterestUsdc": "153186952.30391695744176463365",
+          "longOpenInterestUsdc": "87597396.3371941370682659658",
+          "shortOpenInterestUsdc": "65589555.96672282037349866785",
+          "longShortRatio": 1.3355387919021298,
+          "turnover24h": 1.0089165908378812
         }
       },
       "byAssetClass": [
         {
           "id": "equity",
           "label": "Equities",
-          "marketCount": 0,
-          "volume24hUsdc": "0",
-          "traderOpenInterestUsdc": "0",
-          "longOpenInterestUsdc": "0",
-          "shortOpenInterestUsdc": "0",
-          "longShortRatio": null,
-          "turnover24h": null
+          "marketCount": 27,
+          "volume24hUsdc": "64708625.259919",
+          "traderOpenInterestUsdc": "39605365.7887560154601035",
+          "longOpenInterestUsdc": "29103128.66570187018543475",
+          "shortOpenInterestUsdc": "10502237.12305414527466875",
+          "longShortRatio": 2.7711361231613876,
+          "turnover24h": 1.6338348092795503
         },
         {
           "id": "etf",
           "label": "ETF",
           "marketCount": 1,
-          "volume24hUsdc": "12349003.218945",
-          "traderOpenInterestUsdc": "20025161.0896548728868219",
-          "longOpenInterestUsdc": "14535381.9414749216191182",
-          "shortOpenInterestUsdc": "5489779.1481799512677037",
-          "longShortRatio": 2.6477170664131173,
-          "turnover24h": 0.6166743510155618
+          "volume24hUsdc": "11896905.61846",
+          "traderOpenInterestUsdc": "20016468.0787232852423982",
+          "longOpenInterestUsdc": "14539424.3967859710895089",
+          "shortOpenInterestUsdc": "5477043.6819373141528893",
+          "longShortRatio": 2.6546117287206212,
+          "turnover24h": 0.5943558859470288
         },
         {
           "id": "commodity",
           "label": "Commodities",
           "marketCount": 16,
-          "volume24hUsdc": "76694927.941578",
-          "traderOpenInterestUsdc": "88647722.7239169973292901",
-          "longOpenInterestUsdc": "57663652.65688134898501168",
-          "shortOpenInterestUsdc": "30984070.06703564834427842",
-          "longShortRatio": 1.8610741756045295,
-          "turnover24h": 0.8651652358903276
+          "volume24hUsdc": "72841127.54942",
+          "traderOpenInterestUsdc": "88745892.32063184476606577",
+          "longOpenInterestUsdc": "57642136.32673165428112155",
+          "shortOpenInterestUsdc": "31103755.99390019048494422",
+          "longShortRatio": 1.8532210816608754,
+          "turnover24h": 0.820783088035791
         },
         {
           "id": "index",
           "label": "Indices",
           "marketCount": 10,
-          "volume24hUsdc": "898711321.161276",
+          "volume24hUsdc": "880046114.656933",
           "traderOpenInterestUsdc": "90667358.51714638",
           "longOpenInterestUsdc": "63347019.25598666",
           "shortOpenInterestUsdc": "27320339.26115972",
           "longShortRatio": 2.3186761573654646,
-          "turnover24h": 9.91218158176868
+          "turnover24h": 9.706316904451393
         },
         {
           "id": "currency",
@@ -803,47 +807,47 @@
           "id": "pre_ipo",
           "label": "Pre-IPO",
           "marketCount": 2,
-          "volume24hUsdc": "22722947.515975",
-          "traderOpenInterestUsdc": "6044561.94731156503503387",
-          "longOpenInterestUsdc": "3064329.53659522606092375",
-          "shortOpenInterestUsdc": "2980232.41071633897411012",
-          "longShortRatio": 1.0282183112889083,
-          "turnover24h": 3.7592380910384193
+          "volume24hUsdc": "20672404.255191",
+          "traderOpenInterestUsdc": "5945339.38246731090468526",
+          "longOpenInterestUsdc": "2967339.72509000747911246",
+          "shortOpenInterestUsdc": "2977999.6573773034255728",
+          "longShortRatio": 0.9964204387126476,
+          "turnover24h": 3.4770772407296904
         },
         {
           "id": "unclassified",
           "label": "Unclassified",
-          "marketCount": 562,
-          "volume24hUsdc": "224999249.904096",
-          "traderOpenInterestUsdc": "192472286.9149259866509654137",
-          "longOpenInterestUsdc": "116505734.36484852815740196254",
-          "shortOpenInterestUsdc": "75966552.55007745849356345116",
-          "longShortRatio": 1.5336451432101974,
-          "turnover24h": 1.168995565598216
+          "marketCount": 535,
+          "volume24hUsdc": "154552857.679313",
+          "traderOpenInterestUsdc": "153186952.30391695744176463365",
+          "longOpenInterestUsdc": "87597396.3371941370682659658",
+          "shortOpenInterestUsdc": "65589555.96672282037349866785",
+          "longShortRatio": 1.3355387919021298,
+          "turnover24h": 1.0089165908378812
         }
       ],
       "byInstrumentType": [
         {
           "id": "perpetual",
           "label": "Perpetuals",
-          "marketCount": 11,
-          "volume24hUsdc": "62483474.947196",
-          "traderOpenInterestUsdc": "76369470.68657438525114587",
-          "longOpenInterestUsdc": "45443344.50468239666505363",
-          "shortOpenInterestUsdc": "30926126.18189198858609224",
-          "longShortRatio": 1.469415995957832,
-          "turnover24h": 0.8181734714861718
+          "marketCount": 38,
+          "volume24hUsdc": "123801198.098261",
+          "traderOpenInterestUsdc": "115965090.49626940637325273",
+          "longOpenInterestUsdc": "74432009.48404040303517766",
+          "shortOpenInterestUsdc": "41533081.01222900333807507",
+          "longShortRatio": 1.792113844434624,
+          "turnover24h": 1.0675729874262778
         },
         {
           "id": "swap",
           "label": "Swaps",
           "marketCount": 18,
-          "volume24hUsdc": "947994724.890578",
+          "volume24hUsdc": "926363979.241662",
           "traderOpenInterestUsdc": "129015333.59145543",
           "longOpenInterestUsdc": "93167038.88625576",
           "shortOpenInterestUsdc": "35848294.70519967",
           "longShortRatio": 2.5989252669456047,
-          "turnover24h": 7.3479229057573265
+          "turnover24h": 7.18026263587489
         }
       ],
       "shares": {
@@ -851,11 +855,12 @@
         "tradfiTraderOiPct": null
       },
       "halfSpreads": {
-        "BTC-PERP": 0.5041588949105,
-        "ETH-PERP": 1.396021635365,
-        "SOL-PERP": 2.8551350065895,
-        "HYPE-PERP": 9.3417017014715
-      }
+        "BTC-PERP": 0.8062470347565,
+        "ETH-PERP": 0.8593738424385,
+        "SOL-PERP": 2.50659929532,
+        "HYPE-PERP": 7.905979408443
+      },
+      "swapQuotes": 0
     }
   ]
 }

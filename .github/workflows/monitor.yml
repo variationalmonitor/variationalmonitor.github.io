@@ -59,14 +59,17 @@ jobs:
           sparse-checkout: |
             /tools/financials.py
             /tools/reported_rewards.py
+            /tools/official_activity.py
             /public/data/financials.json
             /public/data/reported-rewards.json
+            /public/data/official-activity.json
       - name: Check official financial reports
         if: steps.mode.outputs.value == 'reports'
         run: |
           python3 tools/financials.py refresh --output public/data/financials.json
-          if ! git diff --quiet -- public/data/financials.json public/data/reported-rewards.json; then
+          if ! git diff --quiet -- public/data/financials.json public/data/reported-rewards.json public/data/official-activity.json; then
             python3 tools/reported_rewards.py refresh || python3 tools/reported_rewards.py verify
+            python3 tools/official_activity.py refresh || python3 tools/official_activity.py verify
           fi
       - name: Collect daily observations
         if: steps.mode.outputs.value == 'daily'
@@ -74,6 +77,8 @@ jobs:
           COINGECKO_DEMO_API_KEY: ${{ secrets.COINGECKO_DEMO_API_KEY }}
         run: |
           python3 tools/markets.py
+          python3 tools/multi_venue.py refresh --venues hyperliquid
+          python3 tools/official_activity.py refresh || python3 tools/official_activity.py verify
           node tools/build_protocol_metrics.mjs
           python3 tools/reported_rewards.py refresh || python3 tools/reported_rewards.py verify
           python3 tools/supplement.py
@@ -84,7 +89,7 @@ jobs:
         env:
           MODE: ${{ steps.mode.outputs.value }}
         run: |
-          if [[ "$MODE" == reports ]] && git diff --quiet -- public/data/financials.json public/data/reported-rewards.json; then
+          if [[ "$MODE" == reports ]] && git diff --quiet -- public/data/financials.json public/data/reported-rewards.json public/data/official-activity.json; then
             echo "publish=false" >> "$GITHUB_OUTPUT"
           else
             echo "publish=true" >> "$GITHUB_OUTPUT"
@@ -100,6 +105,8 @@ jobs:
           python3 tools/financials.py verify --output public/data/financials.json
           python3 tools/research_baselines.py verify --data-dir public/data
           python3 tools/reported_rewards.py verify
+          python3 tools/official_activity.py verify
+          python3 tools/multi_venue.py verify
           python3 tools/check_site.py
           node tools/build_protocol_metrics.mjs --check
       - name: Save validated observations

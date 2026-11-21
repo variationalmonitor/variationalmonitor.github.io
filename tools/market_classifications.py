@@ -19,6 +19,10 @@ SOURCES = {
 }
 
 
+def primary_source(url):
+    return isinstance(url,str) and (url in SOURCES or bool(re.fullmatch(r"https://data\.sec\.gov/submissions/CIK\d{10}\.json",url)))
+
+
 def validate(data):
     if data.get("schema_version") != 1 or data.get("source", {}).get("url") not in SOURCES:
         raise ValueError("Invalid classification schema/source")
@@ -41,7 +45,7 @@ def validate(data):
             raise ValueError("Invalid curated category")
         if row["scope"] == "crypto" and row["asset_class"] != "crypto" or row["scope"] == "tradfi" and row["asset_class"] in {"crypto","unclassified"}:
             raise ValueError("Inconsistent category scope")
-        if not row.get("source_urls") or any(url not in SOURCES for url in row["source_urls"]):
+        if not row.get("source_urls") or any(not primary_source(url) for url in row["source_urls"]):
             raise ValueError("Registry needs allowed primary sources")
         if row.get("listed_at") is not None:
             listed=datetime.fromisoformat(row["listed_at"].replace("Z", "+00:00"))

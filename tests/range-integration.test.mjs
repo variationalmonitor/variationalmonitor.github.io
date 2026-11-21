@@ -214,3 +214,45 @@ test('table values preserve fractional source dollars, signed sub-dollar amounts
   assert.equal(view.run('exactReportAmount("0")'),'0');
   assert.equal(view.run('exactReportAmount(null)'),'—');
 });
+
+test('latest with swap quotes selects a dated available observation and keeps explicit empty dates',()=>{
+  const view=harness('#/execution?range=all');
+  const closed={date:'2026-07-02',observed_at:'2026-07-02T12:00:00Z',
+    markets:[{ticker:'US100-SWAP',contract_type:'swap',quotes:{}}]};
+  const open={...closed,date:'2026-07-01',observed_at:'2026-07-01T12:00:00Z'};
+  view.context.quoteHistory={snapshots:[open,closed]};
+  view.context.groupHistory={rows:[{observedAt:open.observed_at,swapQuotes:12},{observedAt:closed.observed_at,swapQuotes:0}]};
+  view.run("DATA.history=quoteHistory;DATA.protocolHistory=groupHistory;rangeAnchor=()=> '2026-07-02T15:13:00Z'");
+  const chosen=view.run('executionObservation()');
+  assert.equal(chosen.snapshot.date,'2026-07-01');
+  assert.equal(chosen.prior,true);
+  view.run("route.params.set('quote-date','2026-07-02')");
+  assert.equal(view.run('executionObservation().snapshot.date'),'2026-07-02');
+  assert.match(view.run('executionView()'),/No quote in this observation/);
+});
+
+test('official activity extends aggregate plots without duplicate modern reports or history in an empty week',async()=>{
+  const view=harness('#/overview?range=all');
+  view.context.archivedActivity=await fixture('official-activity.json');
+  view.context.archivedActivity.reports=view.context.archivedActivity.reports.filter(report=>report.published_at<'2026-11-14');
+  view.run('DATA.officialActivity=archivedActivity;overview()');
+  assert.ok(view.run("publishedMetricRecords('cumulative_volume').length")>=44);
+  assert.ok(view.run("charts.get('overview-volume').rows[0].date")<='2025-02-24T17:23:35Z');
+  assert.ok(view.run("charts.get('activity-weekly_active_users').rows.length")>=30);
+  view.clickRange('7d');
+  assert.equal(view.run("charts.get('activity-weekly_active_users').rows.length"),0);
+  assert.equal(view.run("charts.get('overview-volume').unit"),'USDC');
+});
+
+test('venue comparison honors order size, currency, publication permissions, and selected range',async()=>{
+  const view=harness('#/execution?coin=BTC&size=1000000&range=all');
+  view.context.samples={rows:['binance','lighter'].map(venue=>({venue,market:'BTC',notional_usd:1000000,observed_at:'2026-11-21T15:12:00Z',omni_bps:1,book_bps:1,fee_bps:0,total_bps:1})),coverage:['bybit','okx'].map(venue=>({venue,market:'BTC',status:'permission_required'}))};
+  view.run("DATA.multiVenue=samples;rangeAnchor=()=> '2026-11-21T15:13:00Z'");
+  const html=view.run('multiVenuePanel()');
+  assert.match(html,/Perpetual Trading Costs by Venue/);
+  assert.match(html,/<th scope="row">Binance<\/th><td>USDT<\/td>/);
+  assert.match(html,/<th scope="row">Lighter<\/th><td>USDC<\/td>/);
+  assert.equal((html.match(/Publication permission required/g)||[]).length,2);
+  view.run("rangeAnchor=()=> '2026-12-21T00:00:00Z';route.params.set('range','7d')");
+  assert.match(view.run('multiVenuePanel()'),/No match in this period/);
+});

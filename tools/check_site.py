@@ -4,8 +4,11 @@ from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urlsplit
 
+from arbitrum_index import validate_public as validate_arbitrum_index
 from chain_history import validate as validate_chain_history
 from execution_study import validate as validate_execution_study
+from multi_venue import validate as validate_multi_venue
+from official_activity import validate as validate_official_activity
 from market_classifications import validate as validate_market_classifications
 from markets import load_partition, read_existing
 from supplement import CATALOG, WALLETS, USDC, public_research, read_json
@@ -47,6 +50,9 @@ def check():
                 raise ValueError("Daily totals differ between detail and history index")
     validate_execution_study(read_json(DATA / "execution-study.json"))
     validate_market_classifications(read_json(DATA / "market-classifications.json"))
+    validate_multi_venue(read_json(DATA / "multi-venue.json"))
+    validate_official_activity(read_json(DATA / "official-activity.json"))
+    validate_arbitrum_index(read_json(DATA / "arbitrum-index.json"))
     supplement = read_json(DATA / "supplement.json")
     validate_chain_history(read_json(DATA / "chain-history.json"))
     if supplement["research"] != public_research(read_json(CATALOG)):

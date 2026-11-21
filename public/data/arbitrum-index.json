@@ -1,0 +1,148 @@
+{
+  "schema_version": 1,
+  "chain_id": 42161,
+  "generated_at": "2026-11-21T15:16:32Z",
+  "factory": {
+    "address": "0x0f820b9afc270d658a9fd7d16b1bdc45b70f074c",
+    "registry_url": "https://docs.variational.io/technical-documentation/mainnet-contracts",
+    "source_url": "https://sourcify.dev/server/v2/contract/42161/0x0f820b9afc270d658a9fd7d16b1bdc45b70f074c?fields=all",
+    "source_sha256": "95d1f713a2a558a55b2c4ba11e37503d08dd1c556ccd418a289be710a17e68d2",
+    "runtime_code_sha256": "f8f05cd11619401a9534c9bc8f0168edfa5a3fa7ab8cff9ff1abd256aebc86aa",
+    "deployment_block": 300692000,
+    "deployment_transaction": "0x080b1709bcb228f8031e6043a22d5396c124d7b2f7602198bb546455ea3482ca",
+    "event_signature": "PoolCreated(address,address[],uint128,address,uint128,uint128,address,uint256)",
+    "event_topic": "0x0b33722ea9d97f05fb7128e0987e4060c182350308a3d0a19f8ec53512fe1493",
+    "event_abi": {
+      "name": "PoolCreated",
+      "type": "event",
+      "inputs": [
+        {
+          "name": "creatorAddress",
+          "type": "address",
+          "indexed": true,
+          "internalType": "address"
+        },
+        {
+          "name": "otherAddresses",
+          "type": "address[]",
+          "indexed": false,
+          "internalType": "address[]"
+        },
+        {
+          "name": "poolUuid",
+          "type": "uint128",
+          "indexed": true,
+          "internalType": "uint128"
+        },
+        {
+          "name": "pool",
+          "type": "address",
+          "indexed": false,
+          "internalType": "address"
+        },
+        {
+          "name": "rfqUuid",
+          "type": "uint128",
+          "indexed": false,
+          "internalType": "uint128"
+        },
+        {
+          "name": "parentQuoteUuid",
+          "type": "uint128",
+          "indexed": false,
+          "internalType": "uint128"
+        },
+        {
+          "name": "feePaidBy",
+          "type": "address",
+          "indexed": false,
+          "internalType": "address"
+        },
+        {
+          "name": "feeAmount",
+          "type": "uint256",
+          "indexed": false,
+          "internalType": "uint256"
+        }
+      ],
+      "anonymous": false
+    },
+    "deployment_block_hash": "0xc19bca1caa6cb311fe7809b9698ca6157d36e07d0190f7f2b72936c6ab9608b2",
+    "deployment_timestamp": "2025-01-30T02:15:04Z",
+    "code_verified_at_block": 526268568,
+    "code_verified_at_hash": "0x94fa6548a2550ca11a57ef0a711db0cd99d1bea4432fe1b47c78cc63f6865a6d"
+  },
+  "coverage": {
+    "status": "complete_for_declared_blocks",
+    "from_block": 417159094,
+    "to_block": 417160093,
+    "from_timestamp": "2026-01-02T15:14:01Z",
+    "to_timestamp": "2026-01-02T15:18:11Z",
+    "next_block": 417160094,
+    "requested_to_block": 417160093,
+    "requested_window_complete": true,
+    "registry_complete_since_deployment": false,
+    "current_factory_only": true,
+    "ranges": [
+      {
+        "from_block": 417159094,
+        "from_hash": "0x45f1d751e289645b5f9d580e6a70b12c42fd36570822a34039958d7d7cf17e71",
+        "from_timestamp": "2026-01-02T15:14:01Z",
+        "log_count": 5,
+        "normalized_logs_sha256": "d0a000901f836b1c846a582715c28812cd16c93254c2b7dc6acb8e5831f98642",
+        "primary_rpc": "https://arb1.arbitrum.io/rpc",
+        "to_block": 417160093,
+        "to_hash": "0xca6d35f65f690576ff4b1ca5f56a267932240a82b094493a6496b4c427bf224a",
+        "to_timestamp": "2026-01-02T15:18:11Z",
+        "verification": "two_provider_complete_range_log_set_agreement_plus_canonical_headers_and_receipts",
+        "verified_at": "2026-11-21T15:15:17Z",
+        "witness_page_blocks": 50,
+        "witness_rpc": "https://arb-pokt.nodies.app"
+      }
+    ]
+  },
+  "summary": {
+    "created_pools": 5,
+    "distinct_creator_accounts": 1,
+    "distinct_creation_participant_accounts": 6,
+    "creation_participant_accounts_excluding_core_olp": 5
+  },
+  "daily": [
+    {
+      "date": "2026-01-02",
+      "created_pools": 5,
+      "distinct_creator_accounts": 1,
+      "distinct_creation_participant_accounts": 6,
+      "creation_participant_accounts_excluding_core_olp": 5,
+      "coverage": "indexed_blocks_only",
+      "complete_utc_day": false
+    }
+  ],
+  "methodology": {
+    "scope": "PoolCreated events from the currently documented factory within the declared block range only.",
+    "participants": "Distinct participant addresses named at creation. Excluding Core OLP does not establish a unique person, trader, or new account. OtherPartyAdded can change membership later.",
+    "cash_flows": "Pool deposit/withdraw summaries alone cannot establish a complete cash ledger. Deployed pool implementations and native-USDC Transfer coverage must be verified against a complete block-aware pool registry; internal pool transfers cancel at the chosen perimeter.",
+    "source_timestamps": "Canonical block headers, not optional log blockTimestamp fields, determine dates.",
+    "empty_blocks": "Every block in each declared range was queried on two RPC endpoints, including blocks with no matched events. Days outside those ranges are not zero.",
+    "verification_limit": "Two-provider agreement and canonical headers/receipts validate this bounded pilot; this is not an independent audit or evidence of complete historical factory migrations.",
+    "rpc_documentation": [
+      "https://docs.arbitrum.io/chain-info",
+      "https://docs.nodies.app/rpc-services/pokt-public-rpc-endpoints"
+    ]
+  },
+  "availability": {
+    "trading_active_accounts": {
+      "status": "unavailable",
+      "reason": "Factory creation is not trading activity; complete trade/settlement semantics and coverage are unverified."
+    },
+    "protocol_net_flows": {
+      "status": "unavailable",
+      "reason": "Complete historical pool registry and native-USDC Transfer coverage are not yet established."
+    },
+    "referral_claims": {
+      "status": "unverified",
+      "reason": "Current official registry and referral documentation do not establish a canonical claims contract/event. Factory creation fees are not referral claims.",
+      "source_url": "https://docs.variational.io/omni/rewards/referrals"
+    }
+  }
+}

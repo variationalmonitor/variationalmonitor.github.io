@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "observed_at": "2026-11-21T14:48:50Z",
+  "observed_at": "2026-11-21T15:18:55Z",
   "source": {
     "url": "https://docs.variational.io/omni/trading/swaps",
     "kind": "Independently curated public specification and explicit native market identities",
@@ -12,6 +12,42 @@
     "scope": "Small reviewed registry; no undocumented endpoint or wholesale app taxonomy. Unlisted identities remain unclassified. Pre-IPO classifications are dated reviewed facts, not automatic IPO detection."
   },
   "mappings": [
+    {
+      "ticker": "AAPL-PERP",
+      "name": "Apple Inc.",
+      "contract_type": "perpetual",
+      "scope": "tradfi",
+      "asset_class": "equity",
+      "listed_at": null,
+      "source_urls": [
+        "https://data.sec.gov/submissions/CIK0000320193.json"
+      ],
+      "match_basis": "Exact SEC ticker and issuer name after case, punctuation, and corporate-suffix normalization"
+    },
+    {
+      "ticker": "AMD-PERP",
+      "name": "Advanced Micro Devices, Inc.",
+      "contract_type": "perpetual",
+      "scope": "tradfi",
+      "asset_class": "equity",
+      "listed_at": null,
+      "source_urls": [
+        "https://data.sec.gov/submissions/CIK0000002488.json"
+      ],
+      "match_basis": "Exact SEC ticker and issuer name after case, punctuation, and corporate-suffix normalization"
+    },
+    {
+      "ticker": "AMZN-PERP",
+      "name": "Amazon.com, Inc.",
+      "contract_type": "perpetual",
+      "scope": "tradfi",
+      "asset_class": "equity",
+      "listed_at": null,
+      "source_urls": [
+        "https://data.sec.gov/submissions/CIK0001018724.json"
+      ],
+      "match_basis": "Exact SEC ticker and issuer name after case, punctuation, and corporate-suffix normalization"
+    },
     {
       "ticker": "ANT-PERP",
       "name": "Anthropic PBC",
@@ -28,6 +64,30 @@
         "https://docs.variational.io/omni/trading/tradfi-perpetuals",
         "https://docs.variational.io/technical-documentation/api"
       ]
+    },
+    {
+      "ticker": "AVGO-PERP",
+      "name": "Broadcom Inc.",
+      "contract_type": "perpetual",
+      "scope": "tradfi",
+      "asset_class": "equity",
+      "listed_at": null,
+      "source_urls": [
+        "https://data.sec.gov/submissions/CIK0001730168.json"
+      ],
+      "match_basis": "Exact SEC ticker and issuer name after case, punctuation, and corporate-suffix normalization"
+    },
+    {
+      "ticker": "BABA-PERP",
+      "name": "Alibaba Group Holding Limited",
+      "contract_type": "perpetual",
+      "scope": "tradfi",
+      "asset_class": "equity",
+      "listed_at": null,
+      "source_urls": [
+        "https://data.sec.gov/submissions/CIK0001577552.json"
+      ],
+      "match_basis": "Exact SEC ticker and issuer name after case, punctuation, and corporate-suffix normalization"
     },
     {
       "ticker": "BTC-PERP",
@@ -115,6 +175,18 @@
       ]
     },
     {
+      "ticker": "COIN-PERP",
+      "name": "Coinbase Global, Inc.",
+      "contract_type": "perpetual",
+      "scope": "tradfi",
+      "asset_class": "equity",
+      "listed_at": null,
+      "source_urls": [
+        "https://data.sec.gov/submissions/CIK0001679788.json"
+      ],
+      "match_basis": "Exact SEC ticker and issuer name after case, punctuation, and corporate-suffix normalization"
+    },
+    {
       "ticker": "COPP-SWAP",
       "name": "Swap on Copper Spot",
       "contract_type": "swap",
@@ -147,6 +219,18 @@
         "https://docs.variational.io/omni/trading/tradfi-perpetuals",
         "https://docs.variational.io/technical-documentation/api"
       ]
+    },
+    {
+      "ticker": "CRM-PERP",
+      "name": "Salesforce, Inc.",
+      "contract_type": "perpetual",
+      "scope": "tradfi",
+      "asset_class": "equity",
+      "listed_at": null,
+      "source_urls": [
+        "https://data.sec.gov/submissions/CIK0001108524.json"
+      ],
+      "match_basis": "Exact SEC ticker and issuer name after case, punctuation, and corporate-suffix normalization"
     },
     {
       "ticker": "DXI-SWAP",
@@ -200,6 +284,30 @@
       ]
     },
     {
+      "ticker": "GME-PERP",
+      "name": "GameStop Corp.",
+      "contract_type": "perpetual",
+      "scope": "tradfi",
+      "asset_class": "equity",
+      "listed_at": null,
+      "source_urls": [
+        "https://data.sec.gov/submissions/CIK0001326380.json"
+      ],
+      "match_basis": "Exact SEC ticker and issuer name after case, punctuation, and corporate-suffix normalization"
+    },
+    {
+      "ticker": "GOOGL-PERP",
+      "name": "Alphabet Inc.",
+      "contract_type": "perpetual",
+      "scope": "tradfi",
+      "asset_class": "equity",
+      "listed_at": null,
+      "source_urls": [
+        "https://data.sec.gov/submissions/CIK0001652044.json"
+      ],
+      "match_basis": "Exact SEC ticker and issuer name after case, punctuation, and corporate-suffix normalization"
+    },
+    {
       "ticker": "HOIL-SWAP",
       "name": "Swap on Heating Oil",
       "contract_type": "swap",
@@ -215,6 +323,18 @@
         "https://docs.variational.io/omni/trading/swaps",
         "https://docs.variational.io/technical-documentation/api"
       ]
+    },
+    {
+      "ticker": "HOOD-PERP",
+      "name": "Robinhood Markets, Inc.",
+      "contract_type": "perpetual",
+      "scope": "tradfi",
+      "asset_class": "equity",
+      "listed_at": null,
+      "source_urls": [
+        "https://data.sec.gov/submissions/CIK0001783879.json"
+      ],
+      "match_basis": "Exact SEC ticker and issuer name after case, punctuation, and corporate-suffix normalization"
     },
     {
       "ticker": "HYPE-PERP",
@@ -234,6 +354,90 @@
       ]
     },
     {
+      "ticker": "IBM-PERP",
+      "name": "International Business Machines Corporation",
+      "contract_type": "perpetual",
+      "scope": "tradfi",
+      "asset_class": "equity",
+      "listed_at": null,
+      "source_urls": [
+        "https://data.sec.gov/submissions/CIK0000051143.json"
+      ],
+      "match_basis": "Exact SEC ticker and issuer name after case, punctuation, and corporate-suffix normalization"
+    },
+    {
+      "ticker": "INTC-PERP",
+      "name": "Intel Corporation",
+      "contract_type": "perpetual",
+      "scope": "tradfi",
+      "asset_class": "equity",
+      "listed_at": null,
+      "source_urls": [
+        "https://data.sec.gov/submissions/CIK0000050863.json"
+      ],
+      "match_basis": "Exact SEC ticker and issuer name after case, punctuation, and corporate-suffix normalization"
+    },
+    {
+      "ticker": "META-PERP",
+      "name": "Meta Platforms, Inc.",
+      "contract_type": "perpetual",
+      "scope": "tradfi",
+      "asset_class": "equity",
+      "listed_at": null,
+      "source_urls": [
+        "https://data.sec.gov/submissions/CIK0001326801.json"
+      ],
+      "match_basis": "Exact SEC ticker and issuer name after case, punctuation, and corporate-suffix normalization"
+    },
+    {
+      "ticker": "MRNA-PERP",
+      "name": "Moderna, Inc.",
+      "contract_type": "perpetual",
+      "scope": "tradfi",
+      "asset_class": "equity",
+      "listed_at": null,
+      "source_urls": [
+        "https://data.sec.gov/submissions/CIK0001682852.json"
+      ],
+      "match_basis": "Exact SEC ticker and issuer name after case, punctuation, and corporate-suffix normalization"
+    },
+    {
+      "ticker": "MSFT-PERP",
+      "name": "Microsoft Corporation",
+      "contract_type": "perpetual",
+      "scope": "tradfi",
+      "asset_class": "equity",
+      "listed_at": null,
+      "source_urls": [
+        "https://data.sec.gov/submissions/CIK0000789019.json"
+      ],
+      "match_basis": "Exact SEC ticker and issuer name after case, punctuation, and corporate-suffix normalization"
+    },
+    {
+      "ticker": "MSTR-PERP",
+      "name": "Strategy Inc",
+      "contract_type": "perpetual",
+      "scope": "tradfi",
+      "asset_class": "equity",
+      "listed_at": null,
+      "source_urls": [
+        "https://data.sec.gov/submissions/CIK0001050446.json"
+      ],
+      "match_basis": "Exact SEC ticker and issuer name after case, punctuation, and corporate-suffix normalization"
+    },
+    {
+      "ticker": "MU-PERP",
+      "name": "Micron Technology, Inc.",
+      "contract_type": "perpetual",
+      "scope": "tradfi",
+      "asset_class": "equity",
+      "listed_at": null,
+      "source_urls": [
+        "https://data.sec.gov/submissions/CIK0000723125.json"
+      ],
+      "match_basis": "Exact SEC ticker and issuer name after case, punctuation, and corporate-suffix normalization"
+    },
+    {
       "ticker": "NATGAS-PERP",
       "name": "Natural Gas",
       "contract_type": "perpetual",
@@ -249,6 +453,30 @@
         "https://docs.variational.io/omni/trading/tradfi-perpetuals",
         "https://docs.variational.io/technical-documentation/api"
       ]
+    },
+    {
+      "ticker": "NFLX-PERP",
+      "name": "Netflix, Inc.",
+      "contract_type": "perpetual",
+      "scope": "tradfi",
+      "asset_class": "equity",
+      "listed_at": null,
+      "source_urls": [
+        "https://data.sec.gov/submissions/CIK0001065280.json"
+      ],
+      "match_basis": "Exact SEC ticker and issuer name after case, punctuation, and corporate-suffix normalization"
+    },
+    {
+      "ticker": "NVDA-PERP",
+      "name": "NVIDIA Corporation",
+      "contract_type": "perpetual",
+      "scope": "tradfi",
+      "asset_class": "equity",
+      "listed_at": null,
+      "source_urls": [
+        "https://data.sec.gov/submissions/CIK0001045810.json"
+      ],
+      "match_basis": "Exact SEC ticker and issuer name after case, punctuation, and corporate-suffix normalization"
     },
     {
       "ticker": "OPENAI-PERP",
@@ -268,6 +496,66 @@
       ]
     },
     {
+      "ticker": "ORCL-PERP",
+      "name": "Oracle Corporation",
+      "contract_type": "perpetual",
+      "scope": "tradfi",
+      "asset_class": "equity",
+      "listed_at": null,
+      "source_urls": [
+        "https://data.sec.gov/submissions/CIK0001341439.json"
+      ],
+      "match_basis": "Exact SEC ticker and issuer name after case, punctuation, and corporate-suffix normalization"
+    },
+    {
+      "ticker": "PLTR-PERP",
+      "name": "Palantir Technologies Inc.",
+      "contract_type": "perpetual",
+      "scope": "tradfi",
+      "asset_class": "equity",
+      "listed_at": null,
+      "source_urls": [
+        "https://data.sec.gov/submissions/CIK0001321655.json"
+      ],
+      "match_basis": "Exact SEC ticker and issuer name after case, punctuation, and corporate-suffix normalization"
+    },
+    {
+      "ticker": "RDDT-PERP",
+      "name": "Reddit, Inc.",
+      "contract_type": "perpetual",
+      "scope": "tradfi",
+      "asset_class": "equity",
+      "listed_at": null,
+      "source_urls": [
+        "https://data.sec.gov/submissions/CIK0001713445.json"
+      ],
+      "match_basis": "Exact SEC ticker and issuer name after case, punctuation, and corporate-suffix normalization"
+    },
+    {
+      "ticker": "SMCI-PERP",
+      "name": "Super Micro Computer, Inc.",
+      "contract_type": "perpetual",
+      "scope": "tradfi",
+      "asset_class": "equity",
+      "listed_at": null,
+      "source_urls": [
+        "https://data.sec.gov/submissions/CIK0001375365.json"
+      ],
+      "match_basis": "Exact SEC ticker and issuer name after case, punctuation, and corporate-suffix normalization"
+    },
+    {
+      "ticker": "SNDK-PERP",
+      "name": "Sandisk Corporation",
+      "contract_type": "perpetual",
+      "scope": "tradfi",
+      "asset_class": "equity",
+      "listed_at": null,
+      "source_urls": [
+        "https://data.sec.gov/submissions/CIK0002023554.json"
+      ],
+      "match_basis": "Exact SEC ticker and issuer name after case, punctuation, and corporate-suffix normalization"
+    },
+    {
       "ticker": "SOL-PERP",
       "name": "Solana",
       "contract_type": "perpetual",
@@ -285,6 +573,30 @@
       ]
     },
     {
+      "ticker": "TSLA-PERP",
+      "name": "Tesla, Inc.",
+      "contract_type": "perpetual",
+      "scope": "tradfi",
+      "asset_class": "equity",
+      "listed_at": null,
+      "source_urls": [
+        "https://data.sec.gov/submissions/CIK0001318605.json"
+      ],
+      "match_basis": "Exact SEC ticker and issuer name after case, punctuation, and corporate-suffix normalization"
+    },
+    {
+      "ticker": "TSM-PERP",
+      "name": "Taiwan Semiconductor Manufacturing Company Limited",
+      "contract_type": "perpetual",
+      "scope": "tradfi",
+      "asset_class": "equity",
+      "listed_at": null,
+      "source_urls": [
+        "https://data.sec.gov/submissions/CIK0001046179.json"
+      ],
+      "match_basis": "Exact SEC ticker and issuer name after case, punctuation, and corporate-suffix normalization"
+    },
+    {
       "ticker": "TWI-SWAP",
       "name": "Swap on Taiwan Index",
       "contract_type": "swap",
@@ -300,6 +612,18 @@
         "https://docs.variational.io/omni/trading/swaps",
         "https://docs.variational.io/technical-documentation/api"
       ]
+    },
+    {
+      "ticker": "UBER-PERP",
+      "name": "Uber Technologies, Inc.",
+      "contract_type": "perpetual",
+      "scope": "tradfi",
+      "asset_class": "equity",
+      "listed_at": null,
+      "source_urls": [
+        "https://data.sec.gov/submissions/CIK0001543151.json"
+      ],
+      "match_basis": "Exact SEC ticker and issuer name after case, punctuation, and corporate-suffix normalization"
     },
     {
       "ticker": "UKOIL-SWAP",
@@ -576,9 +900,9 @@
   ],
   "coverage": {
     "market_count": 595,
-    "classified_count": 33,
-    "unclassified_count": 562,
-    "stats_observed_at": "2026-11-21T14:40:29Z",
+    "classified_count": 60,
+    "unclassified_count": 535,
+    "stats_observed_at": "2026-11-21T15:12:08Z",
     "note": "Partial curated identity coverage. Full platform TradFi shares are unavailable. Full historical names can be matched; compact rows without a documented listing date remain unclassified."
   }
 }

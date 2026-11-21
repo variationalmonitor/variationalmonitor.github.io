@@ -7,9 +7,9 @@ import {warningsForMetrics,RANGE_OPTIONS,normalizeRange,rangeBounds,filterRange,
 
 const BLUE='#4c9af8',TEAL='#80b8bb',GREY='#6c829d',LIGHT='#b8c6d8';
 const API_DOCS='https://docs.variational.io/technical-documentation/api';
-const DATA={financials:null,markets:null,history:null,supplement:null,baselines:null,chainHistory:null,executionStudy:null,classifications:null,protocolHistory:null,rewards:null,errors:{}};
+const DATA={financials:null,markets:null,history:null,supplement:null,baselines:null,chainHistory:null,multiVenue:null,officialActivity:null,arbitrumIndex:null,executionStudy:null,classifications:null,protocolHistory:null,rewards:null,errors:{}};
 const state={financialKey:'net_profit',financialMode:'cumulative',allocationMode:'period',olpMode:'lifetime',marketSearch:'',marketSort:'volume_24h_usdc',marketDir:-1,marketPage:1,explorerSearch:'',explorerCategory:'All'};
-const titles={overview:'Overview',omni:'Omni',tradfi:'TradFi',execution:'Execution',financials:'Financials',rewards:'Rewards',olp:'OLP',var:'VAR',pro:'Variational Pro',research:'Research',explorer:'Data Explorer'};
+const titles={overview:'Overview',omni:'Omni',tradfi:'TradFi',accounts:'Accounts',execution:'Execution',financials:'Financials',rewards:'Rewards',olp:'OLP',var:'VAR',pro:'Variational Pro',research:'Research',explorer:'Data Explorer'};
 const financialLabels={gross_revenue:'Spreads Paid (Gross Revenue)',market_making_costs:'Market Making Costs (Cost of Revenue)',net_revenue:'Net Revenue',rewards:'Rewards',net_profit:'Net Profit',treasury_inflow:'Protocol Treasury Inflow',olp_pnl:'OLP PnL'};
 const charts=new Map();let chartCleanups=[];let route={page:'overview',params:new URLSearchParams()};let lastFocus=null;
 const historyCache=new Map(),historyPending=new Set(),historyFailed=new Set();
@@ -35,7 +35,7 @@ function selectedFinancialTotals(){return periodTotals(selectedReports(),Object.
 function pageRangeToolbar(){return `<div class="range-toolbar"><span class="range-label">Period</span><div class="range-buttons" role="group" aria-label="Historical period">${RANGE_OPTIONS.map(([key,label])=>`<button type="button" data-range="${key}" aria-pressed="${selectedRange()===key}">${label}</button>`).join('')}</div>${infoButton('range','Date-range methodology')}</div>`;}
 let pendingRangeFocus=false;
 let pendingResultsFocus=false;
-function syncRangeLinks(){document.querySelectorAll('a[href^="#/"]').forEach(a=>a.setAttribute('href',rangeHref(a.getAttribute('href'),selectedRange())));if(pendingRangeFocus){pendingRangeFocus=false;requestAnimationFrame(()=>main.querySelector('button[data-range="'+selectedRange()+'"]')?.focus({preventScroll:true}));}}
+function syncRangeLinks(){document.querySelectorAll('a[href^="#/"]:not([data-fixed-range])').forEach(a=>a.setAttribute('href',rangeHref(a.getAttribute('href'),selectedRange())));if(pendingRangeFocus){pendingRangeFocus=false;requestAnimationFrame(()=>main.querySelector('button[data-range="'+selectedRange()+'"]')?.focus({preventScroll:true}));}}
 function selectedFlowDetail(){return selectedReports().length?'Reports published in selected period':'No reports published in selected period';}
 function rangeWindowLabel(){const bounds=rangeBounds(selectedRange(),rangeAnchor());return bounds.endExclusive===null?'Capture date unavailable':(bounds.start===null?'Archive start':date(bounds.start))+' through '+date(bounds.endExclusive-1)+' UTC';}
 
@@ -107,9 +107,12 @@ function marketHistoryPanels(market) {
 }
 function executionObservation() {
   const eligible = marketHistoryEntries().filter(entry=>entry.partition_url || entry.markets);
-  const snapshot = eligible.find(entry=>entry.date===route.params.get('quote-date')) || eligible.at(-1);
+  const coverage = new Map((DATA.protocolHistory?.rows || []).map(row=>[row.observedAt,row.swapQuotes]));
+  const quoted = [...eligible].reverse().find(entry=>coverage.get(entry.observed_at)>0);
+  const requested = route.params.get('quote-date');
+  const snapshot = requested ? eligible.find(entry=>entry.date===requested) : quoted || eligible.at(-1);
   const data = snapshot?.observed_at===latest()?.observed_at ? latest() : snapshot?.markets ? snapshot : historyCache.get(snapshot?.date);
-  return {eligible,snapshot,data};
+  return {eligible,snapshot,data,requested,prior:!requested && Boolean(snapshot && snapshot!==eligible.at(-1))};
 }
 async function ensureMarketHistory() {
   const market = route.page==='omni' && selectedMarket();
@@ -156,10 +159,14 @@ function chartPanel({id, title, subtitle, rows, series, type='line', unit='$', m
   const details = `<details class="table-disclosure" data-chart-table="${e(id)}">
     <summary>Chart data</summary><div class="table-wrap"><table class="data-table">
     <thead><tr>${interval ? '<th>From (UTC)</th><th>To (UTC)</th>' : '<th>Date (UTC)</th>'}${headers}<th>Source</th></tr></thead><tbody></tbody></table></div></details>`;
+  const measured = rows.filter(row=>series.some(item=>n(row.values[item.key])!==null)).length;
+  const sparse = measured>0 && measured<=8 ? `<span class="chart-coverage">${measured} observation${measured===1?'':'s'}</span>` : '';
   const context = [subtitle,note].filter(Boolean).join('. ');
+  const historyURL = rangeHref(location.hash,'all');
   const chart = hasData ? `${legend}<div class="chart-shell" data-chart="${e(id)}"></div>` :
-    '<div class="chart-empty">No observations in this period</div>';
-  const footer = hasData ? `<div class="chart-bottom"><div>${exception}
+    `<div class="chart-empty">No observations in this period${selectedRange()!=='all' && historyURL.startsWith('#/') ?
+      ' <a class="inline-link" data-fixed-range href="'+e(historyURL)+'">View all history</a>' : ''}</div>`;
+  const footer = hasData ? `<div class="chart-bottom">${sparse}<div>${exception}
     <button type="button" class="text-button" data-export-chart="${e(id)}">CSV</button>
     ${source ? sourceLink(source,sourceLabel) : ''}</div></div>${details}` : '';
   return panel(title, context, controls+chart+footer, method);
@@ -199,6 +206,77 @@ function activityToolbar(metric, modes) {
   return `<div class="segmented" role="group" aria-label="${metric === 'volume' ? 'Trading volume measure' : 'Open interest measure'}">${buttons}</div>`;
 }
 
+function publishedMetricRecords(field) {
+  const series = new Map();
+  for (const report of DATA.officialActivity?.reports || []) {
+    const metric=report.metrics?.[field];
+    if (!metric) continue;
+    series.set(report.id,{date:report.published_at,value:metric.value,unit:metric.unit,
+      source:report.source_urls?.[0],detail:metric.precision_increment && n(metric.precision_increment)>1 ? 'Rounded in the source update' : ''});
+  }
+  for (const report of reports()) {
+    const value = report.snapshot?.[field];
+    if (value!==null && value!==undefined) series.set(report.id,
+      {date:report.published_at,value,unit:report.units?.[field],source:report.source_urls?.[0]});
+  }
+  return [...series.values()].sort((a,b)=>a.date.localeCompare(b.date));
+}
+function publishedMetricRows(field,label='value') {
+  return rangeRows(publishedMetricRecords(field).map(row=>({...row,values:{[label]:row.value}})));
+}
+function accountsView() {
+  const index = DATA.arbitrumIndex;
+  const title = heading('Accounts')+pageRangeToolbar();
+  const reported = officialActivityPanels();
+  const userStats = [['Daily Active Users','daily_active_users_week_average'],['Weekly Active Users','weekly_active_users']].map(([label,field])=>{
+    const item = publishedMetricRecords(field).at(-1);
+    return item ? stat(label+' ('+shortDate(item.date)+')',fixed(item.value,0),date(item.date),'reported-activity') : '';
+  }).join('');
+  const activeCards = userStats ? `<div class="stats user-activity-stats">${userStats}</div>` : '';
+  if (!index?.summary || !index.coverage) return title+activeCards+reported+dataUnavailable('Onchain pool index','arbitrumIndex');
+  const {coverage,summary} = index;
+  const window = rangeBounds(selectedRange(),rangeAnchor());
+  const indexStart = Date.parse(coverage.from_timestamp), indexEnd = Date.parse(coverage.to_timestamp);
+  const wholeIndex = selectedRange()==='all' || (window.start!==null && window.endExclusive!==null &&
+    indexStart>=window.start && indexEnd<window.endExclusive);
+  if (!wholeIndex) {
+    const overlapping = window.start!==null && window.endExclusive!==null &&
+      indexStart<window.endExclusive && indexEnd>=window.start;
+    const message = overlapping ? 'Only part of the indexed interval falls in this period.' : 'No indexed blocks in this period.';
+    return title+activeCards+panel('Verified Pool Index Coverage','',`<div class="chart-empty">${message}
+      <a class="inline-link" href="#/accounts?range=all" data-fixed-range>View all indexed blocks</a></div>`,'pool-index')+reported;
+  }
+  const indexed = `Block ${fixed(coverage.from_block,0)} through ${fixed(coverage.to_block,0)}. ${timestamp(coverage.from_timestamp)} to ${timestamp(coverage.to_timestamp)}.`;
+  const stats = `<div class="stats account-index-stats">
+    ${stat('Indexed Pool Creations',fixed(summary.created_pools,0),indexed,'pool-index')}
+    ${stat('Distinct Pool Creators',fixed(summary.distinct_creator_accounts,0),indexed,'pool-index')}
+    ${stat('Creation Participants Excluding Core OLP',fixed(summary.creation_participant_accounts_excluding_core_olp,0),indexed,'pool-index')}</div>`;
+  const indexRows = (coverage.ranges || []).map(chunk=>`<tr><td>${e(timestamp(chunk.from_timestamp))}</td><td>${e(timestamp(chunk.to_timestamp))}</td>
+    <td class="number">${fixed(chunk.from_block,0)}</td><td class="number">${fixed(chunk.to_block,0)}</td>
+    <td class="number">${fixed(chunk.log_count,0)}</td></tr>`).join('');
+  const availability = [['trading_active_accounts','Onchain Trading Activity'],['protocol_net_flows','Settlement Pool Net Flows'],['referral_claims','Onchain Referral Claims']];
+  const statusRows=availability.map(([key,label])=>`<tr><th scope="row">${e(label)}</th><td class="wrap muted">${e(index.availability?.[key]?.reason || 'Coverage unavailable')}</td></tr>`).join('');
+  const firstDate = date(coverage.from_timestamp), lastDate = date(coverage.to_timestamp);
+  const indexDates = firstDate === lastDate ? firstDate : firstDate+' to '+lastDate;
+  return title+activeCards+'<p class="data-state">Indexed '+e(indexDates)+' UTC</p>'+stats+panel('Verified Pool Index Coverage',indexed,`<div class="table-wrap"><table class="data-table">
+    <thead><tr><th>From (UTC)</th><th>To (UTC)</th><th class="number">First block</th><th class="number">Last block</th>
+    <th class="number">Pool creations</th></tr></thead><tbody>${indexRows}</tbody></table></div>
+    <div class="source-line">${sourceLink(index.factory?.registry_url,'Contract registry')}<a class="inline-link" href="data/arbitrum-index.json" download>Index data</a></div>`,'pool-index')+
+    reported+`<div class="section-space">${panel('Onchain Coverage Gaps','',`<div class="table-wrap"><table class="data-table"><tbody>${statusRows}</tbody></table></div>`,'pool-index')}</div>`;
+}
+function officialActivityPanels() {
+  if (!DATA.officialActivity?.reports.length) return '';
+  const common={source:'data/official-activity.json',sourceLabel:'Data',method:'reported-activity',type:'line'};
+  const charts = [
+    ['daily_active_users_week_average','Reported Daily Active Users','count','Daily users (seven-day average)',BLUE],
+    ['weekly_active_users','Reported Weekly Active Users','count','Weekly active users',TEAL],
+    ['total_trades_placed','Reported Cumulative Trade Count','count','Total trades placed',BLUE],
+    ['tokens_listed','Reported Listed Tokens','count','Listed tokens',TEAL],
+  ].map(([field,title,unit,label,color])=>chartPanel({...common,id:'activity-'+field,title,unit,
+    rows:publishedMetricRows(field),series:[{key:'value',label,color}]}));
+  return `<div class="grid two section-space">${charts.join('')}</div>`;
+}
+
 function protocolActivityChart(id='overview-volume') {
   const mode = activityModes.volume;
   const toolbar = activityToolbar('volume', [['cumulative','Cumulative'],['interval','Between reports'],['rolling','24H']]);
@@ -210,14 +288,13 @@ function protocolActivityChart(id='overview-volume') {
   const cumulativeMode = mode === 'cumulative';
   const fullRows = [];
   let previous = null;
-  for (const report of reports()) {
-    const amount = n(report.snapshot?.cumulative_volume);
-    const available = amount !== null && report.units?.cumulative_volume === '$';
+  for (const report of publishedMetricRecords('cumulative_volume')) {
+    const amount = n(report.value);
+    const available = amount !== null && report.unit === '$';
     const comparable = available && previous && amount >= previous.amount;
     const value = cumulativeMode ? (available ? amount : null) : (comparable ? amount - previous.amount : null);
-    fullRows.push({date:report.published_at, label:cumulativeMode || !comparable ? date(report.published_at) :
-      shortDate(previous.date)+' – '+date(report.published_at), startDate:comparable ? previous.date : null, values:{value},source:report.source_urls?.[0]});
-    previous = available ? {amount, date:report.published_at} : null;
+    fullRows.push({date:report.date,detail:report.detail,startDate:comparable ? previous.date : null,values:{value},source:report.source});
+    previous = available ? {amount,date:report.date} : null;
   }
   const title = cumulativeMode ? 'Cumulative Trading Volume' : 'Trading Volume Between Reports';
   const visible = rangeRows(fullRows);
@@ -234,13 +311,13 @@ function protocolActivityChart(id='overview-volume') {
     series:[{key:'value',label:cumulativeMode?'Total Volume Traded':'Change in Total Volume Traded',color:BLUE}],
     toolbar, type:cumulativeMode?'area':'bar',unit:'$',method:'reported-volume',interval:!cumulativeMode,
     note:visible.length?'':'Latest report / '+date(latestReport()?.published_at),
-    source:'data/financials.json',sourceLabel:'Reports'});
+    source:DATA.officialActivity?'data/official-activity.json':'data/financials.json',sourceLabel:'Reports'});
 }
 
 function protocolOpenInterestChart(id='overview-oi') {
   const toolbar = activityToolbar('interest',[['dual','Dual-sided OI'],['trader','Trader OI']]);
   if (activityModes.interest === 'dual') {
-    const visible = financialRows(['dual_sided_oi'],{snapshot:true});
+    const visible = publishedMetricRows('dual_sided_oi','dual_sided_oi');
     if (!visible.some(row => n(row.values.dual_sided_oi) !== null)) {
       const apiRows = historyRows('open_interest_total_usdc');
       if (apiRows.some(row => n(row.values.value) !== null)) {
@@ -252,7 +329,7 @@ function protocolOpenInterestChart(id='overview-oi') {
     }
     return chartPanel({id,title:'Dual-Sided Open Interest',subtitle:'Variational updates / USD', toolbar, unit:'$',
       rows:visible,series:[{key:'dual_sided_oi',label:'Dual-sided OI',color:TEAL}],
-      type:'line',method:'reported-oi',note:selectedReports().length?'':'Latest report / '+date(latestReport()?.published_at),source:'data/financials.json',sourceLabel:'Reports'});
+      type:'line',method:'reported-oi',note:selectedReports().length?'':'Latest report / '+date(latestReport()?.published_at),source:DATA.officialActivity?'data/official-activity.json':'data/financials.json',sourceLabel:'Reports'});
   }
   return chartPanel({id,title:'Trader Open Interest',subtitle:'Omni API in USDC',toolbar,unit:'USDC',
     rows:historyRows('trader_open_interest_usdc'),series:[{key:'value',label:'Trader open interest',color:TEAL}],
@@ -280,7 +357,7 @@ function overview() {
   const marketRanks = !DATA.markets ? dataUnavailable('Market rankings','markets') : panel('Markets by 24-Hour Volume','Omni / USDC',
     `<div id="overview-markets">${marketTable({limit:6,compact:true})}</div>
     <div class="source-line"><span>${e(timestamp(latest()?.observed_at))}</span><a class="inline-link" href="#/omni">All markets</a></div>`,'markets');
-  const financeCards = DATA.financials ? `<div class="stats section-space">
+  const financeCards = selectedReports().length ? `<div class="stats section-space">
     ${stat('Spreads Paid (Gross Revenue)',cash(t.gross_revenue),selectedFlowDetail(),'selected-flow')}
     ${stat('Net Profit',cash(t.net_profit),selectedFlowDetail(),'selected-flow')}
     ${stat('Net Profit / Gross Revenue',percent(ratio(t.net_profit,t.gross_revenue)),'Selected reports','profit-ratio')}
@@ -288,7 +365,7 @@ function overview() {
   return heading('Overview','','') + pageRangeToolbar() + apiNotice() + marketCards +
     `<div class="grid two">${protocolActivityChart()}${protocolOpenInterestChart()}</div>` + financeCards +
     `<div class="grid two section-space">${primaryFinancialChart()}${marketRanks}</div>
-     <div class="section-space">${latestReportSummary()}</div>${protocolDepthPanels()}`;
+     <div class="section-space">${latestReportSummary()}</div>${protocolDepthPanels()}${officialActivityPanels()}`;
 }
 function officialUpdate(report) {
   return report?.sources?.find(source => source.matches_current)?.url || report?.source_urls?.[0];
@@ -477,12 +554,16 @@ function quoteSizePanel(observation) {
   const selected = executionBenchmarks.map(ticker => marketList.find(market=>market.ticker===ticker)).filter(Boolean);
   const values = selected.flatMap(market => executionSizes.map(([key])=>n(market.quotes?.[key]?.full_spread_bps))).filter(value=>value!==null);
   const max = Math.max(1,...values);
-  const rows = selected.map(market => `<tr><th scope="row"><button type="button" class="market-button" data-market="${e(marketKey(market))}">${e(market.ticker)}</button></th>
-    ${executionSizes.map(([key])=>{
+  const rows = selected.map(market => {
+    const allMissing = executionSizes.every(([key])=>n(market.quotes?.[key]?.full_spread_bps)===null);
+    const availability = allMissing ? '<td colspan="3" class="muted">No quote in this observation</td>' : executionSizes.map(([key])=>{
       const value = n(market.quotes?.[key]?.full_spread_bps);
       return `<td class="number spread-cell">${value===null ? '' : '<i aria-hidden="true" style="width:'+Math.max(0,Math.min(100,value/max*100)).toFixed(4)+'%"></i>'}
-        <span>${spreadLabel(value)}</span></td>`;
-    }).join('')}</tr>`).join('');
+        <span>${value===null ? '<span aria-label="Quote unavailable">—</span>' : spreadLabel(value)}</span></td>`;
+    }).join('');
+    return `<tr><th scope="row"><button type="button" class="market-button" data-market="${e(marketKey(market))}">${e(market.ticker)}</button></th>
+    ${availability}</tr>`;
+  }).join('');
   return panel('Full Bid-Ask Spread by Order Size',timestamp(observation.snapshot?.observed_at),
     rows ? `<div class="table-wrap"><table class="data-table spread-table"><thead><tr><th>Market</th>
       ${executionSizes.map(([,,label])=>'<th class="number">'+label+' (bps)</th>').join('')}</tr></thead><tbody>${rows}</tbody></table></div>`
@@ -496,7 +577,7 @@ function executionMatches() {
   for (const row of DATA.executionStudy?.rows || []) add(row);
   return [...rows.values()].filter(row=>rangeRows([{date:row.observed_at}]).length).sort((a,b)=>a.observed_at.localeCompare(b.observed_at));
 }
-function matchedExecutionPanel() {
+function archivedExecutionPanel() {
   const sizes = executionSizes.map(([,size])=>size);
   const requested = Number(route.params.get('size'));
   const size = sizes.includes(requested) ? requested : 100000;
@@ -516,7 +597,7 @@ function matchedExecutionPanel() {
     <td class="number">${row.count}</td></tr>`).join('');
   const details = matches.map(row=>`<tr><td>${e(timestamp(row.observed_at))}</td><td>${e(row.market)}</td>
     <td class="number">${spreadLabel(row.omni_bps)}</td><td class="number">${spreadLabel(row.peer_total_bps)}</td></tr>`).join('');
-  return panel('Crypto Execution Costs','USD order size. All costs in basis points.',
+  return panel('November 11 Hyperliquid Study','Indicative costs in basis points.',
     `<div class="chart-toolbar" aria-label="Order size">${sizeLinks}</div>`+
     (matches.length ? `<div class="table-wrap"><table class="data-table"><thead><tr><th>Market</th><th class="number">Omni</th>
       <th class="number">HL book</th><th class="number">HL fees</th><th class="number">HL total</th>
@@ -525,17 +606,69 @@ function matchedExecutionPanel() {
       <thead><tr><th>Time (UTC)</th><th>Market</th><th class="number">Omni</th><th class="number">HL total</th></tr></thead>
       <tbody>${details}</tbody></table></div></details>` : '<div class="chart-empty">No matched quotes in this period</div>'),'execution');
 }
+const venueOrder = [['hyperliquid','Hyperliquid'],['lighter','Lighter'],['binance','Binance'],['okx','OKX'],['bybit','Bybit']];
+const missingVenue = {
+  permission_required:'Publication permission required',not_sampled:'No sample collected',stale_source:'Source times did not match', source_unavailable:'Public book unavailable', market_unavailable:'Market unavailable',
+  no_omni_quote:'Omni quote unavailable', invalid_data:'Public book could not be verified', insufficient_depth:'Insufficient published depth'
+};
+function venueRoute(coin,size) {
+  const params = new URLSearchParams(route.params);
+  params.delete('view');
+  params.set('coin',coin);
+  params.set('size',String(size));
+  return '#/execution?'+params.toString();
+}
+function multiVenuePanel() {
+  const coins = ['BTC','ETH','SOL','HYPE'];
+  const sizes = executionSizes.map(([,size])=>size);
+  const choice = route.params.get('coin'), requested = Number(route.params.get('size'));
+  const coin = coins.includes(choice) ? choice : 'BTC';
+  const size = sizes.includes(requested) ? requested : 100000;
+  const archive = DATA.multiVenue;
+  const matches = (archive?.rows || []).filter(row=>row.market===coin && row.notional_usd===size);
+  const visible = rangeRows(matches.map(row=>({...row,date:row.observed_at})));
+  const tabs = (choices,option,label,path)=>`<div class="segmented" aria-label="${e(label)}">${choices.map(([value,name])=>
+    `<a href="${e(path(value))}"${option===value?' aria-current="true"':''}>${e(name)}</a>`).join('')}</div>`;
+  const controls = '<div class="chart-toolbar">'+tabs(coins.map(value=>[value,value]),coin,'Market',value=>venueRoute(value,size))+
+    tabs(executionSizes.map(([,amount,label])=>[amount,label]),size,'Order size',value=>venueRoute(coin,value))+'</div>';
+  const rows = venueOrder.map(([key,name])=>{
+    const subset = visible.filter(row=>row.venue===key);
+    const currency = archive?.venues?.[key]?.currency || (key==='hyperliquid'||key==='lighter'?'USDC':'USDT');
+    const label = `<tr><th scope="row">${name}</th><td>${currency}</td>`;
+    if (!subset.length) {
+      const status = archive?.coverage?.find(row=>row.venue===key && row.market===coin)?.status;
+      const detail = matches.some(row=>row.venue===key) ? 'No match in this period' :
+        status==='ok' ? 'No matched depth at this size' : missingVenue[status] || 'No matched sample';
+      return label+`<td colspan="5" class="muted">${e(detail)}</td><td class="number">0</td><td>—</td></tr>`;
+    }
+    const fields = ['omni_bps','book_bps','fee_bps','total_bps'];
+    const values = fields.map(field=>median(subset.map(row=>row[field])));
+    const edge = median(subset.map(row=>row.total_bps-row.omni_bps));
+    return label + [...values,edge].map(value=>`<td class="number">${spreadLabel(value)}</td>`).join('')+`<td class="number">${subset.length}</td><td>${e(shortDate(subset.at(-1).observed_at))}</td></tr>`;
+  }).join('');
+  const table = `<div class="table-wrap"><table class="data-table"><thead><tr><th>Venue</th><th>Quote</th>
+    <th class="number">Omni (bps)</th><th class="number">Depth (bps)</th><th class="number">Fees (bps)</th>
+    <th class="number">Total (bps)</th><th class="number">Vs. Omni (bps)</th><th class="number">Pairs</th><th>Last match (UTC)</th></tr></thead>
+    <tbody>${rows}</tbody></table></div>`;
+  return panel('Perpetual Trading Costs by Venue','Median matched round trips. A positive difference means the peer costs more.',
+    controls+table+(archive?.rows.length ? '<div class="source-line"><a class="inline-link" href="data/multi-venue.json" download>Sample data</a></div>' : ''),
+    'multi-venue');
+}
 function executionView() {
   const observation = executionObservation();
   const options = [...observation.eligible].reverse().map(entry=>
-    `<option value="${e(entry.date)}"${observation.snapshot===entry?' selected':''}>${e(date(entry.observed_at))}</option>`).join('');
-  const actions = options ? `<div class="field-select"><select data-execution-date aria-label="Omni quote date">${options}</select></div>` : '';
+    `<option value="${e(entry.date)}"${observation.requested===entry.date?' selected':''}>${e(date(entry.observed_at))}</option>`).join('');
+  const actions = options ? `<div class="field-select"><select data-execution-date aria-label="Omni quote date">
+    <option value="">Latest with swap quotes</option>${options}</select></div>` : '';
   const pending = observation.snapshot && !observation.data && !historyFailed.has(observation.snapshot.date);
   const detail = pending ? '<p class="data-state" role="status">Loading quotes…</p>' :
+    observation.prior ? '<p class="data-state">Last saved swap quotes: '+e(timestamp(observation.snapshot.observed_at))+'</p>' :
+    observation.requested && !observation.snapshot ? '<p class="data-state">Selected quote date is outside this period.</p>' :
     observation.snapshot && !observation.data ? '<p class="data-state" role="status">Quote observation could not load.</p>' : '';
   return heading('Execution','','',actions)+pageRangeToolbar()+detail+
     `<div id="execution-observations" class="grid two">${quoteSizePanel(observation)}${quoteBreadth(observation)}</div>
-    <div class="section-space">${matchedExecutionPanel()}</div>`;
+    <div class="section-space">${multiVenuePanel()}</div>
+    <details class="panel section-space table-disclosure"><summary>Archived Hyperliquid study</summary>${archivedExecutionPanel()}</details>`;
 }
 
 function resultsSelection(periodReports = selectedReports()) {
@@ -570,6 +703,11 @@ function resultPanels(selection) {
   if (selection.unavailable) {
     const message = '<div class="empty-state">The linked update is unavailable in this period.</div>';
     return panel('Gross Revenue to Net Profit','USD',message,'waterfall');
+  }
+  if (!records.length) {
+    const last = latestReport();
+    const contextual = last ? ` <a class="inline-link" href="#/financials?report=${e(encodeURIComponent(last.id))}&amp;range=all" data-fixed-range>View ${e(date(last.published_at))} update</a>` : '';
+    return panel('Gross Revenue to Net Profit','',`<div class="chart-empty">No updates in this period.${contextual}</div>`,'waterfall');
   }
   const scope = selected ? date(selected.published_at)+' update' : 'Period total';
   const subtitle = scope+' / USD';
@@ -631,7 +769,7 @@ function reportsView(periodReports,selection) {
   return resultPanels(selection)+`<div class="section-space">${primaryFinancialChart('financial-performance')}</div>
     <div class="grid two section-space">${allocationHistory}${marginHistory}</div>`+resultsByPeriod(periodReports);
 }
-function treasuryView(){const r=latestReport(),chain=DATA.supplement?.chain,account=chain?.accounts?.find(a=>a.id==='treasury');return `<div class="stats">${stat('Reported Treasury Holdings',compact(r.snapshot.treasury_holdings),'<span class="unit">USDC</span> / '+e(date(r.published_at)),'treasury')}${stat('Observed Onchain Balance',compact(account?.balance_usdc),'<span class="unit">USDC</span> / '+e(chain?.observed_at?shortDate(chain.observed_at):'Unavailable'),'chain')}${stat('Selected-period Treasury Inflow',cash(selectedFinancialTotals().treasury_inflow),selectedFlowDetail(),'selected-flow')}${stat('Latest Reported Inflow',cash(r.period_amounts.treasury_inflow),'2w / '+e(date(r.published_at)),'treasury')}</div><div class="grid two">${chartPanel({id:'treasury-holdings',title:'Reported Protocol Treasury Holdings',subtitle:'USDC / reported snapshots',rows:financialRows(['treasury_holdings'],{snapshot:true}),series:[{key:'treasury_holdings',label:'Treasury Holdings',color:BLUE}],type:'line',unit:'USDC',method:'treasury',note:'Missing observations remain gaps'})}${chartPanel({id:'treasury-inflow',title:'Cumulative Protocol Treasury Inflow',subtitle:'Reported / $ / sum of covered reports',rows:financialRows(['treasury_inflow'],{mode:'cumulative'}),series:[{key:'treasury_inflow',label:'Protocol Treasury Inflow',color:BLUE}],type:'area',method:'treasury',note:'Cumulative from archive start; displayed period is cropped'})}</div>${chainPanel('treasury')}`;}
+function treasuryView(){const r=latestReport(),chain=DATA.supplement?.chain,account=chain?.accounts?.find(a=>a.id==='treasury');return `<div class="stats report-linked-stats">${stat('Reported Treasury Holdings',compact(r.snapshot.treasury_holdings),'<span class="unit">USDC</span> / '+e(date(r.published_at)),'treasury')}${stat('Observed Onchain Balance',compact(account?.balance_usdc),'<span class="unit">USDC</span> / '+e(chain?.observed_at?shortDate(chain.observed_at):'Unavailable'),'chain')}${selectedReports().length ? stat('Selected-period Treasury Inflow', cash(selectedFinancialTotals().treasury_inflow), selectedFlowDetail(), 'selected-flow') : ''}${stat('Latest Reported Inflow',cash(r.period_amounts.treasury_inflow),'2w / '+e(date(r.published_at)),'treasury')}</div><div class="grid two">${chartPanel({id:'treasury-holdings',title:'Reported Protocol Treasury Holdings',subtitle:'USDC / reported snapshots',rows:financialRows(['treasury_holdings'],{snapshot:true}),series:[{key:'treasury_holdings',label:'Treasury Holdings',color:BLUE}],type:'line',unit:'USDC',method:'treasury',note:'Missing observations remain gaps'})}${chartPanel({id:'treasury-inflow',title:'Cumulative Protocol Treasury Inflow',subtitle:'Reported / $ / sum of covered reports',rows:financialRows(['treasury_inflow'],{mode:'cumulative'}),series:[{key:'treasury_inflow',label:'Protocol Treasury Inflow',color:BLUE}],type:'area',method:'treasury',note:'Cumulative from archive start; displayed period is cropped'})}</div>${chainPanel('treasury')}`;}
 function chainPanel(id) {
   const history = DATA.chainHistory?.points || [];
   const chain = DATA.supplement?.chain;
@@ -690,7 +828,7 @@ function rewardsView() {
   return top+`<div class="stats rewards-stats">${stats}</div><div class="grid two">
     ${makeSeries('reported-rewards','Reported Rewards History',fields)}${referral}</div>`;
 }
-function olp(){if(!latestReport())return heading('Omni Liquidity Provider')+pageRangeToolbar()+dataUnavailable('OLP reports','financials');const r=latestReport(),account=DATA.supplement?.chain?.accounts?.find(a=>a.id==='olp');const lifetime=state.olpMode==='lifetime';const rows=lifetime?financialRows(['lifetime_olp_pnl'],{snapshot:true}):financialRows(['olp_pnl'],{mode:state.olpMode==='cumulative'?'cumulative':'period'});const key=lifetime?'lifetime_olp_pnl':'olp_pnl';const toolbar=`<div class="segmented" aria-label="OLP PnL series"><button type="button" data-olp-mode="lifetime" aria-pressed="${lifetime}">Reported lifetime</button><button type="button" data-olp-mode="period" aria-pressed="${state.olpMode==='period'}">Per report</button><button type="button" data-olp-mode="cumulative" aria-pressed="${state.olpMode==='cumulative'}">Covered cumulative</button></div>`;return heading('Omni Liquidity Provider','','OLP PERFORMANCE')+pageRangeToolbar()+`<div class="stats">${stat('Lifetime OLP PnL',cash(r.snapshot.lifetime_olp_pnl),'Reported / '+e(date(r.published_at)),'olp')}${stat('Selected-period OLP PnL',cash(selectedFinancialTotals().olp_pnl),selectedFlowDetail(),'selected-flow')}${stat('Latest 2W OLP PnL',cash(r.period_amounts.olp_pnl),'Reported / '+e(date(r.published_at)),'olp')}${stat('Observed OLP Balance',compact(account?.balance_usdc),'<span class="unit">USDC</span> / onchain cash','chain')}</div>${chartPanel({id:'olp-performance',title:lifetime?'Reported Lifetime OLP PnL':state.olpMode==='period'?'OLP PnL by Report':'Cumulative OLP PnL / Covered Reports',subtitle:'Reported / $ / publication dates in UTC',rows,series:[{key,label:lifetime?'Lifetime OLP PnL':'OLP PnL',color:BLUE}],type:state.olpMode==='period'?'bar':'area',method:'olp',toolbar,note:lifetime?'Source lifetime values / not a sum of this archive':state.olpMode==='cumulative'?'Cumulative from archive start; displayed period is cropped':'Native report amounts'})}${chainPanel('olp')}<div class="section-space">${panel('OLP Data Coverage','Source boundaries',`<div class="table-wrap"><table class="data-table status-table"><tbody><tr><td>Reported period and lifetime PnL</td><td>${reports().length} reports</td></tr><tr><td>Observed onchain USDC balance</td><td>${account?'Available':'Unavailable'}</td></tr><tr><td>Consolidated NAV and external hedges</td><td>Not publicly established</td></tr><tr><td>Return / APY</td><td>Insufficient accounting data</td></tr></tbody></table></div>`,'olp')}</div>`;}
+function olp(){if(!latestReport())return heading('Omni Liquidity Provider')+pageRangeToolbar()+dataUnavailable('OLP reports','financials');const r=latestReport(),account=DATA.supplement?.chain?.accounts?.find(a=>a.id==='olp');const lifetime=state.olpMode==='lifetime';const rows=lifetime?financialRows(['lifetime_olp_pnl'],{snapshot:true}):financialRows(['olp_pnl'],{mode:state.olpMode==='cumulative'?'cumulative':'period'});const key=lifetime?'lifetime_olp_pnl':'olp_pnl';const toolbar=`<div class="segmented" aria-label="OLP PnL series"><button type="button" data-olp-mode="lifetime" aria-pressed="${lifetime}">Reported lifetime</button><button type="button" data-olp-mode="period" aria-pressed="${state.olpMode==='period'}">Per report</button><button type="button" data-olp-mode="cumulative" aria-pressed="${state.olpMode==='cumulative'}">Covered cumulative</button></div>`;return heading('Omni Liquidity Provider','','OLP PERFORMANCE')+pageRangeToolbar()+`<div class="stats report-linked-stats">${stat('Lifetime OLP PnL',cash(r.snapshot.lifetime_olp_pnl),'Reported / '+e(date(r.published_at)),'olp')}${selectedReports().length ? stat('Selected-period OLP PnL', cash(selectedFinancialTotals().olp_pnl), selectedFlowDetail(), 'selected-flow') : ''}${stat('Latest 2W OLP PnL',cash(r.period_amounts.olp_pnl),'Reported / '+e(date(r.published_at)),'olp')}${stat('Observed OLP Balance',compact(account?.balance_usdc),'<span class="unit">USDC</span> / onchain cash','chain')}</div>${chartPanel({id:'olp-performance',title:lifetime?'Reported Lifetime OLP PnL':state.olpMode==='period'?'OLP PnL by Report':'Cumulative OLP PnL / Covered Reports',subtitle:'Reported / $ / publication dates in UTC',rows,series:[{key,label:lifetime?'Lifetime OLP PnL':'OLP PnL',color:BLUE}],type:state.olpMode==='period'?'bar':'area',method:'olp',toolbar,note:lifetime?'Source lifetime values / not a sum of this archive':state.olpMode==='cumulative'?'Cumulative from archive start; displayed period is cropped':'Native report amounts'})}${chainPanel('olp')}<div class="section-space">${panel('OLP Data Coverage','Source boundaries',`<div class="table-wrap"><table class="data-table status-table"><tbody><tr><td>Reported period and lifetime PnL</td><td>${reports().length} reports</td></tr><tr><td>Observed onchain USDC balance</td><td>${account?'Available':'Unavailable'}</td></tr><tr><td>Consolidated NAV and external hedges</td><td>Not publicly established</td></tr><tr><td>Return / APY</td><td>Insufficient accounting data</td></tr></tbody></table></div>`,'olp')}</div>`;}
 function token(){const token=DATA.supplement?.token||{},verified=token.status==='verified';const allocations=token.allocations||[];return heading('VAR',token.checked_at?'Source checked '+timestamp(token.checked_at):'Source verification pending','TOKEN DATA',sourceLink(token.source_url,'CoinGecko'))+`<div class="stats">${stat('Token Price',verified?cash(token.price_usd):'Unavailable',verified?'USD':'Market identity not verified','var')}${stat('Market Capitalization',verified?cash(token.market_cap_usd):'Unavailable',verified?'USD':'Preview listing','var')}${stat('Circulating Supply',verified?compact(token.circulating_supply):'Unverified','VAR','var')}${stat('Token Contract',token.contract_address?'Verified':'Unverified',token.contract_address?e(token.contract_address.slice(0,10)+'…'):'Official identity required','var')}</div><div class="grid two">${allocations.length?panel('Planned Token Allocation','Announced allocation / not circulating supply',`<div class="panel-body"><div class="allocation-bar" style="height:18px" aria-label="Planned token allocation">${allocations.map((a,i)=>`<span style="width:${Math.max(0,Math.min(100,n(a.percent)||0))}%;background:${[BLUE,TEAL,GREY][i%3]}"></span>`).join('')}</div><div class="allocation-legend">${allocations.map((a,i)=>`<div class="allocation-row"><span><i style="background:${[BLUE,TEAL,GREY][i%3]}"></i>${e(a.label)}</span><strong class="number">${fixed(a.percent,0)}%</strong></div>`).join('')}</div></div>${sourceFooter(token.policy_url,'Official allocation',token.policy_as_of?'Source as of '+date(token.policy_as_of):'Documented policy')}`,'var'):panel('Token Allocation','Official documentation',`<div class="empty-state">Allocation data is not available in this release.</div>`,'var')}${panel('Token Data Availability','Activation follows source verification',`<div class="table-wrap"><table class="data-table status-table"><tbody><tr><td>CoinGecko listing</td><td>${e(token.status==='preview'?'Preview':'Identity review')}</td></tr><tr><td>Canonical contract</td><td>${token.contract_address?'Verified':'Unverified'}</td></tr><tr><td>Vesting / unlock execution</td><td>Unverified</td></tr><tr><td>Buyback purchases</td><td>No verified series</td></tr><tr><td>Token burns</td><td>No verified series</td></tr></tbody></table></div>`,'var')}</div>`;}
 function pro(){const pro=DATA.supplement?.pro||{};return heading('Variational Pro',pro.checked_at?'Source checked '+timestamp(pro.checked_at):'Public documentation','INSTITUTIONAL OTC',sourceLink(pro.source_url||'https://docs.variational.io/pro/about-pro','Official documentation'))+panel('Variational Pro','Institutional OTC with multiple market makers',`<div class="table-wrap"><table class="data-table status-table"><tbody><tr><td>Public release</td><td>${pro.status==='prelaunch'?'Not live per documentation':'Under review'}</td></tr><tr><td>Public market data</td><td>No validated feed</td></tr><tr><td>RFQ and market maker participation</td><td>Authorized aggregates required</td></tr><tr><td>Quote response and acceptance</td><td>Authorized activity data required</td></tr><tr><td>Settlement outcomes</td><td>Authorized settlement data required</td></tr></tbody></table></div>`,'pro');}
 function research(){const articles=(DATA.supplement?.research?.articles||[]).filter(a=>['published','scheduled'].includes(a.status));const selected=articles.find(a=>a.id===route.params.get('article'));if(selected)return articleReader(selected);return heading('Research','Articles and analysis by Jae (Ponyo)','RESEARCH LIBRARY')+(articles.length?`<div class="article-list">${[...articles].sort((a,b)=>new Date(b.published_at||b.scheduled_date)-new Date(a.published_at||a.scheduled_date)).map(a=>`<article class="article-row"><div class="article-date">${e(a.status==='published'?date(a.published_at):a.scheduled_date?date(a.scheduled_date):'Date pending')}<br><span class="badge ${a.status==='published'?'blue':''}" style="margin-top:8px">${e(a.status==='published'?'Published':'Scheduled')}</span></div><div><h2><a href="#/research?article=${encodeURIComponent(a.id)}">${e(a.title)}</a></h2><div class="article-meta"><span>${e(a.author||'Jae (Ponyo)')}</span><span>${e(a.language||'English')}</span>${(a.topics||[]).map(t=>`<span>${e(t)}</span>`).join('')}</div><a class="inline-link article-indicator-link" href="#/research?article=${encodeURIComponent(a.id)}&view=indicators">Research indicators</a>${a.status==='published'&&a.summary?`<p class="article-summary">${e(a.summary)}</p>`:''}</div><a class="button" href="#/research?article=${encodeURIComponent(a.id)}">${a.status==='published'?'Read article':'Details'}</a></article>`).join('')}</div>`:panel('Research Library','Published work',`<div class="empty-state"><h2>No published articles yet</h2><p>Published research and its related metrics will appear here.</p></div>`,'research'));}
@@ -789,7 +927,10 @@ function definition(key){if(key==='waterfall')return breakdownMethod();const rep
   'classified-markets':{title:'Omni Market Groups',definition:'Trading volume and trader open interest from saved Omni observations. Volume covers the rolling 24 hours. Open interest represents trader positions except for the OLP series, which mirrors the matched trader side when listing coverage is complete.',calculation:'Groups match exact identities in the sourced market catalogue. TradFi totals cover classified listings. Total share requires complete listing and classification coverage. Trade Distribution uses the latest observation and ranks the ten highest-volume markets.',source:sourceLink('data/market-classifications.json','Classification evidence')+' / '+sourceLink(API_DOCS,'Omni API'),updated:timestamp(currentProtocolMetrics()?.classificationObservedAt)},
   'chart-half-spread':{title:'Quoted Half-Spread',definition:'One saved indicative quote per market and observation, at $100,000.',calculation:'Half of the full bid-ask spread in basis points.',source:sourceLink(API_DOCS,'Omni API'),updated:timestamp(latest()?.observed_at)},
   'quote-breadth':{title:'Omni Quotes',definition:'Full bid-ask spreads at $1K, $100K and $1M on the selected quote date. Quoted counts require two valid sides. A closed swap can have no quote.',calculation:'Spread in bps equals (ask − bid) / midpoint × 10,000. Medians cover markets with both quotes at that size.',source:sourceLink(API_DOCS,'Official Omni API'),updated:timestamp(executionObservation().snapshot?.observed_at)},
-  execution:{title:'Crypto Execution Costs',definition:'Median indicative costs for BTC, ETH, SOL and HYPE. On November 11, 49 of 72 captured market-size pairs qualified. Archived pairs use the later source timestamp.',calculation:'Omni full spread versus depth-weighted Hyperliquid bids and asks plus 4.5 bps per side. Source times must be within 45 seconds. Both book sides must cover the full size. Savings is the median paired difference.',source:sourceLink('data/execution-study.json','Matched samples')+' / '+sourceLink('https://hyperliquid.gitbook.io/hyperliquid-docs/trading/fees','Hyperliquid fees'),updated:timestamp(executionMatches().at(-1)?.observed_at)},
+  'pool-index':{title:'Verified Settlement Pool Creations',definition:'Events from the documented Variational settlement pool factory inside the indexed block interval.',calculation:'PoolCreated identifies an event and its named participants. Participant and creator counts describe the indexed interval. Wallet cash movements require a separate native-USDC transfer ledger.',source:sourceLink('data/arbitrum-index.json','Block coverage and validation'),updated:timestamp(DATA.arbitrumIndex?.coverage?.to_timestamp)},
+  'reported-activity':{title:'Variational Activity Updates',definition:'Actual observations published by Variational. Daily Active Users is an average for the prior week, and Weekly Active Users is the reported weekly count.',calculation:'The chart uses release dates. Source values retain their original reporting windows. These figures use Variational’s reported activity definition.',source:sourceLink('data/official-activity.json','Official disclosure archive'),updated:timestamp(DATA.officialActivity?.reports?.at(-1)?.published_at)},
+  'multi-venue':{title:'Perpetual Trading Costs by Venue',definition:'Estimated cost of buying and selling the same amount at each order size. Omni indicative quotes are matched against public order books within 45 seconds.',calculation:'Each peer uses both sides of its own book and the fee assumption in the sample file. Binance uses 5 bps per side as an illustrative undiscounted rate. Lighter uses the zero standard fee reported by the market endpoint. USDC and USDT are treated at dollar par. Funding, rebates and account discounts are excluded. The matched Omni median may differ by peer because qualifying times differ.',source:sourceLink('data/multi-venue.json','Samples and venue documentation'),updated:timestamp(DATA.multiVenue?.attempted_at)},
+  execution:{title:'November 11 Hyperliquid Study',definition:'Median indicative costs for BTC, ETH, SOL and HYPE. On November 11, 49 of 72 captured market-size pairs qualified. Archived pairs use the later source timestamp.',calculation:'Omni full spread versus depth-weighted Hyperliquid bids and asks plus 4.5 bps per side. Source times must be within 45 seconds. Both book sides must cover the full size. Savings is the median paired difference.',source:sourceLink('data/execution-study.json','Matched samples')+' / '+sourceLink('https://hyperliquid.gitbook.io/hyperliquid-docs/trading/fees','Hyperliquid fees'),updated:timestamp(executionMatches().at(-1)?.observed_at)},
   coverage:{title:'Data & methodology',definition:'Official Variational API observations, official reported financials, documented Arbitrum accounts and verified token reference data.',calculation:'Reported, observed and derived measures remain separate. Snapshot timestamps and report dates govern each view; missing values are never zero.',source:sourceLink('data/financials.json','Financial records')+' / '+sourceLink('data/markets.json','Market snapshot')+' / '+sourceLink('data/supplement.json','Supplemental data'),updated:`Financial reports: ${reports().length}. API snapshots: ${snapshots().length}. Daily collection is scheduled; source reports follow their native cadence.`},
   freshness:{title:'Source freshness',definition:'Market data refreshes daily. An observation older than 36 hours carries a visible delay notice.',calculation:DATA.markets?.status?.state==='last_known_good'?'The latest Omni request returned '+e(DATA.markets.status.error||'a source error')+' at '+timestamp(DATA.markets.status.last_attempt_at)+'. The dashboard retains the last successful snapshot.':'The source timestamp is retained independently of page load time.',source:sourceLink('data/markets.json','Market collection status')+' / '+sourceLink('data/financials.json','Report discovery'),updated:'Omni '+timestamp(latest()?.observed_at)+' / Financial report '+timestamp(report?.published_at)}
 };return methods[key]||methods.coverage;}
@@ -812,7 +953,7 @@ function setMenu(open){
   if(open)(sidebar.querySelector('[aria-current="page"]')||sidebar.querySelector('a')).focus();else if(restoreFocus)toggle.focus();
 }
 function readRoute(){const [path,query='']=(location.hash.replace(/^#\/?/,'')||'overview').split('?');route={page:titles[path]?path:'overview',params:new URLSearchParams(query)};if(!route.params.has('range'))route.params.set('range',normalizeRange(new URLSearchParams(location.search).get('range')));else route.params.set('range',normalizeRange(route.params.get('range')));}
-function render(){chartCleanups.forEach(fn=>fn());chartCleanups=[];charts.clear();readRoute();syncNavigation();const views={overview,omni,tradfi:tradfiView,execution:executionView,financials,rewards:rewardsView,olp,var:token,pro,research,explorer};main.innerHTML=views[route.page]();syncRangeLinks();main.querySelectorAll('[data-chart]').forEach(el=>{const config=charts.get(el.dataset.chart);if(config)chartCleanups.push(mountChart(el,config));});document.documentElement.dataset.appReady='true';setMenu(false);void ensureMarketHistory();if(route.page==='research'&&route.params.get('view')==='indicators'){requestAnimationFrame(()=>{const target=document.getElementById('research-indicators');if(typeof target?.scrollIntoView==='function')target.scrollIntoView({block:'start',behavior:'auto'});});}if(route.page==='omni'&&route.params.get('view')==='execution'){requestAnimationFrame(()=>{const target=document.getElementById('execution-observations');if(typeof target?.scrollIntoView==='function')target.scrollIntoView({block:'start',behavior:'auto'});});}}
+function render(){chartCleanups.forEach(fn=>fn());chartCleanups=[];charts.clear();readRoute();syncNavigation();const views={overview,omni,tradfi:tradfiView,accounts:accountsView,execution:executionView,financials,rewards:rewardsView,olp,var:token,pro,research,explorer};main.innerHTML=views[route.page]();syncRangeLinks();main.querySelectorAll('[data-chart]').forEach(el=>{const config=charts.get(el.dataset.chart);if(config)chartCleanups.push(mountChart(el,config));});document.documentElement.dataset.appReady='true';setMenu(false);void ensureMarketHistory();if(route.page==='research'&&route.params.get('view')==='indicators'){requestAnimationFrame(()=>{const target=document.getElementById('research-indicators');if(typeof target?.scrollIntoView==='function')target.scrollIntoView({block:'start',behavior:'auto'});});}if(route.page==='omni'&&route.params.get('view')==='execution'){requestAnimationFrame(()=>{const target=document.getElementById('execution-observations');if(typeof target?.scrollIntoView==='function')target.scrollIntoView({block:'start',behavior:'auto'});});}}
 function exportWaterfall() {
   const {records,selected} = resultsSelection();
   if (!records.length) return;
@@ -828,13 +969,14 @@ function exportWaterfall() {
 function exportFinancials(){const keys=Object.keys(financialLabels);downloadCSV('variational-financial-reports-'+selectedRange()+'.csv',['publication_at_utc',...keys,'source_url','source_exception_count'],selectedReports().map(r=>[r.published_at,...keys.map(k=>r.period_amounts[k]),r.source_urls?.[0],r.warnings?.length||0]));}
 function exportMarkets(){downloadCSV('variational-omni-markets.csv',['observed_at_utc','ticker','contract_type','mark_price_usdc','volume_24h_usdc','trader_open_interest_usdc','long_open_interest_usdc','short_open_interest_usdc','indicative_full_spread_100k_bps','quote_updated_at'],marketRows().map(m=>[latest().observed_at,m.ticker,m.contract_type,m.mark_price,m.volume_24h_usdc,m.trader_open_interest_usdc,m.long_open_interest_usdc,m.short_open_interest_usdc,m.quotes?.size_100k?.full_spread_bps,m.quotes?.updated_at]));}
 function exportQuotes(key){const m=latestMarkets().find(m=>marketKey(m)===key);if(!m)return;downloadCSV('variational-'+m.ticker.replace(/[^a-z0-9_-]/gi,'_')+'-quotes.csv',['ticker','notional_source_convention','bid_usdc','ask_usdc','full_spread_bps','observed_at_utc','quote_status'],[['base','base'],['size_1k','1000'],['size_100k','100000'],['size_1m','1000000']].map(([k,label])=>[m.ticker,label,m.quotes?.[k]?.bid,m.quotes?.[k]?.ask,m.quotes?.[k]?.full_spread_bps,m.quotes?.updated_at,quoteIssue(m,k)||(m.quotes?.[k]?'available':'unavailable')]));}
-document.addEventListener('click',event=>{const button=event.target.closest('button[data-range]');if(!button)return;const next=normalizeRange(button.dataset.range);if(next===selectedRange())return;const params=new URLSearchParams(route.params);params.set('range',next);if(route.page==='financials')params.delete('report');state.marketPage=1;pendingRangeFocus=true;location.hash='/'+route.page+'?'+params.toString();});
+document.addEventListener('click',event=>{const button=event.target.closest('button[data-range]');if(!button)return;const next=normalizeRange(button.dataset.range);if(next===selectedRange())return;const params=new URLSearchParams(route.params);params.set('range',next);if(route.page==='financials')params.delete('report');if(route.page==='execution')params.delete('quote-date');state.marketPage=1;pendingRangeFocus=true;location.hash='/'+route.page+'?'+params.toString();});
 document.addEventListener('click',event=>{const b=event.target.closest('button');if(!b)return;if(b.dataset.method){showMethod(b.dataset.method,b.dataset.context);return;}if(b.dataset.report){showReport(b.dataset.report);return;}if(b.id==='close-dialog'){closeDialog();return;}if(b.id==='menu-toggle'){setMenu(b.getAttribute('aria-expanded')!=='true');return;}if(b.dataset.market){location.hash=rangeHref('#/omni?market='+encodeURIComponent(b.dataset.market),selectedRange()).slice(1);return;}if(b.dataset.financialMode){state.financialMode=b.dataset.financialMode;render();return;}if(b.dataset.olpMode){state.olpMode=b.dataset.olpMode;render();return;}if(b.dataset.marketSort){state.marketDir=state.marketSort===b.dataset.marketSort?-state.marketDir:-1;state.marketSort=b.dataset.marketSort;state.marketPage=1;document.getElementById('market-table').innerHTML=marketTable();return;}if(b.dataset.marketPage){state.marketPage=Math.max(1,state.marketPage+(b.dataset.marketPage==='next'?1:-1));document.getElementById('market-table').innerHTML=marketTable();return;}if(b.hasAttribute('data-export-waterfall')){exportWaterfall();return;}if(b.hasAttribute('data-export-financials')){exportFinancials();return;}if(b.hasAttribute('data-export-markets')){exportMarkets();return;}if(b.dataset.exportQuotes){exportQuotes(b.dataset.exportQuotes);return;}if(b.dataset.exportChart){const chart=charts.get(b.dataset.exportChart);if(chart)downloadCSV('variational-'+b.dataset.exportChart+'.csv',[...(chart.interval?['from_utc','to_utc']:['date_utc']),...chart.series.map(s=>s.label+' ('+chart.unit+')'),'source_url'],chart.rows.map(r=>[...(chart.interval?[r.startDate,r.date]:[r.date]),...chart.series.map(s=>r.values[s.key]),r.source]));}});
 document.addEventListener('input',event=>{if(event.target.hasAttribute('data-market-search')){state.marketSearch=event.target.value;state.marketPage=1;document.getElementById('market-table').innerHTML=marketTable();}if(event.target.hasAttribute('data-explorer-search')){state.explorerSearch=event.target.value;document.getElementById('explorer-table').innerHTML=explorerRows();}});
 document.addEventListener('change',event=>{
   if (event.target.hasAttribute('data-execution-date')) {
     const params = new URLSearchParams(route.params);
-    params.set('quote-date',event.target.value);
+    if (event.target.value) params.set('quote-date',event.target.value);
+    else params.delete('quote-date');
     location.hash = '/execution?'+params.toString();
     return;
   }
@@ -858,6 +1000,6 @@ window.addEventListener('hashchange',()=>{state.marketPage=1;render();
     main.querySelector('[data-results-report]')?.focus({preventScroll:true});
   } else window.scrollTo({top:0,behavior:'auto'});
 });
-async function load(){const definitions=[['financials','financials.json'],['markets','markets.json'],['history','market-history.json'],['supplement','supplement.json'],['baselines','research-baselines.json'],['chainHistory','chain-history.json'],['executionStudy','execution-study.json'],['classifications','market-classifications.json'],['protocolHistory','protocol-metrics-history.json'],['rewards','reported-rewards.json']];await Promise.all(definitions.map(async([key,file])=>{try{const response=await fetch(new URL('../data/'+file,import.meta.url),{cache:'no-store'});if(!response.ok)throw new Error('HTTP '+response.status);const payload=await response.json();if(![1,2].includes(payload.schema_version))throw new Error('Unsupported data schema');if(key==='financials'&&!Array.isArray(payload.reports))throw new Error('Invalid financial records');if(key==='markets'&&!Array.isArray(payload.latest?.markets))throw new Error('Invalid market records');if(key==='history'&&!Array.isArray(payload.snapshots))throw new Error('Invalid history index');const requiredArrays={executionStudy:'rows',protocolHistory:'rows',rewards:'reports',classifications:'mappings'};if(requiredArrays[key] && (payload.schema_version!==1 || !Array.isArray(payload[requiredArrays[key]])))throw new Error('Invalid '+requiredArrays[key]+' data');if(key==='baselines'&&(payload.schema_version!==1||!Array.isArray(payload.articles)))throw new Error('Invalid research baseline data');if(key==='chainHistory' && (payload.chain_id!==42161 || !Array.isArray(payload.points))) throw new Error('Invalid onchain observation history');
+async function load(){const definitions=[['financials','financials.json'],['markets','markets.json'],['history','market-history.json'],['supplement','supplement.json'],['baselines','research-baselines.json'],['chainHistory','chain-history.json'],['executionStudy','execution-study.json'],['multiVenue','multi-venue.json'],['officialActivity','official-activity.json'],['arbitrumIndex','arbitrum-index.json'],['classifications','market-classifications.json'],['protocolHistory','protocol-metrics-history.json'],['rewards','reported-rewards.json']];await Promise.all(definitions.map(async([key,file])=>{try{const response=await fetch(new URL('../data/'+file,import.meta.url),{cache:'no-store'});if(!response.ok)throw new Error('HTTP '+response.status);const payload=await response.json();if(![1,2].includes(payload.schema_version))throw new Error('Unsupported data schema');if(key==='arbitrumIndex'&&(payload.chain_id!==42161||!Array.isArray(payload.coverage?.ranges)))throw new Error('Invalid pool index');if(key==='financials'&&!Array.isArray(payload.reports))throw new Error('Invalid financial records');if(key==='markets'&&!Array.isArray(payload.latest?.markets))throw new Error('Invalid market records');if(key==='history'&&!Array.isArray(payload.snapshots))throw new Error('Invalid history index');const requiredArrays={executionStudy:'rows',multiVenue:'rows',officialActivity:'reports',protocolHistory:'rows',rewards:'reports',classifications:'mappings'};if(requiredArrays[key] && (payload.schema_version!==1 || !Array.isArray(payload[requiredArrays[key]])))throw new Error('Invalid '+requiredArrays[key]+' data');if(key==='baselines'&&(payload.schema_version!==1||!Array.isArray(payload.articles)))throw new Error('Invalid research baseline data');if(key==='chainHistory' && (payload.chain_id!==42161 || !Array.isArray(payload.points))) throw new Error('Invalid onchain observation history');
       DATA[key]=payload;}catch(error){DATA.errors[key]=error.message;}}));document.getElementById('source-status').textContent=latest()?.observed_at?'Snapshot '+shortDate(latest().observed_at):'Source data unavailable';render();}
 load().catch(()=>{main.innerHTML='<div class="error-card"><h1>Dashboard could not load</h1><p>Source files are unavailable. Please reload the page.</p></div>';});

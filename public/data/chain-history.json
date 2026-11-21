@@ -6,11 +6,11 @@
     "contract_address": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
     "decimals": 6,
     "decimals_verification": {
-      "block_number": 525885890,
-      "block_hash": "0xc8a2b8cafeb102aa4e629e750bfcd06566b14de354c3754c3f58fe79ed629bfd",
-      "block_timestamp": "2026-11-20T09:19:10Z",
+      "block_number": 526086841,
+      "block_hash": "0x63f2715799b4ae96f13769837bb855a49613756ae29bf395ba7bc5ffb29013ad",
+      "block_timestamp": "2026-11-21T00:32:26Z",
       "rpc_url": "https://arb-pokt.nodies.app",
-      "observed_at": "2026-11-20T10:02:34Z",
+      "observed_at": "2026-11-21T15:11:21Z",
       "value": 6
     }
   },
@@ -427,6 +427,126 @@
       }
     },
     {
+      "date": "2026-11-07",
+      "kind": "utc_day_close",
+      "observed_at": "2026-11-21T15:11:31Z",
+      "block_number": 522223184,
+      "block_hash": "0x84c391ab49d93ab40b37ddf0b5e0ff93b3c677b43004f7f7804e7b78b371b186",
+      "block_timestamp": "2026-11-07T23:59:59Z",
+      "usdc_decimals": 6,
+      "treasury_usdc": "12685514.925731",
+      "olp_usdc": "35516579.952857",
+      "rpc_url": "https://arb-pokt.nodies.app",
+      "source_url": "https://arbiscan.io/block/522223184",
+      "closing_boundary": {
+        "next_block_number": 522223185,
+        "next_block_hash": "0x26b0580575c9cba14d60ed1952254a977f54e0e8093ae786067058a47e806ada",
+        "next_block_timestamp": "2026-11-08T00:00:00Z"
+      },
+      "metadata_cross_check": {
+        "rpc_url": "https://arb1.arbitrum.io/rpc",
+        "block_hash": "0x84c391ab49d93ab40b37ddf0b5e0ff93b3c677b43004f7f7804e7b78b371b186",
+        "next_block_hash": "0x26b0580575c9cba14d60ed1952254a977f54e0e8093ae786067058a47e806ada",
+        "verified_at": "2026-11-21T15:11:31Z"
+      }
+    },
+    {
+      "date": "2026-11-08",
+      "kind": "utc_day_close",
+      "observed_at": "2026-11-21T15:11:39Z",
+      "block_number": 522512200,
+      "block_hash": "0x8c77cb08b8f52b0e4ae528f15cd4994d453fd5a549f5d61ab054efe43f0a3939",
+      "block_timestamp": "2026-11-08T23:59:59Z",
+      "usdc_decimals": 6,
+      "treasury_usdc": "12731445.386406",
+      "olp_usdc": "43494578.453366",
+      "rpc_url": "https://arb-pokt.nodies.app",
+      "source_url": "https://arbiscan.io/block/522512200",
+      "closing_boundary": {
+        "next_block_number": 522512201,
+        "next_block_hash": "0x4d71ba7d76096539c93da5b107fa600f0da393fa112f7443f8ac9db8d436594d",
+        "next_block_timestamp": "2026-11-09T00:00:00Z"
+      },
+      "metadata_cross_check": {
+        "rpc_url": "https://arb1.arbitrum.io/rpc",
+        "block_hash": "0x8c77cb08b8f52b0e4ae528f15cd4994d453fd5a549f5d61ab054efe43f0a3939",
+        "next_block_hash": "0x4d71ba7d76096539c93da5b107fa600f0da393fa112f7443f8ac9db8d436594d",
+        "verified_at": "2026-11-21T15:11:39Z"
+      }
+    },
+    {
+      "date": "2026-11-09",
+      "kind": "utc_day_close",
+      "observed_at": "2026-11-21T15:11:47Z",
+      "block_number": 522823867,
+      "block_hash": "0x948852bcbe9f804f4e533f66302a8e2929abf8c45698f0203e1612a5b7ef022a",
+      "block_timestamp": "2026-11-09T23:59:59Z",
+      "usdc_decimals": 6,
+      "treasury_usdc": "12799025.375357",
+      "olp_usdc": "37692897.287737",
+      "rpc_url": "https://arb-pokt.nodies.app",
+      "source_url": "https://arbiscan.io/block/522823867",
+      "closing_boundary": {
+        "next_block_number": 522823868,
+        "next_block_hash": "0x2666118a46ca461eabcc8470401603feb7ff654e132bc2a62be7caa040a53f66",
+        "next_block_timestamp": "2026-11-10T00:00:00Z"
+      },
+      "metadata_cross_check": {
+        "rpc_url": "https://arb1.arbitrum.io/rpc",
+        "block_hash": "0x948852bcbe9f804f4e533f66302a8e2929abf8c45698f0203e1612a5b7ef022a",
+        "next_block_hash": "0x2666118a46ca461eabcc8470401603feb7ff654e132bc2a62be7caa040a53f66",
+        "verified_at": "2026-11-21T15:11:47Z"
+      }
+    },
+    {
+      "date": "2026-11-10",
+      "kind": "utc_day_close",
+      "observed_at": "2026-11-21T15:11:56Z",
+      "block_number": 523127656,
+      "block_hash": "0x15cfc49e3ba962a8a39724a9a246366aad6173ba42c83b0cbb9b1a2f20cca3f5",
+      "block_timestamp": "2026-11-10T23:59:59Z",
+      "usdc_decimals": 6,
+      "treasury_usdc": "12881268.197547",
+      "olp_usdc": "44234707.204169",
+      "rpc_url": "https://arb-pokt.nodies.app",
+      "source_url": "https://arbiscan.io/block/523127656",
+      "closing_boundary": {
+        "next_block_number": 523127657,
+        "next_block_hash": "0xf90067e67fd11f64dccc97b66a7fc2036a77d7fef100adb1205bd0fca4f554c4",
+        "next_block_timestamp": "2026-11-11T00:00:00Z"
+      },
+      "metadata_cross_check": {
+        "rpc_url": "https://arb1.arbitrum.io/rpc",
+        "block_hash": "0x15cfc49e3ba962a8a39724a9a246366aad6173ba42c83b0cbb9b1a2f20cca3f5",
+        "next_block_hash": "0xf90067e67fd11f64dccc97b66a7fc2036a77d7fef100adb1205bd0fca4f554c4",
+        "verified_at": "2026-11-21T15:11:56Z"
+      }
+    },
+    {
+      "date": "2026-11-11",
+      "kind": "utc_day_close",
+      "observed_at": "2026-11-21T15:12:04Z",
+      "block_number": 523417793,
+      "block_hash": "0xf61f349a46b6a15c7b431ae70481bf184061c634d8becfd1e817490a4585ac72",
+      "block_timestamp": "2026-11-11T23:59:59Z",
+      "usdc_decimals": 6,
+      "treasury_usdc": "12970388.138338",
+      "olp_usdc": "45624903.838084",
+      "rpc_url": "https://arb-pokt.nodies.app",
+      "source_url": "https://arbiscan.io/block/523417793",
+      "closing_boundary": {
+        "next_block_number": 523417794,
+        "next_block_hash": "0x6bfad2fc866266796b63931178a12186741d55a751bddc6e1c83256eacba776e",
+        "next_block_timestamp": "2026-11-12T00:00:00Z"
+      },
+      "metadata_cross_check": {
+        "rpc_url": "https://arb1.arbitrum.io/rpc",
+        "block_hash": "0xf61f349a46b6a15c7b431ae70481bf184061c634d8becfd1e817490a4585ac72",
+        "next_block_hash": "0x6bfad2fc866266796b63931178a12186741d55a751bddc6e1c83256eacba776e",
+        "verified_at": "2026-11-21T15:12:04Z"
+      }
+    },
+    {
       "date": "2026-11-12",
       "kind": "utc_day_close",
       "observed_at": "2026-11-20T10:00:32Z",
@@ -448,6 +568,150 @@
         "block_hash": "0xfb92a596df8d8b8a5494a89f3f96972cc85e73223cf2976d2d7c79780205f452",
         "verified_at": "2026-11-20T10:01:48Z",
         "next_block_hash": "0xd57f8bba9202739dc46c4d54371462141f34fd06bcade4fff9a2a706352b7145"
+      }
+    },
+    {
+      "date": "2026-11-13",
+      "kind": "utc_day_close",
+      "observed_at": "2026-11-21T15:12:15Z",
+      "block_number": 524005790,
+      "block_hash": "0x31dad02de492f050556fb482db338f3746ef1415f460da1fe765bd42edecfa86",
+      "block_timestamp": "2026-11-13T23:59:59Z",
+      "usdc_decimals": 6,
+      "treasury_usdc": "13137597.037345",
+      "olp_usdc": "51091210.688869",
+      "rpc_url": "https://arb-pokt.nodies.app",
+      "source_url": "https://arbiscan.io/block/524005790",
+      "closing_boundary": {
+        "next_block_number": 524005791,
+        "next_block_hash": "0xc21e76c3c0702acbc51ab943cb0d5aac6cc751c246c1a14e36d5ddf81d1d285d",
+        "next_block_timestamp": "2026-11-14T00:00:00Z"
+      },
+      "metadata_cross_check": {
+        "rpc_url": "https://arb1.arbitrum.io/rpc",
+        "block_hash": "0x31dad02de492f050556fb482db338f3746ef1415f460da1fe765bd42edecfa86",
+        "next_block_hash": "0xc21e76c3c0702acbc51ab943cb0d5aac6cc751c246c1a14e36d5ddf81d1d285d",
+        "verified_at": "2026-11-21T15:12:15Z"
+      }
+    },
+    {
+      "date": "2026-11-14",
+      "kind": "utc_day_close",
+      "observed_at": "2026-11-21T15:12:22Z",
+      "block_number": 524304924,
+      "block_hash": "0xca261c1e7d0fe20a27845f9ab0db0b42c4d86c7c50be3efe3e73b55181c6d1c1",
+      "block_timestamp": "2026-11-14T23:59:59Z",
+      "usdc_decimals": 6,
+      "treasury_usdc": "13225253.480854",
+      "olp_usdc": "60113415.119410",
+      "rpc_url": "https://arb-pokt.nodies.app",
+      "source_url": "https://arbiscan.io/block/524304924",
+      "closing_boundary": {
+        "next_block_number": 524304925,
+        "next_block_hash": "0xe3ad5db62b92f266e430dde20ab1c3a093d4e848a57744d3a810e0c8d9dac9df",
+        "next_block_timestamp": "2026-11-15T00:00:00Z"
+      },
+      "metadata_cross_check": {
+        "rpc_url": "https://arb1.arbitrum.io/rpc",
+        "block_hash": "0xca261c1e7d0fe20a27845f9ab0db0b42c4d86c7c50be3efe3e73b55181c6d1c1",
+        "next_block_hash": "0xe3ad5db62b92f266e430dde20ab1c3a093d4e848a57744d3a810e0c8d9dac9df",
+        "verified_at": "2026-11-21T15:12:22Z"
+      }
+    },
+    {
+      "date": "2026-11-15",
+      "kind": "utc_day_close",
+      "observed_at": "2026-11-21T15:12:31Z",
+      "block_number": 524596794,
+      "block_hash": "0x8d6d7e5d7d80bba3daa4ec908994e2eb533844c2e0b5fef15eed253948b8bb1e",
+      "block_timestamp": "2026-11-15T23:59:59Z",
+      "usdc_decimals": 6,
+      "treasury_usdc": "13294306.644961",
+      "olp_usdc": "55829891.901490",
+      "rpc_url": "https://arb-pokt.nodies.app",
+      "source_url": "https://arbiscan.io/block/524596794",
+      "closing_boundary": {
+        "next_block_number": 524596795,
+        "next_block_hash": "0x92e4af81e0a8dc8eef9101d8cab4d940adb9652bb92742f3298dbb1d9c057bc4",
+        "next_block_timestamp": "2026-11-16T00:00:00Z"
+      },
+      "metadata_cross_check": {
+        "rpc_url": "https://arb1.arbitrum.io/rpc",
+        "block_hash": "0x8d6d7e5d7d80bba3daa4ec908994e2eb533844c2e0b5fef15eed253948b8bb1e",
+        "next_block_hash": "0x92e4af81e0a8dc8eef9101d8cab4d940adb9652bb92742f3298dbb1d9c057bc4",
+        "verified_at": "2026-11-21T15:12:31Z"
+      }
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "utc_day_close",
+      "observed_at": "2026-11-21T15:12:40Z",
+      "block_number": 524888868,
+      "block_hash": "0xdc3f2d35e723833afc48953f9162f2f47c98172a0414a1bffd15746dac8fe667",
+      "block_timestamp": "2026-11-16T23:59:59Z",
+      "usdc_decimals": 6,
+      "treasury_usdc": "13371174.211696",
+      "olp_usdc": "59098441.559579",
+      "rpc_url": "https://arb-pokt.nodies.app",
+      "source_url": "https://arbiscan.io/block/524888868",
+      "closing_boundary": {
+        "next_block_number": 524888869,
+        "next_block_hash": "0xc08fc1e040c3f44407708f2713fafacf04381fd1c0463cc2b49a9f73d159ca0d",
+        "next_block_timestamp": "2026-11-17T00:00:00Z"
+      },
+      "metadata_cross_check": {
+        "rpc_url": "https://arb1.arbitrum.io/rpc",
+        "block_hash": "0xdc3f2d35e723833afc48953f9162f2f47c98172a0414a1bffd15746dac8fe667",
+        "next_block_hash": "0xc08fc1e040c3f44407708f2713fafacf04381fd1c0463cc2b49a9f73d159ca0d",
+        "verified_at": "2026-11-21T15:12:40Z"
+      }
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "utc_day_close",
+      "observed_at": "2026-11-21T15:12:49Z",
+      "block_number": 525175775,
+      "block_hash": "0xa98b64900519a9706dfb2f5b67223196b47734fc172f2d84a6b7256e2681281f",
+      "block_timestamp": "2026-11-17T23:59:59Z",
+      "usdc_decimals": 6,
+      "treasury_usdc": "13447752.542876",
+      "olp_usdc": "58266946.127994",
+      "rpc_url": "https://arb-pokt.nodies.app",
+      "source_url": "https://arbiscan.io/block/525175775",
+      "closing_boundary": {
+        "next_block_number": 525175776,
+        "next_block_hash": "0x5832efd3ff36dc88256d5a48d8fce1090490ffab677856cacab56a6de4046b27",
+        "next_block_timestamp": "2026-11-18T00:00:00Z"
+      },
+      "metadata_cross_check": {
+        "rpc_url": "https://arb1.arbitrum.io/rpc",
+        "block_hash": "0xa98b64900519a9706dfb2f5b67223196b47734fc172f2d84a6b7256e2681281f",
+        "next_block_hash": "0x5832efd3ff36dc88256d5a48d8fce1090490ffab677856cacab56a6de4046b27",
+        "verified_at": "2026-11-21T15:12:49Z"
+      }
+    },
+    {
+      "date": "2026-11-18",
+      "kind": "utc_day_close",
+      "observed_at": "2026-11-21T15:12:57Z",
+      "block_number": 525464277,
+      "block_hash": "0x086572b2d38690c2362bcd92217a8407465b0a85980fc805eb8bf15939a18e78",
+      "block_timestamp": "2026-11-18T23:59:59Z",
+      "usdc_decimals": 6,
+      "treasury_usdc": "13524952.574188",
+      "olp_usdc": "62949008.618769",
+      "rpc_url": "https://arb-pokt.nodies.app",
+      "source_url": "https://arbiscan.io/block/525464277",
+      "closing_boundary": {
+        "next_block_number": 525464278,
+        "next_block_hash": "0x3f11d9e49ba6fcbcc165732f0267af34bb1a1635e7ac7c9da016b93c0821b683",
+        "next_block_timestamp": "2026-11-19T00:00:00Z"
+      },
+      "metadata_cross_check": {
+        "rpc_url": "https://arb1.arbitrum.io/rpc",
+        "block_hash": "0x086572b2d38690c2362bcd92217a8407465b0a85980fc805eb8bf15939a18e78",
+        "next_block_hash": "0x3f11d9e49ba6fcbcc165732f0267af34bb1a1635e7ac7c9da016b93c0821b683",
+        "verified_at": "2026-11-21T15:12:57Z"
       }
     },
     {
@@ -476,17 +740,27 @@
     },
     {
       "date": "2026-11-20",
-      "kind": "safe_block_observation",
-      "observed_at": "2026-11-20T10:17:22Z",
-      "block_number": 525895250,
-      "block_hash": "0xb19e288e482b60dc30989f10794aaf8157781c64c81c1f8ead622c56b69f03ae",
-      "block_timestamp": "2026-11-20T10:03:02Z",
+      "kind": "utc_day_close",
+      "observed_at": "2026-11-21T15:13:08Z",
+      "block_number": 526080488,
+      "block_hash": "0xa8f0efd5edb31bfaac434b7cdc220ed614b4369ad833df87d0cb0264ed1cbcd2",
+      "block_timestamp": "2026-11-20T23:59:59Z",
       "usdc_decimals": 6,
-      "treasury_usdc": "13665626.247088",
-      "olp_usdc": "70553560.008838",
-      "rpc_url": "https://arb1.arbitrum.io/rpc",
-      "source_url": "https://arbiscan.io/block/525895250",
-      "upstream_source": "data/supplement.json"
+      "treasury_usdc": "13746921.768947",
+      "olp_usdc": "75655055.093944",
+      "rpc_url": "https://arb-pokt.nodies.app",
+      "source_url": "https://arbiscan.io/block/526080488",
+      "closing_boundary": {
+        "next_block_number": 526080489,
+        "next_block_hash": "0x9c376d89cdeeafd2db2d13242ff001ba3459f69d02e36c3dbc4a6937daf76419",
+        "next_block_timestamp": "2026-11-21T00:00:00Z"
+      },
+      "metadata_cross_check": {
+        "rpc_url": "https://arb1.arbitrum.io/rpc",
+        "block_hash": "0xa8f0efd5edb31bfaac434b7cdc220ed614b4369ad833df87d0cb0264ed1cbcd2",
+        "next_block_hash": "0x9c376d89cdeeafd2db2d13242ff001ba3459f69d02e36c3dbc4a6937daf76419",
+        "verified_at": "2026-11-21T15:13:08Z"
+      }
     },
     {
       "date": "2026-11-21",
@@ -506,31 +780,49 @@
   "archive": {
     "state": "available",
     "rpc_url": "https://arb-pokt.nodies.app",
-    "last_attempt_at": "2026-11-20T10:02:34Z",
+    "last_attempt_at": "2026-11-21T15:11:21Z",
     "requested_dates": [
-      "2026-03-31",
-      "2026-04-30",
-      "2026-05-31",
-      "2026-06-30",
-      "2026-07-31"
+      "2026-11-07",
+      "2026-11-08",
+      "2026-11-09",
+      "2026-11-10",
+      "2026-11-11",
+      "2026-11-12",
+      "2026-11-13",
+      "2026-11-14",
+      "2026-11-15",
+      "2026-11-16",
+      "2026-11-17",
+      "2026-11-18",
+      "2026-11-19",
+      "2026-11-20"
     ],
     "verified_dates": [
-      "2026-03-31",
-      "2026-04-30",
-      "2026-05-31",
-      "2026-06-30",
-      "2026-07-31"
+      "2026-11-07",
+      "2026-11-08",
+      "2026-11-09",
+      "2026-11-10",
+      "2026-11-11",
+      "2026-11-12",
+      "2026-11-13",
+      "2026-11-14",
+      "2026-11-15",
+      "2026-11-16",
+      "2026-11-17",
+      "2026-11-18",
+      "2026-11-19",
+      "2026-11-20"
     ],
     "missing_requested_dates": [],
-    "calls_used": 75
+    "calls_used": 183
   },
   "coverage": {
     "first_date": "2026-03-31",
     "last_date": "2026-11-21",
-    "point_count": 20,
-    "closing_point_count": 18,
-    "safe_observation_count": 2,
+    "point_count": 31,
+    "closing_point_count": 30,
+    "safe_observation_count": 1,
     "cadence": "Explicit dated closes plus daily safe-block observations; not a continuous daily closing series"
   },
-  "generated_at": "2026-11-21T00:47:35Z"
+  "generated_at": "2026-11-21T15:13:08Z"
 }
