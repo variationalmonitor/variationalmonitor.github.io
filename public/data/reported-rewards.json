@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-21T14:52:56Z",
+  "generated_at": "2026-11-21T23:47:10Z",
   "latest_report_id": "x:2121317860740063501",
   "coverage": {
     "report_count": 19,
@@ -1200,6 +1200,7 @@
       "financial_report_published_at": "2026-10-30T16:36:34Z",
       "source_url": "https://x.com/variational_io/status/2116210079758524489",
       "source_urls": [
+        "https://t.me/variational_io/446",
         "https://x.com/variational_io/status/2116210079758524489"
       ],
       "period_start": null,
@@ -1254,6 +1255,17 @@
           "retrieval_method": "saved FxTwitter replay of official X post",
           "disclosure_sha256": "8ae0dc6fbf22ea621ac2f60001c120aeb13dfda513d6c9ee381c678f8b3d9c6d",
           "matches_current": true
+        },
+        {
+          "url": "https://t.me/variational_io/446",
+          "author": "variational_io",
+          "platform": "telegram",
+          "id": "446",
+          "published_at": "2026-10-30T16:36:34Z",
+          "observed_at": "2026-11-21T23:47:10Z",
+          "retrieval_method": "official public Telegram announcements feed",
+          "disclosure_sha256": "8ae0dc6fbf22ea621ac2f60001c120aeb13dfda513d6c9ee381c678f8b3d9c6d",
+          "matches_current": true
         }
       ],
       "warnings": [],
@@ -1265,6 +1277,7 @@
       "financial_report_published_at": "2026-11-13T18:51:03Z",
       "source_url": "https://x.com/variational_io/status/2121317860740063501",
       "source_urls": [
+        "https://t.me/variational_io/459",
         "https://x.com/variational_io/status/2121317860740063501"
       ],
       "period_start": null,
@@ -1317,6 +1330,17 @@
           "published_at": "2026-11-13T19:02:44Z",
           "observed_at": "2026-11-21T14:46:10Z",
           "retrieval_method": "saved FxTwitter replay of official X post",
+          "disclosure_sha256": "88c8a2b9a785033f09d6b1883015a00150e26cb51094c6a7306dc44bff50ff09",
+          "matches_current": true
+        },
+        {
+          "url": "https://t.me/variational_io/459",
+          "author": "variational_io",
+          "platform": "telegram",
+          "id": "459",
+          "published_at": "2026-11-13T18:51:03Z",
+          "observed_at": "2026-11-21T23:47:10Z",
+          "retrieval_method": "official public Telegram announcements feed",
           "disclosure_sha256": "88c8a2b9a785033f09d6b1883015a00150e26cb51094c6a7306dc44bff50ff09",
           "matches_current": true
         }

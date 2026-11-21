@@ -2,26 +2,26 @@
   "schema_version": 1,
   "chain": {
     "chain_id": 42161,
-    "observed_at": "2026-11-21T00:47:35Z",
-    "block_number": 526086841,
-    "block_timestamp": "2026-11-21T00:32:26Z",
-    "block_hash": "0x63f2715799b4ae96f13769837bb855a49613756ae29bf395ba7bc5ffb29013ad",
+    "observed_at": "2026-11-21T23:47:11Z",
+    "block_number": 526365924,
+    "block_timestamp": "2026-11-21T23:37:13Z",
+    "block_hash": "0x853de093fb03a1221e83802de2cb96efdceb9b4456b764138eb17e2e659103ff",
     "usdc_contract": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
     "source_url": "https://docs.variational.io/technical-documentation/mainnet-contracts",
-    "block_url": "https://arbiscan.io/block/526086841",
+    "block_url": "https://arbiscan.io/block/526365924",
     "accounts": [
       {
         "id": "treasury",
         "name": "Protocol Treasury",
         "address": "0x5e91b40467fb8902c46a7b6cb90482363188d645",
-        "balance_usdc": "13749646.732273",
+        "balance_usdc": "13832181.587976",
         "source_url": "https://arbiscan.io/address/0x5e91b40467fb8902c46a7b6cb90482363188d645"
       },
       {
         "id": "olp",
         "name": "Core OLP Vault",
         "address": "0x74bbbb0e7f0bad6938509dd4b556a39a4db1f2cd",
-        "balance_usdc": "75744022.771016",
+        "balance_usdc": "73945077.039040",
         "source_url": "https://arbiscan.io/address/0x74bbbb0e7f0bad6938509dd4b556a39a4db1f2cd"
       }
     ],
@@ -37,17 +37,17 @@
       },
       {
         "date": "2026-11-21",
-        "observed_at": "2026-11-21T00:47:35Z",
-        "block_number": 526086841,
-        "block_timestamp": "2026-11-21T00:32:26Z",
-        "block_hash": "0x63f2715799b4ae96f13769837bb855a49613756ae29bf395ba7bc5ffb29013ad",
-        "treasury_usdc": "13749646.732273",
-        "olp_usdc": "75744022.771016"
+        "observed_at": "2026-11-21T23:47:11Z",
+        "block_number": 526365924,
+        "block_timestamp": "2026-11-21T23:37:13Z",
+        "block_hash": "0x853de093fb03a1221e83802de2cb96efdceb9b4456b764138eb17e2e659103ff",
+        "treasury_usdc": "13832181.587976",
+        "olp_usdc": "73945077.039040"
       }
     ]
   },
   "token": {
-    "checked_at": "2026-11-21T00:47:35Z",
+    "checked_at": "2026-11-21T23:47:11Z",
     "symbol": "VAR",
     "source_url": "https://www.coingecko.com/en/coins/variational",
     "contract_address": null,
@@ -78,7 +78,7 @@
     "status": "preview"
   },
   "pro": {
-    "checked_at": "2026-11-21T00:47:35Z",
+    "checked_at": "2026-11-21T23:47:11Z",
     "source_url": "https://docs.variational.io/pro/about-pro",
     "status": "prelaunch"
   },
@@ -109,8 +109,8 @@
     ]
   },
   "execution": {
-    "observed_date": "2026-11-11",
-    "observed_at": "2026-11-11T07:13:33Z",
+    "observed_date": "2026-11-21",
+    "observed_at": "2026-11-21T23:47:12Z",
     "notional_usd": 100000,
     "eligible_markets": 4,
     "method": "Two-sided indicative Omni spread versus depth-weighted Hyperliquid bids and asks plus the base taker fee of 4.5 bps per side. $100,000 each way. Quotes must be within 45 seconds of each other and 120 seconds of collection. Only fully covered books qualify.",
@@ -124,31 +124,44 @@
         "market": "BTC",
         "omni_ticker": "BTC-PERP",
         "peer_ticker": "BTC",
-        "omni_bps": 1.0013,
-        "peer_book_bps": 0.2539,
+        "omni_bps": 1.0448,
+        "peer_book_bps": 0.1661,
         "peer_fees_bps": 9.0,
-        "peer_total_bps": 9.2539,
+        "peer_total_bps": 9.1661,
         "samples": 1,
-        "quote_time": "2026-11-11T07:13:23.295461747Z",
-        "peer_book_time": "2026-11-11T07:13:25Z",
-        "skew_seconds": 2.66
+        "quote_time": "2026-11-21T23:47:01.895977976Z",
+        "peer_book_time": "2026-11-21T23:47:11Z",
+        "skew_seconds": 9.7
       },
       {
         "market": "ETH",
         "omni_ticker": "ETH-PERP",
         "peer_ticker": "ETH",
-        "omni_bps": 1.3642,
-        "peer_book_bps": 0.4867,
+        "omni_bps": 3.6297,
+        "peer_book_bps": 1.0576,
         "peer_fees_bps": 9.0,
-        "peer_total_bps": 9.4867,
+        "peer_total_bps": 10.0576,
         "samples": 1,
-        "quote_time": "2026-11-11T07:12:58.224182563Z",
-        "peer_book_time": "2026-11-11T07:13:28Z",
-        "skew_seconds": 30.46
+        "quote_time": "2026-11-21T23:46:34.978051530Z",
+        "peer_book_time": "2026-11-21T23:47:11Z",
+        "skew_seconds": 36.62
+      },
+      {
+        "market": "SOL",
+        "omni_ticker": "SOL-PERP",
+        "peer_ticker": "SOL",
+        "omni_bps": 6.7073,
+        "peer_book_bps": 1.1706,
+        "peer_fees_bps": 9.0,
+        "peer_total_bps": 10.1706,
+        "samples": 1,
+        "quote_time": "2026-11-21T23:46:53.892071600Z",
+        "peer_book_time": "2026-11-21T23:47:11Z",
+        "skew_seconds": 17.71
       }
     ],
-    "last_attempt_at": "2026-11-21T00:47:35Z",
-    "matched_on_last_attempt": 0
+    "last_attempt_at": "2026-11-21T23:47:12Z",
+    "matched_on_last_attempt": 3
   },
   "source_issues": {}
 }

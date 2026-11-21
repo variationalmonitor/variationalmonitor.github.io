@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-21T15:13:29Z",
+  "generated_at": "2026-11-21T23:47:06Z",
   "coverage": {
     "report_count": 44,
     "first_report_published_at": "2025-02-24T17:23:35Z",
@@ -4914,6 +4914,7 @@
       "published_at": "2026-10-30T16:36:34Z",
       "financial_report_id": "x:2116210079758524489",
       "source_urls": [
+        "https://t.me/variational_io/446",
         "https://x.com/variational_io/status/2116210079758524489"
       ],
       "sources": [
@@ -4926,6 +4927,18 @@
           "observed_at": "2026-11-21T15:13:05Z",
           "retrieval_method": "saved FxTwitter replay of official X post",
           "source_text_sha256": "17ce20a5c3ef6aac9ef667977fd896abd12f8ebd65d0ecbfeb33381bbda17edb",
+          "normalized_sha256": "2b5c7f152a8939f43d193ac8e1502ecc74bd3efa2d2576d4d17405630b0894c4",
+          "matches_current": true
+        },
+        {
+          "platform": "telegram",
+          "id": "446",
+          "url": "https://t.me/variational_io/446",
+          "author": "variational_io",
+          "published_at": "2026-10-30T16:36:34Z",
+          "observed_at": "2026-11-21T23:47:06Z",
+          "retrieval_method": "official public Telegram announcements feed",
+          "source_text_sha256": "488e910d755409e4d0cc1fe0b53a1ba733f9d7ac1bb556252c7615d1bbeb89cb",
           "normalized_sha256": "2b5c7f152a8939f43d193ac8e1502ecc74bd3efa2d2576d4d17405630b0894c4",
           "matches_current": true
         }
@@ -5013,13 +5026,14 @@
       "reported_phase": null,
       "revisions": [],
       "source_available_at": "2026-11-21T15:13:05Z",
-      "source_published_at": "2026-10-30T16:46:14Z"
+      "source_published_at": "2026-10-30T16:36:34Z"
     },
     {
       "id": "x:2121317860740063501",
       "published_at": "2026-11-13T18:51:03Z",
       "financial_report_id": "x:2121317860740063501",
       "source_urls": [
+        "https://t.me/variational_io/459",
         "https://x.com/variational_io/status/2121317860740063501"
       ],
       "sources": [
@@ -5032,6 +5046,18 @@
           "observed_at": "2026-11-21T15:13:05Z",
           "retrieval_method": "saved FxTwitter replay of official X post",
           "source_text_sha256": "be1e5f51715699cde4370dbe1cd88bd75d03716a6d98bee31fafc66a9b421941",
+          "normalized_sha256": "b1898b762b4d9b4aff0bd9b6b19ebbfc71756fba187bfba8036c2178c04d3271",
+          "matches_current": true
+        },
+        {
+          "platform": "telegram",
+          "id": "459",
+          "url": "https://t.me/variational_io/459",
+          "author": "variational_io",
+          "published_at": "2026-11-13T18:51:03Z",
+          "observed_at": "2026-11-21T23:47:06Z",
+          "retrieval_method": "official public Telegram announcements feed",
+          "source_text_sha256": "a58f114174e00e087332239b79a4e61e214e5a297cda10701f51ae0c79035856",
           "normalized_sha256": "b1898b762b4d9b4aff0bd9b6b19ebbfc71756fba187bfba8036c2178c04d3271",
           "matches_current": true
         }
@@ -5119,7 +5145,7 @@
       "reported_phase": null,
       "revisions": [],
       "source_available_at": "2026-11-21T15:13:05Z",
-      "source_published_at": "2026-11-13T19:02:44Z"
+      "source_published_at": "2026-11-13T18:51:03Z"
     }
   ]
 }
