@@ -1,0 +1,584 @@
+{
+  "schema_version": 1,
+  "observed_at": "2026-11-21T14:48:50Z",
+  "source": {
+    "url": "https://docs.variational.io/omni/trading/swaps",
+    "kind": "Independently curated public specification and explicit native market identities",
+    "sources": [
+      "https://docs.variational.io/omni/trading/swaps",
+      "https://docs.variational.io/omni/trading/tradfi-perpetuals",
+      "https://docs.variational.io/technical-documentation/api"
+    ],
+    "scope": "Small reviewed registry; no undocumented endpoint or wholesale app taxonomy. Unlisted identities remain unclassified. Pre-IPO classifications are dated reviewed facts, not automatic IPO detection."
+  },
+  "mappings": [
+    {
+      "ticker": "ANT-PERP",
+      "name": "Anthropic PBC",
+      "contract_type": "perpetual",
+      "scope": "tradfi",
+      "asset_class": "pre_ipo",
+      "source_asset_class": "pre_ipo",
+      "source_instrument_type": "perpetual",
+      "source_asset": "ANT",
+      "listed_at": null,
+      "match_basis": "Manually reviewed explicit asset identity; exact native stats ticker/type/name",
+      "classification_reviewed_at": "2026-11-21T14:48:50Z",
+      "source_urls": [
+        "https://docs.variational.io/omni/trading/tradfi-perpetuals",
+        "https://docs.variational.io/technical-documentation/api"
+      ]
+    },
+    {
+      "ticker": "BTC-PERP",
+      "name": "Bitcoin",
+      "contract_type": "perpetual",
+      "scope": "crypto",
+      "asset_class": "crypto",
+      "source_asset_class": "crypto",
+      "source_instrument_type": "perpetual",
+      "source_asset": "BTC",
+      "listed_at": null,
+      "match_basis": "Manually reviewed explicit asset identity; exact native stats ticker/type/name",
+      "classification_reviewed_at": "2026-11-21T14:48:50Z",
+      "source_urls": [
+        "https://docs.variational.io/technical-documentation/api",
+        "https://docs.variational.io/technical-documentation/api"
+      ]
+    },
+    {
+      "ticker": "BZ-PERP",
+      "name": "Brent Oil",
+      "contract_type": "perpetual",
+      "scope": "tradfi",
+      "asset_class": "commodity",
+      "source_asset_class": "commodity",
+      "source_instrument_type": "perpetual",
+      "source_asset": "BZ",
+      "listed_at": null,
+      "match_basis": "Manually reviewed explicit asset identity; exact native stats ticker/type/name",
+      "classification_reviewed_at": "2026-11-21T14:48:50Z",
+      "source_urls": [
+        "https://docs.variational.io/omni/trading/tradfi-perpetuals",
+        "https://docs.variational.io/technical-documentation/api"
+      ]
+    },
+    {
+      "ticker": "CL-PERP",
+      "name": "WTI Crude Oil",
+      "contract_type": "perpetual",
+      "scope": "tradfi",
+      "asset_class": "commodity",
+      "source_asset_class": "commodity",
+      "source_instrument_type": "perpetual",
+      "source_asset": "CL",
+      "listed_at": null,
+      "match_basis": "Manually reviewed explicit asset identity; exact native stats ticker/type/name",
+      "classification_reviewed_at": "2026-11-21T14:48:50Z",
+      "source_urls": [
+        "https://docs.variational.io/omni/trading/tradfi-perpetuals",
+        "https://docs.variational.io/technical-documentation/api"
+      ]
+    },
+    {
+      "ticker": "CNA50-SWAP",
+      "name": "Swap on China Index",
+      "contract_type": "swap",
+      "scope": "tradfi",
+      "asset_class": "index",
+      "source_asset_class": "index",
+      "source_instrument_type": "swap",
+      "source_asset": "CNA50",
+      "listed_at": null,
+      "match_basis": "Manually reviewed official swap instrument table; exact native stats ticker/type/name",
+      "classification_reviewed_at": "2026-11-21T14:48:50Z",
+      "source_urls": [
+        "https://docs.variational.io/omni/trading/swaps",
+        "https://docs.variational.io/technical-documentation/api"
+      ]
+    },
+    {
+      "ticker": "COCOA-SWAP",
+      "name": "Swap on Cocoa",
+      "contract_type": "swap",
+      "scope": "tradfi",
+      "asset_class": "commodity",
+      "source_asset_class": "commodity",
+      "source_instrument_type": "swap",
+      "source_asset": "COCOA",
+      "listed_at": null,
+      "match_basis": "Manually reviewed official swap instrument table; exact native stats ticker/type/name",
+      "classification_reviewed_at": "2026-11-21T14:48:50Z",
+      "source_urls": [
+        "https://docs.variational.io/omni/trading/swaps",
+        "https://docs.variational.io/technical-documentation/api"
+      ]
+    },
+    {
+      "ticker": "COPP-SWAP",
+      "name": "Swap on Copper Spot",
+      "contract_type": "swap",
+      "scope": "tradfi",
+      "asset_class": "commodity",
+      "source_asset_class": "commodity",
+      "source_instrument_type": "swap",
+      "source_asset": "COPP",
+      "listed_at": null,
+      "match_basis": "Manually reviewed official swap instrument table; exact native stats ticker/type/name",
+      "classification_reviewed_at": "2026-11-21T14:48:50Z",
+      "source_urls": [
+        "https://docs.variational.io/omni/trading/swaps",
+        "https://docs.variational.io/technical-documentation/api"
+      ]
+    },
+    {
+      "ticker": "COPPER-PERP",
+      "name": "Copper",
+      "contract_type": "perpetual",
+      "scope": "tradfi",
+      "asset_class": "commodity",
+      "source_asset_class": "commodity",
+      "source_instrument_type": "perpetual",
+      "source_asset": "COPPER",
+      "listed_at": null,
+      "match_basis": "Manually reviewed explicit asset identity; exact native stats ticker/type/name",
+      "classification_reviewed_at": "2026-11-21T14:48:50Z",
+      "source_urls": [
+        "https://docs.variational.io/omni/trading/tradfi-perpetuals",
+        "https://docs.variational.io/technical-documentation/api"
+      ]
+    },
+    {
+      "ticker": "DXI-SWAP",
+      "name": "Swap on Dollar Index",
+      "contract_type": "swap",
+      "scope": "tradfi",
+      "asset_class": "index",
+      "source_asset_class": "index",
+      "source_instrument_type": "swap",
+      "source_asset": "DXI",
+      "listed_at": null,
+      "match_basis": "Manually reviewed official swap instrument table; exact native stats ticker/type/name",
+      "classification_reviewed_at": "2026-11-21T14:48:50Z",
+      "source_urls": [
+        "https://docs.variational.io/omni/trading/swaps",
+        "https://docs.variational.io/technical-documentation/api"
+      ]
+    },
+    {
+      "ticker": "ETH-PERP",
+      "name": "Ethereum",
+      "contract_type": "perpetual",
+      "scope": "crypto",
+      "asset_class": "crypto",
+      "source_asset_class": "crypto",
+      "source_instrument_type": "perpetual",
+      "source_asset": "ETH",
+      "listed_at": null,
+      "match_basis": "Manually reviewed explicit asset identity; exact native stats ticker/type/name",
+      "classification_reviewed_at": "2026-11-21T14:48:50Z",
+      "source_urls": [
+        "https://docs.variational.io/technical-documentation/api",
+        "https://docs.variational.io/technical-documentation/api"
+      ]
+    },
+    {
+      "ticker": "GASOL-SWAP",
+      "name": "Swap on Gasoline",
+      "contract_type": "swap",
+      "scope": "tradfi",
+      "asset_class": "commodity",
+      "source_asset_class": "commodity",
+      "source_instrument_type": "swap",
+      "source_asset": "GASOL",
+      "listed_at": null,
+      "match_basis": "Manually reviewed official swap instrument table; exact native stats ticker/type/name",
+      "classification_reviewed_at": "2026-11-21T14:48:50Z",
+      "source_urls": [
+        "https://docs.variational.io/omni/trading/swaps",
+        "https://docs.variational.io/technical-documentation/api"
+      ]
+    },
+    {
+      "ticker": "HOIL-SWAP",
+      "name": "Swap on Heating Oil",
+      "contract_type": "swap",
+      "scope": "tradfi",
+      "asset_class": "commodity",
+      "source_asset_class": "commodity",
+      "source_instrument_type": "swap",
+      "source_asset": "HOIL",
+      "listed_at": null,
+      "match_basis": "Manually reviewed official swap instrument table; exact native stats ticker/type/name",
+      "classification_reviewed_at": "2026-11-21T14:48:50Z",
+      "source_urls": [
+        "https://docs.variational.io/omni/trading/swaps",
+        "https://docs.variational.io/technical-documentation/api"
+      ]
+    },
+    {
+      "ticker": "HYPE-PERP",
+      "name": "Hyperliquid",
+      "contract_type": "perpetual",
+      "scope": "crypto",
+      "asset_class": "crypto",
+      "source_asset_class": "crypto",
+      "source_instrument_type": "perpetual",
+      "source_asset": "HYPE",
+      "listed_at": null,
+      "match_basis": "Manually reviewed explicit asset identity; exact native stats ticker/type/name",
+      "classification_reviewed_at": "2026-11-21T14:48:50Z",
+      "source_urls": [
+        "https://docs.variational.io/technical-documentation/api",
+        "https://docs.variational.io/technical-documentation/api"
+      ]
+    },
+    {
+      "ticker": "NATGAS-PERP",
+      "name": "Natural Gas",
+      "contract_type": "perpetual",
+      "scope": "tradfi",
+      "asset_class": "commodity",
+      "source_asset_class": "commodity",
+      "source_instrument_type": "perpetual",
+      "source_asset": "NATGAS",
+      "listed_at": null,
+      "match_basis": "Manually reviewed explicit asset identity; exact native stats ticker/type/name",
+      "classification_reviewed_at": "2026-11-21T14:48:50Z",
+      "source_urls": [
+        "https://docs.variational.io/omni/trading/tradfi-perpetuals",
+        "https://docs.variational.io/technical-documentation/api"
+      ]
+    },
+    {
+      "ticker": "OPENAI-PERP",
+      "name": "OpenAI",
+      "contract_type": "perpetual",
+      "scope": "tradfi",
+      "asset_class": "pre_ipo",
+      "source_asset_class": "pre_ipo",
+      "source_instrument_type": "perpetual",
+      "source_asset": "OPENAI",
+      "listed_at": null,
+      "match_basis": "Manually reviewed explicit asset identity; exact native stats ticker/type/name",
+      "classification_reviewed_at": "2026-11-21T14:48:50Z",
+      "source_urls": [
+        "https://docs.variational.io/omni/trading/tradfi-perpetuals",
+        "https://docs.variational.io/technical-documentation/api"
+      ]
+    },
+    {
+      "ticker": "SOL-PERP",
+      "name": "Solana",
+      "contract_type": "perpetual",
+      "scope": "crypto",
+      "asset_class": "crypto",
+      "source_asset_class": "crypto",
+      "source_instrument_type": "perpetual",
+      "source_asset": "SOL",
+      "listed_at": null,
+      "match_basis": "Manually reviewed explicit asset identity; exact native stats ticker/type/name",
+      "classification_reviewed_at": "2026-11-21T14:48:50Z",
+      "source_urls": [
+        "https://docs.variational.io/technical-documentation/api",
+        "https://docs.variational.io/technical-documentation/api"
+      ]
+    },
+    {
+      "ticker": "TWI-SWAP",
+      "name": "Swap on Taiwan Index",
+      "contract_type": "swap",
+      "scope": "tradfi",
+      "asset_class": "index",
+      "source_asset_class": "index",
+      "source_instrument_type": "swap",
+      "source_asset": "TWI",
+      "listed_at": null,
+      "match_basis": "Manually reviewed official swap instrument table; exact native stats ticker/type/name",
+      "classification_reviewed_at": "2026-11-21T14:48:50Z",
+      "source_urls": [
+        "https://docs.variational.io/omni/trading/swaps",
+        "https://docs.variational.io/technical-documentation/api"
+      ]
+    },
+    {
+      "ticker": "UKOIL-SWAP",
+      "name": "Swap on Brent Crude Oil",
+      "contract_type": "swap",
+      "scope": "tradfi",
+      "asset_class": "commodity",
+      "source_asset_class": "commodity",
+      "source_instrument_type": "swap",
+      "source_asset": "UKOIL",
+      "listed_at": null,
+      "match_basis": "Manually reviewed official swap instrument table; exact native stats ticker/type/name",
+      "classification_reviewed_at": "2026-11-21T14:48:50Z",
+      "source_urls": [
+        "https://docs.variational.io/omni/trading/swaps",
+        "https://docs.variational.io/technical-documentation/api"
+      ]
+    },
+    {
+      "ticker": "US100-SWAP",
+      "name": "Swap on US Non-Financial 100",
+      "contract_type": "swap",
+      "scope": "tradfi",
+      "asset_class": "index",
+      "source_asset_class": "index",
+      "source_instrument_type": "swap",
+      "source_asset": "US100",
+      "listed_at": null,
+      "match_basis": "Manually reviewed official swap instrument table; exact native stats ticker/type/name",
+      "classification_reviewed_at": "2026-11-21T14:48:50Z",
+      "source_urls": [
+        "https://docs.variational.io/omni/trading/swaps",
+        "https://docs.variational.io/technical-documentation/api"
+      ]
+    },
+    {
+      "ticker": "US2K-SWAP",
+      "name": "Swap on US2K Spot",
+      "contract_type": "swap",
+      "scope": "tradfi",
+      "asset_class": "index",
+      "source_asset_class": "index",
+      "source_instrument_type": "swap",
+      "source_asset": "US2K",
+      "listed_at": null,
+      "match_basis": "Manually reviewed official swap instrument table; exact native stats ticker/type/name",
+      "classification_reviewed_at": "2026-11-21T14:48:50Z",
+      "source_urls": [
+        "https://docs.variational.io/omni/trading/swaps",
+        "https://docs.variational.io/technical-documentation/api"
+      ]
+    },
+    {
+      "ticker": "US30-SWAP",
+      "name": "Swap on US30 Spot",
+      "contract_type": "swap",
+      "scope": "tradfi",
+      "asset_class": "index",
+      "source_asset_class": "index",
+      "source_instrument_type": "swap",
+      "source_asset": "US30",
+      "listed_at": null,
+      "match_basis": "Manually reviewed official swap instrument table; exact native stats ticker/type/name",
+      "classification_reviewed_at": "2026-11-21T14:48:50Z",
+      "source_urls": [
+        "https://docs.variational.io/omni/trading/swaps",
+        "https://docs.variational.io/technical-documentation/api"
+      ]
+    },
+    {
+      "ticker": "US400-SWAP",
+      "name": "Swap on US MidCap Spot",
+      "contract_type": "swap",
+      "scope": "tradfi",
+      "asset_class": "index",
+      "source_asset_class": "index",
+      "source_instrument_type": "swap",
+      "source_asset": "US400",
+      "listed_at": null,
+      "match_basis": "Manually reviewed official swap instrument table; exact native stats ticker/type/name",
+      "classification_reviewed_at": "2026-11-21T14:48:50Z",
+      "source_urls": [
+        "https://docs.variational.io/omni/trading/swaps",
+        "https://docs.variational.io/technical-documentation/api"
+      ]
+    },
+    {
+      "ticker": "US500-PERP",
+      "name": "State Street SPDR S&P 500 ETF Trust",
+      "contract_type": "perpetual",
+      "scope": "tradfi",
+      "asset_class": "etf",
+      "source_asset_class": "etf",
+      "source_instrument_type": "perpetual",
+      "source_asset": "US500",
+      "listed_at": null,
+      "match_basis": "Manually reviewed explicit asset identity; exact native stats ticker/type/name",
+      "classification_reviewed_at": "2026-11-21T14:48:50Z",
+      "source_urls": [
+        "https://docs.variational.io/omni/trading/tradfi-perpetuals",
+        "https://docs.variational.io/technical-documentation/api"
+      ]
+    },
+    {
+      "ticker": "US500-SWAP",
+      "name": "Swap on US 500",
+      "contract_type": "swap",
+      "scope": "tradfi",
+      "asset_class": "index",
+      "source_asset_class": "index",
+      "source_instrument_type": "swap",
+      "source_asset": "US500",
+      "listed_at": null,
+      "match_basis": "Manually reviewed official swap instrument table; exact native stats ticker/type/name",
+      "classification_reviewed_at": "2026-11-21T14:48:50Z",
+      "source_urls": [
+        "https://docs.variational.io/omni/trading/swaps",
+        "https://docs.variational.io/technical-documentation/api"
+      ]
+    },
+    {
+      "ticker": "USFNG-SWAP",
+      "name": "Swap on FANG+ Index",
+      "contract_type": "swap",
+      "scope": "tradfi",
+      "asset_class": "index",
+      "source_asset_class": "index",
+      "source_instrument_type": "swap",
+      "source_asset": "USFNG",
+      "listed_at": null,
+      "match_basis": "Manually reviewed official swap instrument table; exact native stats ticker/type/name",
+      "classification_reviewed_at": "2026-11-21T14:48:50Z",
+      "source_urls": [
+        "https://docs.variational.io/omni/trading/swaps",
+        "https://docs.variational.io/technical-documentation/api"
+      ]
+    },
+    {
+      "ticker": "USOIL-SWAP",
+      "name": "Swap on WTI Crude Oil",
+      "contract_type": "swap",
+      "scope": "tradfi",
+      "asset_class": "commodity",
+      "source_asset_class": "commodity",
+      "source_instrument_type": "swap",
+      "source_asset": "USOIL",
+      "listed_at": null,
+      "match_basis": "Manually reviewed official swap instrument table; exact native stats ticker/type/name",
+      "classification_reviewed_at": "2026-11-21T14:48:50Z",
+      "source_urls": [
+        "https://docs.variational.io/omni/trading/swaps",
+        "https://docs.variational.io/technical-documentation/api"
+      ]
+    },
+    {
+      "ticker": "VXI-SWAP",
+      "name": "Swap on Volatility Index",
+      "contract_type": "swap",
+      "scope": "tradfi",
+      "asset_class": "index",
+      "source_asset_class": "index",
+      "source_instrument_type": "swap",
+      "source_asset": "VXI",
+      "listed_at": null,
+      "match_basis": "Manually reviewed official swap instrument table; exact native stats ticker/type/name",
+      "classification_reviewed_at": "2026-11-21T14:48:50Z",
+      "source_urls": [
+        "https://docs.variational.io/omni/trading/swaps",
+        "https://docs.variational.io/technical-documentation/api"
+      ]
+    },
+    {
+      "ticker": "XAG-PERP",
+      "name": "Silver",
+      "contract_type": "perpetual",
+      "scope": "tradfi",
+      "asset_class": "commodity",
+      "source_asset_class": "commodity",
+      "source_instrument_type": "perpetual",
+      "source_asset": "XAG",
+      "listed_at": null,
+      "match_basis": "Manually reviewed explicit asset identity; exact native stats ticker/type/name",
+      "classification_reviewed_at": "2026-11-21T14:48:50Z",
+      "source_urls": [
+        "https://docs.variational.io/omni/trading/tradfi-perpetuals",
+        "https://docs.variational.io/technical-documentation/api"
+      ]
+    },
+    {
+      "ticker": "XAG-SWAP",
+      "name": "Swap on Silver Spot",
+      "contract_type": "swap",
+      "scope": "tradfi",
+      "asset_class": "commodity",
+      "source_asset_class": "commodity",
+      "source_instrument_type": "swap",
+      "source_asset": "XAG",
+      "listed_at": null,
+      "match_basis": "Manually reviewed official swap instrument table; exact native stats ticker/type/name",
+      "classification_reviewed_at": "2026-11-21T14:48:50Z",
+      "source_urls": [
+        "https://docs.variational.io/omni/trading/swaps",
+        "https://docs.variational.io/technical-documentation/api"
+      ]
+    },
+    {
+      "ticker": "XAU-PERP",
+      "name": "Gold",
+      "contract_type": "perpetual",
+      "scope": "tradfi",
+      "asset_class": "commodity",
+      "source_asset_class": "commodity",
+      "source_instrument_type": "perpetual",
+      "source_asset": "XAU",
+      "listed_at": null,
+      "match_basis": "Manually reviewed explicit asset identity; exact native stats ticker/type/name",
+      "classification_reviewed_at": "2026-11-21T14:48:50Z",
+      "source_urls": [
+        "https://docs.variational.io/omni/trading/tradfi-perpetuals",
+        "https://docs.variational.io/technical-documentation/api"
+      ]
+    },
+    {
+      "ticker": "XAU-SWAP",
+      "name": "Swap on Gold Spot",
+      "contract_type": "swap",
+      "scope": "tradfi",
+      "asset_class": "commodity",
+      "source_asset_class": "commodity",
+      "source_instrument_type": "swap",
+      "source_asset": "XAU",
+      "listed_at": null,
+      "match_basis": "Manually reviewed official swap instrument table; exact native stats ticker/type/name",
+      "classification_reviewed_at": "2026-11-21T14:48:50Z",
+      "source_urls": [
+        "https://docs.variational.io/omni/trading/swaps",
+        "https://docs.variational.io/technical-documentation/api"
+      ]
+    },
+    {
+      "ticker": "XPD-PERP",
+      "name": "Palladium",
+      "contract_type": "perpetual",
+      "scope": "tradfi",
+      "asset_class": "commodity",
+      "source_asset_class": "commodity",
+      "source_instrument_type": "perpetual",
+      "source_asset": "XPD",
+      "listed_at": null,
+      "match_basis": "Manually reviewed explicit asset identity; exact native stats ticker/type/name",
+      "classification_reviewed_at": "2026-11-21T14:48:50Z",
+      "source_urls": [
+        "https://docs.variational.io/omni/trading/tradfi-perpetuals",
+        "https://docs.variational.io/technical-documentation/api"
+      ]
+    },
+    {
+      "ticker": "XPT-PERP",
+      "name": "Platinum",
+      "contract_type": "perpetual",
+      "scope": "tradfi",
+      "asset_class": "commodity",
+      "source_asset_class": "commodity",
+      "source_instrument_type": "perpetual",
+      "source_asset": "XPT",
+      "listed_at": null,
+      "match_basis": "Manually reviewed explicit asset identity; exact native stats ticker/type/name",
+      "classification_reviewed_at": "2026-11-21T14:48:50Z",
+      "source_urls": [
+        "https://docs.variational.io/omni/trading/tradfi-perpetuals",
+        "https://docs.variational.io/technical-documentation/api"
+      ]
+    }
+  ],
+  "coverage": {
+    "market_count": 595,
+    "classified_count": 33,
+    "unclassified_count": 562,
+    "stats_observed_at": "2026-11-21T14:40:29Z",
+    "note": "Partial curated identity coverage. Full platform TradFi shares are unavailable. Full historical names can be matched; compact rows without a documented listing date remain unclassified."
+  }
+}

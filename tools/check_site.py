@@ -5,6 +5,8 @@ from pathlib import Path
 from urllib.parse import urlsplit
 
 from chain_history import validate as validate_chain_history
+from execution_study import validate as validate_execution_study
+from market_classifications import validate as validate_market_classifications
 from markets import load_partition, read_existing
 from supplement import CATALOG, WALLETS, USDC, public_research, read_json
 
@@ -43,6 +45,8 @@ def check():
             snap = load_partition(DATA, item)
             if snap["totals"] != item["totals"]:
                 raise ValueError("Daily totals differ between detail and history index")
+    validate_execution_study(read_json(DATA / "execution-study.json"))
+    validate_market_classifications(read_json(DATA / "market-classifications.json"))
     supplement = read_json(DATA / "supplement.json")
     validate_chain_history(read_json(DATA / "chain-history.json"))
     if supplement["research"] != public_research(read_json(CATALOG)):

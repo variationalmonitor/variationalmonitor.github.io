@@ -137,11 +137,9 @@ function chartLabel(line) {
   return line.label;
 }
 function lineNote(line) {
-  if (line.basis === 'calculated') return 'Calculated from reported endpoints';
-  if (line.basis === 'source_difference') return 'Reported minus calculated';
-  if (!line.coverage.complete) return line.value === null ? 'Not disclosed' : `Disclosed subtotal · ${coverageText(line.coverage)}`;
-  if (line.key === 'gross_revenue') return 'Gross Revenue';
-  if (line.key === 'market_making_costs') return 'Cost of Revenue';
+  if (line.basis === 'calculated') return '';
+  if (line.basis === 'source_difference') return '';
+  if (!line.coverage.complete) return line.value === null ? 'Not disclosed' : `Disclosed subtotal, ${coverageText(line.coverage)}`;
   return '';
 }
 function costDisclosure(model) {
@@ -238,13 +236,13 @@ export function allocationBody(input) {
   const reconciled = complete && checked === reports.length && exceptions.length === 0 && treasury.value + olp.value === profit.value;
   const composition = reconciled && profit.value > 0n && treasury.value >= 0n && olp.value >= 0n;
   const rows = [['Protocol Treasury Inflow', treasury, 'treasury'], ['OLP PnL', olp, 'olp']];
-  const content = rows.map(([label, item, key]) => `<div class="results-allocation-row"><dt><i class="is-${key}" aria-hidden="true"></i>${esc(label)}${!item.complete ? `<small>${item.count} of ${reports.length} reports${item.value === null ? ' · not disclosed' : ' · disclosed subtotal'}</small>` : ''}</dt><dd>${esc(money(decimalText(item.value)))}${composition ? `<small>${share(item.value, profit.value).toFixed(1)}%</small>` : ''}</dd></div>`).join('');
+  const content = rows.map(([label, item, key]) => `<div class="results-allocation-row"><dt><i class="is-${key}" aria-hidden="true"></i>${esc(label)}${!item.complete ? `<small>${item.count} of ${reports.length} reports${item.value === null ? ', omitted' : ', disclosed subtotal'}</small>` : ''}</dt><dd>${esc(money(decimalText(item.value)))}${composition ? `<small>${share(item.value, profit.value).toFixed(1)}%</small>` : ''}</dd></div>`).join('');
   const allocationBar = composition ? `<div class="results-allocation-strip" aria-label="Reconciled allocation of selected reported profit"><span class="is-treasury" style="width:${percentPosition(allocationWidth(treasury.value, profit.value))}"></span><span class="is-olp" style="width:${percentPosition(100 - allocationWidth(treasury.value, profit.value))}"></span></div>` : '';
   const state = !complete ? `Allocation incomplete: ${checked} of ${reports.length} reports include all three amounts.` :
     exceptions.length ? `${exceptions.length} source allocation difference${exceptions.length === 1 ? '' : 's'}. Percentages withheld.` :
     profit.value === 0n ? 'Reported allocations reconcile to zero. No percentage allocation.' :
     !composition ? 'Signed reported allocations reconcile. No percentage allocation for this loss or negative component.' : 'Protocol Treasury Inflow + OLP PnL = Net Profit';
-  const identity = `<div class="results-allocation-total"><span>Net Profit${!profit.complete ? ' · disclosed subtotal' : ''}</span><strong>${esc(money(decimalText(profit.value)))}</strong></div>`;
+  const identity = `<div class="results-allocation-total"><span>Net Profit${!profit.complete ? ', disclosed subtotal' : ''}</span><strong>${esc(money(decimalText(profit.value)))}</strong></div>`;
   const issues = exceptions.map(item => `<li><strong>${absoluteSourceLink(item.report)}</strong><dl><div><dt>Treasury + OLP</dt><dd>${esc(money(decimalText(item.expected)))}</dd></div><div><dt>Net Profit</dt><dd>${esc(money(decimalText(item.reported)))}</dd></div><div class="is-difference"><dt>Profit − allocations</dt><dd>${esc(money(decimalText(item.difference), true))}</dd></div></dl></li>`).join('');
   const losses = negativePeriods.map(item => `<li><strong>${absoluteSourceLink(item.report)}</strong><dl><div><dt>Protocol Treasury Inflow</dt><dd>${esc(money(decimalText(item.treasury)))}</dd></div><div><dt>OLP PnL</dt><dd>${esc(money(decimalText(item.olp)))}</dd></div><div><dt>Net Profit</dt><dd>${esc(money(decimalText(item.profit)))}</dd></div></dl></li>`).join('');
   const details = issues || losses ? `<details class="results-details${issues ? ' has-difference' : ''}"><summary>${issues ? 'Allocation source differences' : 'Periods with a negative amount'}</summary><div class="results-details-body">${issues ? `<ul class="results-exceptions">${issues}</ul>` : ''}${losses ? `<p>Selected totals retain these signed source amounts.</p><ul class="results-exceptions">${losses}</ul>` : ''}</div></details>` : '';

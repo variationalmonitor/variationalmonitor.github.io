@@ -44,7 +44,7 @@ test('offsetting source exceptions remain disclosed even when their aggregate di
   assert.deepEqual(difference.slice(2,5),['0','100','100']);
   assert.match(html,/2 source differences/);
   assert.match(html,/Individual exceptions remain visible even when they offset/);
-  assert.match(html,/Reported minus calculated/);
+  assert.match(html,/Reported − calculated/);
   assert.match(html,/not additional income/);
   assert.match(html,/\+\$1/);
   assert.match(html,/−\$1/);
@@ -58,7 +58,7 @@ test('partial itemized costs are separate from the calculated gross-to-net bridg
   const disclosed = rows.find(row => row[0] === 'Market Making Costs (disclosed subtotal)');
   assert.deepEqual(derived.slice(0,7),['Gross-to-net change','calculated','-60','200','140',2,2]);
   assert.deepEqual(disclosed.slice(1,7),['reported','-30',null,null,1,2]);
-  assert.match(html,/Calculated from reported endpoints/);
+  assert.match(html,/Calculated change/);
   assert.match(html,/1 of 2 reports/);
   assert.match(html,/Itemized Market Making Costs: −\$30 across 1 of 2 updates/);
 });
@@ -94,7 +94,7 @@ test('zero allocation and missing amounts remain distinct and neither gets share
   const missing = allocationBody([report('missing',{olp_pnl:null})]);
   noShares(missing);
   assert.match(missing,/Allocation incomplete/);
-  assert.match(missing,/0 of 1 reports · not disclosed/);
+  assert.match(missing,/0 of 1 reports, omitted/);
   assert.match(missing,/Unavailable/);
 });
 

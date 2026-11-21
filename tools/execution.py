@@ -17,8 +17,8 @@ MAX_SKEW_SECONDS = 45
 MAX_AGE_SECONDS = 120
 
 
-def depth_price(levels, buying):
-    remaining = NOTIONAL
+def depth_price(levels, buying, notional=NOTIONAL):
+    remaining = notional
     size = Decimal(0)
     previous = None
     for level in levels:
@@ -30,11 +30,11 @@ def depth_price(levels, buying):
         size += cost / price
         remaining -= cost
         if remaining == 0:
-            return NOTIONAL / size
+            return notional / size
     return None
 
 
-def compare(coin, bid_ask, quoted_at, book, observed):
+def compare(coin, bid_ask, quoted_at, book, observed, *, notional=NOTIONAL):
     if book.get("coin") != coin:
         raise ValueError("Peer instrument mismatch")
     book_time = datetime.fromtimestamp(book["time"] / 1000, timezone.utc)
@@ -50,7 +50,7 @@ def compare(coin, bid_ask, quoted_at, book, observed):
     best_bid, best_ask = positive(bids[0]["px"]), positive(asks[0]["px"])
     if ask < bid or best_ask <= best_bid:
         raise ValueError("Invalid bid and ask")
-    buy, sell = depth_price(asks, True), depth_price(bids, False)
+    buy, sell = depth_price(asks, True, notional), depth_price(bids, False, notional)
     if buy is None or sell is None:
         return None
     omni = (ask - bid) / ((ask + bid) / 2) * 10000

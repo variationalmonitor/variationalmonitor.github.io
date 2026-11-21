@@ -58,16 +58,24 @@ jobs:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             /tools/financials.py
+            /tools/reported_rewards.py
             /public/data/financials.json
+            /public/data/reported-rewards.json
       - name: Check official financial reports
         if: steps.mode.outputs.value == 'reports'
-        run: python3 tools/financials.py refresh --output public/data/financials.json
+        run: |
+          python3 tools/financials.py refresh --output public/data/financials.json
+          if ! git diff --quiet -- public/data/financials.json public/data/reported-rewards.json; then
+            python3 tools/reported_rewards.py refresh || python3 tools/reported_rewards.py verify
+          fi
       - name: Collect daily observations
         if: steps.mode.outputs.value == 'daily'
         env:
           COINGECKO_DEMO_API_KEY: ${{ secrets.COINGECKO_DEMO_API_KEY }}
         run: |
           python3 tools/markets.py
+          node tools/build_protocol_metrics.mjs
+          python3 tools/reported_rewards.py refresh || python3 tools/reported_rewards.py verify
           python3 tools/supplement.py
           python3 tools/chain_history.py --data public/data
           python3 tools/research_baselines.py --data-dir public/data
@@ -76,7 +84,7 @@ jobs:
         env:
           MODE: ${{ steps.mode.outputs.value }}
         run: |
-          if [[ "$MODE" == reports ]] && git diff --quiet -- public/data/financials.json; then
+          if [[ "$MODE" == reports ]] && git diff --quiet -- public/data/financials.json public/data/reported-rewards.json; then
             echo "publish=false" >> "$GITHUB_OUTPUT"
           else
             echo "publish=true" >> "$GITHUB_OUTPUT"
@@ -91,7 +99,9 @@ jobs:
           node --test tests/*.test.mjs
           python3 tools/financials.py verify --output public/data/financials.json
           python3 tools/research_baselines.py verify --data-dir public/data
+          python3 tools/reported_rewards.py verify
           python3 tools/check_site.py
+          node tools/build_protocol_metrics.mjs --check
       - name: Save validated observations
         if: steps.decision.outputs.publish == 'true' && steps.mode.outputs.value != 'publish'
         env:

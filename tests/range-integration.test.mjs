@@ -5,6 +5,7 @@ import vm from 'node:vm';
 import {buildOperatingResults,OperatingResultsError} from '../public/assets/operating-results.js';
 import {waterfallBody,waterfallExportRows,allocationBody} from '../public/assets/results-chart.js';
 import {frozenOperatingReports} from './fixtures/operating-reports.mjs';
+import {buildProtocolMetrics} from '../public/assets/protocol-metrics.js';
 
 const asset=path=>readFile(new URL('../public/assets/'+path,import.meta.url),'utf8');
 const [utils,ranges,app]=await Promise.all([asset('utils.js'),asset('ranges.js'),asset('app.js')]);
@@ -19,7 +20,7 @@ function harness(hash='#/financials?range=all',financialFixture=archivedFinancia
   const location={search:'',href:'https://example.com/',get hash(){return currentHash;},set hash(value){currentHash='#'+value.replace(/^#/,'');}};
   const listen=target=>(type,handler)=>(events[target][type]??=[]).push(handler);
   const document={getElementById:node,querySelectorAll(){return [];},addEventListener:listen('document'),documentElement:{dataset:{}},activeElement:null};
-  const context=vm.createContext({document,location,window:{addEventListener:listen('window'),scrollTo(){},innerWidth:1200},URL,URLSearchParams,Intl,Date,Map,Set,console,setTimeout,clearTimeout,requestAnimationFrame:fn=>fn(),mountChart:()=>()=>{},buildOperatingResults,OperatingResultsError,waterfallBody,waterfallExportRows,allocationBody,fixtures:{financials:financialFixture,markets,history,supplement}});
+  const context=vm.createContext({document,location,window:{addEventListener:listen('window'),scrollTo(){},innerWidth:1200},URL,URLSearchParams,Intl,Date,Map,Set,console,setTimeout,clearTimeout,requestAnimationFrame:fn=>fn(),mountChart:()=>()=>{},buildProtocolMetrics,buildOperatingResults,OperatingResultsError,waterfallBody,waterfallExportRows,allocationBody,fixtures:{financials:financialFixture,markets,history,supplement}});
   const compiled=utils.replace(/^export /gm,'')+'\nconst e=escapeHTML,n=number;\n'+ranges.replace(/^export /gm,'')+'\n'+app.replace(/^import .*$/gm,'').replaceAll('import.meta.url',"'https://example.com/assets/app.js'").replace(/^load\(\)\.catch.*$/m,'');
   vm.runInContext(compiled,context);
   vm.runInContext("DATA.financials=fixtures.financials;DATA.markets=fixtures.markets;DATA.history=fixtures.history;DATA.supplement=fixtures.supplement;rangeAnchor=()=> '2026-11-20T09:31:41Z';readRoute();",context);
@@ -103,8 +104,8 @@ test('between-report volume carries both publication timestamps after filtering'
 test('the swap filter changes both market charts and the drilldown table to the same product',()=>{
   const h=harness('#/omni?contract=swap&range=all');
   const html=h.run('omni()');
-  assert.match(html,/Swaps · 24-Hour Trading Volume/);
-  assert.match(html,/Swaps · Trader Open Interest/);
+  assert.match(html,/24-Hour Swap Volume/);
+  assert.match(html,/Swap Trader Open Interest/);
   assert.ok(h.run("marketRows().every(market=>market.contract_type==='swap')"));
   const chart=h.run("charts.get('omni-volume')");
   for (const row of chart.rows) {
@@ -140,7 +141,9 @@ test('Operating Results shows the waterfall before allocation and exports the se
   const view=operatingHarness();
   const html=view.run('financials()');
   assert.match(html,/<h1>Operating Results<\/h1>/);
-  assert.ok(html.indexOf('<h2>Gross Revenue to Net Profit</h2>') < html.indexOf('<h2>Net Profit Allocation</h2>'));
+  assert.ok(html.indexOf('<h2>Gross Revenue to Net Profit</h2>') < html.indexOf('<h2>Net Profit Allocation by Period</h2>'));
+  assert.doesNotMatch(html,/<h2>Net Profit Allocation<\/h2>/);
+  assert.doesNotMatch(html,/class="(?:page-context|stat-detail|panel-subtitle)"| · /);
   assert.match(html,/<h2>Results by Period/);
   assert.doesNotMatch(html,/Bi-weekly Financial Reports/);
   const exported=exportOperatingRows(view);
@@ -166,7 +169,7 @@ test('individual breakdown links select the same publication in both panels, its
   assert.equal(selection.selected.id,latest.id);
   const html=view.run('financials()');
   assert.ok(html.includes('value="'+latest.id+'" selected'));
-  assert.equal((html.match(/13 Nov 2026 update · USD/g)||[]).length,2);
+  assert.match(html,/data-context="13 Nov 2026 update \/ USD"/);
   assert.ok(html.includes(view.run('officialUpdate(resultsSelection().selected)')));
   const exported=exportOperatingRows(view);
   assert.equal(exported.filename,'variational-operating-waterfall-2026-11-13.csv');

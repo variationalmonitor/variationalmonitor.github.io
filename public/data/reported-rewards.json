@@ -1,0 +1,1328 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-11-21T14:52:56Z",
+  "latest_report_id": "x:2121317860740063501",
+  "coverage": {
+    "report_count": 19,
+    "first_report_published_at": "2026-03-06T18:12:38Z",
+    "last_report_published_at": "2026-11-13T19:02:44Z",
+    "note": "Official source disclosures at publication dates. Cumulative claimed/refunded figures are not summed. Native 2w deductions are not reconstructed daily claims; rounded source notation is retained."
+  },
+  "reports": [
+    {
+      "id": "x:2029983510824636491",
+      "published_at": "2026-03-06T18:12:38Z",
+      "financial_report_published_at": "2026-03-06T18:12:38Z",
+      "source_url": "https://x.com/variational_io/status/2029983510824636491",
+      "source_urls": [
+        "https://x.com/variational_io/status/2029983510824636491"
+      ],
+      "period_start": null,
+      "period_end": null,
+      "fields": {
+        "total_rewards_claimed": {
+          "value": "6392067",
+          "raw": "$6,392,067",
+          "unit": "$",
+          "label": "Total Rewards Claimed",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "cumulative_reported"
+        },
+        "total_losses_refunded": {
+          "value": "4381625",
+          "raw": "$4,381,625",
+          "unit": "$",
+          "label": "Total Losses Refunded",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "cumulative_reported"
+        },
+        "total_referral_rewards_claimed": {
+          "value": "2010442",
+          "raw": "$2,010,442",
+          "unit": "$",
+          "label": "Total Referral Rewards Claimed",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "cumulative_reported"
+        },
+        "referral_rewards": {
+          "value": "-85051",
+          "raw": "($85,051)",
+          "unit": "$",
+          "label": "Referral Rewards",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "reported_2w_deduction"
+        },
+        "loss_refunds": {
+          "value": "-175833",
+          "raw": "($175,833)",
+          "unit": "$",
+          "label": "Loss Refunds",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "reported_2w_deduction"
+        }
+      },
+      "sources": [
+        {
+          "url": "https://x.com/variational_io/status/2029983510824636491",
+          "author": "variational_io",
+          "platform": "x",
+          "id": "2029983510824636491",
+          "published_at": "2026-03-06T18:12:38Z",
+          "observed_at": "2026-11-21T14:46:10Z",
+          "retrieval_method": "saved FxTwitter replay of official X post",
+          "disclosure_sha256": "f658773c244765604da4a9ee775b05de5e9abe6bb85337bcf3dd06713f561374",
+          "matches_current": true
+        }
+      ],
+      "warnings": [],
+      "revisions": []
+    },
+    {
+      "id": "x:2035011447072440602",
+      "published_at": "2026-03-20T15:11:52Z",
+      "financial_report_published_at": "2026-03-20T15:11:52Z",
+      "source_url": "https://x.com/variational_io/status/2035011447072440602",
+      "source_urls": [
+        "https://x.com/variational_io/status/2035011447072440602"
+      ],
+      "period_start": null,
+      "period_end": null,
+      "fields": {
+        "total_rewards_claimed": {
+          "value": "6653401",
+          "raw": "$6,653,401",
+          "unit": "$",
+          "label": "Total Rewards Claimed",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "cumulative_reported"
+        },
+        "total_losses_refunded": {
+          "value": "4559196",
+          "raw": "$4,559,196",
+          "unit": "$",
+          "label": "Total Losses Refunded",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "cumulative_reported"
+        },
+        "total_referral_rewards_claimed": {
+          "value": "2094205",
+          "raw": "$2,094,205",
+          "unit": "$",
+          "label": "Total Referral Rewards Claimed",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "cumulative_reported"
+        },
+        "referral_rewards": {
+          "value": "-85681",
+          "raw": "($85,681)",
+          "unit": "$",
+          "label": "Referral Rewards",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "reported_2w_deduction"
+        },
+        "loss_refunds": {
+          "value": "-176333",
+          "raw": "($176,333)",
+          "unit": "$",
+          "label": "Loss Refunds",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "reported_2w_deduction"
+        }
+      },
+      "sources": [
+        {
+          "url": "https://x.com/variational_io/status/2035011447072440602",
+          "author": "variational_io",
+          "platform": "x",
+          "id": "2035011447072440602",
+          "published_at": "2026-03-20T15:11:52Z",
+          "observed_at": "2026-11-21T14:46:10Z",
+          "retrieval_method": "saved FxTwitter replay of official X post",
+          "disclosure_sha256": "b19393bc75f72ee2f9c0695049b5ef86650edc6b97a68b213519fda555f07552",
+          "matches_current": true
+        }
+      ],
+      "warnings": [],
+      "revisions": []
+    },
+    {
+      "id": "x:2040164994764124195",
+      "published_at": "2026-04-03T20:30:13Z",
+      "financial_report_published_at": "2026-04-03T20:30:13Z",
+      "source_url": "https://x.com/variational_io/status/2040164994764124195",
+      "source_urls": [
+        "https://x.com/variational_io/status/2040164994764124195"
+      ],
+      "period_start": null,
+      "period_end": null,
+      "fields": {
+        "total_rewards_claimed": {
+          "value": "6728461",
+          "raw": "$6,728,461",
+          "unit": "$",
+          "label": "Total Rewards Claimed",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "cumulative_reported"
+        },
+        "total_losses_refunded": {
+          "value": "4559196",
+          "raw": "$4,559,196",
+          "unit": "$",
+          "label": "Total Losses Refunded (Sunset)",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "cumulative_reported"
+        },
+        "total_referral_rewards_claimed": {
+          "value": "2169265",
+          "raw": "$2,169,265",
+          "unit": "$",
+          "label": "Total Referral Rewards Claimed",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "cumulative_reported"
+        },
+        "referral_rewards": {
+          "value": "-75127",
+          "raw": "($75,127)",
+          "unit": "$",
+          "label": "Referral Rewards",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "reported_2w_deduction"
+        },
+        "loss_refunds": {
+          "value": "-47134",
+          "raw": "($47,134)",
+          "unit": "$",
+          "label": "Loss Refunds (Sunset)",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "reported_2w_deduction"
+        }
+      },
+      "sources": [
+        {
+          "url": "https://x.com/variational_io/status/2040164994764124195",
+          "author": "variational_io",
+          "platform": "x",
+          "id": "2040164994764124195",
+          "published_at": "2026-04-03T20:30:13Z",
+          "observed_at": "2026-11-21T14:52:56Z",
+          "retrieval_method": "saved FxTwitter replay of official X post",
+          "disclosure_sha256": "ed950bfdb067db79df8aec0e7dc33f1661ca9048884915033f4485b330580b94",
+          "matches_current": true
+        }
+      ],
+      "warnings": [],
+      "revisions": [
+        {
+          "observed_at": "2026-11-21T14:52:56Z",
+          "fields": {
+            "total_rewards_claimed": {
+              "value": "6728461",
+              "raw": "$6,728,461",
+              "unit": "$",
+              "label": "Total Rewards Claimed",
+              "rounded": false,
+              "precision_increment": "1",
+              "kind": "cumulative_reported"
+            },
+            "total_losses_refunded": {
+              "value": "4559196",
+              "raw": "$4,559,196",
+              "unit": "$",
+              "label": "Total Losses Refunded (Sunset)",
+              "rounded": false,
+              "precision_increment": "1",
+              "kind": "cumulative_reported"
+            },
+            "total_referral_rewards_claimed": {
+              "value": "2169265",
+              "raw": "$2,169,265",
+              "unit": "$",
+              "label": "Total Referral Rewards Claimed",
+              "rounded": false,
+              "precision_increment": "1",
+              "kind": "cumulative_reported"
+            },
+            "referral_rewards": {
+              "value": "-75127",
+              "raw": "($75,127)",
+              "unit": "$",
+              "label": "Referral Rewards",
+              "rounded": false,
+              "precision_increment": "1",
+              "kind": "reported_2w_deduction"
+            },
+            "loss_refunds": null
+          },
+          "sources": [
+            {
+              "url": "https://x.com/variational_io/status/2040164994764124195",
+              "author": "variational_io",
+              "platform": "x",
+              "id": "2040164994764124195",
+              "published_at": "2026-04-03T20:30:13Z",
+              "observed_at": "2026-11-21T14:46:10Z",
+              "retrieval_method": "saved FxTwitter replay of official X post",
+              "disclosure_sha256": "43ab92ad4d1a966d366ab49bf46e96ac8a0110c6fcb590709cb40618ec73c264",
+              "matches_current": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "x:2045195227615613390",
+      "published_at": "2026-04-17T17:38:34Z",
+      "financial_report_published_at": "2026-04-17T17:38:34Z",
+      "source_url": "https://x.com/variational_io/status/2045195227615613390",
+      "source_urls": [
+        "https://x.com/variational_io/status/2045195227615613390"
+      ],
+      "period_start": null,
+      "period_end": null,
+      "fields": {
+        "total_rewards_claimed": {
+          "value": "6799825",
+          "raw": "$6,799,825",
+          "unit": "$",
+          "label": "Total Rewards Claimed",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "cumulative_reported"
+        },
+        "total_losses_refunded": {
+          "value": "4559196",
+          "raw": "$4,559,196",
+          "unit": "$",
+          "label": "Total Losses Refunded (Sunset)",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "cumulative_reported"
+        },
+        "total_referral_rewards_claimed": {
+          "value": "2240629",
+          "raw": "$2,240,629",
+          "unit": "$",
+          "label": "Total Referral Rewards Claimed",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "cumulative_reported"
+        },
+        "referral_rewards": {
+          "value": "-75856",
+          "raw": "($75,856)",
+          "unit": "$",
+          "label": "Referral Rewards",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "reported_2w_deduction"
+        },
+        "loss_refunds": null
+      },
+      "sources": [
+        {
+          "url": "https://x.com/variational_io/status/2045195227615613390",
+          "author": "variational_io",
+          "platform": "x",
+          "id": "2045195227615613390",
+          "published_at": "2026-04-17T17:38:34Z",
+          "observed_at": "2026-11-21T14:46:10Z",
+          "retrieval_method": "saved FxTwitter replay of official X post",
+          "disclosure_sha256": "0334f88045fe2e7ffa05e5bf1e73b7df4fde56a6bd9cd306947533ac01ed623f",
+          "matches_current": true
+        }
+      ],
+      "warnings": [],
+      "revisions": []
+    },
+    {
+      "id": "x:2050242620912537798",
+      "published_at": "2026-05-01T15:55:07Z",
+      "financial_report_published_at": "2026-05-01T15:55:07Z",
+      "source_url": "https://x.com/variational_io/status/2050242620912537798",
+      "source_urls": [
+        "https://x.com/variational_io/status/2050242620912537798"
+      ],
+      "period_start": null,
+      "period_end": null,
+      "fields": {
+        "total_rewards_claimed": {
+          "value": "6871220",
+          "raw": "$6,871,220",
+          "unit": "$",
+          "label": "Total Rewards Claimed",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "cumulative_reported"
+        },
+        "total_losses_refunded": {
+          "value": "4559196",
+          "raw": "$4,559,196",
+          "unit": "$",
+          "label": "Total Losses Refunded (Sunset)",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "cumulative_reported"
+        },
+        "total_referral_rewards_claimed": {
+          "value": "2312024",
+          "raw": "$2,312,024",
+          "unit": "$",
+          "label": "Total Referral Rewards Claimed",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "cumulative_reported"
+        },
+        "referral_rewards": {
+          "value": "-69545",
+          "raw": "($69,545)",
+          "unit": "$",
+          "label": "Referral Rewards",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "reported_2w_deduction"
+        },
+        "loss_refunds": null
+      },
+      "sources": [
+        {
+          "url": "https://x.com/variational_io/status/2050242620912537798",
+          "author": "variational_io",
+          "platform": "x",
+          "id": "2050242620912537798",
+          "published_at": "2026-05-01T15:55:07Z",
+          "observed_at": "2026-11-21T14:46:10Z",
+          "retrieval_method": "saved FxTwitter replay of official X post",
+          "disclosure_sha256": "fae12a73bfec20a6dc740aaee22de63d375cd8548cd05e504a827661615a4c0e",
+          "matches_current": true
+        }
+      ],
+      "warnings": [],
+      "revisions": []
+    },
+    {
+      "id": "x:2055324287922507828",
+      "published_at": "2026-05-15T16:27:50Z",
+      "financial_report_published_at": "2026-05-15T16:27:50Z",
+      "source_url": "https://x.com/variational_io/status/2055324287922507828",
+      "source_urls": [
+        "https://x.com/variational_io/status/2055324287922507828"
+      ],
+      "period_start": null,
+      "period_end": null,
+      "fields": {
+        "total_rewards_claimed": {
+          "value": "6945522",
+          "raw": "$6,945,522",
+          "unit": "$",
+          "label": "Total Rewards Claimed",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "cumulative_reported"
+        },
+        "total_losses_refunded": {
+          "value": "4559196",
+          "raw": "$4,559,196",
+          "unit": "$",
+          "label": "Total Losses Refunded (Sunset)",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "cumulative_reported"
+        },
+        "total_referral_rewards_claimed": {
+          "value": "2386326",
+          "raw": "$2,386,326",
+          "unit": "$",
+          "label": "Total Referral Rewards Claimed",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "cumulative_reported"
+        },
+        "referral_rewards": {
+          "value": "-81710",
+          "raw": "($81,710)",
+          "unit": "$",
+          "label": "Referral Rewards",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "reported_2w_deduction"
+        },
+        "loss_refunds": null
+      },
+      "sources": [
+        {
+          "url": "https://x.com/variational_io/status/2055324287922507828",
+          "author": "variational_io",
+          "platform": "x",
+          "id": "2055324287922507828",
+          "published_at": "2026-05-15T16:27:50Z",
+          "observed_at": "2026-11-21T14:46:10Z",
+          "retrieval_method": "saved FxTwitter replay of official X post",
+          "disclosure_sha256": "32efda637db92bfbd8142c061520eecfd5b7fe1eff8db5d9e980dab8cfb4dc42",
+          "matches_current": true
+        }
+      ],
+      "warnings": [],
+      "revisions": []
+    },
+    {
+      "id": "x:2060738032580567428",
+      "published_at": "2026-05-30T15:00:08Z",
+      "financial_report_published_at": "2026-05-30T15:00:08Z",
+      "source_url": "https://x.com/variational_io/status/2060738032580567428",
+      "source_urls": [
+        "https://x.com/variational_io/status/2060738032580567428"
+      ],
+      "period_start": null,
+      "period_end": null,
+      "fields": {
+        "total_rewards_claimed": {
+          "value": "7042844",
+          "raw": "$7,042,844",
+          "unit": "$",
+          "label": "Total Rewards Claimed",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "cumulative_reported"
+        },
+        "total_losses_refunded": {
+          "value": "4559196",
+          "raw": "$4,559,196",
+          "unit": "$",
+          "label": "Total Losses Refunded (Sunset)",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "cumulative_reported"
+        },
+        "total_referral_rewards_claimed": {
+          "value": "2483648",
+          "raw": "$2,483,648",
+          "unit": "$",
+          "label": "Total Referral Rewards Claimed",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "cumulative_reported"
+        },
+        "referral_rewards": {
+          "value": "-107553",
+          "raw": "($107,553)",
+          "unit": "$",
+          "label": "Referral Rewards",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "reported_2w_deduction"
+        },
+        "loss_refunds": null
+      },
+      "sources": [
+        {
+          "url": "https://x.com/variational_io/status/2060738032580567428",
+          "author": "variational_io",
+          "platform": "x",
+          "id": "2060738032580567428",
+          "published_at": "2026-05-30T15:00:08Z",
+          "observed_at": "2026-11-21T14:46:10Z",
+          "retrieval_method": "saved FxTwitter replay of official X post",
+          "disclosure_sha256": "2c75cb72d5d0fad8ea3e4f96551aafa9abb41596c77c4f1e2892c22beca055fc",
+          "matches_current": true
+        }
+      ],
+      "warnings": [],
+      "revisions": []
+    },
+    {
+      "id": "x:2065467514486993157",
+      "published_at": "2026-06-12T16:13:24Z",
+      "financial_report_published_at": "2026-06-12T16:13:24Z",
+      "source_url": "https://x.com/variational_io/status/2065467514486993157",
+      "source_urls": [
+        "https://x.com/variational_io/status/2065467514486993157"
+      ],
+      "period_start": null,
+      "period_end": null,
+      "fields": {
+        "total_rewards_claimed": {
+          "value": "7238105",
+          "raw": "$7,238,105",
+          "unit": "$",
+          "label": "Total Rewards Claimed",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "cumulative_reported"
+        },
+        "total_losses_refunded": {
+          "value": "4559196",
+          "raw": "$4,559,196",
+          "unit": "$",
+          "label": "Total Losses Refunded (Sunset)",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "cumulative_reported"
+        },
+        "total_referral_rewards_claimed": {
+          "value": "2678909",
+          "raw": "$2,678,909",
+          "unit": "$",
+          "label": "Total Referral Rewards Claimed",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "cumulative_reported"
+        },
+        "referral_rewards": {
+          "value": "-209668",
+          "raw": "($209,668)",
+          "unit": "$",
+          "label": "Referral Rewards",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "reported_2w_deduction"
+        },
+        "loss_refunds": null
+      },
+      "sources": [
+        {
+          "url": "https://x.com/variational_io/status/2065467514486993157",
+          "author": "variational_io",
+          "platform": "x",
+          "id": "2065467514486993157",
+          "published_at": "2026-06-12T16:13:24Z",
+          "observed_at": "2026-11-21T14:46:10Z",
+          "retrieval_method": "saved FxTwitter replay of official X post",
+          "disclosure_sha256": "66c02f5c1a1ac33fcc43ef5ab4029fd393ea6eff85bf1cd2622c3a51ff86228a",
+          "matches_current": true
+        }
+      ],
+      "warnings": [],
+      "revisions": []
+    },
+    {
+      "id": "x:2070877921158586432",
+      "published_at": "2026-06-27T14:32:26Z",
+      "financial_report_published_at": "2026-06-27T14:32:26Z",
+      "source_url": "https://x.com/variational_io/status/2070877921158586432",
+      "source_urls": [
+        "https://x.com/variational_io/status/2070877921158586432"
+      ],
+      "period_start": null,
+      "period_end": null,
+      "fields": {
+        "total_rewards_claimed": {
+          "value": "7366115",
+          "raw": "$7,366,115",
+          "unit": "$",
+          "label": "Total Rewards Claimed",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "cumulative_reported"
+        },
+        "total_losses_refunded": {
+          "value": "4559196",
+          "raw": "$4,559,196",
+          "unit": "$",
+          "label": "Total Losses Refunded (Sunset)",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "cumulative_reported"
+        },
+        "total_referral_rewards_claimed": {
+          "value": "2806919",
+          "raw": "$2,806,919",
+          "unit": "$",
+          "label": "Total Referral Rewards Claimed",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "cumulative_reported"
+        },
+        "referral_rewards": {
+          "value": "-155995",
+          "raw": "($155,995)",
+          "unit": "$",
+          "label": "Referral Rewards",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "reported_2w_deduction"
+        },
+        "loss_refunds": null
+      },
+      "sources": [
+        {
+          "url": "https://x.com/variational_io/status/2070877921158586432",
+          "author": "variational_io",
+          "platform": "x",
+          "id": "2070877921158586432",
+          "published_at": "2026-06-27T14:32:26Z",
+          "observed_at": "2026-11-21T14:46:10Z",
+          "retrieval_method": "saved FxTwitter replay of official X post",
+          "disclosure_sha256": "f3780a62cc3c9c7f5d5fee60c9f3b81c820bc8c42c8f105510c1738ada582ac5",
+          "matches_current": true
+        }
+      ],
+      "warnings": [],
+      "revisions": []
+    },
+    {
+      "id": "x:2075603602081824975",
+      "published_at": "2026-07-10T15:30:36Z",
+      "financial_report_published_at": "2026-07-10T15:30:36Z",
+      "source_url": "https://x.com/variational_io/status/2075603602081824975",
+      "source_urls": [
+        "https://x.com/variational_io/status/2075603602081824975"
+      ],
+      "period_start": null,
+      "period_end": null,
+      "fields": {
+        "total_rewards_claimed": {
+          "value": "7507896",
+          "raw": "$7,507,896",
+          "unit": "$",
+          "label": "Total Rewards Claimed",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "cumulative_reported"
+        },
+        "total_losses_refunded": {
+          "value": "4559196",
+          "raw": "$4,559,196",
+          "unit": "$",
+          "label": "Total Losses Refunded (Sunset)",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "cumulative_reported"
+        },
+        "total_referral_rewards_claimed": {
+          "value": "2948700",
+          "raw": "$2,948,700",
+          "unit": "$",
+          "label": "Total Referral Rewards Claimed",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "cumulative_reported"
+        },
+        "referral_rewards": {
+          "value": "-148583",
+          "raw": "($148,583)",
+          "unit": "$",
+          "label": "Referral Rewards",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "reported_2w_deduction"
+        },
+        "loss_refunds": null
+      },
+      "sources": [
+        {
+          "url": "https://x.com/variational_io/status/2075603602081824975",
+          "author": "variational_io",
+          "platform": "x",
+          "id": "2075603602081824975",
+          "published_at": "2026-07-10T15:30:36Z",
+          "observed_at": "2026-11-21T14:46:10Z",
+          "retrieval_method": "saved FxTwitter replay of official X post",
+          "disclosure_sha256": "b72ce854cfed83331358b9b603af0f4acaff50952092134ab3aca6c10a1c9265",
+          "matches_current": true
+        }
+      ],
+      "warnings": [],
+      "revisions": []
+    },
+    {
+      "id": "x:2080694730460151877",
+      "published_at": "2026-07-24T16:40:55Z",
+      "financial_report_published_at": "2026-07-24T16:40:55Z",
+      "source_url": "https://x.com/variational_io/status/2080694730460151877",
+      "source_urls": [
+        "https://x.com/variational_io/status/2080694730460151877"
+      ],
+      "period_start": null,
+      "period_end": null,
+      "fields": {
+        "total_rewards_claimed": {
+          "value": "7600341",
+          "raw": "$7,600,341",
+          "unit": "$",
+          "label": "Total Rewards Claimed",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "cumulative_reported"
+        },
+        "total_losses_refunded": {
+          "value": "4559196",
+          "raw": "$4,559,196",
+          "unit": "$",
+          "label": "Total Losses Refunded (Sunset)",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "cumulative_reported"
+        },
+        "total_referral_rewards_claimed": {
+          "value": "3041145",
+          "raw": "$3,041,145",
+          "unit": "$",
+          "label": "Total Referral Rewards Claimed",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "cumulative_reported"
+        },
+        "referral_rewards": {
+          "value": "-115932",
+          "raw": "($115,932)",
+          "unit": "$",
+          "label": "Referral Rewards",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "reported_2w_deduction"
+        },
+        "loss_refunds": null
+      },
+      "sources": [
+        {
+          "url": "https://x.com/variational_io/status/2080694730460151877",
+          "author": "variational_io",
+          "platform": "x",
+          "id": "2080694730460151877",
+          "published_at": "2026-07-24T16:40:55Z",
+          "observed_at": "2026-11-21T14:46:10Z",
+          "retrieval_method": "saved FxTwitter replay of official X post",
+          "disclosure_sha256": "3cc19c9ab15450b5ad234a280d97db619ce106e540ce64db23475e081ff65efd",
+          "matches_current": true
+        }
+      ],
+      "warnings": [],
+      "revisions": []
+    },
+    {
+      "id": "x:2085772888293228829",
+      "published_at": "2026-08-07T16:59:43Z",
+      "financial_report_published_at": "2026-08-07T16:59:43Z",
+      "source_url": "https://x.com/variational_io/status/2085772888293228829",
+      "source_urls": [
+        "https://x.com/variational_io/status/2085772888293228829"
+      ],
+      "period_start": null,
+      "period_end": null,
+      "fields": {
+        "total_rewards_claimed": {
+          "value": "7750040",
+          "raw": "$7,750,040",
+          "unit": "$",
+          "label": "Total Rewards Claimed",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "cumulative_reported"
+        },
+        "total_losses_refunded": {
+          "value": "4559196",
+          "raw": "$4,559,196",
+          "unit": "$",
+          "label": "Total Losses Refunded (Sunset)",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "cumulative_reported"
+        },
+        "total_referral_rewards_claimed": {
+          "value": "3190844",
+          "raw": "$3,190,844",
+          "unit": "$",
+          "label": "Total Referral Rewards Claimed",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "cumulative_reported"
+        },
+        "referral_rewards": {
+          "value": "-135371",
+          "raw": "($135,371)",
+          "unit": "$",
+          "label": "Referral Rewards",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "reported_2w_deduction"
+        },
+        "loss_refunds": null
+      },
+      "sources": [
+        {
+          "url": "https://x.com/variational_io/status/2085772888293228829",
+          "author": "variational_io",
+          "platform": "x",
+          "id": "2085772888293228829",
+          "published_at": "2026-08-07T16:59:43Z",
+          "observed_at": "2026-11-21T14:46:10Z",
+          "retrieval_method": "saved FxTwitter replay of official X post",
+          "disclosure_sha256": "1b57ce321ee73281ce7fa932af39753efcc5a6fd11b6c034b3dcedc688ba0835",
+          "matches_current": true
+        }
+      ],
+      "warnings": [],
+      "revisions": []
+    },
+    {
+      "id": "x:2090861899730812971",
+      "published_at": "2026-08-21T18:01:37Z",
+      "financial_report_published_at": "2026-08-21T18:01:37Z",
+      "source_url": "https://x.com/variational_io/status/2090861899730812971",
+      "source_urls": [
+        "https://x.com/variational_io/status/2090861899730812971"
+      ],
+      "period_start": null,
+      "period_end": null,
+      "fields": {
+        "total_rewards_claimed": {
+          "value": "7870436",
+          "raw": "$7,870,436",
+          "unit": "$",
+          "label": "Total Rewards Claimed",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "cumulative_reported"
+        },
+        "total_losses_refunded": {
+          "value": "4559196",
+          "raw": "$4,559,196",
+          "unit": "$",
+          "label": "Total Losses Refunded (Sunset)",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "cumulative_reported"
+        },
+        "total_referral_rewards_claimed": {
+          "value": "3311240",
+          "raw": "$3,311,240",
+          "unit": "$",
+          "label": "Total Referral Rewards Claimed",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "cumulative_reported"
+        },
+        "referral_rewards": {
+          "value": "-155016",
+          "raw": "($155,016)",
+          "unit": "$",
+          "label": "Referral Rewards",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "reported_2w_deduction"
+        },
+        "loss_refunds": null
+      },
+      "sources": [
+        {
+          "url": "https://x.com/variational_io/status/2090861899730812971",
+          "author": "variational_io",
+          "platform": "x",
+          "id": "2090861899730812971",
+          "published_at": "2026-08-21T18:01:37Z",
+          "observed_at": "2026-11-21T14:46:10Z",
+          "retrieval_method": "saved FxTwitter replay of official X post",
+          "disclosure_sha256": "788a6d93c7ccd1befcbb7b16978128c8a689354fe0a4c72ada5e75f64de9f5fe",
+          "matches_current": true
+        }
+      ],
+      "warnings": [],
+      "revisions": []
+    },
+    {
+      "id": "x:2095924511921336444",
+      "published_at": "2026-09-04T17:18:38Z",
+      "financial_report_published_at": "2026-09-04T17:18:38Z",
+      "source_url": "https://x.com/variational_io/status/2095924511921336444",
+      "source_urls": [
+        "https://x.com/variational_io/status/2095924511921336444"
+      ],
+      "period_start": null,
+      "period_end": null,
+      "fields": {
+        "total_rewards_claimed": {
+          "value": "8094935",
+          "raw": "$8,094,935",
+          "unit": "$",
+          "label": "Total Rewards Claimed",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "cumulative_reported"
+        },
+        "total_losses_refunded": {
+          "value": "4559196",
+          "raw": "$4,559,196",
+          "unit": "$",
+          "label": "Total Losses Refunded (Sunset)",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "cumulative_reported"
+        },
+        "total_referral_rewards_claimed": {
+          "value": "3535739",
+          "raw": "$3,535,739",
+          "unit": "$",
+          "label": "Total Referral Rewards Claimed",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "cumulative_reported"
+        },
+        "referral_rewards": {
+          "value": "-247501",
+          "raw": "($247,501)",
+          "unit": "$",
+          "label": "Referral Rewards",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "reported_2w_deduction"
+        },
+        "loss_refunds": null
+      },
+      "sources": [
+        {
+          "url": "https://x.com/variational_io/status/2095924511921336444",
+          "author": "variational_io",
+          "platform": "x",
+          "id": "2095924511921336444",
+          "published_at": "2026-09-04T17:18:38Z",
+          "observed_at": "2026-11-21T14:46:10Z",
+          "retrieval_method": "saved FxTwitter replay of official X post",
+          "disclosure_sha256": "cb3771d44a568a9112ab4f0d97e3d53ac7caebfef4820639e4ae06138475d0be",
+          "matches_current": true
+        }
+      ],
+      "warnings": [],
+      "revisions": []
+    },
+    {
+      "id": "x:2100975039118225440",
+      "published_at": "2026-09-18T15:47:38Z",
+      "financial_report_published_at": "2026-09-18T15:47:38Z",
+      "source_url": "https://x.com/variational_io/status/2100975039118225440",
+      "source_urls": [
+        "https://x.com/variational_io/status/2100975039118225440"
+      ],
+      "period_start": null,
+      "period_end": null,
+      "fields": {
+        "total_rewards_claimed": {
+          "value": "8275215",
+          "raw": "$8,275,215",
+          "unit": "$",
+          "label": "Total Rewards Claimed",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "cumulative_reported"
+        },
+        "total_losses_refunded": {
+          "value": "4559196",
+          "raw": "$4,559,196",
+          "unit": "$",
+          "label": "Total Losses Refunded (Sunset)",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "cumulative_reported"
+        },
+        "total_referral_rewards_claimed": {
+          "value": "3716019",
+          "raw": "$3,716,019",
+          "unit": "$",
+          "label": "Total Referral Rewards Claimed",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "cumulative_reported"
+        },
+        "referral_rewards": {
+          "value": "-211814",
+          "raw": "($211,814)",
+          "unit": "$",
+          "label": "Referral Rewards",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "reported_2w_deduction"
+        },
+        "loss_refunds": null
+      },
+      "sources": [
+        {
+          "url": "https://x.com/variational_io/status/2100975039118225440",
+          "author": "variational_io",
+          "platform": "x",
+          "id": "2100975039118225440",
+          "published_at": "2026-09-18T15:47:38Z",
+          "observed_at": "2026-11-21T14:46:10Z",
+          "retrieval_method": "saved FxTwitter replay of official X post",
+          "disclosure_sha256": "52ff90b0181be3d5e368af3476584f75cd5f5870cedbb3de56a7b61aec49cdf7",
+          "matches_current": true
+        }
+      ],
+      "warnings": [],
+      "revisions": []
+    },
+    {
+      "id": "x:2106063274114723997",
+      "published_at": "2026-10-02T16:46:27Z",
+      "financial_report_published_at": "2026-10-02T16:46:27Z",
+      "source_url": "https://x.com/variational_io/status/2106063274114723997",
+      "source_urls": [
+        "https://x.com/variational_io/status/2106063274114723997"
+      ],
+      "period_start": null,
+      "period_end": null,
+      "fields": {
+        "total_rewards_claimed": {
+          "value": "8564196",
+          "raw": "$8,564,196",
+          "unit": "$",
+          "label": "Total Rewards Claimed",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "cumulative_reported"
+        },
+        "total_losses_refunded": {
+          "value": "4559196",
+          "raw": "$4,559,196",
+          "unit": "$",
+          "label": "Total Losses Refunded (Sunset)",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "cumulative_reported"
+        },
+        "total_referral_rewards_claimed": {
+          "value": "4005000",
+          "raw": "$4,005,000",
+          "unit": "$",
+          "label": "Total Referral Rewards Claimed",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "cumulative_reported"
+        },
+        "referral_rewards": {
+          "value": "-337984",
+          "raw": "($337,984)",
+          "unit": "$",
+          "label": "Referral Rewards",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "reported_2w_deduction"
+        },
+        "loss_refunds": null
+      },
+      "sources": [
+        {
+          "url": "https://x.com/variational_io/status/2106063274114723997",
+          "author": "variational_io",
+          "platform": "x",
+          "id": "2106063274114723997",
+          "published_at": "2026-10-02T16:46:27Z",
+          "observed_at": "2026-11-21T14:46:10Z",
+          "retrieval_method": "saved FxTwitter replay of official X post",
+          "disclosure_sha256": "f3462be2bc4037c2d47ccbb3676adfe4742971fdde5d89e770f0562819e9b32f",
+          "matches_current": true
+        }
+      ],
+      "warnings": [],
+      "revisions": []
+    },
+    {
+      "id": "x:2111139394547818854",
+      "published_at": "2026-10-16T16:57:09Z",
+      "financial_report_published_at": "2026-10-16T16:57:09Z",
+      "source_url": "https://x.com/variational_io/status/2111139394547818854",
+      "source_urls": [
+        "https://x.com/variational_io/status/2111139394547818854"
+      ],
+      "period_start": null,
+      "period_end": null,
+      "fields": {
+        "total_rewards_claimed": {
+          "value": "8831643",
+          "raw": "$8,831,643",
+          "unit": "$",
+          "label": "Total Rewards Claimed",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "cumulative_reported"
+        },
+        "total_losses_refunded": {
+          "value": "4559196",
+          "raw": "$4,559,196",
+          "unit": "$",
+          "label": "Total Losses Refunded (Sunset)",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "cumulative_reported"
+        },
+        "total_referral_rewards_claimed": {
+          "value": "4272447",
+          "raw": "$4,272,447",
+          "unit": "$",
+          "label": "Total Referral Rewards Claimed",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "cumulative_reported"
+        },
+        "referral_rewards": {
+          "value": "-303768",
+          "raw": "($303,768)",
+          "unit": "$",
+          "label": "Referral Rewards",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "reported_2w_deduction"
+        },
+        "loss_refunds": null
+      },
+      "sources": [
+        {
+          "url": "https://x.com/variational_io/status/2111139394547818854",
+          "author": "variational_io",
+          "platform": "x",
+          "id": "2111139394547818854",
+          "published_at": "2026-10-16T16:57:09Z",
+          "observed_at": "2026-11-21T14:46:10Z",
+          "retrieval_method": "saved FxTwitter replay of official X post",
+          "disclosure_sha256": "ee2ca51236822f6566e270b8c8d4c269dc2931dbf74c390ab0fc6791958becb7",
+          "matches_current": true
+        }
+      ],
+      "warnings": [],
+      "revisions": []
+    },
+    {
+      "id": "x:2116210079758524489",
+      "published_at": "2026-10-30T16:46:14Z",
+      "financial_report_published_at": "2026-10-30T16:36:34Z",
+      "source_url": "https://x.com/variational_io/status/2116210079758524489",
+      "source_urls": [
+        "https://x.com/variational_io/status/2116210079758524489"
+      ],
+      "period_start": null,
+      "period_end": null,
+      "fields": {
+        "total_rewards_claimed": {
+          "value": "9080000.00",
+          "raw": "$9.08M",
+          "unit": "$",
+          "label": "Total Rewards Claimed",
+          "rounded": true,
+          "precision_increment": "10000",
+          "kind": "cumulative_reported"
+        },
+        "total_losses_refunded": {
+          "value": "4560000.00",
+          "raw": "$4.56M",
+          "unit": "$",
+          "label": "Total Losses Refunded (Sunset)",
+          "rounded": true,
+          "precision_increment": "10000",
+          "kind": "cumulative_reported"
+        },
+        "total_referral_rewards_claimed": {
+          "value": "4520000.00",
+          "raw": "$4.52M",
+          "unit": "$",
+          "label": "Total Referral Rewards Claimed",
+          "rounded": true,
+          "precision_increment": "10000",
+          "kind": "cumulative_reported"
+        },
+        "referral_rewards": {
+          "value": "-236977",
+          "raw": "($236,977)",
+          "unit": "$",
+          "label": "Referral Rewards",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "reported_2w_deduction"
+        },
+        "loss_refunds": null
+      },
+      "sources": [
+        {
+          "url": "https://x.com/variational_io/status/2116210079758524489",
+          "author": "variational_io",
+          "platform": "x",
+          "id": "2116210079758524489",
+          "published_at": "2026-10-30T16:46:14Z",
+          "observed_at": "2026-11-21T14:46:10Z",
+          "retrieval_method": "saved FxTwitter replay of official X post",
+          "disclosure_sha256": "8ae0dc6fbf22ea621ac2f60001c120aeb13dfda513d6c9ee381c678f8b3d9c6d",
+          "matches_current": true
+        }
+      ],
+      "warnings": [],
+      "revisions": []
+    },
+    {
+      "id": "x:2121317860740063501",
+      "published_at": "2026-11-13T19:02:44Z",
+      "financial_report_published_at": "2026-11-13T18:51:03Z",
+      "source_url": "https://x.com/variational_io/status/2121317860740063501",
+      "source_urls": [
+        "https://x.com/variational_io/status/2121317860740063501"
+      ],
+      "period_start": null,
+      "period_end": null,
+      "fields": {
+        "total_rewards_claimed": {
+          "value": "9310000.00",
+          "raw": "$9.31M",
+          "unit": "$",
+          "label": "Total Rewards Claimed",
+          "rounded": true,
+          "precision_increment": "10000",
+          "kind": "cumulative_reported"
+        },
+        "total_losses_refunded": {
+          "value": "4600000.00",
+          "raw": "$4.60M",
+          "unit": "$",
+          "label": "Total Losses Refunded (Sunset)",
+          "rounded": true,
+          "precision_increment": "10000",
+          "kind": "cumulative_reported"
+        },
+        "total_referral_rewards_claimed": {
+          "value": "4710000.00",
+          "raw": "$4.71M",
+          "unit": "$",
+          "label": "Total Referral Rewards Claimed",
+          "rounded": true,
+          "precision_increment": "10000",
+          "kind": "cumulative_reported"
+        },
+        "referral_rewards": {
+          "value": "-217813",
+          "raw": "($217,813)",
+          "unit": "$",
+          "label": "Referral Rewards",
+          "rounded": false,
+          "precision_increment": "1",
+          "kind": "reported_2w_deduction"
+        },
+        "loss_refunds": null
+      },
+      "sources": [
+        {
+          "url": "https://x.com/variational_io/status/2121317860740063501",
+          "author": "variational_io",
+          "platform": "x",
+          "id": "2121317860740063501",
+          "published_at": "2026-11-13T19:02:44Z",
+          "observed_at": "2026-11-21T14:46:10Z",
+          "retrieval_method": "saved FxTwitter replay of official X post",
+          "disclosure_sha256": "88c8a2b9a785033f09d6b1883015a00150e26cb51094c6a7306dc44bff50ff09",
+          "matches_current": true
+        }
+      ],
+      "warnings": [],
+      "revisions": []
+    }
+  ]
+}
