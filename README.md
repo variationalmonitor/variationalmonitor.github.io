@@ -22,8 +22,8 @@ Run the chart and calendar-window tests with `node --test tests/*.test.mjs`. All
 
 - Omni charts use saved API observations within the selected UTC range. The horizontal scale follows their actual dates. Per-market volume is a rolling 24-hour amount. The API does not supply daily trade histories, hourly quote histories or per-market lifetime volume.
 - The TradFi view joins an independently sourced exact-identity catalogue to the public Omni feed. Unmatched markets stay unclassified. The TradFi share shown is a lower bound using the verified subset. The daily job rebuilds group histories from saved partitions.
-- Execution shows observed two-sided Omni quote availability at three sizes. The crypto comparison replays public-source captures with independently verified order-book coverage, a maximum 45-second source-time difference and 4.5 bps per side in Hyperliquid base-tier taker fees. It compares the median paired difference in indicative costs.
-- Rewards are recorded from official updates. Cumulative claims retain their reported precision. The signed period rewards are separate. Treasury wallet charts use verified USDC balances and differences between recorded blocks.
+- Execution shows observed two-sided Omni quote availability at three sizes. Perpetual Trading Costs by Venue uses two-sided depth, a maximum 45-second source-time difference and stated venue fee assumptions. It compares the median paired difference in indicative costs.
+- Rewards use official updates. Cumulative snapshots include the earlier archive and retain the published precision. Signed period expenses use the modern Operating Results disclosures. Treasury wallet charts use verified USDC balances and differences between recorded blocks.
 
 ## Historical backfill and onchain index
 
@@ -31,6 +31,7 @@ Run the chart and calendar-window tests with `node --test tests/*.test.mjs`. All
 - [Execution](https://variationalmonitor.github.io/#/execution) defaults to the latest saved observation with a benchmark swap quote within the range. Users can select a closed-date snapshot and inspect unavailable prices. Cross-venue estimates require timed, two-sided books and charge a stated taker fee. The public collector ships Hyperliquid, Lighter and Binance sample data. OKX and Bybit display a publication-permission status.
 - The local collector can refresh matched book data immediately after `python3 tools/markets.py`. Run `python3 tools/multi_venue.py refresh` in an eligible environment. The hosted daily collector samples Hyperliquid. Each venue row displays its actual latest matched date.
 - The [Accounts](https://variationalmonitor.github.io/#/accounts) pilot exports verified creation events as aggregate counts for a bounded block range. `python3 tools/arbitrum_index.py --help` lists the resumable local options. The SQLite checkpoint stays outside the published directory. The index still needs all historical factories, verified cash-transfer coverage, and a canonical referral claims source for a full backfill.
+- `python3 tools/arbitrum_bulk.py --max-pages 1` resumes a separate local factory census using the official Arbitrum RPC. It writes only to a private checkpoint outside the checkout. Its results come from one provider and require independent reconciliation before publication.
 
 ## Updates
 
