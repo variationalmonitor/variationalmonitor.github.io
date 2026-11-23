@@ -1,0 +1,82 @@
+name: Capture
+
+# Saves the Omni stats API every 30 minutes (on :00 and :30 UTC), pairs it with the Hyperliquid books, and
+# commits both to the `data` branch. The API has no history: a missed tick is lost for good.
+#
+# GitHub's own cron fired only a handful of this repository's scheduled slots a day, so the schedule is not
+# what keeps this alive. One job loops for a bit over five hours and, as its last step, dispatches the next
+# run of this workflow. The cron entries are only a watchdog: a scheduled run starts a loop when no other run
+# of this workflow is queued or in progress, and does nothing otherwise.
+#
+# One loop at a time: the loop job is in a concurrency group, so a second one waits for the first to finish.
+# Only when the repository variable VM_PUBLISH is "on" does the loop also ask publish.yml to run after every
+# :00 tick, and at once when a new report appears on Telegram. Unset (the default), capture runs alone.
+#
+# Stop it on purpose: disable this workflow first (gh workflow disable capture.yml), then cancel the run.
+# All logic is in ci/capture.py, ci/datastore.py, ci/guard.sh and ci/handover.sh.
+
+on:
+  workflow_dispatch:
+    inputs:
+      strikes:
+        description: "Set by the previous loop: how many loops in a row have failed"
+        required: false
+        default: "0"
+  schedule:
+    - cron: "7,22,37,52 * * * *"
+
+permissions:
+  contents: write   # push snapshots to the data branch
+  actions: write    # dispatch the next loop (and publish.yml when VM_PUBLISH is on)
+
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      run: ${{ steps.decide.outputs.run }}
+    steps:
+      - uses: actions/checkout@9f698171ed81b15d1823a05fc7211befd50c8ae0 # v6.0.3
+        with:
+          sparse-checkout: ci
+          persist-credentials: false
+      - name: Start a loop only if none is running
+        id: decide
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EVENT: ${{ github.event_name }}
+        run: bash ci/guard.sh capture.yml
+
+  loop:
+    needs: guard
+    if: needs.guard.outputs.run == '1'
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    concurrency:
+      group: capture-loop
+      cancel-in-progress: false
+    env:
+      GH_TOKEN: ${{ github.token }}
+      VM_PUBLISH: ${{ vars.VM_PUBLISH }}
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@9f698171ed81b15d1823a05fc7211befd50c8ae0 # v6.0.3
+        with:
+          sparse-checkout: |
+            ci
+            pipeline
+      - name: Check out the data branch
+        uses: actions/checkout@9f698171ed81b15d1823a05fc7211befd50c8ae0 # v6.0.3
+        with:
+          ref: data
+          path: .store
+          fetch-depth: 1
+      - name: Capture on every half hour for a bit over five hours
+        id: loop
+        run: python3 ci/capture.py loop --store .store
+      - name: Hand over to the next loop
+        if: always()
+        env:
+          STRIKES: ${{ inputs.strikes || '0' }}
+          LOOP_OUTCOME: ${{ steps.loop.outcome }}
+        run: bash ci/handover.sh

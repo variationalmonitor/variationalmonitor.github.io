@@ -1,0 +1,467 @@
+{
+  "checked": "2026-11-22",
+  "sizes": {
+    "100k": 100000,
+    "1m": 1000000
+  },
+  "match_window_s": 45,
+  "omni": {
+    "quote_basis": "Indicative quote from the stats API snapshot: (ask - bid) / ((ask + bid) / 2) at size_100k and size_1m. Null when the size is not quoted, a side is zero, or the listing carries no quotes (swap closed).",
+    "trading_fee_bps": 0,
+    "fee_source": "https://docs.variational.io/omni/trading/fees",
+    "fee_quote": "There are no trading fees on Omni.",
+    "fee_checked": "2026-11-22 (docs copy saved 2 Nov 2026)"
+  },
+  "hyperliquid": {
+    "api": "https://api.hyperliquid.xyz/info",
+    "base_taker_bps": 4.5,
+    "base_taker_sources": [
+      "https://hyperliquid.gitbook.io/hyperliquid-docs/trading/fees (Perps fee tiers, tier 0 base rate: taker 0.045%)",
+      "POST https://api.hyperliquid.xyz/info {\"type\":\"userFees\"}: feeSchedule.cross = 0.00045, userCrossRate = 0.00045 for an address with no volume, stake or referral"
+    ],
+    "builder_dex_formula": "taker = base * (scale + 1 if scale < 1 else scale * 2) * (0.1 if growthMode else 1), from 'Fee formula for developers' on the fees page; scale and growthMode are the market's deployerFeeScale and growthMode in {\"type\":\"meta\",\"dex\":\"xyz\"}",
+    "fee_basis": "Base tier, taker, per side, before any volume-tier, staking or referral discount and excluding any front-end builder fee. Volume tiers cut the base rate to as little as 2.4 bps and staking by up to a further 40%, so the base tier is the most a taker pays.",
+    "verified_taker_bps": {
+      "core": [
+        4.5
+      ],
+      "xyz": [
+        0.9,
+        9.0
+      ]
+    },
+    "verified_note": "Per-side base-tier rates that have been checked against the docs and against fills: 4.5 on validator-operated perpetuals; on trade[XYZ] (deployerFeeScale 1.0) 9.0 standard and 0.9 in growth mode. A capture that computes any other rate (a changed deployerFeeScale) is published without a fee until this file is re-verified.",
+    "fill_check": "22 Nov 2026, userFills of the accounts in each market's recentTrades, taker fills, fee net of builderFee over notional. Highest rate seen: BTC 4.50 bps, xyz:GOLD 9.00, xyz:SP500 0.90, xyz:XYZ100 0.90, xyz:SILVER 0.90, xyz:CL 0.90. Most fills pay less (tier and staking discounts)."
+  },
+  "markets": [
+    {
+      "key": "US500",
+      "label": "S&P 500",
+      "omni": "US500-SWAP",
+      "hl": "xyz:SP500",
+      "hl_dex": "xyz",
+      "underlying": {
+        "match": "same",
+        "omni": "Swap on US 500: CME E-mini S&P 500 futures (CME.ES), front month discounted to a spot-equivalent value (docs.variational.io/omni/trading/swaps, Instrument Reference)",
+        "hl": "S&P 500 Index, licensed to trade[XYZ] by S&P Dow Jones Indices; external price derived from spot index and futures",
+        "source": "https://docs.trade.xyz/perpetuals/markets/equity-indices/us"
+      },
+      "taker_fee_bps": 0.9,
+      "fee": {
+        "deployer_fee_scale": 1.0,
+        "growth_mode": true,
+        "checked": "2026-11-22",
+        "sources": [
+          "https://docs.trade.xyz/perpetuals/mechanics/fees (HIP-3 Fee Tiers: Growth Mode, tier 0 base rate taker 0.0090%)",
+          "https://hyperliquid.gitbook.io/hyperliquid-docs/trading/fees (Growth mode for HIP-3 perps)",
+          "API meta dex xyz: growthMode enabled, deployerFeeScale 1.0",
+          "fills 22 Nov 2026: highest taker rate 0.90 bps"
+        ]
+      },
+      "lighter": {
+        "id": 180,
+        "symbol": "US500",
+        "underlying": {
+          "match": "proxy",
+          "lighter": "Index perpetual: \"Tracks the value of the top 500 US companies\", RedStone oracle",
+          "note": "Lighter does not name the S&P 500 or its index source, so identity is inferred from the description. No price check yet: Omni's swap has been closed since Lighter was added (weekend); samples store both mids so the check can be run once it reopens.",
+          "source": "https://docs.lighter.xyz/trading/real-world-assets-rwas/market-specifications"
+        },
+        "taker_fee_bps": 0.0
+      },
+      "binance": null
+    },
+    {
+      "key": "US100",
+      "label": "Nasdaq 100",
+      "omni": "US100-SWAP",
+      "hl": "xyz:XYZ100",
+      "hl_dex": "xyz",
+      "underlying": {
+        "match": "proxy",
+        "omni": "Swap on US Non-Financial 100: CME E-mini Nasdaq-100 futures (CME.NQ), front month discounted to a spot-equivalent value (docs.variational.io/omni/trading/swaps, Instrument Reference)",
+        "hl": "XYZ U.S. 100 Index (XYZ100): trade[XYZ]'s own modified capitalization-weighted index of 100 large non-financial US-listed companies",
+        "note": "Omni references Nasdaq-100 futures. trade[XYZ] publishes its own XYZ100 index with the Nasdaq-100's description and does not name the Nasdaq-100, so identity on the Hyperliquid side is inferred, not documented. Price check: the two mids differed by a median 2.9 bps (maximum 5.1) across the six 11 Nov 2026 captures, less than BTC against BTC in the same captures (median 8.0). The label is the common name of what both replicate.",
+        "source": "https://docs.trade.xyz/perpetuals/markets/equity-indices/us"
+      },
+      "taker_fee_bps": 0.9,
+      "fee": {
+        "deployer_fee_scale": 1.0,
+        "growth_mode": true,
+        "checked": "2026-11-22",
+        "sources": [
+          "https://docs.trade.xyz/perpetuals/mechanics/fees (HIP-3 Fee Tiers: Growth Mode, tier 0 base rate taker 0.0090%)",
+          "https://hyperliquid.gitbook.io/hyperliquid-docs/trading/fees (Growth mode for HIP-3 perps)",
+          "API meta dex xyz: growthMode enabled, deployerFeeScale 1.0",
+          "fills 22 Nov 2026: highest taker rate 0.90 bps"
+        ]
+      },
+      "lighter": {
+        "id": 181,
+        "symbol": "US100",
+        "underlying": {
+          "match": "proxy",
+          "lighter": "Index perpetual: \"Tracks the 100 largest non-financial companies listed on Nasdaq\", RedStone oracle",
+          "note": "The description is the Nasdaq-100's; the index is not named or licensed. No price check yet (Omni swap closed at the weekend); samples store both mids.",
+          "source": "https://docs.lighter.xyz/trading/real-world-assets-rwas/market-specifications"
+        },
+        "taker_fee_bps": 0.0
+      },
+      "binance": null
+    },
+    {
+      "key": "XAU",
+      "label": "Gold",
+      "omni": "XAU-SWAP",
+      "hl": "xyz:GOLD",
+      "hl_dex": "xyz",
+      "underlying": {
+        "match": "same",
+        "omni": "Swap on Gold Spot: spot gold (XAU/USD)",
+        "hl": "USD spot price of one troy ounce of gold (XAU/USD)",
+        "source": "https://docs.trade.xyz/perpetuals/specifications-and-schedules/specification-index"
+      },
+      "taker_fee_bps": 9.0,
+      "fee": {
+        "deployer_fee_scale": 1.0,
+        "growth_mode": false,
+        "checked": "2026-11-22",
+        "sources": [
+          "https://docs.trade.xyz/perpetuals/mechanics/fees (HIP-3 Fee Tiers: Standard, tier 0 base rate taker 0.090%; gold is not eligible for growth mode)",
+          "https://hyperliquid.gitbook.io/hyperliquid-docs/trading/fees (growth mode excludes perps tracking gold price, because PAXG-USDC already tracks gold price)",
+          "API meta dex xyz: no growthMode on xyz:GOLD, deployerFeeScale 1.0",
+          "fills 22 Nov 2026: highest taker rate 9.00 bps"
+        ]
+      },
+      "lighter": {
+        "id": 92,
+        "symbol": "XAU",
+        "underlying": {
+          "match": "same",
+          "lighter": "\"Tracks the value of 1 troy ounce of gold\", Pyth Metal.XAU/USD",
+          "source": "https://docs.lighter.xyz/trading/real-world-assets-rwas/market-specifications"
+        },
+        "taker_fee_bps": 0.0
+      },
+      "binance": {
+        "symbol": "XAUUSDT",
+        "fee_class": "tradfi",
+        "taker_fee_bps": 4.0,
+        "underlying": {
+          "match": "same",
+          "binance": "TradFi perpetual on gold, USDT. Index constituents: dxFeed XAU/USD 30.2%, Kaiko XAUUSD 30.2%, Pyth XAU 30.2%, Hyperliquid xyz:GOLD 8.6%, own contract 0.9%, each converted at USDT/USD",
+          "source": "GET https://fapi.binance.com/fapi/v1/constituents?symbol=XAUUSDT and /fapi/v1/exchangeInfo (contractType TRADIFI_PERPETUAL)"
+        }
+      }
+    },
+    {
+      "key": "XAG",
+      "label": "Silver",
+      "omni": "XAG-SWAP",
+      "hl": "xyz:SILVER",
+      "hl_dex": "xyz",
+      "underlying": {
+        "match": "same",
+        "omni": "Swap on Silver Spot: spot silver (XAG/USD)",
+        "hl": "USD spot price of one troy ounce of silver (XAG/USD)",
+        "source": "https://docs.trade.xyz/perpetuals/specifications-and-schedules/specification-index"
+      },
+      "taker_fee_bps": 0.9,
+      "fee": {
+        "deployer_fee_scale": 1.0,
+        "growth_mode": true,
+        "checked": "2026-11-22",
+        "sources": [
+          "https://docs.trade.xyz/perpetuals/mechanics/fees (HIP-3 Fee Tiers: Growth Mode, tier 0 base rate taker 0.0090%)",
+          "https://hyperliquid.gitbook.io/hyperliquid-docs/trading/fees (Growth mode for HIP-3 perps)",
+          "API meta dex xyz: growthMode enabled, deployerFeeScale 1.0",
+          "fills 22 Nov 2026: highest taker rate 0.90 bps"
+        ]
+      },
+      "lighter": {
+        "id": 93,
+        "symbol": "XAG",
+        "underlying": {
+          "match": "same",
+          "lighter": "\"Tracks the value of 1 troy ounce of silver\", Pyth Metal.XAG/USD",
+          "source": "https://docs.lighter.xyz/trading/real-world-assets-rwas/market-specifications"
+        },
+        "taker_fee_bps": 0.0
+      },
+      "binance": {
+        "symbol": "XAGUSDT",
+        "fee_class": "tradfi",
+        "taker_fee_bps": 4.0,
+        "underlying": {
+          "match": "same",
+          "binance": "TradFi perpetual on silver, USDT. Index constituents: dxFeed XAG/USD 30.2%, Kaiko XAGUSD 30.2%, Pyth XAG 30.2%, Hyperliquid xyz:SILVER 8.6%, own contract 0.9%",
+          "source": "GET https://fapi.binance.com/fapi/v1/constituents?symbol=XAGUSDT and /fapi/v1/exchangeInfo (contractType TRADIFI_PERPETUAL)"
+        }
+      }
+    },
+    {
+      "key": "CL",
+      "label": "WTI crude",
+      "omni": "USOIL-SWAP",
+      "hl": "xyz:CL",
+      "hl_dex": "xyz",
+      "underlying": {
+        "match": "same_commodity_different_roll",
+        "omni": "Swap on WTI Crude Oil: NYMEX WTI futures (CME.CL), front and second month blended with a weight that falls linearly in calendar time",
+        "hl": "WTI Light Sweet Crude Oil: one designated futures contract, rolled 20% a day over the 5th to 10th business day of the month",
+        "note": "Same commodity and the same futures curve, but the two blends hold different contract weights on most days, so the two prices differ by the curve spread between those weights. Cost is measured in bps of each venue's own mid, which this does not affect.",
+        "source": "https://docs.trade.xyz/perpetuals/markets/commodities"
+      },
+      "taker_fee_bps": 0.9,
+      "fee": {
+        "deployer_fee_scale": 1.0,
+        "growth_mode": true,
+        "checked": "2026-11-22",
+        "sources": [
+          "https://docs.trade.xyz/perpetuals/mechanics/fees (HIP-3 Fee Tiers: Growth Mode, tier 0 base rate taker 0.0090%)",
+          "https://hyperliquid.gitbook.io/hyperliquid-docs/trading/fees (Growth mode for HIP-3 perps)",
+          "API meta dex xyz: growthMode enabled, deployerFeeScale 1.0",
+          "fills 22 Nov 2026: highest taker rate 0.90 bps"
+        ]
+      },
+      "lighter": {
+        "id": 145,
+        "symbol": "WTI",
+        "underlying": {
+          "match": "same_commodity_roll_undocumented",
+          "lighter": "\"Tracks the value of 1 barrel of West Texas Intermediate Light Sweet Crude Oil\", RedStone oracle",
+          "note": "Same commodity. Since 22 Oct 2026 the price comes from a RedStone feed whose contract month and roll are not published, so which point of the futures curve it tracks is unknown. Cost is measured in bps of each venue's own mid, which this does not affect.",
+          "source": "https://docs.lighter.xyz/trading/real-world-assets-rwas/futures-contract-price-rolling-mechanism"
+        },
+        "taker_fee_bps": 0.0
+      },
+      "binance": {
+        "symbol": "CLUSDT",
+        "fee_class": "tradfi",
+        "taker_fee_bps": 4.0,
+        "underlying": {
+          "match": "same_commodity_different_roll",
+          "binance": "TradFi perpetual on WTI crude, USDT. Index constituents: Hyperliquid xyz:CL 49.3%, RedStone WTI.Y 49.3%, own contract 1.4%",
+          "note": "Same commodity. Half the index is trade[XYZ]'s own WTI price, so it inherits that contract's designated-month roll; the RedStone half is undocumented. Omni blends front and second month by calendar day. Cost is measured in bps of each venue's own mid.",
+          "source": "GET https://fapi.binance.com/fapi/v1/constituents?symbol=CLUSDT and /fapi/v1/exchangeInfo (contractType TRADIFI_PERPETUAL)"
+        }
+      }
+    },
+    {
+      "key": "BTC",
+      "label": "BTC",
+      "omni": "BTC-PERP",
+      "hl": "BTC",
+      "hl_dex": null,
+      "underlying": {
+        "match": "same",
+        "omni": "Bitcoin perpetual",
+        "hl": "BTC perpetual (validator-operated)"
+      },
+      "taker_fee_bps": 4.5,
+      "fee": {
+        "checked": "2026-11-22",
+        "sources": [
+          "hyperliquid.base_taker_sources",
+          "fills 22 Nov 2026: highest taker rate 4.50 bps"
+        ]
+      },
+      "lighter": {
+        "id": 1,
+        "symbol": "BTC",
+        "underlying": {
+          "match": "same",
+          "lighter": "BTC perpetual, USDC"
+        },
+        "taker_fee_bps": 0.0
+      },
+      "binance": {
+        "symbol": "BTCUSDT",
+        "fee_class": "crypto",
+        "taker_fee_bps": 5.0,
+        "underlying": {
+          "match": "same",
+          "binance": "BTC perpetual, USDT-margined"
+        }
+      }
+    },
+    {
+      "key": "ETH",
+      "label": "ETH",
+      "omni": "ETH-PERP",
+      "hl": "ETH",
+      "hl_dex": null,
+      "underlying": {
+        "match": "same",
+        "omni": "Ethereum perpetual",
+        "hl": "ETH perpetual (validator-operated)"
+      },
+      "taker_fee_bps": 4.5,
+      "fee": {
+        "checked": "2026-11-22",
+        "sources": [
+          "hyperliquid.base_taker_sources (one schedule for all validator-operated perpetuals)"
+        ]
+      },
+      "lighter": {
+        "id": 0,
+        "symbol": "ETH",
+        "underlying": {
+          "match": "same",
+          "lighter": "ETH perpetual, USDC"
+        },
+        "taker_fee_bps": 0.0
+      },
+      "binance": {
+        "symbol": "ETHUSDT",
+        "fee_class": "crypto",
+        "taker_fee_bps": 5.0,
+        "underlying": {
+          "match": "same",
+          "binance": "ETH perpetual, USDT-margined"
+        }
+      }
+    },
+    {
+      "key": "SOL",
+      "label": "SOL",
+      "omni": "SOL-PERP",
+      "hl": "SOL",
+      "hl_dex": null,
+      "underlying": {
+        "match": "same",
+        "omni": "Solana perpetual",
+        "hl": "SOL perpetual (validator-operated)"
+      },
+      "taker_fee_bps": 4.5,
+      "fee": {
+        "checked": "2026-11-22",
+        "sources": [
+          "hyperliquid.base_taker_sources (one schedule for all validator-operated perpetuals)"
+        ]
+      },
+      "lighter": {
+        "id": 2,
+        "symbol": "SOL",
+        "underlying": {
+          "match": "same",
+          "lighter": "SOL perpetual, USDC"
+        },
+        "taker_fee_bps": 0.0
+      },
+      "binance": {
+        "symbol": "SOLUSDT",
+        "fee_class": "crypto",
+        "taker_fee_bps": 5.0,
+        "underlying": {
+          "match": "same",
+          "binance": "SOL perpetual, USDT-margined"
+        }
+      }
+    },
+    {
+      "key": "HYPE",
+      "label": "HYPE",
+      "omni": "HYPE-PERP",
+      "hl": "HYPE",
+      "hl_dex": null,
+      "underlying": {
+        "match": "same",
+        "omni": "Hyperliquid perpetual",
+        "hl": "HYPE perpetual (validator-operated)"
+      },
+      "taker_fee_bps": 4.5,
+      "fee": {
+        "checked": "2026-11-22",
+        "sources": [
+          "hyperliquid.base_taker_sources (one schedule for all validator-operated perpetuals)",
+          "fills 22 Nov 2026: highest taker rate in the sample 4.05 bps (4.5 less a 10% staking discount; no base-tier account in the sample)"
+        ]
+      },
+      "lighter": {
+        "id": 24,
+        "symbol": "HYPE",
+        "underlying": {
+          "match": "same",
+          "lighter": "HYPE perpetual, USDC"
+        },
+        "taker_fee_bps": 0.0
+      },
+      "binance": {
+        "symbol": "HYPEUSDT",
+        "fee_class": "crypto",
+        "taker_fee_bps": 5.0,
+        "underlying": {
+          "match": "same",
+          "binance": "HYPE perpetual, USDT-margined"
+        }
+      }
+    }
+  ],
+  "venues": [
+    {
+      "key": "hl",
+      "label": "Hyperliquid"
+    },
+    {
+      "key": "lighter",
+      "label": "Lighter"
+    },
+    {
+      "key": "binance",
+      "label": "Binance"
+    }
+  ],
+  "lighter": {
+    "api": "https://mainnet.zklighter.elliot.ai/api/v1",
+    "book": "wss://mainnet.zklighter.elliot.ai/stream channel order_book/<market_id>: full snapshot, exact price levels, server timestamp in ms. Fallback when the socket fails: GET /api/v1/orderBookOrders?market_id=<id>&limit=250 (best 250 orders a side, book time from the HTTP Date header, good to about two seconds).",
+    "quote_currency": "USDC",
+    "taker_fee_bps": 0.0,
+    "verified_taker_bps": [
+      0.0
+    ],
+    "fee_basis": "Standard account (the default account type), regular orders, per side. Lighter has no volume tiers.",
+    "fee_sources": [
+      "https://docs.lighter.xyz/trading/trading-fees (Standard Account (Default): 0 maker / 0 taker on regular perpetual and spot orders; 1 bp on TWAP/advanced orders and RFQ)",
+      "https://docs.lighter.xyz/developers/reference/account-types (Standard: maker 0%, taker 0%, taker latency 300 ms)",
+      "GET https://mainnet.zklighter.elliot.ai/api/v1/feeTiers: tier standard taker_fee_ticks 0; plus 50; premium 280",
+      "GET https://mainnet.zklighter.elliot.ai/api/v1/orderBooks: taker_fee 0.0000 on each of the nine mapped markets"
+    ],
+    "fee_checked": "2026-11-22",
+    "not_applied": "Opt-in account types pay fees and are not what this figure shows: Plus 0.5 bps maker and taker; Premium/Advanced 2.8 bps taker and 0.4 bps maker at no LIT staked, falling to 1.96 bps taker at 500,000 LIT staked, in exchange for 140 ms taker latency instead of 300 ms. A Standard account pays 1 bp on TWAP/advanced orders and RFQ.",
+    "live_guard": "Each capture reads /orderBooks: a mapped id whose symbol differs from this file, or whose market is not an active perp, is recorded as a failure and not priced; a non-zero taker_fee there records the fee as unverified (null).",
+    "dropped": [
+      "SPY (id 128) and QQQ (id 129): perpetuals on the ETF shares, not on the index. Omni lists the same ETFs as its own perpetuals (US500-PERP, QQQ-PERP), separate from the index swaps compared here.",
+      "PAXG (id 48): tokenised gold, a crypto asset, not spot gold.",
+      "BRENTOIL: Brent, not WTI."
+    ]
+  },
+  "binance": {
+    "api": "https://fapi.binance.com",
+    "book": "GET /fapi/v1/depth?symbol=<SYMBOL>&limit=1000: up to 1,000 exact price levels a side; book time is E (message output time, ms).",
+    "quote_currency": "USDT",
+    "quote_note": "Contracts are quoted and margined in USDT. The $100K and $1M sizes are taken as 100,000 and 1,000,000 USDT, and cost is in bps of the contract's own mid, so the USDT/USD rate does not enter. The USDT-margined contracts are used because they are the deeper books; the USDC-margined twins have a different fee.",
+    "verified_taker_bps": {
+      "crypto": [
+        5.0
+      ],
+      "tradfi": [
+        4.0
+      ]
+    },
+    "fee_basis": "Regular user (below VIP 1), taker, per side, fee paid in USDT.",
+    "fee_sources": [
+      "https://www.binance.com/en/fee/futureFee (USDⓈ-M Futures, Regular User, USDT maker / taker 0.0200% / 0.0500%; with BNB 0.0180% / 0.0450%), read in a browser 22 Nov 2026",
+      "https://www.binance.com/bapi/accounts/v1/public/account/futures-trade-level/get (the data behind that table): level 0 makerCommission 0.0002, takerCommission 0.0005",
+      "https://www.binance.com/en/fee/tradFiFee (TradFi Futures, Regular User, maker 0.0000%, taker 0.0400%; with BNB 0.0360%), read in a browser 22 Nov 2026"
+    ],
+    "fee_checked": "2026-11-22",
+    "not_applied": "The 10% discount for paying fees in BNB, VIP tiers (taker down to 1.7 bps on crypto contracts and 0.85 bps on TradFi contracts at VIP 9) and any promotion are not applied. The fee an account actually pays is only available from a signed API call, so the rate is taken from the published table, not read live.",
+    "refusal": "Binance does not serve every location. An HTTP 451 or 403 on the first depth request marks the venue unavailable for that tick: no further request is sent, nothing is retried, and no other host or route is tried. Each affected sample is stored with binance_status venue_unavailable.",
+    "dropped": [
+      "SPYUSDT and QQQUSDT: perpetuals on the ETF shares, not on the index (see Lighter). Binance lists no S&P 500 or Nasdaq-100 index perpetual; its only INDEX contracts are crypto baskets (BTCDOMUSDT, ALLUSDT).",
+      "PAXGUSDT and XAUTUSDT: tokenised gold, crypto assets.",
+      "BZUSDT: Brent, not WTI."
+    ]
+  }
+}
