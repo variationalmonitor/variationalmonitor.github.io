@@ -1,0 +1,13 @@
+{
+ "source": "DefiLlama, Variational protocol page, Perp Volume chart, CSV download",
+ "page": "https://defillama.com/protocol/variational",
+ "exported_by": "owner",
+ "exported_on": "2026-11-23",
+ "file": "perp_volume_export.csv",
+ "sha256": "b895bf6e4296f22a33b19978bde02d8cacf397713eec97d924f0b114d9c08651",
+ "rows": 330,
+ "first": "2025-12-29",
+ "last": "2026-11-23",
+ "unit": "USD per UTC day, whole dollars",
+ "use": "rows dated before exported_on; the row of the export date is the day in progress and is dropped"
+}
