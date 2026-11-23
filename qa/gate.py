@@ -1442,10 +1442,15 @@ def check_v3(rep, docs, now):
     samples = exec_samples()
     bad, soft = [], []
     cutoff = parse_time(ev["as_of"]).strftime("%Y%m%dT%H%MZ") if is_time(ev.get("as_of")) else ""
-    newest = max((r["snap"] for r in samples), default="")
+    # the builder dates the file by its newest matched pair (build_execution.py), so a tick on which no pair matched
+    # leaves as_of at the tick before and is no sign of a stale file (23 Nov 2026 21:00 UTC: the Omni reading was 78 s
+    # older than the books, all 18 pairs went unmatched, and this check held the site at the last build); only a
+    # matched sample newer than as_of means the file was built before the store
+    newest = max((r["snap"] for r in samples if any(val for k, val in r.items() if k == "matched" or k.endswith("_matched"))),
+                 default="")
     for v in venues:
         flag, status = ("matched", None) if v == "hl" else (v + "_matched", v + "_status")
-        in_file = [r for r in samples if r["snap"] <= cutoff]
+        in_file = samples if newest <= cutoff else [r for r in samples if r["snap"] <= cutoff]
         matched = sum(1 for r in in_file if r.get(flag))
         refused = sum(1 for r in in_file if status and r.get(status) == "venue_unavailable")
         block = ((ev.get("match") or {}).get("venues") or {}).get(v) or {}
