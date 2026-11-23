@@ -1878,9 +1878,12 @@ def compare_series(name, path, prev, new, rule, accept, now):
             continue
         diff = abs(now_v - was)
         rel = rule["recent_rel"] if i >= recent_from else rule["rel"]
+        # `recent_abs` (optional) replaces `abs` on the provisional dates: a relative tolerance cannot cover a value
+        # that stood at zero, so a count that starts the day at zero needs its own allowance
+        tol = rule.get("recent_abs", rule["abs"]) if i >= recent_from else rule["abs"]
         if reanchor and (last_day - dt.date.fromisoformat(day)).days <= rule["reanchor_days"]:
             rel = max(rel, rule["reanchor_rel"])
-        if diff <= max(rule["abs"], rel * abs(was)):
+        if diff <= max(tol, rel * abs(was)):
             continue
         text = "%s %s %s: %s -> %s (%+.2f%%)" % (name, path, day, was, now_v, (now_v - was) / abs(was) * 100 if was else 0)
         # compare source names, not codes: a code may name another source after a contract change (volume_daily code 1
@@ -1987,7 +1990,11 @@ def check_history(rep, docs, previous, accept, now):
                     for col in ("omni", "hl_book", "hl_fee", "n"):
                         p = {"dates": dates, "v": cols.get(col, [])}
                         q = {"dates": new.get("dates", []), "v": pick(new, "by.%s.%s.%s" % (key, size, col))}
-                        b, r, a = compare_series("execution_venue", "v", p, q, {"rel": 0.0, "abs": 0.011, "recent": 1, "recent_rel": 10.0}, accept, now)
+                        # the newest deployed day is still being sampled, so its medians and counts move freely until the
+                        # day ends (23 Nov 2026: XAG 1m n 0 -> 2 held the site at the last build); the sample-store tie
+                        # above still checks every figure of that day, and earlier days stay exact
+                        b, r, a = compare_series("execution_venue", "v", p, q, {"rel": 0.0, "abs": 0.011, "recent": 1, "recent_rel": 10.0,
+                                                                                "recent_abs": float("inf")}, accept, now)
                         blocking += [x.replace(" v ", " %s %s %s " % (key, size, col)) for x in b]
                         compared += 1
     notes = "%d series compared across %d files deployed %s" % (compared, len(prev_docs), status.get("built_at", ""))
