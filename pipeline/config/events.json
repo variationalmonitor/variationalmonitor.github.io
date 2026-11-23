@@ -1,0 +1,36 @@
+{
+  "_doc": "Chart event markers. Dates are UTC days and each is the date of the cited source itself (`verified: direct`). A date that can only be derived is not placed on a chart: see `not_marked`. site/data/events.json carries date and label only.",
+  "events": [
+    {
+      "key": "swaps_launch",
+      "date": "2026-09-01",
+      "label": "Swaps launch",
+      "verified": "direct",
+      "source": "https://t.me/variational_io/395",
+      "evidence": "Variational, 2026-09-01T19:33:28Z: 'The first swap markets ($XAU and $US100) are now live on Omni.'"
+    },
+    {
+      "key": "binance_hack",
+      "date": "2026-10-29",
+      "label": "Binance hack",
+      "verified": "direct",
+      "source": "https://t.me/variational_io/444",
+      "evidence": "Variational, 2026-10-29T21:12:20Z: 'On the possible Binance hack: All user funds on Omni are safe.' The post dates Variational's response; it words the event as possible."
+    },
+    {
+      "key": "public_mainnet",
+      "date": "2026-11-11",
+      "label": "Public mainnet",
+      "verified": "direct",
+      "source": "https://t.me/variational_io/457",
+      "evidence": "Variational, 2026-11-11T15:31:45Z: 'The Omni Private Beta has ended. The platform is now live in Public Mainnet.' The linked X post (status 2120538337815736402) was created 2026-11-11T15:25:12Z. That is 12 Nov in Korea; the UTC day is 11 Nov."
+    }
+  ],
+  "not_marked": [
+    {
+      "label": "First RWA perpetuals",
+      "reason": "No post is dated to the first listing. Counting back from two later posts gives 2026-05-20, which is derived, so it is not marked.",
+      "evidence": "Variational, 2026-06-09T13:49Z: '$MU is the 21st RWA listing on Variational over the past 20 days' (9 Jun minus 20 days). Same count-back from https://t.me/variational_io/322, 2026-06-11T14:37Z: '26 new RWA listings over the past 22 days'. The biweekly update of 2026-05-29 (https://t.me/variational_io/317) records 'Listed initial RWA markets'. No post dated to the first listing itself is in the channel."
+    }
+  ]
+}

@@ -1,0 +1,96 @@
+/* Design tokens. The only place colours, radii and faces are defined; chart.js reads the series colours from here. */
+
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("../fonts/Inter-latin-var.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Geist Mono";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("../fonts/GeistMono-latin-var.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Zalando Sans Expanded";
+  font-style: normal;
+  font-weight: 200 900;
+  font-display: swap;
+  src: url("../fonts/ZalandoSansExpanded-latin-var.woff2") format("woff2");
+}
+
+:root {
+  color-scheme: dark;
+
+  /* surfaces */
+  --bg: #010612;
+  --card: #070c18;
+  --raised: #0b101b;
+  --pop: #151a24;
+  --line: rgba(255, 255, 255, 0.06);
+  --line-strong: rgba(255, 255, 255, 0.10);
+  --shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.6), 0 2px 6px rgba(0, 0, 0, 0.3); /* every floating layer */
+  --radius: 10px;
+  --radius-ctl: 6px;
+
+  /* text */
+  --text: #ffffff;
+  --text-2: #a0aec0;
+  --text-3: #8294ab;
+  --text-4: #7388a3;
+
+  /* brand and sign */
+  --brand: #4c9af8;
+  --brand-tint: #cce6fd;
+  --up: #56c75d;
+  --down: #f1787e;
+
+  /* series, fixed by entity */
+  --s-blue: #4a95f0;
+  --s-honey: #c7852a;
+  --s-teal: #23aa8a;
+  --s-violet: #864fd8;
+  --s-pink: #c33d92;
+  --s-grey: #54657a;
+  --s-grey-2: #7c8ea6; /* Pre-IPO: a lighter grey beside FX */
+  --s-long: #47ad4f;
+  --s-short: #c94a53;
+  --s-ramp-1: #22538d;
+  --s-ramp-2: #2969b4;
+  --s-ramp-3: #3881d7;
+  --s-ramp-4: #4a95f0;
+  --s-ramp-5: #b0d4ff;
+
+  /* faces */
+  --sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --wordmark: "Zalando Sans Expanded", "Inter", system-ui, sans-serif;
+
+  /* layout */
+  --pad: 28px;
+  --gap: 16px;
+  --rail-w: 232px;
+  --row-h: 48px;   /* the rail's lockup row and the phone bar */
+  --hd-h: 88px;    /* the title block on a wide screen: as-of line, then the title with the Range control */
+  --hd-tuck: 32px; /* how much of that block (the as-of line) slides under the top edge once the page scrolls; 0px keeps all of it stuck */
+  --head-h: 56px;  /* everything that stays stuck to the top; the shell sets it (fitHead) */
+  --fx-h: 0px;
+  --plot-12: 340px;
+  --plot-6: 280px;
+  --plot-4: 220px;
+  --plot-sm: 180px;
+
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+@media (max-width: 760px) {
+  :root {
+    --pad: 16px;
+    --plot-12: 240px;
+    --plot-6: 240px;
+    --plot-4: 240px;
+  }
+}

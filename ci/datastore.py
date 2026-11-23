@@ -6,7 +6,7 @@ never touch the same file:
 
   capture   snapshots/<stamp>.json.gz, exec/<day>.jsonl, capture/<day>.log        every 30 minutes
             (raw snapshots stay 14 days: the builders read the last seven for the intraday series)
-  publish   everything else (platform.jsonl, days/, source caches, reports.json, baselines/<slug>.json, onchain/)
+  publish   everything else (platform.jsonl, days/, source caches, reports.json, onchain/)
             and the removal of raw snapshots older than 14 days                    every hour
 
     ci/datastore.py commit-push --dir .store -m "capture 20261122T1030Z"

@@ -1,0 +1,101 @@
+{
+  "_doc": "Underlyings Omni lists as both a perpetual and a swap. A pair is accepted when the two share Variational's symbol, or when the docs name the same reference market for both (TradFi Perpetuals > Index Prices; Swaps > Instrument Reference). Reviewed against the listings in the stored snapshots on 2026-11-22.",
+  "pairs": [
+    {
+      "key": "XAU",
+      "label": "Gold",
+      "perp": "XAU-PERP",
+      "swap": "XAU-SWAP",
+      "basis": "Same symbol. Perpetual: gold spot price. Swap: spot gold (XAU/USD)."
+    },
+    {
+      "key": "XAG",
+      "label": "Silver",
+      "perp": "XAG-PERP",
+      "swap": "XAG-SWAP",
+      "basis": "Same symbol. Perpetual: silver spot price. Swap: spot silver (XAG/USD)."
+    },
+    {
+      "key": "CL",
+      "label": "WTI crude",
+      "perp": "CL-PERP",
+      "swap": "USOIL-SWAP",
+      "basis": "Perpetual: WTI Crude Oil futures. Swap: NYMEX WTI Crude Oil futures (CME.CL)."
+    },
+    {
+      "key": "BZ",
+      "label": "Brent crude",
+      "perp": "BZ-PERP",
+      "swap": "UKOIL-SWAP",
+      "basis": "Perpetual: Brent Crude Oil futures. Swap: ICE Brent Crude futures (ICE.BRN)."
+    },
+    {
+      "key": "COPPER",
+      "label": "Copper",
+      "perp": "COPPER-PERP",
+      "swap": "COPP-SWAP",
+      "basis": "Perpetual: COMEX High Grade Copper futures. Swap: COMEX Copper futures (CME.HG)."
+    },
+    {
+      "key": "US500",
+      "label": "S&P 500",
+      "perp": "US500-PERP",
+      "swap": "US500-SWAP",
+      "basis": "Same symbol and same index, different reference instrument. Perpetual: 'an ETF composed of a basket of the leading 500 US stocks', priced at a tenth of the index. Swap: CME E-mini S&P 500 futures (CME.ES)."
+    }
+  ],
+  "rejected": [
+    {
+      "perp": "QQQ-PERP",
+      "swap": "US100-SWAP",
+      "reason": "Different symbols; the perpetual is on the Invesco QQQ Trust share, the swap on CME E-mini Nasdaq-100 futures."
+    },
+    {
+      "perp": "IWM-PERP",
+      "swap": "US2K-SWAP",
+      "reason": "Different symbols; the perpetual is on the iShares Russell 2000 ETF share, the swap on CME E-mini Russell 2000 futures."
+    },
+    {
+      "perp": "EWT-PERP",
+      "swap": "TWI-SWAP",
+      "reason": "Different underlying: iShares MSCI Taiwan ETF against SGX FTSE Taiwan Index futures."
+    },
+    {
+      "perp": "KSTR-PERP",
+      "swap": "CNA50-SWAP",
+      "reason": "Different underlying: an SSE STAR Market 50 ETF against SGX FTSE China A50 Index futures."
+    },
+    {
+      "perp": "UVXY-PERP",
+      "swap": "VXI-SWAP",
+      "reason": "Different underlying: a leveraged VIX short-term futures ETF against Cboe VIX futures."
+    },
+    {
+      "perp": "XLE-PERP",
+      "swap": "USOIL-SWAP",
+      "reason": "Different underlying: an energy-sector equity ETF against crude oil futures."
+    }
+  ],
+  "no_counterpart": {
+    "perpetual_only": [
+      "NATGAS-PERP",
+      "XPT-PERP",
+      "XPD-PERP"
+    ],
+    "swap_only": [
+      "US100-SWAP",
+      "US2K-SWAP",
+      "US30-SWAP",
+      "US400-SWAP",
+      "USFNG-SWAP",
+      "TWI-SWAP",
+      "CNA50-SWAP",
+      "DXI-SWAP",
+      "VXI-SWAP",
+      "COCOA-SWAP",
+      "GASOL-SWAP",
+      "HOIL-SWAP"
+    ],
+    "note": "The docs' swap reference also lists XPT, XPD, NTGAS and EURUSD swaps; none is in the API yet. When one appears, add the pair here."
+  }
+}

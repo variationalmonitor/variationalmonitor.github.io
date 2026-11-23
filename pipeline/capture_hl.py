@@ -6,9 +6,11 @@
                                                                         (variational_v2_stats.json + hl_l2books.json)
 
 The file keeps its first name because the capture loops call it; it now reads every venue in
-pipeline/config/venues.json: Hyperliquid, Lighter and Binance USDⓈ-M futures.
+pipeline/config/venues.json: Hyperliquid and Lighter. (Binance was dropped on 23 Nov 2026: it refuses
+GitHub's runners, so it could not be captured; samples written before then keep their binance_* fields,
+which nothing reads.)
 
-Never calls the Omni API: Omni quotes are read from the snapshot file only. The three venues are read at the
+Never calls the Omni API: Omni quotes are read from the snapshot file only. The venues are read at the
 same time, each on its own thread (about a second in all), then one line per market and size is appended to
 <store>/exec/YYYY-MM-DD.jsonl (the UTC day in the snapshot's name). A venue that fails, is refused or
 overruns its time leaves its own fields empty and never delays or blocks the others; the run is cut off at
@@ -27,14 +29,13 @@ One sample
   hl_fee_side_bps   Base-tier taker fee per side at capture time: the base rate for validator-operated perps;
                 for trade[XYZ] markets the documented formula applied to the market's live deployerFeeScale and
                 growthMode. None when those settings could not be read.
-  lighter_*, binance_*   The same reading for the other venues, present only where venues.json maps the market:
+  lighter_*     The same reading for the other venue, present only where venues.json maps the market:
                 <venue> (instrument), <venue>_book_bps (same cost function; these books are exact price levels,
                 so there is no aggregation or rounding), <venue>_mid, <venue>_at, <venue>_gap_s,
                 <venue>_matched (same 45-second rule against the same Omni quote), <venue>_fee_side_bps and
-                <venue>_status: ok, insufficient_depth, fetch_failed, venue_unavailable (Binance refused this
-                location: see sources/binance.py), identity_mismatch or inactive (Lighter's market id no longer
-                is the active perpetual named in venues.json). lighter_src says whether the book came from the
-                websocket ("ws") or the REST fallback ("rest").
+                <venue>_status: ok, insufficient_depth, fetch_failed, identity_mismatch or inactive (Lighter's
+                market id no longer is the active perpetual named in venues.json). lighter_src says whether
+                the book came from the websocket ("ws") or the REST fallback ("rest").
 
 A failed market never stops the others, and a snapshot already in the store is skipped unless --force.
 """
@@ -50,7 +51,7 @@ from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from sources import binance, hyperliquid as hl, lighter  # noqa: E402
+from sources import hyperliquid as hl, lighter  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CONFIG = os.path.join(ROOT, "pipeline", "config", "venues.json")
@@ -168,18 +169,10 @@ def lighter_reading(spec, extra):
     return book, (None if book else "fetch_failed"), fee
 
 
-def binance_reading(spec, extra):
-    data = extra.get("binance")
-    if not data:
-        return None, "fetch_failed", None
-    book, failure = data.get(spec["symbol"], (None, "fetch_failed"))
-    return book, (failure if not book else None), spec.get("taker_fee_bps")
-
-
 def build_samples(config, listings, books, universes, snap, src, run_at=None, extra=None):
     """One sample per market and size. `books` is {coin: {agg: book}}; `universes` is {dex: {coin: entry} | None}.
 
-    `extra` holds the other venues' readings ({"lighter": {...} | None, "binance": {...} | None}); when it is
+    `extra` holds the other venues' readings ({"lighter": {...} | None}); when it is
     None (a replay of an archive that has only Hyperliquid books) their fields are left out of the sample.
     """
     window = config["match_window_s"]
@@ -228,7 +221,7 @@ def build_samples(config, listings, books, universes, snap, src, run_at=None, ex
                 "hl_fee_side_bps": round(fee, 4) if fee is not None else None,
             })
             if extra is not None:
-                for prefix, reading in (("lighter", lighter_reading), ("binance", binance_reading)):
+                for prefix, reading in (("lighter", lighter_reading),):
                     spec = market.get(prefix)
                     if not spec:
                         continue
@@ -285,13 +278,8 @@ def fetch_lighter(config):
         return {"books": books, "markets": listing.result()}
 
 
-def fetch_binance(config):
-    symbols = [market["binance"]["symbol"] for market in config["markets"] if market.get("binance")]
-    return binance.depth_books(symbols, timeout=2.5)
-
-
 def fetch_all(config, budget=VENUE_BUDGET_S):
-    """Read the three venues at once. Returns (hl books, hl universes, extra); a venue that raised or was
+    """Read the venues at once. Returns (hl books, hl universes, extra); a venue that raised or was
     still running at the budget is None in `extra` (empty for Hyperliquid) and its samples say fetch_failed."""
     results = {}
 
@@ -302,7 +290,7 @@ def fetch_all(config, budget=VENUE_BUDGET_S):
             results[name] = None
 
     threads = [threading.Thread(target=run, args=(name, call), daemon=True)
-               for name, call in (("hl", fetch_live), ("lighter", fetch_lighter), ("binance", fetch_binance))]
+               for name, call in (("hl", fetch_live), ("lighter", fetch_lighter))]
     deadline = time.time() + budget
     for thread in threads:
         thread.start()
@@ -310,7 +298,7 @@ def fetch_all(config, budget=VENUE_BUDGET_S):
         thread.join(max(0.0, deadline - time.time()))
     done = dict(results)  # a venue finishing after this line is ignored
     books, universes = done.get("hl") or ({}, {})
-    return books, universes, {"lighter": done.get("lighter"), "binance": done.get("binance")}
+    return books, universes, {"lighter": done.get("lighter")}
 
 
 def load_replay(directory):
@@ -354,7 +342,7 @@ def summary(snap, samples, elapsed):
     aggregated = sorted({"%s/%s:%s" % (row["key"], row["size"], row["hl_agg"]) for row in samples
                          if row["hl_agg"] not in (None, "finest")})
     others = []
-    for prefix in ("lighter", "binance"):
+    for prefix in ("lighter",):
         rows = [row for row in samples if prefix + "_status" in row]
         if not rows:
             continue

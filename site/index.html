@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <!-- Strict CSP: this origin only. Inline style attributes are allowed because ECharts positions its canvas with them. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="no-referrer">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#010612">
+  <meta name="description" content="Variational Monitor: independent analytics for Variational, not affiliated with Variational.">
+  <title>Variational Monitor</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="fonts/Inter-latin-var.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/GeistMono-latin-var.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/ZalandoSansExpanded-latin-var.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <!-- Apache ECharts 5.6.0, official minified build from the npm package (dist/echarts.min.js), vendored; Apache-2.0. -->
+  <script src="vendor/echarts.min.js" defer></script>
+  <script type="module" src="js/app.js"></script>
+</head>
+<body>
+  <div class="fixture-bar" id="fixture" role="alert" hidden>FIXTURE DATA</div>
+
+  <div class="mbar">
+    <a class="lockup" href="#/overview" aria-label="Variational Monitor, overview"><span class="lk"><svg class="mark" viewBox="212 133 80 58" fill="none" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" fill="currentColor" d="M251.938 133.933C258.799 133.933 265.014 138.331 267.581 144.844L280.926 180.771C281.637 182.473 283.234 183.566 284.944 183.566H292V190.067H284.944C280.534 190.067 276.493 187.2 274.933 182.937L271.167 172.809C270.493 171.014 268.849 169.851 267.085 169.851C265.309 169.851 263.676 170.984 263.005 172.804L263.003 172.809L259.237 182.937C257.676 187.2 253.636 190.067 249.226 190.067H212V183.566H218.976C220.704 183.566 222.383 182.398 223.056 180.608L236.218 145.156C238.705 138.476 244.964 133.934 251.938 133.933ZM251.938 140.434C247.647 140.434 243.668 143.234 242.108 147.481V147.485L228.684 183.566H234.081C235.811 183.565 237.492 182.395 238.163 180.604L246.626 157.839V157.834C248.709 152.292 253.753 148.642 259.513 148.642C260.464 148.642 261.403 148.751 262.314 148.956L261.695 147.29C260.046 143.141 256.156 140.434 251.938 140.434ZM259.471 155.184C256.397 155.184 253.669 157.089 252.514 160.17L243.79 183.566H249.184C250.915 183.566 252.597 182.396 253.269 180.604L257.032 170.478C258.603 166.258 262.419 163.432 266.807 163.389H267.016C267.222 163.39 267.424 163.397 267.622 163.41L266.426 160.163C265.309 157.164 262.539 155.184 259.471 155.184Z"/></svg><span>Variational</span><span class="mo">Monitor</span></span></a>
+    <button class="icon-btn menu-btn" id="menu" type="button" aria-label="Pages" aria-controls="rail" aria-expanded="false">
+      <span class="ic" aria-hidden="true"><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2.5 4.5h11M2.5 8h11M2.5 11.5h11"/></svg></span>
+    </button>
+  </div>
+
+  <aside class="rail" id="rail">
+    <a class="lockup" href="#/overview" aria-label="Variational Monitor, overview"><span class="lk"><svg class="mark" viewBox="212 133 80 58" fill="none" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" fill="currentColor" d="M251.938 133.933C258.799 133.933 265.014 138.331 267.581 144.844L280.926 180.771C281.637 182.473 283.234 183.566 284.944 183.566H292V190.067H284.944C280.534 190.067 276.493 187.2 274.933 182.937L271.167 172.809C270.493 171.014 268.849 169.851 267.085 169.851C265.309 169.851 263.676 170.984 263.005 172.804L263.003 172.809L259.237 182.937C257.676 187.2 253.636 190.067 249.226 190.067H212V183.566H218.976C220.704 183.566 222.383 182.398 223.056 180.608L236.218 145.156C238.705 138.476 244.964 133.934 251.938 133.933ZM251.938 140.434C247.647 140.434 243.668 143.234 242.108 147.481V147.485L228.684 183.566H234.081C235.811 183.565 237.492 182.395 238.163 180.604L246.626 157.839V157.834C248.709 152.292 253.753 148.642 259.513 148.642C260.464 148.642 261.403 148.751 262.314 148.956L261.695 147.29C260.046 143.141 256.156 140.434 251.938 140.434ZM259.471 155.184C256.397 155.184 253.669 157.089 252.514 160.17L243.79 183.566H249.184C250.915 183.566 252.597 182.396 253.269 180.604L257.032 170.478C258.603 166.258 262.419 163.432 266.807 163.389H267.016C267.222 163.39 267.424 163.397 267.622 163.41L266.426 160.163C265.309 157.164 262.539 155.184 259.471 155.184Z"/></svg><span>Variational</span><span class="mo">Monitor</span></span></a>
+    <nav class="nav" id="nav" aria-label="Pages"></nav>
+    <div class="rail-foot" id="foot"></div>
+  </aside>
+  <div class="scrim" id="scrim" hidden></div>
+
+  <div class="shell">
+    <!-- the title block: the as-of time top right; beneath it the title, with the Range control at the right end of its line -->
+    <header class="head" id="head">
+      <div class="head-in" id="head-in">
+        <h1 class="page-title" id="title"></h1>
+        <span class="asof" data-asof></span>
+        <div class="seg is-range" id="range" role="group" aria-label="Range"></div>
+      </div>
+    </header>
+    <!-- the row beneath it: the page's tabs (Markets). On a phone the shell moves the Range control in here, so it sticks under the top bar -->
+    <div class="subhead" id="subhead" hidden>
+      <div class="subhead-in" id="subhead-in"><div class="sub-l" id="scope2"></div></div>
+    </div>
+    <main id="main">
+      <div class="page" id="page"></div>
+    </main>
+    <footer class="foot">
+      <div class="foot-in">
+        <span class="by">by <span>Ponyo</span></span>
+        <span class="no">Independent analytics, not affiliated with Variational</span>
+      </div>
+    </footer>
+  </div>
+
+  <div id="layer"></div>
+  <noscript>Variational Monitor needs JavaScript to draw its charts.</noscript>
+</body>
+</html>

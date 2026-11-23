@@ -1,0 +1,12 @@
+{
+  "name": "variational-monitor-qa",
+  "private": true,
+  "type": "module",
+  "description": "Page checks for the deploy gate (qa/render.mjs). The numbers gate (qa/gate.py) needs none of this.",
+  "scripts": {
+    "render": "node render.mjs"
+  },
+  "devDependencies": {
+    "playwright": "1.65.1"
+  }
+}

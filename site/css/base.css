@@ -1,0 +1,277 @@
+/* Reset and page shell: fixture bar, left rail, header strip, grid. */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  background: var(--bg);
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--fx-h) + var(--head-h) + 16px);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font: 400 13px/20px var(--sans);
+  font-feature-settings: "cv11", "ss03";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+button, input { font: inherit; color: inherit; }
+button { background: none; border: 0; padding: 0; cursor: pointer; }
+a { color: var(--brand); text-decoration: none; }
+a:hover { text-decoration: underline; text-underline-offset: 3px; }
+h1, h2, h3, p { margin: 0; }
+[hidden] { display: none !important; }
+
+:focus { outline: none; }
+:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+/* a link gets a soft corner on its ring; a control keeps its own radius while focused */
+:where(a, [role="link"]):focus-visible { border-radius: 4px; }
+
+.mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+/* ---------- fixture bar ---------- */
+.fixture-bar {
+  position: sticky; top: 0; z-index: 70;
+  height: 24px;
+  display: flex; align-items: center; justify-content: center;
+  background: #d92b3a;
+  color: #fff;
+  font: 700 11px/1 var(--sans);
+  letter-spacing: 0.16em;
+}
+
+/* ---------- left rail (drawn from the nav config) ---------- */
+/* the lockup: mark, then one logotype in two weights */
+.lockup { display: flex; align-items: center; color: var(--text); }
+.lockup:hover { text-decoration: none; }
+.lk { display: inline-flex; align-items: baseline; white-space: nowrap; font: 600 13px/1 var(--wordmark); letter-spacing: -0.01em; color: var(--text); }
+.lk .mark { width: 19.3px; height: 14px; margin-right: 7px; flex: none; color: var(--brand); }
+.lk .mo { margin-left: 0.3em; font-weight: 400; letter-spacing: 0; color: var(--brand); }
+
+.rail {
+  position: fixed; top: var(--fx-h); left: 0; bottom: 0; z-index: 60;
+  width: var(--rail-w);
+  display: flex; flex-direction: column;
+  padding: 0 12px;
+  background: var(--bg);
+  border-right: 1px solid var(--line);
+  overflow-y: auto;
+}
+.rail > .lockup { height: var(--row-h); flex: none; margin: 0 -12px 10px; padding: 0 20px; }
+.nav { display: flex; flex-direction: column; padding-bottom: 16px; }
+.nav-h { margin: 20px 0 4px; padding: 0 8px; font: 500 11px/16px var(--sans); letter-spacing: 0.01em; color: var(--text-4); }
+.nav-a, .nav-p {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  height: 30px; flex: none; padding: 0 8px;
+  border-radius: 6px;
+  font: 500 13px/1 var(--sans);
+  color: var(--text-2);
+  white-space: nowrap;
+}
+.nav-a { transition: color 120ms var(--ease), background-color 120ms var(--ease); }
+.nav-a + .nav-a, .nav-a + .nav-p, .nav-g + .nav-p, .nav-g + .nav-a { margin-top: 1px; }
+a.nav-a:hover { color: var(--text); background: rgba(255, 255, 255, 0.035); text-decoration: none; }
+.nav-a[aria-current="page"] { color: var(--text); background: rgba(255, 255, 255, 0.06); }
+.nav-a:focus-visible { outline-offset: -2px; }
+/* a product label is not a link; it turns strong only while one of its pages is open */
+.nav-p.is-cur { color: var(--text); font-weight: 600; }
+.nav-p.is-off { color: var(--text-4); }
+/* a product's pages sit in, beside a hairline guide */
+.nav-g { position: relative; display: flex; flex-direction: column; gap: 1px; margin: 1px 0 1px 14px; padding-left: 7px; }
+.nav-g::before { content: ""; position: absolute; left: 0; top: 4px; bottom: 4px; width: 1px; background: var(--line-strong); }
+.nav-g .nav-a { padding-left: 10px; margin-top: 0; }
+.nav-tag { font: 500 11px/1 var(--sans); color: var(--text-4); }
+.rail-foot { flex: none; display: flex; align-items: center; height: 65px; margin: auto -12px 0; padding: 0 12px; border-top: 1px solid var(--line); }
+.rail-foot .nav-a { flex: 1; }
+.scrim { position: fixed; inset: 0; z-index: 55; background: rgba(1, 6, 18, 0.72); }
+.mbar { display: none; }
+
+/* ---------- page header ---------- */
+.shell { margin-left: var(--rail-w); display: flex; flex-direction: column; min-height: calc(100vh - var(--fx-h)); }
+/* One block, stuck to the top: the as-of time top right; beneath it the title, with the Range control at the right
+   end of its line. Once the page scrolls, the as-of line slides under the top edge (--hd-tuck) and the time
+   rides beside the Range (.is-stuck, set by the shell). */
+.head {
+  position: sticky; top: calc(var(--fx-h) - var(--hd-tuck)); z-index: 40;
+  height: var(--hd-h); flex: none;
+  padding: 16px var(--pad) 0;
+  background: rgba(1, 6, 18, 0.82);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+.head-in, .page, .foot-in, .subhead-in { width: 100%; max-width: 1240px; margin: 0 auto; }
+.head-in { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; grid-template-rows: 16px 34px; gap: 10px 16px; align-items: center; }
+.page-title { grid-column: 1; grid-row: 2; display: flex; align-items: baseline; min-width: 0; font: 600 20px/34px var(--sans); letter-spacing: -0.017em; white-space: nowrap; }
+/* a sub-page is titled by its trail: the parent page, then the key, then its plain name */
+.crumb { font-weight: 500; color: var(--text-3); transition: color 120ms var(--ease); }
+.crumb:hover { color: var(--text); text-decoration: none; }
+.crumb-s { margin: 0 9px; font-weight: 400; color: var(--text-4); }
+.crumb-n { margin-left: 12px; font: 400 13px/20px var(--sans); letter-spacing: 0; color: var(--text-3); }
+.crumb-n:empty { display: none; }
+/* the market's name, then its listing date, set apart by space alone */
+.crumb-n > span + span { margin-left: 12px; color: var(--text-4); }
+/* a long name gives way before the header does; the 4px is room for the crumb's focus ring inside the clip */
+.page-title.is-trail { overflow: hidden; margin-left: -4px; padding-left: 4px; }
+.page-title.is-trail > * { flex: none; }
+.page-title.is-trail > .crumb-n { flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.asof { grid-column: 2 / 4; grid-row: 1; justify-self: end; font: 400 12px/16px var(--sans); font-variant-numeric: tabular-nums; color: var(--text-3); white-space: nowrap; }
+.asof b { font-weight: 500; color: var(--text-2); }
+.asof.is-stale, .asof.is-stale b { color: var(--down); }
+.asof .short { display: none; }
+.head #range { grid-column: 3; grid-row: 2; justify-self: end; }
+/* scrolled: the as-of line has slid under the top edge, so the time rides beside the Range */
+.head.is-stuck .asof { grid-column: 2; grid-row: 2; animation: asof-in 150ms var(--ease); }
+@keyframes asof-in { from { opacity: 0; } }
+/* a page without a Range (Research Library, Data): the as-of time sits on the title's own line, baselines aligned */
+.head.no-range .head-in { align-items: baseline; }
+.head.no-range .asof { grid-column: 2 / 4; grid-row: 2; animation: none; }
+
+/* segmented control: a quiet track, the pressed option one step lighter; no border */
+.seg { display: inline-flex; gap: 2px; padding: 2px; background: rgba(255, 255, 255, 0.04); border-radius: 7px; }
+.seg button {
+  height: 24px; min-width: 34px; padding: 0 9px;
+  border-radius: 5px;
+  font: 500 12px/1 var(--sans);
+  color: var(--text-3);
+  white-space: nowrap;
+  transition: color 120ms var(--ease), background-color 120ms var(--ease);
+}
+.seg button:hover:not(:disabled):not([aria-pressed="true"]) { color: var(--text); background: rgba(255, 255, 255, 0.04); }
+.seg button[aria-pressed="true"] { background: rgba(255, 255, 255, 0.10); color: var(--text); }
+.seg button:disabled { color: var(--text-4); opacity: 0.55; cursor: default; }
+.seg button:focus-visible { outline-offset: -2px; }
+.seg.is-off { display: none; }
+/* the Range control decides what every chart on the page shows, so it is the one control with the brand tint */
+.seg.is-range { gap: 2px; padding: 3px; background: rgba(255, 255, 255, 0.05); border-radius: 9px; }
+.seg.is-range button { height: 28px; min-width: 44px; padding: 0 12px; border-radius: 6px; font: 500 13px/1 var(--sans); font-variant-numeric: tabular-nums; color: var(--text-2); }
+.seg.is-range button:hover:not(:disabled):not([aria-pressed="true"]) { color: var(--text); background: rgba(255, 255, 255, 0.05); }
+.seg.is-range button:active:not(:disabled):not([aria-pressed="true"]) { background: rgba(255, 255, 255, 0.09); }
+.seg.is-range button[aria-pressed="true"] { background: rgba(76, 154, 248, 0.22); box-shadow: inset 0 0 0 1px rgba(76, 154, 248, 0.30); color: var(--brand-tint); }
+.seg.is-range button:disabled { color: var(--text-4); }
+
+/* ---------- the row beneath the title block: the page's tabs (Markets); on a phone it also holds the Range control ---------- */
+.head.has-sub { border-bottom-color: transparent; }
+.subhead {
+  position: sticky; top: calc(var(--fx-h) + var(--hd-h) - var(--hd-tuck)); z-index: 39;
+  flex: none; padding: 0 var(--pad);
+  background: rgba(1, 6, 18, 0.82);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+.subhead-in { display: flex; align-items: flex-end; min-height: 40px; }
+.sub-l { display: flex; align-items: flex-end; min-width: 0; }
+/* page tabs (Markets): the hit area reaches 8px past the label on each side; the underline is the label's width */
+.tabs { display: flex; gap: 24px; }
+.tabs button { position: relative; height: 40px; margin: 0 -8px -1px; padding: 0 8px; font: 500 13px/1 var(--sans); color: var(--text-3); white-space: nowrap; transition: color 120ms var(--ease); }
+.tabs button::after { content: ""; position: absolute; left: 8px; right: 8px; bottom: 0; height: 2px; border-radius: 1px 1px 0 0; background: transparent; transition: background-color 120ms var(--ease); }
+.tabs button:hover { color: var(--text); }
+.tabs button[aria-selected="true"] { color: var(--text); }
+.tabs button[aria-selected="true"]::after { background: var(--brand); }
+.tabs button:focus-visible { outline-offset: -5px; border-radius: 9px; }
+
+main { flex: 1; padding: 20px var(--pad) 28px; }
+.page { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--gap); align-items: stretch; }
+.span-12 { grid-column: span 12; }
+.span-8 { grid-column: span 8; }
+.span-6 { grid-column: span 6; }
+.span-4 { grid-column: span 4; }
+.span-3 { grid-column: span 3; }
+/* a tall card may take two rows, with two short cards stacked beside it */
+.rows-2 { grid-row: span 2; }
+
+/* ---------- foot: the credit, at the end of the content (the viewport's bottom on a short page) ---------- */
+.foot { flex: none; padding: 0 var(--pad); border-top: 1px solid var(--line); }
+.foot-in { height: 64px; display: flex; flex-direction: column; align-items: flex-end; justify-content: center; gap: 7px; }
+.foot .by { font: 500 12px/1 var(--sans); color: var(--text-3); }
+.foot .by span { color: var(--text-2); }
+.foot .no { font: 400 11px/1 var(--sans); letter-spacing: 0.01em; color: var(--text-4); }
+
+/* ---------- floating layer ---------- */
+#layer { position: absolute; top: 0; left: 0; width: 0; height: 0; z-index: 80; }
+.toast {
+  position: fixed; left: 50%; bottom: 28px; transform: translateX(-50%);
+  padding: 8px 12px;
+  background: var(--pop); border: 1px solid var(--line-strong); border-radius: 8px;
+  box-shadow: var(--shadow);
+  font: 500 12px/16px var(--sans); color: var(--text);
+  z-index: 90;
+}
+
+/* ---------- responsive ---------- */
+@media (max-width: 1279px) {
+  .span-3 { grid-column: span 6; }
+}
+@media (max-width: 1180px) {
+  .span-8 { grid-column: span 12; }
+  .span-4, .span-3 { grid-column: span 6; }
+  .span-4:last-child:nth-child(even) { grid-column: span 12; }
+}
+@media (max-width: 1000px) {
+  .span-6, .span-4 { grid-column: span 12; }
+  .span-3 { grid-column: span 6; }
+  .rows-2 { grid-row: auto; }
+}
+
+@media (min-width: 761px) and (max-width: 1100px) {
+  /* not enough room on the title line for the stuck as-of time beside a long trail */
+  .head.is-stuck .asof { display: none; }
+}
+@media (min-width: 761px) and (max-width: 900px) {
+  /* a narrow window beside the rail: the title steps down, the Range tightens, the market's name gives way */
+  .head-in { column-gap: 12px; }
+  .page-title { font-size: 18px; }
+  .crumb-n { display: none; }
+  .seg.is-range button { min-width: 38px; padding: 0 9px; }
+}
+@media (max-width: 760px) {
+  /* the rail becomes a top bar; its menu button opens the full rail as an overlay */
+  .mbar {
+    position: sticky; top: var(--fx-h); z-index: 50;
+    display: flex; align-items: center; justify-content: space-between;
+    height: var(--row-h); padding: 0 8px 0 var(--pad);
+    background: rgba(1, 6, 18, 0.9);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+  }
+  .menu-btn { width: 40px; height: 40px; color: var(--text-2); }
+  .rail { width: min(84vw, 300px); transform: translateX(-100%); visibility: hidden; transition: transform 200ms var(--ease), visibility 0s 200ms; }
+  .rail.is-open { transform: none; visibility: visible; transition: transform 200ms var(--ease); }
+  .rail-open body { overflow: hidden; }
+  .shell { margin-left: 0; min-height: calc(100vh - var(--fx-h) - var(--row-h)); }
+  /* the title scrolls away with the page; the row beneath it (tabs, then the Range control) sticks under the top bar */
+  .head { position: static; height: auto; padding: 14px var(--pad) 8px; background: none; -webkit-backdrop-filter: none; backdrop-filter: none; border-bottom: 0; }
+  /* one line: the title (it may wrap inside its column) and the short as-of time on its first baseline */
+  .head-in { grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: auto; gap: 0 12px; align-items: baseline; }
+  .page-title, .page-title.is-trail { grid-row: 1; flex-wrap: wrap; white-space: normal; overflow: visible; margin-left: 0; padding-left: 0; font-size: 18px; line-height: 26px; letter-spacing: -0.014em; }
+  .page-title.is-trail > .crumb-n { flex: 0 1 100%; margin-left: 0; white-space: normal; line-height: 18px; }
+  .asof, .head.no-range .asof { grid-column: 2; grid-row: 1; }
+  .asof .long { display: none; }
+  .asof .short { display: inline; }
+  .subhead { top: calc(var(--fx-h) + var(--row-h)); padding: 0; background: rgba(1, 6, 18, 0.9); }
+  .subhead-in { display: block; min-height: 0; }
+  .sub-l { padding: 0 var(--pad); overflow-x: auto; scrollbar-width: none; }
+  .sub-l::-webkit-scrollbar { display: none; }
+  .sub-l:empty { display: none; }
+  .subhead.is-tabs .sub-l { border-bottom: 1px solid var(--line); }
+  .sub-l .tabs { flex: none; }
+  .tabs button { margin-bottom: 0; }
+  .subhead #range:not(.is-off) { display: flex; margin: 8px var(--pad); }
+  .subhead #range button { flex: 1 1 0; min-width: 0; padding: 0; height: 32px; }
+  main { padding-top: 12px; padding-bottom: 20px; }
+  .foot-in { align-items: flex-start; }
+  .page { gap: 12px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
+}

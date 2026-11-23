@@ -1,0 +1,184 @@
+name: Publish
+
+# Builds the site data from the `data` branch, runs the gate, and deploys site/ to GitHub Pages.
+#
+# When it runs
+#   - every hour, dispatched by the capture loop right after the :00 snapshot is committed (reason=hourly)
+#   - at once when the capture loop sees a new report on Telegram (reason=report)
+#   - on a push to main that touches the site, the pipeline, the gate or this automation
+#   - by hand (Run workflow)
+#   - from the cron below, as a fallback only: a scheduled run does nothing when the deployed build is
+#     younger than 50 minutes
+#
+# If the gate fails nothing is deployed, so the last good site stays up, and one issue (label qa-gate) is
+# opened or updated with the failing checks; the next passing run closes it. The store (sealed days, source
+# caches, reports, on-chain files) is committed to the data branch whenever the numbers passed, even if the
+# page checks failed.
+#
+# Logic lives in ci/*.py, ci/*.sh, pipeline/build.py and qa/gate.py; this file only orders the steps.
+
+on:
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: "hourly or report when dispatched by the capture loop; manual otherwise"
+        required: false
+        default: manual
+  schedule:
+    - cron: "35 * * * *"
+  push:
+    branches: [main]
+    paths:
+      - "site/**"
+      - "pipeline/**"
+      - "qa/**"
+      - "ci/**"
+      - ".github/workflows/publish.yml"
+
+permissions:
+  contents: write   # commit the store to the data branch
+  pages: write
+  id-token: write
+  issues: write     # the qa-gate issue
+
+concurrency:
+  group: publish
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    outputs:
+      deploy: ${{ steps.verdict.outputs.deploy }}
+    env:
+      GH_TOKEN: ${{ github.token }}
+      SITE_URL: https://variationalmonitor.github.io
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@9f698171ed81b15d1823a05fc7211befd50c8ae0 # v6.0.3
+      - name: Skip a scheduled run while the deployed build is fresh
+        id: due
+        run: |
+          if [ "${{ github.event_name }}" = "schedule" ]; then
+            python3 ci/live.py age --fresh-minutes 50
+          else
+            echo "fresh=0" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Check out the data branch
+        if: steps.due.outputs.fresh != '1'
+        uses: actions/checkout@9f698171ed81b15d1823a05fc7211befd50c8ae0 # v6.0.3
+        with:
+          ref: data
+          path: .store
+          fetch-depth: 1
+      # The data branch keeps 14 days of raw snapshots; the market builder reads the last seven through VM_SNAPSHOTS
+      # for its intraday series, and the gate fails a window that comes out short.
+      - name: Set the paths
+        if: steps.due.outputs.fresh != '1'
+        run: |
+          . ci/env.sh .store
+          python3 ci/datastore.py status --dir .store
+
+      # On-chain: at most one increment per UTC day, from the cached state (or the weekly copy on the data branch).
+      - name: Restore the on-chain state
+        if: steps.due.outputs.fresh != '1'
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ${{ runner.temp }}/vm-onchain/state
+          key: onchain-state-${{ github.run_id }}
+          restore-keys: |
+            onchain-state-
+      - name: On-chain increment
+        id: onchain
+        if: steps.due.outputs.fresh != '1'
+        continue-on-error: true    # a failed increment keeps yesterday's files; the gate's freshness check decides
+        run: python3 ci/onchain.py increment
+
+      - name: Build the data files
+        id: build
+        if: steps.due.outputs.fresh != '1'
+        continue-on-error: true    # the gate reports a failed build with its log, so the issue says why
+        run: |
+          set -o pipefail
+          mkdir -p qa/out
+          python3 pipeline/build.py --verbose 2>&1 | tee qa/out/build.log
+
+      - name: Prepare the page checks
+        if: steps.due.outputs.fresh != '1'
+        working-directory: qa
+        env:
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: "1"
+        run: |
+          npm ci --no-audit --no-fund
+          # the runner image ships Google Chrome; download Playwright's own browser only if none can be launched
+          node render.mjs --probe || npx playwright install --with-deps chromium-headless-shell
+      - name: Gate
+        id: gate
+        if: steps.due.outputs.fresh != '1'
+        run: |
+          python3 ci/live.py fetch --out qa/out/previous
+          python3 qa/gate.py --previous qa/out/previous --render --render-args "--shots qa/out/shots" --out qa/out \
+            --build-outcome "${{ steps.build.outcome }}" --build-log qa/out/build.log
+      - name: Read the verdict
+        id: verdict
+        if: always() && steps.due.outputs.fresh != '1'
+        run: |
+          numbers=$(python3 -c "import json; print(int(json.load(open('qa/out/report.json'))['numbers_ok']))" 2>/dev/null || echo 0)
+          deploy=0; [ "${{ steps.gate.outcome }}" = "success" ] && deploy=1
+          echo "numbers=$numbers" >> "$GITHUB_OUTPUT"
+          echo "deploy=$deploy" >> "$GITHUB_OUTPUT"
+          rm -rf qa/out/previous
+          { echo '### Gate'; cat qa/out/report.md 2>/dev/null || echo 'no report'; } >> "$GITHUB_STEP_SUMMARY"
+      - name: Keep the gate report
+        if: always() && steps.due.outputs.fresh != '1'
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: qa-report
+          path: qa/out
+          retention-days: 7
+      - name: Open, update or close the gate issue
+        if: always() && steps.due.outputs.fresh != '1' && (steps.gate.outcome == 'success' || steps.gate.outcome == 'failure')
+        continue-on-error: true
+        run: bash ci/gate_issue.sh "$([ "${{ steps.gate.outcome }}" = "success" ] && echo pass || echo fail)" qa/out/report.md
+
+      # Persist only what passed the numbers gate: a bad build never reaches the store. This runs whether or not
+      # the page checks passed, so a day sealed or a report read in this build is kept even when the deploy is held.
+      - name: Save the store to the data branch
+        if: always() && steps.verdict.outputs.numbers == '1'
+        run: |
+          python3 ci/datastore.py prune --dir .store
+          python3 ci/datastore.py commit-push --dir .store -m "publish $(date -u +%Y-%m-%dT%H:%MZ) (${{ inputs.reason || github.event_name }})" --daily-if-new days/ --squash-if-due
+          # GitHub's own size figure for the repository (KB), so that growth is visible in every run
+          size_kb=$(gh api "repos/$GITHUB_REPOSITORY" --jq .size 2>/dev/null || echo 0)
+          echo "repository size: $((size_kb / 1024)) MB"
+          if [ "$size_kb" -gt 1500000 ]; then echo "::warning::the repository is over 1.5 GB; see the growth budget in ci/datastore.py"; fi
+      - name: Save the on-chain state
+        if: always() && steps.verdict.outputs.numbers == '1' && steps.onchain.outputs.updated == '1'
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ${{ runner.temp }}/vm-onchain/state
+          key: onchain-state-${{ github.run_id }}
+
+      - name: Package the site
+        if: steps.verdict.outputs.deploy == '1'
+        uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4.0.0
+        with:
+          path: site
+          retention-days: 1
+
+  deploy:
+    needs: build
+    if: needs.build.outputs.deploy == '1'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: github-pages
+      url: ${{ steps.pages.outputs.page_url }}
+    permissions:
+      pages: write
+      id-token: write
+    steps:
+      - name: Deploy to GitHub Pages
+        id: pages
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1

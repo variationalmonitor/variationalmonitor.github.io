@@ -1,0 +1,5 @@
+{
+ "_doc": "Waivers the owner grants the gate. history: restatements of deployed history to let through, each {file, series (or *), from, to (dates), reason, expires (date)}. headline: pairs of cards on one page whose printed figures may coincide, each {cards: [id, id], reason}. Remove entries once they have passed.",
+ "history": [],
+ "headline": []
+}

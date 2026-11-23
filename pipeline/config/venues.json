@@ -68,8 +68,7 @@
           "source": "https://docs.lighter.xyz/trading/real-world-assets-rwas/market-specifications"
         },
         "taker_fee_bps": 0.0
-      },
-      "binance": null
+      }
     },
     {
       "key": "US100",
@@ -106,8 +105,7 @@
           "source": "https://docs.lighter.xyz/trading/real-world-assets-rwas/market-specifications"
         },
         "taker_fee_bps": 0.0
-      },
-      "binance": null
+      }
     },
     {
       "key": "XAU",
@@ -142,16 +140,6 @@
           "source": "https://docs.lighter.xyz/trading/real-world-assets-rwas/market-specifications"
         },
         "taker_fee_bps": 0.0
-      },
-      "binance": {
-        "symbol": "XAUUSDT",
-        "fee_class": "tradfi",
-        "taker_fee_bps": 4.0,
-        "underlying": {
-          "match": "same",
-          "binance": "TradFi perpetual on gold, USDT. Index constituents: dxFeed XAU/USD 30.2%, Kaiko XAUUSD 30.2%, Pyth XAU 30.2%, Hyperliquid xyz:GOLD 8.6%, own contract 0.9%, each converted at USDT/USD",
-          "source": "GET https://fapi.binance.com/fapi/v1/constituents?symbol=XAUUSDT and /fapi/v1/exchangeInfo (contractType TRADIFI_PERPETUAL)"
-        }
       }
     },
     {
@@ -187,16 +175,6 @@
           "source": "https://docs.lighter.xyz/trading/real-world-assets-rwas/market-specifications"
         },
         "taker_fee_bps": 0.0
-      },
-      "binance": {
-        "symbol": "XAGUSDT",
-        "fee_class": "tradfi",
-        "taker_fee_bps": 4.0,
-        "underlying": {
-          "match": "same",
-          "binance": "TradFi perpetual on silver, USDT. Index constituents: dxFeed XAG/USD 30.2%, Kaiko XAGUSD 30.2%, Pyth XAG 30.2%, Hyperliquid xyz:SILVER 8.6%, own contract 0.9%",
-          "source": "GET https://fapi.binance.com/fapi/v1/constituents?symbol=XAGUSDT and /fapi/v1/exchangeInfo (contractType TRADIFI_PERPETUAL)"
-        }
       }
     },
     {
@@ -234,17 +212,6 @@
           "source": "https://docs.lighter.xyz/trading/real-world-assets-rwas/futures-contract-price-rolling-mechanism"
         },
         "taker_fee_bps": 0.0
-      },
-      "binance": {
-        "symbol": "CLUSDT",
-        "fee_class": "tradfi",
-        "taker_fee_bps": 4.0,
-        "underlying": {
-          "match": "same_commodity_different_roll",
-          "binance": "TradFi perpetual on WTI crude, USDT. Index constituents: Hyperliquid xyz:CL 49.3%, RedStone WTI.Y 49.3%, own contract 1.4%",
-          "note": "Same commodity. Half the index is trade[XYZ]'s own WTI price, so it inherits that contract's designated-month roll; the RedStone half is undocumented. Omni blends front and second month by calendar day. Cost is measured in bps of each venue's own mid.",
-          "source": "GET https://fapi.binance.com/fapi/v1/constituents?symbol=CLUSDT and /fapi/v1/exchangeInfo (contractType TRADIFI_PERPETUAL)"
-        }
       }
     },
     {
@@ -274,15 +241,6 @@
           "lighter": "BTC perpetual, USDC"
         },
         "taker_fee_bps": 0.0
-      },
-      "binance": {
-        "symbol": "BTCUSDT",
-        "fee_class": "crypto",
-        "taker_fee_bps": 5.0,
-        "underlying": {
-          "match": "same",
-          "binance": "BTC perpetual, USDT-margined"
-        }
       }
     },
     {
@@ -311,15 +269,6 @@
           "lighter": "ETH perpetual, USDC"
         },
         "taker_fee_bps": 0.0
-      },
-      "binance": {
-        "symbol": "ETHUSDT",
-        "fee_class": "crypto",
-        "taker_fee_bps": 5.0,
-        "underlying": {
-          "match": "same",
-          "binance": "ETH perpetual, USDT-margined"
-        }
       }
     },
     {
@@ -348,15 +297,6 @@
           "lighter": "SOL perpetual, USDC"
         },
         "taker_fee_bps": 0.0
-      },
-      "binance": {
-        "symbol": "SOLUSDT",
-        "fee_class": "crypto",
-        "taker_fee_bps": 5.0,
-        "underlying": {
-          "match": "same",
-          "binance": "SOL perpetual, USDT-margined"
-        }
       }
     },
     {
@@ -386,15 +326,6 @@
           "lighter": "HYPE perpetual, USDC"
         },
         "taker_fee_bps": 0.0
-      },
-      "binance": {
-        "symbol": "HYPEUSDT",
-        "fee_class": "crypto",
-        "taker_fee_bps": 5.0,
-        "underlying": {
-          "match": "same",
-          "binance": "HYPE perpetual, USDT-margined"
-        }
       }
     }
   ],
@@ -406,10 +337,6 @@
     {
       "key": "lighter",
       "label": "Lighter"
-    },
-    {
-      "key": "binance",
-      "label": "Binance"
     }
   ],
   "lighter": {
@@ -434,34 +361,6 @@
       "SPY (id 128) and QQQ (id 129): perpetuals on the ETF shares, not on the index. Omni lists the same ETFs as its own perpetuals (US500-PERP, QQQ-PERP), separate from the index swaps compared here.",
       "PAXG (id 48): tokenised gold, a crypto asset, not spot gold.",
       "BRENTOIL: Brent, not WTI."
-    ]
-  },
-  "binance": {
-    "api": "https://fapi.binance.com",
-    "book": "GET /fapi/v1/depth?symbol=<SYMBOL>&limit=1000: up to 1,000 exact price levels a side; book time is E (message output time, ms).",
-    "quote_currency": "USDT",
-    "quote_note": "Contracts are quoted and margined in USDT. The $100K and $1M sizes are taken as 100,000 and 1,000,000 USDT, and cost is in bps of the contract's own mid, so the USDT/USD rate does not enter. The USDT-margined contracts are used because they are the deeper books; the USDC-margined twins have a different fee.",
-    "verified_taker_bps": {
-      "crypto": [
-        5.0
-      ],
-      "tradfi": [
-        4.0
-      ]
-    },
-    "fee_basis": "Regular user (below VIP 1), taker, per side, fee paid in USDT.",
-    "fee_sources": [
-      "https://www.binance.com/en/fee/futureFee (USDⓈ-M Futures, Regular User, USDT maker / taker 0.0200% / 0.0500%; with BNB 0.0180% / 0.0450%), read in a browser 22 Nov 2026",
-      "https://www.binance.com/bapi/accounts/v1/public/account/futures-trade-level/get (the data behind that table): level 0 makerCommission 0.0002, takerCommission 0.0005",
-      "https://www.binance.com/en/fee/tradFiFee (TradFi Futures, Regular User, maker 0.0000%, taker 0.0400%; with BNB 0.0360%), read in a browser 22 Nov 2026"
-    ],
-    "fee_checked": "2026-11-22",
-    "not_applied": "The 10% discount for paying fees in BNB, VIP tiers (taker down to 1.7 bps on crypto contracts and 0.85 bps on TradFi contracts at VIP 9) and any promotion are not applied. The fee an account actually pays is only available from a signed API call, so the rate is taken from the published table, not read live.",
-    "refusal": "Binance does not serve every location. An HTTP 451 or 403 on the first depth request marks the venue unavailable for that tick: no further request is sent, nothing is retried, and no other host or route is tried. Each affected sample is stored with binance_status venue_unavailable.",
-    "dropped": [
-      "SPYUSDT and QQQUSDT: perpetuals on the ETF shares, not on the index (see Lighter). Binance lists no S&P 500 or Nasdaq-100 index perpetual; its only INDEX contracts are crypto baskets (BTCDOMUSDT, ALLUSDT).",
-      "PAXGUSDT and XAUTUSDT: tokenised gold, crypto assets.",
-      "BZUSDT: Brent, not WTI."
     ]
   }
 }
