@@ -1,0 +1,147 @@
+<!doctype html>
+<!--
+  The link-preview card (Open Graph / X image), 1200 x 630. qa/og/make.mjs serves this page with the site's
+  tokens and fonts, fills in the mark and the curve, and screenshots it to site/og.png. Open alone it draws
+  nothing: the two placeholders below are filled by make.mjs.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="/css/tokens.css">
+<style>
+  html, body { margin: 0; width: 1200px; height: 630px; overflow: hidden; background: var(--bg); }
+  body { position: relative; -webkit-font-smoothing: antialiased; }
+  canvas { position: absolute; left: 0; top: 0; width: 1200px; height: 630px; }
+  .t { position: absolute; left: 72px; white-space: nowrap; }
+
+  /* the rail's lockup (site/css/base.css .lk), the same rules in em so it scales with one font-size */
+  .lk { display: inline-flex; align-items: baseline; white-space: nowrap; font: 600 13px/1 var(--wordmark); letter-spacing: -0.01em; color: var(--text); }
+  .lk .mark { width: 1.4846em; height: 1.0769em; margin-right: 0.5385em; flex: none; color: var(--brand); }
+  .lk .mo { margin-left: 0.3em; font-weight: 400; letter-spacing: 0; color: var(--brand); }
+
+  .line { font: 400 30px/1 var(--sans); color: var(--text-2); }
+  .url { font: 400 20px/1 var(--mono); color: var(--text-3); }
+  /* the footer credit (base.css .foot .by), scaled up */
+  .by { left: auto; right: 72px; font: 500 22px/1 var(--sans); color: var(--text-3); }
+  .by span { color: var(--text-2); }
+</style>
+</head>
+<body>
+<canvas id="c" width="1200" height="630"></canvas>
+<div class="t" id="lockup"><span class="lk"><!--MARK--><span>Variational</span><span class="mo">Monitor</span></span></div>
+<div class="t line" id="line">Independent analytics for Variational</div>
+<div class="t url" id="url">variationalmonitor.github.io</div>
+<div class="t by" id="by">by <span>Ponyo</span></div>
+<script>
+// [x, y] in 0..1: x is the day's position in the series, y the cumulative volume scaled to min..max
+const POINTS = /*POINTS*/null;
+
+const W = 1200, H = 630;
+const M = 72;          // outer margin
+const CAP = 48;        // the wordmark's cap height in px
+const GAP = 28;        // from the lockup's baseline to the cap top of the line beneath it
+const TOP = 0.55;      // the curve's right end, as a share of the card height
+const FLOOR = 6;       // the curve's lowest point above the bottom edge, so the 2.5px line is not cut
+
+(async () => {
+  const css = getComputedStyle(document.documentElement);
+  const brand = css.getPropertyValue('--brand').trim();
+  const ctx = document.getElementById('c').getContext('2d');
+
+  await Promise.all([
+    document.fonts.load('600 100px "Zalando Sans Expanded"', 'Variational'),
+    document.fonts.load('400 100px "Zalando Sans Expanded"', 'Monitor'),
+    document.fonts.load('400 30px "Inter"', 'Independent'),
+    document.fonts.load('500 22px "Inter"', 'by Ponyo'),
+    document.fonts.load('400 20px "Geist Mono"', 'variational'),
+  ]);
+  await document.fonts.ready;
+
+  // cap height of a face, from the ink of "H"
+  const capOf = (font) => { ctx.font = font; return ctx.measureText('H').actualBoundingBoxAscent; };
+  // y of an element's first baseline, from a zero-height inline-block probe
+  const baselineOf = (el) => {
+    const p = document.createElement('span');
+    p.style.cssText = 'display:inline-block;width:0;height:0;vertical-align:baseline';
+    (el.querySelector('.lk') || el).appendChild(p);
+    const y = p.getBoundingClientRect().top;
+    p.remove();
+    return y;
+  };
+  const moveBy = (el, dy) => { el.style.top = (parseFloat(el.style.top || 0) + dy) + 'px'; };
+
+  // lockup: size the wordmark by its cap height, then put the mark's top on the top margin
+  const lk = document.querySelector('.lk');
+  const size = CAP / (capOf('600 100px "Zalando Sans Expanded"') / 100);
+  lk.style.fontSize = size.toFixed(2) + 'px';
+  const lockup = document.getElementById('lockup');
+  moveBy(lockup, M - lk.querySelector('.mark').getBoundingClientRect().top);
+  const lockBase = baselineOf(lockup);
+
+  // the line beneath: its cap top GAP below the lockup's baseline
+  const line = document.getElementById('line');
+  moveBy(line, (lockBase + GAP + capOf('400 30px "Inter"')) - baselineOf(line));
+
+  // bottom texts: baselines on the bottom margin
+  for (const id of ['url', 'by']) {
+    const el = document.getElementById(id);
+    moveBy(el, (H - M) - baselineOf(el));
+  }
+
+  // the curve: monotone cubic through the points (no overshoot on a cumulative series)
+  const pts = POINTS.map(([x, y]) => [x * W, H - FLOOR - y * (TOP * H - FLOOR)]);
+  const n = pts.length;
+  const d = [], m = new Array(n);
+  for (let i = 0; i < n - 1; i++) d.push((pts[i + 1][1] - pts[i][1]) / (pts[i + 1][0] - pts[i][0]));
+  m[0] = d[0]; m[n - 1] = d[n - 2];
+  for (let i = 1; i < n - 1; i++) m[i] = d[i - 1] * d[i] <= 0 ? 0 : (d[i - 1] + d[i]) / 2;
+  for (let i = 0; i < n - 1; i++) {
+    if (d[i] === 0) { m[i] = 0; m[i + 1] = 0; continue; }
+    const a = m[i] / d[i], b = m[i + 1] / d[i], s = a * a + b * b;
+    if (s > 9) { const t = 3 / Math.sqrt(s); m[i] = t * a * d[i]; m[i + 1] = t * b * d[i]; }
+  }
+  const trace = (p) => {
+    p.moveTo(pts[0][0], pts[0][1]);
+    for (let i = 0; i < n - 1; i++) {
+      const [x0, y0] = pts[i], [x1, y1] = pts[i + 1], h = (x1 - x0) / 3;
+      p.bezierCurveTo(x0 + h, y0 + m[i] * h, x1 - h, y1 - m[i + 1] * h, x1, y1);
+    }
+  };
+  const curve = new Path2D(); trace(curve);
+  const area = new Path2D(); trace(area);
+  area.lineTo(W, H); area.lineTo(0, H); area.closePath();
+
+  // fill: per column, brand at 16% at the line fading to 0% at the bottom edge
+  const [r, g, b] = [1, 3, 5].map((i) => parseInt(brand.slice(i, i + 2), 16));
+  const yAt = (x) => { // the curve's y at column x, from the sampled points (linear between them)
+    let i = 0; while (i < n - 2 && pts[i + 1][0] < x) i++;
+    const [x0, y0] = pts[i], [x1, y1] = pts[i + 1];
+    return y0 + (y1 - y0) * Math.min(1, Math.max(0, (x - x0) / (x1 - x0)));
+  };
+  ctx.save();
+  ctx.clip(area);
+  for (let x = 0; x < W; x++) {
+    const top = Math.min(yAt(x), yAt(x + 1)) - 2;
+    const grad = ctx.createLinearGradient(0, top, 0, H);
+    grad.addColorStop(0, `rgba(${r},${g},${b},0.16)`);
+    grad.addColorStop(1, `rgba(${r},${g},${b},0)`);
+    ctx.fillStyle = grad;
+    ctx.fillRect(x, top, 1, H - top);
+  }
+  ctx.restore();
+
+  ctx.lineWidth = 2.5;
+  ctx.lineJoin = 'round';
+  ctx.lineCap = 'round';
+  ctx.strokeStyle = brand;
+  ctx.stroke(curve);
+
+  window.__card = {
+    wordmarkPx: +size.toFixed(2),
+    fonts: [...document.fonts].map((f) => ({ family: f.family, status: f.status })),
+  };
+  document.documentElement.classList.add('is-ready');
+})().catch((e) => { window.__cardError = String(e && e.stack || e); });
+</script>
+</body>
+</html>
