@@ -359,7 +359,7 @@ export const CATALOG = [
 
   // ------------------------------------------------------------------ Products · Omni · Execution
   {
-    id: 'ex.venue', tab: 'omni/execution', span: 12, form: 'dots', dots: 'venue', title: 'Round-trip cost, Omni and other venues',
+    id: 'ex.venue', tab: 'omni/execution', span: 12, form: 'dots', dots: 'venue', title: 'Round-trip cost, Omni and other on-chain venues',
     info: "Cost in basis points of buying and selling the stated size at once. Omni is its indicative quoted bid-ask; other venues are order-book cost at the same moment, plus each venue's base taker fee each way when fees are included. TradFi rows compare Omni's swap with the other venue's perpetual (trade[XYZ] on Hyperliquid). Samples are paired within 45 seconds; figures are medians over the range.",
     source: 'Omni API and venue order books', file: 'execution_venue', unit: 'bps', keys: ['range'],
     controls: [
@@ -777,7 +777,7 @@ export const DATASETS = {
   tradfi: 'TradFi share of volume and open interest, by asset class and by instrument, and TradFi listings.',
   swap_pairs: 'Bid-ask and carry for each underlying listed as both a perpetual and a swap.',
   quote_depth: 'Listings quoted at $1M, per day.',
-  execution_venue: 'Round-trip cost on Omni and other venues, matched samples, per range and per day.',
+  execution_venue: 'Round-trip cost on Omni and other on-chain venues, matched samples, per range and per day.',
   olp_market: 'Offsetting long and short open interest, per day.',
   olp_chain: 'Core OLP Vault balance at the end of each UTC day.',
   accounts: 'Accounts first funded, active accounts, deposits, withdrawals, pool balances and pool states, per day.',
