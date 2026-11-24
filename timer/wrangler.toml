@@ -1,0 +1,11 @@
+# The capture timer (worker.js). Deploy by hand: `wrangler deploy` from this folder, after
+# `wrangler secret put GITHUB_TOKEN`. The token is never written here.
+name = "capture-timer"
+main = "worker.js"
+compatibility_date = "2025-11-01"
+
+[triggers]
+crons = ["27,57 * * * *"]
+
+[vars]
+REPO = "variationalmonitor/variationalmonitor.github.io"

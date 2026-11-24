@@ -1,0 +1,75 @@
+name: Tick
+
+# Saves the Omni stats API for one :00 or :30 UTC boundary, pairs it with the Hyperliquid books, and commits both
+# to the `data` branch: the same reading the capture loop (capture.yml) takes, one boundary per run. The API has
+# no history: a missed boundary is lost for good.
+#
+# A timer outside GitHub (timer/worker.js, a Cloudflare Worker) dispatches this workflow about three minutes
+# before every :00 and :30. The run waits for the boundary, takes one reading and exits; a failed reading is
+# tried once more a quarter of an hour later. A run that starts with no boundary in the next ten minutes
+# captures at once if the boundary that just passed has no snapshot yet, and otherwise does nothing. The cron
+# entries below are a weak fallback only: GitHub's own cron fires few of this repository's slots.
+#
+# The switch: a real capture happens only when the repository variable VM_CAPTURE is exactly "tick". Otherwise
+# the run is a shadow: it waits the same way but calls nothing and writes nothing, and prints one JSON line with
+# its timing and whether the branch holds the loop's snapshot for that boundary a minute after it. With the
+# switch on, a run that finds capture.yml queued or in progress also takes the shadow path and says so, so the
+# loop and the ticks never both call the Omni API (if the runs cannot be listed, it captures).
+#
+# Cut over: gh variable set VM_CAPTURE --body tick; gh workflow disable capture.yml; then cancel the running loop
+# between ticks, right after one of its :00 or :30 snapshots is on the branch (by :05 or :35), so that it has
+# finished before the next tick looks at :27 or :57. Until it has, the ticks stay in shadow.
+# Roll back: gh variable delete VM_CAPTURE; once no tick is running, gh workflow enable capture.yml and
+# gh workflow run capture.yml.
+#
+# One run at a time: the job is in a concurrency group, so a second run waits for the first and then finds its
+# boundary taken. Only when VM_PUBLISH is "on" does a run also ask publish.yml to run after a :00 reading, and at
+# once when a new report appears on Telegram. All logic is in ci/capture.py (once), ci/datastore.py and
+# ci/tick_mode.sh.
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "27,57 * * * *"
+
+permissions:
+  contents: write   # push snapshots to the data branch
+  actions: write    # read the loop's runs; dispatch publish.yml when VM_PUBLISH is on
+
+jobs:
+  tick:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    concurrency:
+      group: capture-tick
+      cancel-in-progress: false
+    env:
+      GH_TOKEN: ${{ github.token }}
+      VM_PUBLISH: ${{ vars.VM_PUBLISH }}
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@9f698171ed81b15d1823a05fc7211befd50c8ae0 # v6.0.3
+        with:
+          sparse-checkout: |
+            ci
+            pipeline
+      - name: Check out the data branch
+        uses: actions/checkout@9f698171ed81b15d1823a05fc7211befd50c8ae0 # v6.0.3
+        with:
+          ref: data
+          path: .store
+          fetch-depth: 1
+      - name: Capture for real or as a shadow
+        id: mode
+        env:
+          VM_CAPTURE: ${{ vars.VM_CAPTURE }}
+        run: bash ci/tick_mode.sh
+      - name: Capture the boundary that is due
+        env:
+          SHADOW: ${{ steps.mode.outputs.shadow }}
+        run: |
+          if [ "$SHADOW" = "0" ]; then
+            python3 ci/capture.py once --store .store
+          else
+            python3 ci/capture.py once --store .store --shadow
+          fi

@@ -4,6 +4,8 @@ the data branch. Python standard library, curl and git only.
 
     ci/capture.py tick --store .store          one capture now (fetch, validate, save, capture_hl, commit, push)
     ci/capture.py loop --store .store          capture on every :00 and :30 UTC for a bit over five hours, then return
+    ci/capture.py once --store .store          capture the one :00 or :30 boundary that is due (tick.yml), then return
+    ci/capture.py once --store .store --shadow the same wait, but nothing is called or written: prints its timing
     ci/capture.py probe --store .store         one look at Telegram: is there a report the store has not seen?
 
 This is the only place that calls the Omni stats API, once per tick, plus at most one request every 10 s for
@@ -21,10 +23,13 @@ variable of that name), the loop also
 The switch is off unless it says exactly "on": capture then runs alone, with no dispatch and no Telegram read
 (the poll exists only to start publish.yml).
 
+`once` does what the loop does for one boundary, with the loop's own sync, tick, dispatch and probe (see once()).
+
 Testing without the real API: --url points the fetch at any HTTP server; --no-push commits locally;
 --dry-run-dispatch prints the dispatches; --period-s shortens the half hour.
 """
 import argparse
+import calendar
 import datetime as dt
 import glob
 import gzip
@@ -53,6 +58,12 @@ REPORT_WINDOW_DAYS = 12.5
 REPORT_POLL_S = 180
 PUBLISH_SWITCH = "VM_PUBLISH"
 REFRESH_SAMPLE_S = 60         # hard stop for sampling the books against a refreshed Omni reading
+ONCE_MAX_WAIT_S = 600         # once: wait for the next boundary only when it is at most this far away
+ONCE_LATE_S = 1200            # once: else capture a boundary that passed without a snapshot, up to this late
+SYNC_BEFORE_S = 75            # the loop's numbers: bring the checkout to the branch tip in the last 75 s,
+TICK_AFTER_S = 1.5            # tick 1.5 s after the boundary,
+PROBE_MARGIN_S = 100          # and read Telegram before a boundary only while it is more than 100 s away
+SHADOW_CHECK_S = 60           # once --shadow: look for the boundary's snapshot on the branch this long after it
 
 
 def publish_on():
@@ -439,10 +450,205 @@ def loop(args):
     return 0
 
 
+# ---------------------------------------------------------------- once
+
+def iso(t):
+    """Epoch seconds as UTC, ISO 8601 with milliseconds."""
+    return dt.datetime.utcfromtimestamp(t).strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3] + "Z"
+
+
+def hhmm(t):
+    return dt.datetime.utcfromtimestamp(t).strftime("%H:%M")
+
+
+def boundary_stamp(names, boundary, period):
+    """The earliest snapshot stamp taken for `boundary` (at or after it, before the next one), else None. A stamp is
+    the UTC minute of the response: the 10:00 tick is 20261124T1000Z, a retry of it 20261124T1015Z."""
+    found = []
+    for name in names:
+        try:
+            t = calendar.timegm(time.strptime(name[:14], "%Y%m%dT%H%MZ"))
+        except ValueError:
+            continue
+        if boundary <= t < boundary + period:
+            found.append(name[:14])
+    return min(found) if found else None
+
+
+def stored_names(store):
+    return [os.path.basename(p) for p in glob.glob(os.path.join(store, "snapshots", "*.json.gz"))]
+
+
+def branch_names(store):
+    """Snapshot file names at the tip of the data branch, from one fetch. Only FETCH_HEAD moves: the checkout, HEAD
+    and the branch stay as they are. None when the fetch or the listing fails."""
+    if not os.path.isdir(os.path.join(store, ".git")):
+        return None
+    if datastore.git(store, "fetch", "-q", "--depth", "1", datastore.REMOTE, datastore.BRANCH, check=False).returncode != 0:
+        return None
+    proc = datastore.git(store, "ls-tree", "--name-only", "FETCH_HEAD", "snapshots/", check=False)
+    if proc.returncode != 0:
+        return None
+    return [os.path.basename(line) for line in proc.stdout.splitlines() if line.endswith(".json.gz")]
+
+
+def choose(now, period, max_wait_s, late_s, holding):
+    """(case, boundary, why) for a run starting at `now`:
+      a  the next boundary is at most max_wait_s away: wait for it;
+      b  else the boundary that just passed, at most late_s ago, has no snapshot: capture it now;
+      c  else nothing to do.
+    `holding(boundary)` returns the stamp the store holds for that boundary, or None; it is asked only for b or c."""
+    nxt = (int(now // period) + 1) * period
+    if nxt - now <= max_wait_s:
+        return "a", nxt, "the next boundary is %.0f s away" % (nxt - now)
+    last = nxt - period
+    if now - last > late_s:
+        return "c", last, "the %s boundary passed %.0f s ago, more than %.0f s; the next is %.0f s away" % (
+            hhmm(last), now - last, late_s, nxt - now)
+    held = holding(last)
+    if held:
+        return "c", last, "the %s boundary already has a snapshot (%s); the next is %.0f s away" % (
+            hhmm(last), held, nxt - now)
+    return "b", last, "the %s boundary passed %.0f s ago and has no snapshot" % (hhmm(last), now - last)
+
+
+def wait_until(target, clock, sleep, each=None):
+    """Sleep until `target` in steps of at most 20 s, as the loop does. `each(left)` runs before every step."""
+    while True:
+        left = target - clock()
+        if left <= 0:
+            return
+        if each is not None:
+            each(left)
+            left = target - clock()     # each() may have taken a while (a sync): do not oversleep the boundary
+            if left <= 0:
+                return
+        sleep(min(20, max(0.2, left)))
+
+
+def report_probe(args, boundary, clock):
+    """The run's one Telegram look (publish switch on, report window open). Never fatal."""
+    try:
+        if args.no_probe or not in_report_window(args.store, dt.datetime.utcfromtimestamp(clock())):
+            return
+        new = probe(args.store)
+        if not new:
+            log("  telegram: no new report")
+        elif int(boundary) % 3600 == 0:
+            log("new report on Telegram: post %s; the hourly dispatch after the %s tick covers it"
+                % (", ".join(map(str, new)), hhmm(boundary)))
+        else:
+            log("new report on Telegram: post %s" % ", ".join(map(str, new)))
+            dispatch("publish.yml", {"reason": "report"}, args.dry_run_dispatch)
+    except Exception as exc:        # Telegram trouble must never stop the capture
+        log("  telegram probe failed: %s" % exc)
+
+
+def shadow_run(args, case, target, started, why, clock, sleep):
+    """The rehearsal: the same wait, then one fetch of the branch SHADOW_CHECK_S after the boundary, one JSON line."""
+    log("shadow run, nothing is called or written: case %s, %s UTC boundary: %s" % (case, hhmm(target), why))
+    reached = None
+    if case == "a":
+        wait_until(target, clock, sleep)
+        sleep(TICK_AFTER_S)
+        reached = clock()           # where the tick would start
+    elif case == "b":
+        reached = clock()
+    wait_until(target + SHADOW_CHECK_S, clock, sleep)
+    checked = clock()
+    names = branch_names(args.store)
+    stamp = None if names is None else boundary_stamp(names, target, args.period_s)
+    print(json.dumps({"shadow": True, "case": case, "boundary": iso(target), "started": iso(started),
+                      "reached": None if reached is None else iso(reached), "checked": iso(checked),
+                      "branch_has_snapshot": None if names is None else stamp is not None,
+                      "branch_snapshot": stamp}), flush=True)
+    return 0
+
+
+def once(args, clock=time.time, sleep=time.sleep):
+    """Capture the one boundary that is due, with the loop's own sync, safe_tick, dispatch and probe, so that its
+    reading cannot be told from one the loop took. The case is picked at the start (choose):
+      a  the next :00 or :30 is at most --max-wait-s away: wait for it as the loop does (sync in the last 75 s,
+         tick 1.5 s after the boundary);
+      b  else the boundary that just passed has no snapshot on the branch and passed at most --late-s ago:
+         capture now, since a late reading beats none;
+      c  else nothing to do: one log line, exit 0.
+    After the tick of a :00 boundary publish.yml is dispatched (reason=hourly) when the publish switch is on, as the
+    loop does, whether or not the tick saved a snapshot. A failed tick is tried once more at boundary + period/2, as
+    in the loop; when that moment has already passed (only a late capture gets there) there is no retry, so the run
+    ends before the next boundary, whose run waits behind this one. Exit 1 when no snapshot was saved.
+
+    Telegram, with the publish switch on and the report window open: one probe per run, before the wait while the
+    boundary is more than 100 s away (as the loop), else right after the tick, so it never delays a capture. A new
+    report dispatches publish.yml (reason=report) unless the boundary is :00, whose hourly dispatch covers it.
+
+    --shadow is a rehearsal of the timing: no Omni, venue or Telegram call, no snapshot, commit or dispatch, and no
+    sync. It waits the same way, makes one fetch of the branch a minute after the boundary and prints one JSON line.
+    """
+    period = args.period_s
+    started = clock()
+
+    def resync():
+        if args.shadow or args.no_push:
+            return      # --no-push commits locally, and a reset to the branch tip would drop them (the loop's rule)
+        try:
+            sync(args.store)
+        except Exception as exc:    # a failed sync costs the fast-forward, never the capture
+            log("  sync failed, going on: %s: %s" % (type(exc).__name__, exc))
+
+    def holding(boundary):
+        resync()                    # the branch, not a stale checkout, says whether the boundary was taken
+        return boundary_stamp(stored_names(args.store), boundary, period)
+
+    case, target, why = choose(started, period, args.max_wait_s, args.late_s, holding)
+    if args.shadow:
+        return shadow_run(args, case, target, started, why, clock, sleep)
+    if case == "c":
+        log("nothing to do: %s" % why)
+        return 0
+    publish = publish_on()
+    log("publish switch (%s): %s" % (PUBLISH_SWITCH, "on, publish.yml is dispatched" if publish
+                                     else "off, capture only: no dispatch, no Telegram probe"))
+    probed = False
+    if case == "a":
+        log("waiting for the %s UTC boundary: %s" % (hhmm(target), why))
+        if target - clock() > PROBE_MARGIN_S:
+            if publish:
+                report_probe(args, target, clock)
+            probed = True
+        synced = []
+
+        def before(left):
+            if not synced and left <= SYNC_BEFORE_S:
+                resync()            # so that the commit after the tick is a plain fast-forward
+                synced.append(True)
+        wait_until(target, clock, sleep, before)
+        sleep(TICK_AFTER_S)         # the stamp is taken after the response: keep it inside the boundary minute
+    else:
+        log("capturing the %s UTC boundary late: %s" % (hhmm(target), why))
+    ok = safe_tick(args)
+    if publish and int(target) % 3600 == 0:
+        dispatch("publish.yml", {"reason": "hourly"}, args.dry_run_dispatch)
+    if publish and not probed:
+        report_probe(args, target, clock)
+    if not ok:
+        retry_at = target + period / 2.0
+        if clock() >= retry_at:
+            log("the tick failed and its retry time %s UTC has passed: no retry" % dt.datetime.utcfromtimestamp(
+                retry_at).strftime("%H:%M:%S"))
+        else:
+            log("the tick failed: one retry at %s UTC" % dt.datetime.utcfromtimestamp(retry_at).strftime("%H:%M:%S"))
+            wait_until(retry_at, clock, sleep)
+            log("retrying the failed tick")
+            ok = safe_tick(args)
+    log("once done: %s" % ("a snapshot was saved" if ok else "no snapshot for the %s boundary" % hhmm(target)))
+    return 0 if ok else 1
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = parser.add_subparsers(dest="cmd", required=True)
-    for name in ("tick", "loop", "probe"):
+    for name in ("tick", "loop", "once", "probe"):
         p = sub.add_parser(name)
         p.add_argument("--store", required=True, help="checkout of the data branch")
         p.add_argument("--url", default=STATS_URL)
@@ -454,9 +660,21 @@ def main():
             p.add_argument("--no-probe", action="store_true")
             p.add_argument("--dry-run-dispatch", action="store_true")
             p.add_argument("--publish-every-tick", action="store_true", help="tests")
+        if name == "once":
+            p.add_argument("--period-s", type=int, default=1800)
+            p.add_argument("--max-wait-s", type=float, default=ONCE_MAX_WAIT_S,
+                           help="wait for the next boundary only when it is at most this far away")
+            p.add_argument("--late-s", type=float, default=ONCE_LATE_S,
+                           help="else capture the boundary that passed without a snapshot, up to this late")
+            p.add_argument("--shadow", action="store_true",
+                           help="rehearse the timing: no Omni, venue or Telegram call, nothing written, one JSON line")
+            p.add_argument("--no-probe", action="store_true")
+            p.add_argument("--dry-run-dispatch", action="store_true")
     args = parser.parse_args()
     if args.cmd == "tick":
         return 0 if safe_tick(args) else 1
+    if args.cmd == "once":
+        return once(args)
     if args.cmd == "probe":
         new = probe(args.store)
         print("window=%s new=%s" % ("open" if in_report_window(args.store) else "closed", ",".join(map(str, new)) or "none"))

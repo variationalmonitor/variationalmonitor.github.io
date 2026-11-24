@@ -17,7 +17,8 @@ never touch the same file:
 commit-push never rebases. When the push is rejected (the other job pushed first, or the branch was squashed)
 it fetches the new tip, resets to it and writes its own changed files again on top, then retries. That is safe
 because each job owns its files, and it works in a depth-1 checkout and across a history rewrite, where
-`git pull --rebase` does not. A .jsonl file that changed on both sides is merged line by line.
+`git pull --rebase` does not. A .jsonl file that changed on both sides is merged line by line; a snapshot that
+reached the branch first (two captures of one boundary) is kept, and the rest of this job's changes still go out.
 
 Growth control
   --daily-if-new days/   platform.jsonl and listings_seen.json are rewritten by every build but committed only
@@ -100,6 +101,11 @@ def blob_at(d, rev, path):
     return proc.stdout if proc.returncode == 0 else None
 
 
+def _read(path):
+    with open(path, "rb") as fh:
+        return fh.read()
+
+
 def reapply(d, stash, present, deleted, old_base):
     """After a reset to the new remote tip, write this job's changes again."""
     for path in present:
@@ -108,6 +114,12 @@ def reapply(d, stash, present, deleted, old_base):
         os.makedirs(os.path.dirname(dst) or d, exist_ok=True)
         if theirs_now is not None and theirs_now != theirs_then:
             # the same file changed on the branch while this job held it: not expected (each job owns its files)
+            if path.startswith("snapshots/"):
+                # two captures of the same boundary (the loop and a tick, say): a snapshot is written once, the
+                # first one pushed stays; this job's other files (its book samples, its log line) still go out
+                log("  %s is already on the branch; the branch's copy is kept%s" % (
+                    path, "" if theirs_now == _read(src) else ", this job's reading is dropped"))
+                continue
             if path.endswith(".jsonl") or path.endswith(".log"):
                 with open(src, "rb") as fh:
                     mine = fh.read().splitlines()
