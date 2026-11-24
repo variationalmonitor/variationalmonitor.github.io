@@ -15,3 +15,6 @@ playwright-report/
 /.store/
 /qa/out/
 qa/node_modules/
+
+# Cloudflare tool cache
+.wrangler/
