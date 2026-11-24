@@ -1441,20 +1441,22 @@ def check_v3(rep, docs, now):
     venues = [v.get("key") for v in ev.get("venues", [])]
     samples = exec_samples()
     bad, soft = [], []
-    cutoff = parse_time(ev["as_of"]).strftime("%Y%m%dT%H%MZ") if is_time(ev.get("as_of")) else ""
-    # the builder dates the file by its newest matched pair (build_execution.py), so a tick on which no pair matched
-    # leaves as_of at the tick before and is no sign of a stale file (23 Nov 2026 21:00 UTC: the Omni reading was 78 s
-    # older than the books, all 18 pairs went unmatched, and this check held the site at the last build); only a
-    # matched sample newer than as_of means the file was built before the store
-    newest = max((r["snap"] for r in samples if any(val for k, val in r.items() if k == "matched" or k.endswith("_matched"))),
-                 default="")
+    # The builder dates the file by the newest moment of a matched pair (build_execution.py: omni_at and the venue's
+    # own stamp), so the file is current when no matched pair in the store is newer than its as_of. Tick names cannot
+    # decide this, and both ways of reading them held the site: a tick on which no pair matched leaves as_of at an
+    # earlier tick (23 Nov 2026 21:00 UTC: the Omni reading was 78 s older than the books), and a book read just
+    # before the tick dates the file a second before the tick's name (24 Nov 2026 00:00 UTC: as_of 23:59:59).
+    moments = [m for r in samples
+               for flag, stamp in [("matched", "hl_at")] + [(k, k[:-len("matched")] + "at") for k in r if k.endswith("_matched")]
+               if r.get(flag) for m in (r.get("omni_at"), r.get(stamp)) if m]
+    moment = max(moments)[:19] + "Z" if moments else None
+    current = moment is None or (is_time(ev.get("as_of")) and is_time(moment) and parse_time(moment) <= parse_time(ev["as_of"]))
     for v in venues:
         flag, status = ("matched", None) if v == "hl" else (v + "_matched", v + "_status")
-        in_file = samples if newest <= cutoff else [r for r in samples if r["snap"] <= cutoff]
-        matched = sum(1 for r in in_file if r.get(flag))
-        refused = sum(1 for r in in_file if status and r.get(status) == "venue_unavailable")
+        matched = sum(1 for r in samples if r.get(flag))
+        refused = sum(1 for r in samples if status and r.get(status) == "venue_unavailable")
         block = ((ev.get("match") or {}).get("venues") or {}).get(v) or {}
-        if newest <= cutoff:                       # the file is current with the store: counts must agree
+        if current:                                # the file is current with the store: counts must agree
             if block.get("matched") != matched:
                 bad.append("%s: the file counts %r matched samples, the store has %d" % (v, block.get("matched"), matched))
             if v != "hl" and block.get("unavailable") != refused:
@@ -1465,8 +1467,8 @@ def check_v3(rep, docs, now):
             all_refused = sum(1 for r in samples if status and r.get(status) == "venue_unavailable")
             soft.append("%s: no matched sample %s (%d ticks refused by the venue for this location)"
                         % (v, "in the store" if last is None else "since %s, %s ago" % (last, fmt_age(age)), all_refused))
-    if newest > cutoff:
-        bad.append("execution_venue.json was built before the newest samples (%s after %s): rebuild" % (newest, cutoff))
+    if not current:
+        bad.append("execution_venue.json was built before the newest matched sample (%s after %s): rebuild" % (moment, ev.get("as_of")))
     rep.check("ties", "execution_venue: every venue's matched and refused samples against the sample store", bad,
               "%d samples; %s" % (len(samples), ", ".join(venues)))
     if soft:
