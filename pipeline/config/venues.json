@@ -70,7 +70,7 @@
         "underlying": {
           "match": "proxy",
           "lighter": "Index perpetual: \"Tracks the value of the top 500 US companies\", RedStone oracle",
-          "note": "Lighter does not name the S&P 500 or its index source, so identity is inferred from the description. No price check yet: Omni's swap has been closed since Lighter was added (weekend); samples store both mids so the check can be run once it reopens.",
+          "note": "Lighter does not name the S&P 500 or its index source, so identity is inferred from the description. Price check, 22 to 24 Nov 2026: Lighter's mid against Omni's swap mid differed by a median 9.6 bps (maximum 20.9) over 35 matched samples, in line with trade[XYZ]'s 7.9 (maximum 13.6) on the same readings.",
           "source": "https://docs.lighter.xyz/trading/real-world-assets-rwas/market-specifications"
         },
         "taker_fee_bps": 0.0
@@ -107,7 +107,7 @@
         "underlying": {
           "match": "proxy",
           "lighter": "Index perpetual: \"Tracks the 100 largest non-financial companies listed on Nasdaq\", RedStone oracle",
-          "note": "The description is the Nasdaq-100's; the index is not named or licensed. No price check yet (Omni swap closed at the weekend); samples store both mids.",
+          "note": "The description is the Nasdaq-100's; the index is not named or licensed. Price check, 22 to 24 Nov 2026: Lighter's mid against Omni's swap mid differed by a median 9.1 bps (maximum 21.7) over 36 matched samples, in line with trade[XYZ]'s 8.4 (maximum 16.0) on the same readings.",
           "source": "https://docs.lighter.xyz/trading/real-world-assets-rwas/market-specifications"
         },
         "taker_fee_bps": 0.0
@@ -360,7 +360,9 @@
       "GET https://mainnet.zklighter.elliot.ai/api/v1/feeTiers: tier standard taker_fee_ticks 0; plus 50; premium 280",
       "GET https://mainnet.zklighter.elliot.ai/api/v1/orderBooks: taker_fee 0.0000 on each of the nine mapped markets"
     ],
-    "fee_checked": "2026-11-22",
+    "fee_checked": "2026-11-24",
+    "taker_latency_ms": 300,
+    "taker_latency_source": "GET https://mainnet.zklighter.elliot.ai/api/v1/feeTiers (standard: taker_latency_ms 300, premium: 140) and https://docs.lighter.xyz/trading/trading-fees (Standard Account (Default): Taker latency: 300ms), both read 24 Nov 2026. The order-book cost is measured on the book as displayed, so it does not include any move in price during the delay.",
     "not_applied": "Opt-in account types pay fees and are not what this figure shows: Plus 0.5 bps maker and taker; Premium/Advanced 2.8 bps taker and 0.4 bps maker at no LIT staked, falling to 1.96 bps taker at 500,000 LIT staked, in exchange for 140 ms taker latency instead of 300 ms. A Standard account pays 1 bp on TWAP/advanced orders and RFQ.",
     "live_guard": "Each capture reads /orderBooks: a mapped id whose symbol differs from this file, or whose market is not an active perp, is recorded as a failure and not priced; a non-zero taker_fee there records the fee as unverified (null).",
     "dropped": [

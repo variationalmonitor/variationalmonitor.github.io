@@ -184,16 +184,23 @@ def fee_note(config, latest_fee):
 
 
 def venue_notes(config, latest_fee, withheld):
-    """[{key, label, fee_note}]: one sentence per venue on the fee applied and what is left out."""
+    """[{key, label, fee_note}]: one sentence per venue, opening with its name, on the fee applied and what is left out.
+
+    The page prints these sentences one under another with nothing else to say whose fee each is, so the name is part
+    of the sentence.
+    """
     notes = []
     for venue in config["venues"]:
-        key = venue["key"]
+        key, name = venue["key"], venue["label"]
         if key == "hl":
             known = [(latest_fee[m["key"]], m["label"]) for m in config["markets"] if latest_fee.get(m["key"]) is not None]
             hidden = [m["label"] for m in config["markets"] if latest_fee.get(m["key"]) is None]
-            text = ("Base-tier taker fee per side: %s%s; volume, staking and referral discounts not applied."
-                    % (grouped_fees(known), ", not verified (%s)" % ", ".join(hidden) if hidden else "")
-                    if known else "Taker fee not verified.")
+            tail = ", not verified (%s)" % ", ".join(hidden) if hidden else ""
+            if known:
+                text = ("%s base-tier taker fee per side: %s%s; volume, staking and referral discounts not applied."
+                        % (name, grouped_fees(known), tail))
+            else:
+                text = "%s taker fee not verified." % name
         else:
             mapped = [m for m in config["markets"] if m.get(key)]
             known = [(m[key]["taker_fee_bps"], m["label"]) for m in mapped
@@ -201,13 +208,18 @@ def venue_notes(config, latest_fee, withheld):
             hidden = [m["label"] for m in mapped if (m[key]["taker_fee_bps"], m["label"]) not in known]
             tail = ", not verified (%s)" % ", ".join(hidden) if hidden else ""
             if not known:
-                text = "Taker fee not verified."
+                text = "%s taker fee not verified." % name
             elif key == "lighter" and all(fee == 0 for fee, _ in known):
-                text = ("Standard account, regular orders: no maker or taker fee%s; opt-in Premium accounts pay a "
-                        "taker fee and are not shown." % tail)
+                # the free account's condition belongs next to its price: takers wait, and the book cost shown is the
+                # book as displayed (config: lighter.taker_latency_ms, read from Lighter's fee tiers)
+                delay = (config.get("lighter") or {}).get("taker_latency_ms")
+                text = ("%s Standard account, the default: no maker or taker fee on regular orders%s%s; opt-in Premium "
+                        "accounts pay a taker fee%s and are not shown."
+                        % (name, tail, ", taker orders delayed %d ms" % delay if delay else "",
+                           " for a shorter delay" if delay else ""))
             else:
-                text = "Entry-level taker fee per side: %s%s." % (grouped_fees(known), tail)
-        notes.append({"key": key, "label": venue["label"], "fee_note": text})
+                text = "%s entry-level taker fee per side: %s%s." % (name, grouped_fees(known), tail)
+        notes.append({"key": key, "label": name, "fee_note": text})
     return notes
 
 
