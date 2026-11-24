@@ -3,6 +3,9 @@
 name = "variational-monitor-timer"
 main = "worker.js"
 compatibility_date = "2025-11-01"
+# no public address: the timer only runs on its schedule
+workers_dev = false
+preview_urls = false
 
 [triggers]
 crons = ["27,57 * * * *"]
