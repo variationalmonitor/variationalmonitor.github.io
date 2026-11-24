@@ -10,9 +10,12 @@ One rule for every TradFi listing, in this order of preference:
 
 A listing first seen once continuous capture had begun (CONTINUOUS_START, a snapshot every half hour) is
 dated by the earliest of the three instead, its snapshot evidence being the UTC day of the first raw snapshot
-that lists it: it has a date on its first day, an earlier post moves it back and a later one leaves it. Before
-continuous capture the store holds only scattered seed and archived snapshots, so a first snapshot there is a
-late bound and the order of preference above stands, with the snapshot day being the day that snapshot closes.
+that lists it: it has a date on its first day, an earlier post moves it back and a later one leaves it. Only
+a post from the POST_LEAD_DAYS before that snapshot counts: the capture would have shown the market sooner had
+it been live when an older post was written, so an older post is about an earlier listing of the same symbol
+or a report whose wording merely fits (the 29 May 2026 report names a "SpaceX" market no listing fits today).
+Before continuous capture the store holds only scattered seed and archived snapshots, so a first snapshot there
+is a late bound and the order of preference above stands, with the snapshot day being the day that snapshot closes.
 
 Crypto listings are dated the same way from their own announcement and their snapshots (reports name
 TradFi markets only). A listing not yet in `config/classification.json` is dated at build time by the same
@@ -32,9 +35,12 @@ listing is stored in `config/classification.json` (`listed`) by `build_market.py
 """
 import os
 import re
+from datetime import timedelta
 
 from . import store
-from .common import CONTINUOUS_START, ROOT, STORE, TRADFI_CLASSES, TRADFI_GROUPS, read_json
+from .common import CONTINUOUS_START, ROOT, STORE, TRADFI_CLASSES, TRADFI_GROUPS, read_json, to_date
+
+POST_LEAD_DAYS = 2      # a post this many days before a listing's first raw snapshot can still be its announcement
 
 _LIVE = re.compile(r"(perps?|swaps?|swap markets?)\b[^\n]*?\b(?:are|is) now live|swap for[^\n]*?is now live", re.I)
 _DOLLAR = re.compile(r"\$([A-Za-z0-9_]+)")
@@ -167,12 +173,14 @@ def evidence(listings, days, seen):
                   for k, p in (("announcement", by_ann.get(tk)), ("report", by_rep.get(tk))) if p]
         first = (seen.get(tk) or {}).get("first")
         if first and first >= CONTINUOUS_START:
-            # first seen by the half-hourly capture: the earliest evidence, a tie going to the post
+            # first seen by the half-hourly capture: the earliest evidence, a tie going to the post; a post older
+            # than POST_LEAD_DAYS before that snapshot is not about this listing (see the module's note)
             if platform is None:
                 platform = store.load_platform()
             raw = {"date": first[:10], "evidence": "snapshot",
                    "source": (platform.get(first) or {}).get("src") or "snapshot " + first}
-            out[tk] = min(posted + [raw], key=lambda x: x["date"])
+            floor = (to_date(first) - timedelta(days=POST_LEAD_DAYS)).isoformat()
+            out[tk] = min([p for p in posted if p["date"] >= floor] + [raw], key=lambda x: x["date"])
         elif posted:
             out[tk] = posted[0]
         elif tk in first_day:

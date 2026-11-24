@@ -131,6 +131,31 @@ class EarlierAnnouncement(Fixture):
                          {"date": "2026-11-23", "evidence": "announcement", "source": "https://t.me/variational_io/470"})
 
 
+class OldAnnouncement(Fixture):
+    # the same symbol announced months before the capture first saw it: an earlier listing, not this one
+    posts = [HUT_POST, post(350, "2026-07-15T12:00:00Z", "POPMART", "Pop Mart")]
+
+    def test_a_post_long_before_the_first_snapshot_does_not_date_it(self):
+        self.assertEqual(self.dates()[1]["POPMART-PERP"],
+                         {"date": "2026-11-24", "evidence": "snapshot", "source": "snapshots/20261124T0930Z.json.gz"})
+
+
+class AnnouncementAtTheLeadLimit(Fixture):
+    posts = [HUT_POST, post(469, "2026-11-22T00:10:00Z", "POPMART", "Pop Mart")]
+
+    def test_a_post_two_days_before_still_dates_it(self):
+        self.assertEqual(self.dates()[1]["POPMART-PERP"]["date"], "2026-11-22")
+        self.assertEqual(self.dates()[1]["POPMART-PERP"]["evidence"], "announcement")
+
+
+class AnnouncementPastTheLeadLimit(Fixture):
+    posts = [HUT_POST, post(468, "2026-11-21T23:50:00Z", "POPMART", "Pop Mart")]
+
+    def test_a_post_three_days_before_does_not(self):
+        self.assertEqual(self.dates()[1]["POPMART-PERP"]["date"], "2026-11-24")
+        self.assertEqual(self.dates()[1]["POPMART-PERP"]["evidence"], "snapshot")
+
+
 class LaterAnnouncement(Fixture):
     posts = [HUT_POST, post(471, "2026-11-25T08:00:00Z", "POPMART", "Pop Mart")]
 
