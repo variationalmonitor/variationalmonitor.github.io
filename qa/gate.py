@@ -33,7 +33,9 @@ Blocking
   page         qa/render.mjs: every route, range and width; console errors; empty cards; horizontal scroll; residency
 Warnings: word budgets, banned words, colons in titles, non-monotone Polymarket strikes, stale external caches,
           a reported two-week period where DefiLlama's daily volume is more than 7% off the reported total,
-          a venue without a matched sample in 48 hours (a venue that refuses the runner's location is expected).
+          a venue without a matched sample in 48 hours (a venue that refuses the runner's location is expected),
+          a report post newer than the newest full report that is not full, or no full report for over 16 days
+          (ci/report_alert.py; the publish job also keeps a report-alert issue from it).
 
 Paths: VM_SITE_DATA, VM_STORE, VM_SNAPSHOTS, VM_ONCHAIN_DATA (see ci/env.sh), with the local layout as default.
 """
@@ -42,6 +44,7 @@ import datetime as dt
 import glob
 import gzip
 import hashlib
+import importlib.util
 import json
 import os
 import re
@@ -1759,6 +1762,14 @@ def check_defillama_volume(rep, docs):
 
 # ---------------------------------------------------------------- E. freshness
 
+def load_report_alert():
+    """ci/report_alert.py: the one definition of the incomplete and overdue report conditions."""
+    spec = importlib.util.spec_from_file_location("report_alert", os.path.join(ROOT, "ci", "report_alert.py"))
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
 def check_freshness(rep, docs, now):
     latest = (docs.get("markets_latest") or {}).get("as_of")
     bad = []
@@ -1833,6 +1844,19 @@ def check_freshness(rep, docs, now):
                        % (checked, fmt_age(now - parse_time(checked)) if is_time(checked) else "?", MAX_TELEGRAM_CHECK_H))
     rep.check("freshness", "reports parsed: channel read within %d hours, newest report is the newest period" % MAX_TELEGRAM_CHECK_H, bad,
               "%d reports, newest %s" % (len(reports), reports[-1]["published_at"]) if reports and not bad else None)
+
+    # the newest report post is full and the next one is not overdue (ci/report_alert.py): a warning, never blocking,
+    # even when that file cannot be loaded
+    name = "operating update: newest report post is full, next one not overdue"
+    if reports is None:
+        rep.add("freshness", name, "skip", ["the report store is unreadable"])
+    else:
+        try:
+            ra = load_report_alert()
+            lines = ra.alerts(reports, now)
+            rep.check("freshness", name, lines, None if lines else ra.status_note(reports, now), warn=True)
+        except Exception as exc:
+            rep.check("freshness", name, ["could not be judged: %s: %s" % (type(exc).__name__, str(exc)[:200])], warn=True)
 
     soft = []
     src = (docs.get("meta") or {}).get("sources") or {}

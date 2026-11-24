@@ -11,9 +11,10 @@ name: Publish
 #     younger than 50 minutes
 #
 # If the gate fails nothing is deployed, so the last good site stays up, and one issue (label qa-gate) is
-# opened or updated with the failing checks; the next passing run closes it. The store (sealed days, source
-# caches, reports, on-chain files) is committed to the data branch whenever the numbers passed, even if the
-# page checks failed.
+# opened or updated with the failing checks; the next passing run closes it. A second issue (label report-alert)
+# is open while a biweekly report post was not fully read or none has come for over 16 days; it never holds the
+# deploy. The store (sealed days, source caches, reports, on-chain files) is committed to the data branch
+# whenever the numbers passed, even if the page checks failed.
 #
 # Logic lives in ci/*.py, ci/*.sh, pipeline/build.py and qa/gate.py; this file only orders the steps.
 
@@ -39,7 +40,7 @@ permissions:
   contents: write   # commit the store to the data branch
   pages: write
   id-token: write
-  issues: write     # the qa-gate issue
+  issues: write     # the qa-gate and report-alert issues
 
 concurrency:
   group: publish
@@ -141,6 +142,11 @@ jobs:
         if: always() && steps.due.outputs.fresh != '1' && (steps.gate.outcome == 'success' || steps.gate.outcome == 'failure')
         continue-on-error: true
         run: bash ci/gate_issue.sh "$([ "${{ steps.gate.outcome }}" = "success" ] && echo pass || echo fail)" qa/out/report.md
+      # Whatever the build and the gate did: the store's reports.json decides (ci/report_alert.py), the deploy never waits.
+      - name: Open, update or close the report alert issue
+        if: always() && steps.due.outputs.fresh != '1'
+        continue-on-error: true
+        run: python3 ci/report_alert.py issue --store .store
 
       # Persist only what passed the numbers gate: a bad build never reaches the store. This runs whether or not
       # the page checks passed, so a day sealed or a report read in this build is kept even when the deploy is held.
