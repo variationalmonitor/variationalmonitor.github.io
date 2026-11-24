@@ -5,6 +5,12 @@
     "1m": 1000000
   },
   "match_window_s": 45,
+  "omni_refresh": {
+    "fresh_s": 10,
+    "min_matched_share": 0.8,
+    "poll_s": 10,
+    "budget_s": 100
+  },
   "omni": {
     "quote_basis": "Indicative quote from the stats API snapshot: (ask - bid) / ((ask + bid) / 2) at size_100k and size_1m. Null when the size is not quoted, a side is zero, or the listing carries no quotes (swap closed).",
     "trading_fee_bps": 0,

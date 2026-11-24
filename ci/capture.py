@@ -6,7 +6,8 @@ the data branch. Python standard library, curl and git only.
     ci/capture.py loop --store .store          capture on every :00 and :30 UTC for a bit over five hours, then return
     ci/capture.py probe --store .store         one look at Telegram: is there a report the store has not seen?
 
-This is the only place that calls the Omni stats API, once per tick. The API is snapshot-only, so a missed
+This is the only place that calls the Omni stats API, once per tick, plus at most one request every 10 s for
+100 s when that reading is a stale cached copy and few pairs matched (refresh). The API is snapshot-only, so a missed
 tick is history lost: a busy answer (HTTP 429, "retry_after_seconds") is retried politely inside a fixed
 budget, and a tick that still fails is written to the capture log on the branch so that it is visible.
 
@@ -51,6 +52,7 @@ CATCH_UP_AFTER_S = 31 * 60    # a loop that starts with no snapshot this recent 
 REPORT_WINDOW_DAYS = 12.5
 REPORT_POLL_S = 180
 PUBLISH_SWITCH = "VM_PUBLISH"
+REFRESH_SAMPLE_S = 60         # hard stop for sampling the books against a refreshed Omni reading
 
 
 def publish_on():
@@ -138,11 +140,12 @@ def retry_after(status, body, headers, attempt):
     return max(2.0, min(MAX_WAIT_S, wait + 1.0))
 
 
-def fetch_stats(url, budget_s=FETCH_BUDGET_S, sleep=time.sleep):
-    """(raw bytes | None, info). Polite retries: honours retry_after_seconds, stops at the budget."""
+def fetch_stats(url, budget_s=FETCH_BUDGET_S, sleep=time.sleep, timeout=60):
+    """(raw bytes | None, info). Polite retries: honours retry_after_seconds, stops at the budget.
+    budget_s=0 makes it a single request; `timeout` caps each request (curl -m)."""
     started, waited, problems = time.time(), 0.0, []
     for attempt in range(1, MAX_REQUESTS + 1):
-        status, body, headers = http_get(url)
+        status, body, headers = http_get(url, timeout)
         if status == 200:
             try:
                 _, summary = validate(body)
@@ -169,9 +172,95 @@ def write_log(store, entry):
         fh.write(json.dumps(entry, separators=(",", ":"), sort_keys=True) + "\n")
 
 
+def quote_staleness(raw, fetched_at, parse_time):
+    """Seconds from the newest quotes.updated_at in a stats response to the moment it was fetched; None if none parses."""
+    newest = None
+    for item in json.loads(raw.decode("utf-8")).get("listings") or []:
+        try:
+            at = parse_time(item["quotes"]["updated_at"])
+        except Exception:
+            continue
+        newest = at if newest is None or at > newest else newest
+    return None if newest is None else fetched_at - newest
+
+
+def match_count(path, stamp, src):
+    """(Omni-quoted, matched on Hyperliquid) over one tick's rows of one src in the day file."""
+    quoted = matched = 0
+    if os.path.exists(path):
+        with open(path) as fh:
+            for line in fh:
+                try:
+                    row = json.loads(line)
+                except ValueError:
+                    continue
+                if row.get("snap") == stamp and row.get("src") == src and row.get("omni_bps") is not None:
+                    quoted += 1
+                    matched += bool(row.get("matched"))
+    return quoted, matched
+
+
+def refresh(store, url, raw, fetched_at, stamp, fetch=fetch_stats, clock=time.time, sleep=time.sleep):
+    """When the tick's Omni reading was a stale cached copy and few pairs matched, poll for a fresh copy and
+    sample the books once more against it (rows src "refresh", same snap, appended; nothing else is written).
+    Rule in venues.json "omni_refresh". Returns the one log text, or None when the rule did not fire.
+    Bounded: each poll is one request capped by curl -m at the budget, the sampling by a subprocess timeout."""
+    sys.path.insert(0, os.path.join(ROOT, "pipeline"))
+    import capture_hl                       # noqa: E402  (parse_time, day_path and the config the sampler uses)
+    rule = capture_hl.load_config()["omni_refresh"]
+    stale = quote_staleness(raw, fetched_at, capture_hl.parse_time)
+    path = capture_hl.day_path(store, stamp)
+    quoted, matched = match_count(path, stamp, "live")
+    if stale is None or stale <= rule["fresh_s"] or not quoted or matched >= rule["min_matched_share"] * quoted:
+        return None
+    deadline = fetched_at + rule["budget_s"]
+    seen, fresh, slot = [], None, 0
+    while fresh is None:
+        slot += 1
+        at = fetched_at + slot * rule["poll_s"]
+        if at >= deadline:
+            break
+        if clock() > at:
+            continue                        # this slot passed while the first sampling ran
+        sleep(max(0.0, at - clock()))
+        left = deadline - clock()
+        if left < 1:
+            break
+        body, info = fetch(url, budget_s=0, timeout=round(left, 1))
+        got = clock()
+        if body is None:
+            seen.append("fail(%s)" % ",".join(info.get("problems") or ["?"]))
+            if any("busy" in p for p in info.get("problems") or []):
+                break                       # 429: stop asking this tick
+            continue
+        age = quote_staleness(body, got, capture_hl.parse_time)
+        seen.append("n/a" if age is None else "%.1fs" % age)
+        if age is not None and age <= rule["fresh_s"]:
+            fresh = body
+    text = "refresh: first reading %.1fs stale, matched %d/%d; %d polls, staleness %s; " % (
+        stale, matched, quoted, len(seen), " ".join(seen) or "-")
+    if fresh is None:
+        return text + "no fresh copy (stopped at +%.0fs of %ss), nothing added" % (clock() - fetched_at, rule["budget_s"])
+    with tempfile.TemporaryDirectory(prefix="vm-refresh-") as tmp:
+        copy = os.path.join(tmp, stamp + ".json")     # the stamp in the name gives the rows the tick's snap
+        with open(copy, "wb") as fh:
+            fh.write(fresh)
+        try:
+            proc = subprocess.run([sys.executable or "python3", os.path.join(ROOT, "pipeline", "capture_hl.py"),
+                                   "--force", "--src", "refresh", copy], stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                                  universal_newlines=True, env=dict(os.environ, VM_STORE=store), timeout=REFRESH_SAMPLE_S)
+            tail = "" if proc.returncode == 0 else " (sampler exit %d: %s)" % (
+                proc.returncode, (proc.stdout.strip().splitlines() or ["no output"])[-1][:200])
+        except subprocess.TimeoutExpired:
+            tail = " (sampler timed out after %ds)" % REFRESH_SAMPLE_S
+    after = match_count(path, stamp, "refresh")
+    return text + "matched after %d/%d%s" % (after[1], after[0], tail)
+
+
 def tick(store, url=STATS_URL, push=True, skip_hl=False, budget_s=FETCH_BUDGET_S):
     """One capture. Returns True when a snapshot was saved."""
     raw, info = fetch_stats(url, budget_s)
+    fetched_at = time.time()
     now = utcnow()
     entry = dict(info, t=now.strftime("%Y-%m-%dT%H:%M:%SZ"), ok=raw is not None)
     stamp = None
@@ -199,6 +288,13 @@ def tick(store, url=STATS_URL, push=True, skip_hl=False, budget_s=FETCH_BUDGET_S
                     entry["hl_ok"] = proc.returncode == 0
                 except subprocess.TimeoutExpired:
                     entry.update(hl="timed out", hl_ok=False)
+                try:                        # a stale Omni copy: one more sampling against a fresh one, never fatal
+                    text = refresh(store, url, raw, fetched_at, stamp)
+                except Exception as exc:
+                    text = "refresh failed, tick goes on: %s: %s" % (type(exc).__name__, str(exc)[:200])
+                if text:
+                    log("  " + text)
+                    entry["refresh"] = text
     log("tick %s %s" % (stamp or "FAILED", json.dumps({k: v for k, v in entry.items() if k not in ("t", "stamp")}, sort_keys=True)))
     write_log(store, entry)
     if os.path.isdir(os.path.join(store, ".git")):

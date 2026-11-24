@@ -362,6 +362,8 @@ def main():
     parser.add_argument("--store", default=STORE)
     parser.add_argument("--force", action="store_true", help="append even if the snapshot is already stored")
     parser.add_argument("--dry-run", action="store_true", help="print the samples, write nothing")
+    parser.add_argument("--src", choices=("live", "refresh"), default="live",
+                        help="label of live samples: refresh = a second reading of the same tick (ci/capture.py)")
     args = parser.parse_args()
     if bool(args.snapshot) == bool(args.replay):
         parser.error("give one snapshot file, or --replay with capture directories")
@@ -379,7 +381,7 @@ def main():
                     continue
                 books, universes, extra = fetch_all(config)  # venues first: every second here widens the gap
                 listings = {item["ticker"]: item for item in read_json(path)["listings"]}
-                samples = build_samples(config, listings, books, universes, snap, "live", run_at=started, extra=extra)
+                samples = build_samples(config, listings, books, universes, snap, args.src, run_at=started, extra=extra)
             else:
                 if not found:
                     raise ValueError("no UTC stamp in directory name")
