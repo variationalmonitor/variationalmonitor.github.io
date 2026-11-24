@@ -357,8 +357,10 @@ def build_oi(reports, dl_var, days):
     for r in reports:
         if r["oi"] is not None:
             rep[r["t"].date().isoformat()] = cents(r["oi"] / 2)
-    keys = sorted(set(rep) | set(dl_var) | set(days))
     dl_first = min(dl_var) if dl_var else "9999-12-31"
+    # a report dates the series only before DefiLlama's first day, so only those report days may stretch the range:
+    # a report posted today would otherwise add today, an unfinished day with no figure, as the last row
+    keys = sorted({ds for ds in rep if ds < dl_first} | set(dl_var) | set(days))
     rep_dual = {r["t"].date().isoformat(): cents(r["oi"]) for r in reports if r["oi"] is not None}
     out = {"dates": [], "total": [], "src": [], "long": [], "short": [], "approx": [], "tradfi_cls": [], "dual": [],
            "group": {g: [] for g in GROUPS}, "cls": {c: [] for c in CLASSES}}
