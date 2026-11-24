@@ -63,7 +63,8 @@ ONCE_LATE_S = 1200            # once: else capture a boundary that passed withou
 SYNC_BEFORE_S = 75            # the loop's numbers: bring the checkout to the branch tip in the last 75 s,
 TICK_AFTER_S = 1.5            # tick 1.5 s after the boundary,
 PROBE_MARGIN_S = 100          # and read Telegram before a boundary only while it is more than 100 s away
-SHADOW_CHECK_S = 60           # once --shadow: look for the boundary's snapshot on the branch this long after it
+SHADOW_CHECK_S = 150          # once --shadow: look for the boundary's snapshot on the branch this long after it
+                              # (the loop's commit can land 100 s after the boundary when its refresh round runs)
 
 
 def publish_on():
@@ -539,9 +540,39 @@ def report_probe(args, boundary, clock):
                 % (", ".join(map(str, new)), hhmm(boundary)))
         else:
             log("new report on Telegram: post %s" % ", ".join(map(str, new)))
-            dispatch("publish.yml", {"reason": "report"}, args.dry_run_dispatch)
+            dispatch_publish("report", args.dry_run_dispatch)
     except Exception as exc:        # Telegram trouble must never stop the capture
         log("  telegram probe failed: %s" % exc)
+
+
+def gh(*args):
+    """(exit code, output) of one gh call; never raises."""
+    try:
+        proc = subprocess.run(["gh"] + list(args), stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                              universal_newlines=True, timeout=60)
+    except (OSError, subprocess.SubprocessError) as exc:
+        return 1, str(exc)
+    return proc.returncode, proc.stdout.strip()
+
+
+def dispatch_publish(reason, dry_run):
+    """Dispatch publish.yml. When that fails, undo only GitHub's inactivity disable, which handover.sh undoes for the
+    loop: if the workflow's state is exactly disabled_inactivity, enable it and dispatch once more. Any other state
+    (a workflow disabled on purpose) is left alone. A successful dispatch reads no state."""
+    if dispatch("publish.yml", {"reason": reason}, dry_run):
+        return True
+    repo = os.environ.get("GITHUB_REPOSITORY")
+    rc, state = gh("api", "repos/%s/actions/workflows/publish.yml" % (repo or "{owner}/{repo}"), "--jq", ".state")
+    if rc != 0 or state != "disabled_inactivity":
+        log("  publish.yml state %s: left alone" % (repr(state) if rc == 0 else "could not be read"))
+        return False
+    rc, out = gh("workflow", "enable", "publish.yml", *(["-R", repo] if repo else []))
+    if rc != 0:
+        log("  publish.yml was disabled for inactivity and could not be enabled: %s" % out[-200:])
+        return False
+    ok = dispatch("publish.yml", {"reason": reason}, dry_run)
+    log("  publish.yml was disabled for inactivity: enabled again, dispatch retried: %s" % ("ok" if ok else "FAILED"))
+    return ok
 
 
 def shadow_run(args, case, target, started, why, clock, sleep):
@@ -574,7 +605,8 @@ def once(args, clock=time.time, sleep=time.sleep):
          capture now, since a late reading beats none;
       c  else nothing to do: one log line, exit 0.
     After the tick of a :00 boundary publish.yml is dispatched (reason=hourly) when the publish switch is on, as the
-    loop does, whether or not the tick saved a snapshot. A failed tick is tried once more at boundary + period/2, as
+    loop does, whether or not the tick saved a snapshot; a failed dispatch undoes only GitHub's inactivity disable of
+    publish.yml (dispatch_publish). A failed tick is tried once more at boundary + period/2, as
     in the loop; when that moment has already passed (only a late capture gets there) there is no retry, so the run
     ends before the next boundary, whose run waits behind this one. Exit 1 when no snapshot was saved.
 
@@ -583,7 +615,8 @@ def once(args, clock=time.time, sleep=time.sleep):
     report dispatches publish.yml (reason=report) unless the boundary is :00, whose hourly dispatch covers it.
 
     --shadow is a rehearsal of the timing: no Omni, venue or Telegram call, no snapshot, commit or dispatch, and no
-    sync. It waits the same way, makes one fetch of the branch a minute after the boundary and prints one JSON line.
+    sync. It waits the same way, makes one fetch of the branch SHADOW_CHECK_S after the boundary and prints one JSON
+    line.
     """
     period = args.period_s
     started = clock()
@@ -628,7 +661,7 @@ def once(args, clock=time.time, sleep=time.sleep):
         log("capturing the %s UTC boundary late: %s" % (hhmm(target), why))
     ok = safe_tick(args)
     if publish and int(target) % 3600 == 0:
-        dispatch("publish.yml", {"reason": "hourly"}, args.dry_run_dispatch)
+        dispatch_publish("hourly", args.dry_run_dispatch)
     if publish and not probed:
         report_probe(args, target, clock)
     if not ok:

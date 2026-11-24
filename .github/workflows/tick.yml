@@ -7,39 +7,41 @@ name: Tick
 # A timer outside GitHub (timer/worker.js, a Cloudflare Worker) dispatches this workflow about three minutes
 # before every :00 and :30. The run waits for the boundary, takes one reading and exits; a failed reading is
 # tried once more a quarter of an hour later. A run that starts with no boundary in the next ten minutes
-# captures at once if the boundary that just passed has no snapshot yet, and otherwise does nothing. The cron
-# entries below are a weak fallback only: GitHub's own cron fires few of this repository's slots.
+# captures at once if the boundary that just passed has no snapshot yet, and otherwise does nothing. There is
+# no schedule: GitHub's cron fired about 2% of this repository's slots, and a workflow without one is never
+# disabled for inactivity.
 #
 # The switch: a real capture happens only when the repository variable VM_CAPTURE is exactly "tick". Otherwise
 # the run is a shadow: it waits the same way but calls nothing and writes nothing, and prints one JSON line with
-# its timing and whether the branch holds the loop's snapshot for that boundary a minute after it. With the
+# its timing and whether the branch holds the loop's snapshot for that boundary 150 seconds after it. With the
 # switch on, a run that finds capture.yml queued or in progress also takes the shadow path and says so, so the
 # loop and the ticks never both call the Omni API (if the runs cannot be listed, it captures).
 #
 # Cut over: gh variable set VM_CAPTURE --body tick; gh workflow disable capture.yml; then cancel the running loop
-# between ticks, right after one of its :00 or :30 snapshots is on the branch (by :05 or :35), so that it has
-# finished before the next tick looks at :27 or :57. Until it has, the ticks stay in shadow.
-# Roll back: gh variable delete VM_CAPTURE; once no tick is running, gh workflow enable capture.yml and
-# gh workflow run capture.yml.
+# by :05 or :35, right after one of its snapshots is on the branch. Rule: its handover step must have finished
+# before the next tick starts at :27 or :57, or that tick sees the loop still in progress, stays in shadow, and
+# its boundary is lost.
+# Roll back: gh variable delete VM_CAPTURE; gh workflow enable capture.yml; then gh workflow run capture.yml.
+# Rule: dispatch capture.yml only when no run of this workflow is active, or the loop and that tick both capture
+# the same boundary.
 #
-# One run at a time: the job is in a concurrency group, so a second run waits for the first and then finds its
-# boundary taken. Only when VM_PUBLISH is "on" does a run also ask publish.yml to run after a :00 reading, and at
-# once when a new report appears on Telegram. All logic is in ci/capture.py (once), ci/datastore.py and
-# ci/tick_mode.sh.
+# One run at a time: the job is in a concurrency group, so a second run (or one that overran) waits for the first
+# and then finds its boundary taken, or captures it late. Only when VM_PUBLISH is "on" does a run also ask
+# publish.yml to run after a :00 reading, and at once when a new report appears on Telegram; if that dispatch
+# fails because GitHub disabled publish.yml for inactivity, the run enables it and dispatches once more (any other
+# disabled state is left alone). All logic is in ci/capture.py (once), ci/datastore.py and ci/tick_mode.sh.
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "27,57 * * * *"
 
 permissions:
   contents: write   # push snapshots to the data branch
-  actions: write    # read the loop's runs; dispatch publish.yml when VM_PUBLISH is on
+  actions: write    # read the loop's runs; dispatch publish.yml (and re-enable it) when VM_PUBLISH is on
 
 jobs:
   tick:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 40
     concurrency:
       group: capture-tick
       cancel-in-progress: false

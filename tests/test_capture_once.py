@@ -319,16 +319,16 @@ class Shadow(unittest.TestCase):
         self.assertEqual(len(records), 1, lines)
         return rc, records[0], fetches
 
-    def test_case_a_waits_the_same_way_then_fetches_the_branch_once_a_minute_after(self):
+    def test_case_a_waits_the_same_way_then_fetches_the_branch_once_150_s_after(self):
         with tempfile.TemporaryDirectory() as store:
             before = tree(store)
             rc, line, fetches = self.run_shadow(store, T0 - 152.25)
             self.assertEqual(tree(store), before)
         self.assertEqual(rc, 0)
-        self.assertEqual(fetches, [T0 + 60])
+        self.assertEqual(fetches, [T0 + 150])
         self.assertEqual(line, {"shadow": True, "case": "a", "boundary": "2026-11-24T10:00:00.000Z",
                                 "started": "2026-11-24T09:57:27.750Z", "reached": "2026-11-24T10:00:01.500Z",
-                                "checked": "2026-11-24T10:01:00.000Z", "branch_has_snapshot": True,
+                                "checked": "2026-11-24T10:02:30.000Z", "branch_has_snapshot": True,
                                 "branch_snapshot": "20261124T1000Z"})
 
     def test_case_b_reaches_at_once_and_c_does_not_reach(self):
@@ -347,6 +347,69 @@ class Shadow(unittest.TestCase):
         with tempfile.TemporaryDirectory() as store:
             rc, line, _ = self.run_shadow(store, T0 - 100, names=None)
         self.assertEqual((rc, line["branch_has_snapshot"], line["branch_snapshot"]), (0, None, None))
+
+
+FAKE_GH = """#!/bin/bash
+echo "$*" >> "$GH_LOG"
+case "$1 $2" in
+  "workflow run")
+    n=$(cat "$GH_RUNS" 2>/dev/null || echo 0); n=$((n + 1)); echo "$n" > "$GH_RUNS"
+    if [ "$n" -le "${GH_RUN_FAILS:-0}" ]; then echo "HTTP 422: Cannot trigger a 'workflow_dispatch' on a disabled workflow"; exit 1; fi
+    exit 0 ;;
+  "workflow enable") exit 0 ;;
+  api*)
+    if [ -n "${GH_STATE:-}" ]; then echo "$GH_STATE"; exit 0; fi
+    echo "HTTP 404: Not Found"; exit 1 ;;
+esac
+exit 2
+"""
+
+
+class PublishDispatch(unittest.TestCase):
+    """A failed dispatch of publish.yml undoes only GitHub's inactivity disable, through a stub gh on PATH."""
+
+    def dispatch(self, run_fails, state):
+        with tempfile.TemporaryDirectory() as tmp:
+            gh = os.path.join(tmp, "gh")
+            with open(gh, "w") as fh:
+                fh.write(FAKE_GH)
+            os.chmod(gh, 0o755)
+            log = os.path.join(tmp, "gh.log")
+            env = {"PATH": tmp + os.pathsep + "/usr/bin:/bin", "GITHUB_REPOSITORY": "owner/repo", "GH_LOG": log,
+                   "GH_RUNS": os.path.join(tmp, "runs"), "GH_RUN_FAILS": str(run_fails), "GH_STATE": state or ""}
+            out = io.StringIO()
+            with mock.patch.dict(os.environ, env, clear=True), contextlib.redirect_stdout(out):
+                ok = capture.dispatch_publish("hourly", False)
+            with open(log) as fh:
+                calls = fh.read().splitlines()
+        return ok, calls, out.getvalue()
+
+    RUN = "workflow run publish.yml -f reason=hourly -R owner/repo"
+    STATE = "api repos/owner/repo/actions/workflows/publish.yml --jq .state"
+
+    def test_a_dispatch_that_works_reads_no_state(self):
+        ok, calls, _ = self.dispatch(0, "disabled_inactivity")
+        self.assertEqual((ok, calls), (True, [self.RUN]))
+
+    def test_disabled_for_inactivity_is_enabled_and_the_dispatch_retried_once(self):
+        ok, calls, out = self.dispatch(1, "disabled_inactivity")
+        self.assertEqual((ok, calls), (True, [self.RUN, self.STATE, "workflow enable publish.yml -R owner/repo", self.RUN]))
+        self.assertIn("publish.yml was disabled for inactivity: enabled again, dispatch retried: ok", out)
+
+    def test_disabled_on_purpose_is_left_alone(self):
+        ok, calls, out = self.dispatch(1, "disabled_manually")
+        self.assertEqual((ok, calls), (False, [self.RUN, self.STATE]))
+        self.assertIn("publish.yml state 'disabled_manually': left alone", out)
+
+    def test_an_unreadable_state_is_left_alone(self):
+        ok, calls, out = self.dispatch(1, None)
+        self.assertEqual((ok, calls), (False, [self.RUN, self.STATE]))
+        self.assertIn("publish.yml state could not be read: left alone", out)
+
+    def test_the_retry_is_made_only_once(self):
+        ok, calls, out = self.dispatch(5, "disabled_inactivity")
+        self.assertEqual((ok, calls.count(self.RUN), calls.count("workflow enable publish.yml -R owner/repo")), (False, 2, 1))
+        self.assertIn("dispatch retried: FAILED", out)
 
 
 # ---------------------------------------------------------------- real git
