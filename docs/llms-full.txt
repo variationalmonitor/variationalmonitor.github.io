@@ -1,3 +1,5 @@
+> Agents can also search and read this documentation through its [MCP server](https://docs.variational.io/~gitbook/mcp).
+
 # What Is Variational
 
 Variational is a protocol for on-chain derivatives trading across crypto, equities, commodities, and forex. By aggregating the deepest possible liquidity for each market from CEXs, DEXs, and TradFi dealers, Variational plugs DeFi directly into the global economy.
