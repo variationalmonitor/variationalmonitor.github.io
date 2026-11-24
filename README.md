@@ -1,46 +1,93 @@
 # Variational Monitor
 
-[variationalmonitor.github.io](https://variationalmonitor.github.io/) is an independent dashboard for Variational. It covers Omni markets, bi-weekly financial reports, Protocol Treasury, the Omni Liquidity Provider, VAR, Variational Pro and research by Jae (Ponyo).
+[variationalmonitor.github.io](https://variationalmonitor.github.io/) is an independent analytics dashboard for
+[Variational](https://variational.io/): its trading venue Omni, its liquidity provider OLP, its reported operating
+results, its Protocol Treasury and its token.
 
-## Run locally
+by Ponyo. Independent analytics, not affiliated with Variational.
 
-The site in `public/` is static. Start it from the project directory with `python3 -m http.server 8000 --directory public` and open `http://localhost:8000`. Collectors use the Python standard library. Run their checks with `python3 -m unittest discover -s tests`.
+## Pages
 
-Run the chart and calendar-window tests with `node --test tests/*.test.mjs`. All historical pages share 7D, 30D, 90D, 180D, 1Y and All controls. The selected range travels with the link. Tables and CSVs use the displayed observations. Cumulative report charts preserve the amounts earned before the selected window.
+| Page | What it shows |
+|---|---|
+| Overview | Volume, open interest, on-chain TVL, gross revenue, net profit, accounts, and Omni's share of on-chain open interest |
+| Omni, Markets | Volume, open interest, long/short, funding and quoted slippage for all markets or one asset class, the full market table, and a page per market |
+| Omni, Execution | Round-trip cost on Omni against Hyperliquid and Lighter at $100K and $1M, and how many markets Omni quotes at $1M |
+| Omni, Accounts | Active accounts, first-time funding, volume per account, and retention by the month an account was first funded |
+| Omni, Deposits | Deposits and withdrawals, settlement pool balances by size, and the largest pools |
+| Omni, OLP | OLP's profit and loss per two-week period, how much of traders' positions offset each other, and the Core OLP Vault balance |
+| Financials, Operating results | Gross revenue through to net profit for every two-week report, margins, and revenue per dollar of volume |
+| Financials, Protocol Treasury | Holdings and inflow on-chain, beside what Variational reports |
+| Token, $VAR | Polymarket-implied launch date and valuation, and the genesis allocation |
+| Token, Rewards and points | Referral rewards and loss refunds paid on-chain, and accounts receiving points |
+| Research Library | Published research on Variational |
+| Data | Every dataset behind the site as JSON and CSV, with the definitions |
 
-## Sources and accounting
+## Sources
 
-- The [Omni API](https://docs.variational.io/technical-documentation/api) reports lifetime trading volume, rolling 24-hour volume, USDC balances and market statistics. Market rows carry the observation time. Public bid and ask prices are indicative quotes.
-- [Variational announcements](https://t.me/s/variational_io) supply the financial reports. Each record links to its source. Covered-period totals sum dated income and allocation lines. Stocks such as Protocol Treasury Holdings and Lifetime OLP PnL retain their individual observation dates. A missing field stays missing. Historical source discrepancies remain attached to the corresponding report.
-- The Arbitrum collector reads native USDC at the published [Protocol Treasury and Core OLP Vault addresses](https://docs.variational.io/technical-documentation/mainnet-contracts) at a common safe block. These balances describe the two wallets. External hedges and liabilities require other disclosures.
-- Historical wallet charts store the block hash, timestamp and native USDC balance for each observed address. Historical UTC closes verify the block on each side of midnight. The ordinary daily job appends the safe-block observation it already collected.
-- Cumulative volume and dual-sided open interest use Variational’s bi-weekly disclosures in USD. If a selected period has no disclosure, the charts can use actual Omni API observations of the same counter in USDC. The chart identifies the unit and source for its entire series. Between-report volume uses the change in successive disclosed counters and exports both publication dates.
-- [CoinGecko](https://www.coingecko.com/en/coins/variational) provides VAR listing status. A verified contract registry and a matching listing are required before market figures appear. [Variational's allocation policy](https://docs.variational.io/token/usdvar) is dated independently.
-- Comparable quote observations use a fixed size against the [Hyperliquid info endpoint](https://hyperliquid.gitbook.io/hyperliquid-docs/for-developers/api/info-endpoint), book depth and the published fee assumption. A match requires adequate depth and quotes within the specified age and time difference.
+| Source | Used for |
+|---|---|
+| [Omni stats API](https://docs.variational.io/technical-documentation/api) | Cumulative volume, open interest, funding and quotes for every market. The API has no history, so a reading is saved every half hour (since 22 Nov 2026) |
+| [DefiLlama](https://defillama.com/protocol/variational) | Daily volume from 29 Dec 2025 and daily open interest from 4 Jan 2026, up to the first saved readings; open interest of other on-chain venues |
+| [Variational's biweekly updates](https://t.me/s/variational_io) | Gross revenue, net revenue, rewards, net profit, Protocol Treasury inflow and OLP profit and loss; also volume and open interest before DefiLlama's history begins. Company-reported and unaudited |
+| Arbitrum | USDC in settlement pools, the Core OLP Vault, the Protocol Treasury and the referral reward pool, from an index of the published [contracts](https://docs.variational.io/technical-documentation/mainnet-contracts) |
+| Hyperliquid and Lighter order books | The cost comparison on Execution |
+| [Polymarket](https://polymarket.com/) | Implied token launch date and valuation |
+| [Variational docs](https://docs.variational.io/) | Token allocation and contract addresses |
 
-## Market history and execution
+## Definitions
 
-- Omni charts use saved API observations within the selected UTC range. The horizontal scale follows their actual dates. Per-market volume is a rolling 24-hour amount. The API does not supply daily trade histories, hourly quote histories or per-market lifetime volume.
-- The TradFi view joins an independently sourced exact-identity catalogue to the public Omni feed. Unmatched markets stay unclassified. The TradFi share shown is a lower bound using the verified subset. The daily job rebuilds group histories from saved partitions.
-- Execution shows observed two-sided Omni quote availability at three sizes. Perpetual Trading Costs by Venue uses two-sided depth, a maximum 45-second source-time difference and stated venue fee assumptions. It compares the median paired difference in indicative costs.
-- Rewards use official updates. Cumulative snapshots include the earlier archive and retain the published precision. Signed period expenses use the modern Operating Results disclosures. Treasury wallet charts use verified USDC balances and differences between recorded blocks.
+- **Open interest** is one-sided: traders' long plus short positions. OLP holds the other side, so the dual-sided
+  figure Variational reports is twice this.
+- **Gross revenue** is the spread traders paid in a two-week reporting period. Variational reports it as spreads paid.
+- **An account** is a settlement pool on Arbitrum. There is one pool per account.
+- **TVL** is USDC held on Arbitrum by settlement pools, the Core OLP Vault, the Protocol Treasury and the referral
+  reward pool. OLP's hedging accounts on other venues are not included.
+- **Round-trip cost** is the cost of buying and selling a size at once. For Omni it is the quoted bid-ask, which
+  carries no trading fee. For Hyperliquid and Lighter it is the order-book cost at the same moment plus each venue's
+  base taker fee each way. Samples are paired within 45 seconds and shown as medians.
+- **Daily gross revenue** is implied: USDC received by the Protocol Treasury each day, divided by the treasury's
+  share of gross revenue (20% since 17 Apr 2026). Over each reporting period it lands within 5% of the reported figure.
 
-## Historical backfill and onchain index
+Every card carries its own definition, source and time in its info popover.
 
-- The official announcement archive extends lifetime volume and report-snapshot activity back into 2025. Published DAU is a weekly average, and published WAU is a point-in-time weekly count. Per-market volume, OI and financing still use independently saved API observations.
-- [Execution](https://variationalmonitor.github.io/#/execution) defaults to the latest saved observation with a benchmark swap quote within the range. Users can select a closed-date snapshot and inspect unavailable prices. Cross-venue estimates require timed, two-sided books and charge a stated taker fee. The public collector ships Hyperliquid, Lighter and Binance sample data. OKX and Bybit display a publication-permission status.
-- The local collector can refresh matched book data immediately after `python3 tools/markets.py`. Run `python3 tools/multi_venue.py refresh` in an eligible environment. The hosted daily collector samples Hyperliquid. Each venue row displays its actual latest matched date.
-- The [Accounts](https://variationalmonitor.github.io/#/accounts) pilot exports verified creation events as aggregate counts for a bounded block range. `python3 tools/arbitrum_index.py --help` lists the resumable local options. The SQLite checkpoint stays outside the published directory. The index still needs all historical factories, verified cash-transfer coverage, and a canonical referral claims source for a full backfill.
-- `python3 tools/arbitrum_bulk.py --max-pages 1` resumes a separate local factory census using the official Arbitrum RPC. It writes only to a private checkpoint outside the checkout. Its results come from one provider and require independent reconciliation before publication.
+## How it stays current
 
-## Updates
+- A reading of the Omni API every half hour, and a rebuild of the site every hour.
+- On-chain figures cover complete UTC days and update after each day closes.
+- Variational's channel is read every hour, so a new biweekly update appears within about an hour of its post.
+- Every build passes a gate before it is published: totals must equal their parts, figures must tie back to the raw
+  sources, published history must not change, and every page must render at desktop and phone widths. When a check
+  fails, the last good build stays up.
 
-GitHub Actions schedules ordinary data collection at 19:15 UTC daily. A separate check within the same workflow scans the official announcement channel every five minutes. New or edited financial disclosures can publish between daily updates. Rewards refresh after an updated financial disclosure or during the daily job. Queue delays at GitHub and cross-posting times depend on the respective sources. See the [workflow history](https://github.com/variationalmonitor/variationalmonitor.github.io/actions) for actual run times.
+## Repository
 
-The workflow deploys the contents of `public/` through GitHub Pages after validation. Failed inputs retain the last valid observations and their timestamps. No personal social-media credentials are required. An optional CoinGecko Demo key may be configured as a repository secret called `COINGECKO_DEMO_API_KEY`.
+| Path | What it is |
+|---|---|
+| `site/` | The page: plain ES modules and ECharts, with every card described in `site/js/catalog.js` |
+| `pipeline/` | Builds the data files from the stored readings and sources (Python standard library) |
+| `qa/` | The gate that every build must pass |
+| `ci/`, `.github/workflows/` | The jobs: take a reading, build, check, publish |
+| `timer/` | The timer that starts each reading |
+| branch `data` | The store: raw readings, sealed days and source caches, written only by the jobs |
+| `AGENTS.md` | How the system runs and the rules for changing it |
 
-## Research
+`public/`, `tools/`, `config/` and `data/` belong to the first version of the site and are not used.
 
-The article catalogue in `config/catalog.json` supports scheduled and published entries. Add the public version and its canonical URL after the publisher releases an article. A scheduled date alone does not publish a draft. Refresh the public catalogue with `python3 tools/supplement.py`.
+## Run it locally
 
-The daily job runs `python3 tools/research_baselines.py --data-dir public/data` after collecting observations. It preserves the available indicators for each article’s target date in Korea. Each indicator retains its source timestamp or report coverage. The article view compares subsequent observations with the recorded baseline. Missing observations stay blank. The first capture for a given article and date is retained on later runs.
+Python 3.9 or later and Node 18 or later.
+
+    git clone https://github.com/variationalmonitor/variationalmonitor.github.io.git
+    cd variationalmonitor.github.io
+    git clone --depth 1 --branch data https://github.com/variationalmonitor/variationalmonitor.github.io.git .store
+    . ci/env.sh .store
+    python3 pipeline/build.py --offline
+    python3 -m http.server 8900 --directory site
+
+Then open http://localhost:8900. The build reads the stored readings only and calls no outside service.
+
+Tests:
+
+    python3 -m unittest discover -s tests -p "test_*.py"
+    node --test tests/*.test.mjs
