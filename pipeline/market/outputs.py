@@ -195,8 +195,8 @@ def peers_json(dl, peers, oi, dl_as_of):
                        for v in peers]}
 
 
-def latest_json(ref, classifier, first_day=None):
-    """markets_latest.json from the newest snapshot."""
+def latest_json(ref, classifier, first_day, dated):
+    """markets_latest.json from the newest snapshot. `dated`: each listing's evidence (listings.listing_dates)."""
     snap = ref.load()
     fin_ref = store.fin_ref_for(ref.t)
     rows, unresolved_fin = [], []
@@ -217,7 +217,7 @@ def latest_json(ref, classifier, first_day=None):
             "quote_at": r["quote_at"],
             "turnover": turnover(cents(r["vol24h"]), cents(r["oi_long"]), cents(r["oi_short"])),
             "long_share": long_share(cents(r["oi_long"]), cents(r["oi_short"])),
-            "listed": listed_date(classifier.listings.get(l["ticker"]), first_day),
+            "listed": listed_date(dated.get(l["ticker"]), first_day),
             "slip1k_bps": slip(ba["1k"]), "slip100k_bps": slip(ba["100k"]), "slip1m_bps": slip(ba["1m"]),
             "ls_ratio": ls_ratio(cents(r["oi_long"]), cents(r["oi_short"])),
         })

@@ -1083,6 +1083,99 @@ def check_latest_against_raw(rep, docs):
               "%d listings, snapshot %s" % (len(rows), stamp))
 
 
+def first_listing_snapshots(tickers):
+    """({ticker: stamp}, stamps, unreadable): the first raw snapshot on disk (any folder of VM_SNAPSHOTS) that lists
+    each ticker, the stamps of every raw snapshot on disk, oldest first, and the files that could not be read."""
+    want = set(tickers)
+    paths = sorted((os.path.basename(p)[:14], p) for folder in SNAPSHOT_DIRS for p in glob.glob(os.path.join(folder, "*.json.gz")))
+    found, unreadable = {}, []
+    for stamp, p in paths:
+        if want <= set(found):
+            break
+        try:
+            with gzip.open(p, "rt", encoding="utf-8") as fh:
+                have = {l.get("ticker") for l in json.load(fh)["listings"]}
+        except (OSError, ValueError, KeyError, TypeError):
+            unreadable.append(os.path.basename(p))
+            continue
+        for tk in want & have:
+            found.setdefault(tk, stamp)
+    return found, [s for s, _ in paths], unreadable
+
+
+def store_posts():
+    """The Telegram posts in the store (the builder reads the same file), [] when there are none."""
+    for path in (os.path.join(STORE, "telegram", "posts.json"), os.path.join(ROOT, ".cache", "telegram", "posts.json")):
+        if os.path.exists(path):
+            try:
+                d = strict_load(path)
+                return d["posts"] if isinstance(d, dict) else d
+            except (OSError, ValueError, KeyError):
+                return []
+    return []
+
+
+def names_listing(text, ticker, name):
+    """True when a post names the listing: its symbol ($PFE, an Omni link or the bare symbol), or the first word or
+    the last two words of its name, on word boundaries and in any case."""
+    body = (text or "").split("X (formerly Twitter)")[0]
+    words = re.findall(r"[A-Za-z0-9]+", (name or "").replace("Swap on ", ""))
+    probes = [ticker.rsplit("-", 1)[0]] + [p for p in words[:1] + ([" ".join(words[-2:])] if len(words) > 1 else []) if len(p) >= 3]
+    return any(re.search(r"(?<![A-Za-z0-9])%s(?![A-Za-z0-9])" % re.escape(p), body, re.I) for p in probes)
+
+
+def unfiled_listing_dates(rows, data_day):
+    """Problems with the listing dates of markets_latest rows that are not in classification.json.
+
+    The builder dates such a listing by the earliest of its announcement, a report naming it and the UTC day of
+    the first raw snapshot that lists it. That snapshot is found here in the raw files themselves. Raw snapshots
+    are kept 14 days: once it has been removed, the store's own index (listings_seen.json, `first`) stands in for
+    it, provided no file on disk contradicts the index. A date before that day must be the day of a post in the
+    store that names the listing, so with no such post the date is that day.
+    """
+    if not rows:
+        return []
+    bad = []
+    found, stamps, unreadable = first_listing_snapshots(r["ticker"] for r in rows)
+    bad += ["raw snapshot %s is unreadable" % f for f in unreadable]
+    on_disk = set(stamps)
+    day_of = lambda stamp: "%s-%s-%s" % (stamp[:4], stamp[4:6], stamp[6:8])
+    first_stored = day_of(stamps[0]) if stamps else None
+    try:
+        seen = strict_load(os.path.join(STORE, "listings_seen.json"))
+    except (OSError, ValueError) as exc:
+        seen = {}
+        bad.append("listings_seen.json unreadable: %s" % exc)
+    posts = None
+    for r in rows:
+        tk, listed = r["ticker"], r.get("listed")
+        raw = found.get(tk)
+        idx = (seen.get(tk) or {}).get("first")
+        idx = parse_time(idx).strftime("%Y%m%dT%H%MZ") if is_time(idx) else None
+        if raw is not None and raw == idx:
+            first = raw
+        elif idx is not None and idx not in on_disk and (raw is None or idx < raw):
+            first = idx                  # no longer on disk: the index records it
+        else:
+            bad.append("%s: the store's index has its first snapshot at %s, the raw files at %s" % (tk, idx, raw))
+            continue
+        day = day_of(first)
+        if listed is None:
+            if first_stored is None or day > first_stored:
+                bad.append("%s: not in classification.json and listed is null, first raw snapshot %s" % (tk, first))
+        elif not is_date(listed):
+            bad.append("%s: listed %r is not a date" % (tk, listed))
+        elif first_stored is None or not first_stored <= listed <= data_day:
+            bad.append("%s: listed %s, outside the first stored snapshot day %s to the data day %s" % (tk, listed, first_stored, data_day))
+        elif listed > day:
+            bad.append("%s: listed %s, after its first raw snapshot %s" % (tk, listed, first))
+        elif listed < day:
+            posts = store_posts() if posts is None else posts
+            if not any(str(p.get("time"))[:10] == listed and names_listing(p.get("text"), tk, r.get("name")) for p in posts):
+                bad.append("%s: listed %s, before its first raw snapshot %s, and no post in the store that day names it" % (tk, listed, first))
+    return bad
+
+
 def check_sealed_volume(rep, docs):
     """volume_daily against the sealed day files for days measured as the change in the API counter."""
     from decimal import Decimal
@@ -1386,10 +1479,12 @@ def check_v3(rep, docs, now):
     if cfg is not None:
         first_snapshot = min((v["listed"]["date"] for v in cfg.values() if (v.get("listed") or {}).get("evidence") == "snapshot"), default=None)
         dated = 0
+        unfiled = []
         for r in (docs.get("markets_latest") or {}).get("rows", []):
             c = cfg.get(r.get("ticker"))
             if c is None:
-                continue                         # classified by rule; the builder lists it in its build report
+                unfiled.append(r)                # classified and dated by rule: its date is checked against the store below
+                continue
             if r.get("cls") != c.get("cls") or r.get("group") != c.get("group"):
                 bad.append("%s: group %s and class %s, classification.json has %s and %s" % (r["ticker"], r.get("group"), r.get("cls"), c.get("group"), c.get("cls")))
             known = c.get("listed") or {}
@@ -1400,7 +1495,11 @@ def check_v3(rep, docs, now):
             elif known.get("date") and not (known.get("evidence") == "snapshot" and known["date"] == first_snapshot):
                 # only a listing already present in the first snapshot has an unknown listing date
                 bad.append("%s: listed is null, classification.json dates it %s (%s)" % (r["ticker"], known["date"], known.get("evidence")))
+        bad += unfiled_listing_dates(unfiled, ((docs.get("markets_latest") or {}).get("as_of") or "")[:10])
         note = "%d rows dated; a listing already in the first snapshot (%s) has no known date" % (dated, first_snapshot)
+        if unfiled:
+            note += "; %d not in the file, dated against the raw store: %s" % (
+                len(unfiled), ", ".join("%s %s" % (r["ticker"], r.get("listed")) for r in unfiled[:5]))
     rep.check("ties", "markets_latest: group, class and listing date against classification.json", bad, note if cfg is not None else None)
 
     # Protocol Treasury: on-chain inflow per report period against the reported two-week inflow

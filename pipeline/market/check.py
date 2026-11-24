@@ -7,7 +7,7 @@ import os
 import re
 from datetime import date, datetime, timedelta
 
-from . import history, store
+from . import classify, history, listings, store
 from sources import defillama
 from .common import (OUT, CONFIG, STORE, GROUPS, CLASSES, TOP, TRADFI_CLASSES, TRADFI_GROUPS, RANGES, MAX_SPREAD_BPS,
                      SIZES, SIZE_FIELD, cents, median, read_json, spread_bps)
@@ -298,6 +298,14 @@ def _run(k):
         l_ = e_.get("listed")
         known = l_ and not (l_["evidence"] == "snapshot" and (first_day is None or l_["date"] <= first_day))
         listed_cfg[t_] = l_["date"] if known else None
+    unfiled = {r["ticker"] for r in rows} - set(cfg_all)
+    if unfiled:
+        # a listing not in the file yet is dated from the store by the rule --classify stores
+        seen_ = store.load_seen()
+        clf_ = classify.Classifier(seen_)
+        dated_ = listings.listing_dates(clf_, history.load_days(clf_), seen_)[1]
+        for t_ in unfiled:
+            listed_cfg[t_] = listings.listed_date(dated_.get(t_), first_day)
     k.ok(all(e_["cls"] in CLASSES for e_ in cfg_all.values()), "classification: a class outside %s" % CLASSES)
     k.ok(all((e_["cls"] in TRADFI_CLASSES) == (e_["group"] in TRADFI_GROUPS) for e_ in cfg_all.values()),
          "classification: TradFi group without a TradFi class, or the reverse")

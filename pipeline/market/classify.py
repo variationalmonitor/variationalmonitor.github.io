@@ -75,6 +75,12 @@ def by_rule(ticker, typ, name, marks):
     return "unclassified", "crypto", "unresolved"
 
 
+def entry_by_rule(ticker, s):
+    """The entry `build_market.py --classify` adds for a seen listing (`s`, from listings_seen.json) missing from the file."""
+    group, cls, basis = by_rule(ticker, s["type"], s["name"], s["marks"])
+    return {"group": group, "cls": cls, "name": s["name"], "basis": basis}
+
+
 class Classifier:
     def __init__(self, seen):
         cfg = read_json(PATH) if os.path.exists(PATH) else {"listings": {}, "swap_financing": {}}
@@ -100,6 +106,14 @@ class Classifier:
         assert group in GROUPS or group == "unclassified", (ticker, group)
         assert cls in CLASSES, (ticker, cls)
         return group, cls, basis
+
+    def every_listing(self):
+        """The file's entries plus, for every seen listing missing from it, the entry --classify would add."""
+        out = dict(self.listings)
+        for tk in sorted(self.seen):
+            if tk not in out:
+                out[tk] = entry_by_rule(tk, self.seen[tk])
+        return out
 
 
 def sum_group(group):

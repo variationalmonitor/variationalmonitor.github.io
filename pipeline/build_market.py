@@ -40,10 +40,8 @@ def extend_classification(seen):
     for tk in sorted(seen):
         if tk in listings:
             continue
-        s = seen[tk]
-        group, cls, basis = classify.by_rule(tk, s["type"], s["name"], s["marks"])
-        listings[tk] = {"group": group, "cls": cls, "name": s["name"], "basis": basis}
-        added.append((tk, group, cls, basis, s["name"]))
+        e = listings[tk] = classify.entry_by_rule(tk, seen[tk])
+        added.append((tk, e["group"], e["cls"], e["basis"], e["name"]))
     cfg["listings"] = {k: listings[k] for k in sorted(listings)}
     cfg.setdefault("swap_financing", {})
     write_classification(cfg)
@@ -107,9 +105,10 @@ def main(argv):
         log("classification: added %d listings" % len(added))
         for row in added:
             log("  %-18s %-13s %-10s %-14s %s" % row)
-        # date every TradFi listing by its earliest evidence and store it beside the classification
+        # date every listing by its earliest evidence and store it beside the classification: the same function
+        # dates a listing missing from the file at build time, so storing it does not move a date already shown
         classifier = classify.Classifier(seen)
-        computed = listings.evidence(classifier.listings, history.load_days(classifier), seen)[0]
+        computed = listings.listing_dates(classifier, history.load_days(classifier), seen)[2]
         cfg = read_json(classify.PATH)
         changed = 0
         for tk, e in cfg["listings"].items():
@@ -207,13 +206,13 @@ def main(argv):
 
     rows_platform = store.load_platform()
     live = [r for r in refs if not rows_platform[r.key]["dup"]]
-    latest, platform, fin_unresolved = outputs.latest_json(live[-1], classifier, min(days) if days else None)
+    listed_tf, li, dated = listings.build_listed(days, classifier, seen)
+    latest, platform, fin_unresolved = outputs.latest_json(live[-1], classifier, min(days) if days else None, dated)
     intra = intraday.collect(refs, rows_platform, classifier)
     files, index = outputs.market_files(days, [r["ticker"] for r in latest["rows"]], intra)
     depth = outputs.quote_depth_json(days)
     pairs_out = outputs.swap_pairs_json(days, pairs)
     olp = outputs.olp_json(days)
-    listed_tf, li, _ = listings.build_listed(days, classifier, seen)
     tradfi = outputs.tradfi_json(volume, oi, days, listed_tf)
     concentration = outputs.concentration_json(days)
     events = outputs.events_list()
@@ -322,8 +321,9 @@ def main(argv):
     log("  group: " + ", ".join("%s %d" % (g, by_group.get(g, 0)) for g in GROUPS + ["unclassified"]))
     log("  class: " + ", ".join("%s %d" % (c, by_cls.get(c, 0)) for c in CLASSES))
     if classifier.not_in_file:
-        log("  NOT IN classification.json (classified by rule; run --classify and review): %s"
-            % ", ".join("%s=%s/%s" % (k, v[0], v[1]) for k, v in sorted(classifier.not_in_file.items())))
+        log("  NOT IN classification.json (classified and dated by rule; review, then --classify stores both): %s"
+            % ", ".join("%s=%s/%s listed %s" % (k, v[0], v[1], "%(date)s (%(evidence)s)" % dated[k] if k in dated else "unknown")
+                        for k, v in sorted(classifier.not_in_file.items())))
     if classifier.unclassified:
         log("  UNCLASSIFIED: %s" % ", ".join(sorted(classifier.unclassified)))
     if classifier.class_unresolved:

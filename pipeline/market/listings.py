@@ -8,6 +8,16 @@ One rule for every TradFi listing, in this order of preference:
                  12 Jun 2026: "28 ... markets have been listed ...: Gold, Silver, ...")
   snapshot      else the first stored Omni snapshot day that contains it
 
+A listing first seen once continuous capture had begun (CONTINUOUS_START, a snapshot every half hour) is
+dated by the earliest of the three instead, its snapshot evidence being the UTC day of the first raw snapshot
+that lists it: it has a date on its first day, an earlier post moves it back and a later one leaves it. Before
+continuous capture the store holds only scattered seed and archived snapshots, so a first snapshot there is a
+late bound and the order of preference above stands, with the snapshot day being the day that snapshot closes.
+
+Crypto listings are dated the same way from their own announcement and their snapshots (reports name
+TradFi markets only). A listing not yet in `config/classification.json` is dated at build time by the same
+function, with the entry `--classify` would add for it (see `listing_dates`).
+
 A named market maps to a ticker only when exactly one TradFi listing fits, among listings that
 were not announced after the post (a market announced later cannot be the one named). It fits when
 the item is the ticker symbol (which settles it: "QQQ" is QQQ, not the fund whose name ends in
@@ -23,7 +33,8 @@ listing is stored in `config/classification.json` (`listed`) by `build_market.py
 import os
 import re
 
-from .common import ROOT, STORE, TRADFI_CLASSES, TRADFI_GROUPS, read_json
+from . import store
+from .common import CONTINUOUS_START, ROOT, STORE, TRADFI_CLASSES, TRADFI_GROUPS, read_json
 
 _LIVE = re.compile(r"(perps?|swaps?|swap markets?)\b[^\n]*?\b(?:are|is) now live|swap for[^\n]*?is now live", re.I)
 _DOLLAR = re.compile(r"\$([A-Za-z0-9_]+)")
@@ -131,7 +142,8 @@ def evidence(listings, days, seen):
 
     Crypto listings get the same treatment (their own announcement, else the first snapshot day),
     which is what the markets table shows as the listing date; only TradFi listings are counted
-    in `tradfi.json`.
+    in `tradfi.json`. `seen` is the store's listing register (listings_seen.json): `first` is the
+    first stored raw snapshot that listed each ticker.
     """
     ann, _ = announcements(listings)
     by_ann = {}
@@ -148,12 +160,21 @@ def evidence(listings, days, seen):
     for d in sorted(days):
         for tk in days[d]["rows"]:
             first_day.setdefault(tk, d)
+    platform = None
     out = {}
     for tk, e in listings.items():
-        if tk in by_ann:
-            out[tk] = {"date": by_ann[tk]["date"], "evidence": "announcement", "source": POST_URL % by_ann[tk]["id"]}
-        elif tk in by_rep:
-            out[tk] = {"date": by_rep[tk]["date"], "evidence": "report", "source": POST_URL % by_rep[tk]["id"]}
+        posted = [{"date": p["date"], "evidence": k, "source": POST_URL % p["id"]}
+                  for k, p in (("announcement", by_ann.get(tk)), ("report", by_rep.get(tk))) if p]
+        first = (seen.get(tk) or {}).get("first")
+        if first and first >= CONTINUOUS_START:
+            # first seen by the half-hourly capture: the earliest evidence, a tie going to the post
+            if platform is None:
+                platform = store.load_platform()
+            raw = {"date": first[:10], "evidence": "snapshot",
+                   "source": (platform.get(first) or {}).get("src") or "snapshot " + first}
+            out[tk] = min(posted + [raw], key=lambda x: x["date"])
+        elif posted:
+            out[tk] = posted[0]
         elif tk in first_day:
             d = first_day[tk]
             out[tk] = {"date": d, "evidence": "snapshot", "source": days[d]["raw"]["boundary_src"]}
@@ -162,13 +183,26 @@ def evidence(listings, days, seen):
     return out, ann, reports
 
 
-def build_listed(days, classifier, seen):
-    """`listed` for tradfi.json plus the figures the build report prints."""
-    listings = classifier.listings
+def listing_dates(classifier, days, seen):
+    """Every listing seen and the evidence that dates it: one function for the build and for --classify.
+
+    Returns (listings, dated, computed, announcements, reports). `listings` is classification.json's
+    entries plus, for a seen listing not in the file yet, the entry --classify would add for it;
+    `computed` is `evidence` over all of them; `dated` is the stored `listed` where the file has one,
+    else the computed evidence, which is what --classify stores.
+    """
+    listings = classifier.every_listing()
     computed, ann, reports = evidence(listings, days, seen)
-    ev = {tk: (listings[tk].get("listed") or computed[tk]) for tk in computed if listings[tk]["group"] in TRADFI_GROUPS}
+    dated = {tk: e.get("listed") or computed.get(tk) for tk, e in listings.items()}
+    return listings, {tk: v for tk, v in dated.items() if v}, computed, ann, reports
+
+
+def build_listed(days, classifier, seen):
+    """`listed` for tradfi.json, the figures the build report prints and the listing evidence of every listing."""
+    listings, every_ev, computed, ann, reports = listing_dates(classifier, days, seen)
+    ev = {tk: every_ev[tk] for tk in computed if listings[tk]["group"] in TRADFI_GROUPS}
     stale = sorted(tk for tk in ev if listings[tk].get("listed") not in (None, computed[tk]))
-    not_in_config = sorted(tk for tk in ev if not listings[tk].get("listed"))
+    not_in_config = sorted(tk for tk in ev if tk in classifier.listings and not listings[tk].get("listed"))
     first_omni = min(days) if days else "9999-12-31"
     kinds = ["announcement", "report", "snapshot"]
     out = dict({"dates": [], "src": []}, **{c: [] for c in TRADFI_CLASSES},
@@ -211,16 +245,15 @@ def build_listed(days, classifier, seen):
         "dated_but_not_in_first_snapshot": sorted(before - omni_first) if omni_first is not None else [],
         "config_stale": stale, "not_in_config": not_in_config,
     }
-    return out, info, computed
+    return out, info, every_ev
 
 
-def listed_date(entry, first_day):
-    """Date a listing first appeared, for the markets table: None when it is not known.
+def listed_date(listed, first_day):
+    """Date a listing first appeared, for the markets table, from its evidence: None when it is not known.
 
     A listing whose only evidence is the first stored snapshot day was already live when capture
     began, so its date is unknown.
     """
-    l = (entry or {}).get("listed")
-    if not l or (l["evidence"] == "snapshot" and (first_day is None or l["date"] <= first_day)):
+    if not listed or (listed["evidence"] == "snapshot" and (first_day is None or listed["date"] <= first_day)):
         return None
-    return l["date"]
+    return listed["date"]

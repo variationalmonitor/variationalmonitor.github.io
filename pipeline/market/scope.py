@@ -25,7 +25,7 @@ Rules
   * slippage is half the full quoted bid-ask at $100K (one way from mid), daily median.
 """
 from .common import TRADFI_CLASSES, TRADFI_GROUPS, allocate, iso, r2, r4, r6, usd
-from .listings import evidence
+from .listings import listing_dates
 
 SCOPES = ["all.all", "all.perp", "all.swap", "crypto.all", "crypto.perp", "tradfi.all", "tradfi.perp", "tradfi.swap"]
 MAJORS = ["BTC-PERP", "ETH-PERP", "SOL-PERP", "HYPE-PERP"]
@@ -119,8 +119,7 @@ def build(vj, oj, tj, sj, days, classifier, seen, swaps_launch, intra=None):
     oi = {d: i for i, d in enumerate(oj["dates"])}
     ti = {d: i for i, d in enumerate(tj["dates"])}
     first_snap = snap_days[0] if snap_days else "9999-12-31"
-    ev = evidence(listings, days, seen)[0]
-    ev = {tk: (listings[tk].get("listed") or e) for tk, e in ev.items()}
+    every, ev = listing_dates(classifier, days, seen)[:2]
 
     # per own day: each listing's volume as allocated in volume_daily (same totals, same weights)
     alloc = {}
@@ -189,7 +188,7 @@ def build(vj, oj, tj, sj, days, classifier, seen, swaps_launch, intra=None):
             if d in days:
                 rec["listed"] = sum(1 for r in days[d]["rows"].values() if in_scope(r))
             elif members[0] in TRADFI_GROUPS and d < first_snap:
-                n = sum(1 for tk, e in ev.items() if listings[tk]["group"] in members
+                n = sum(1 for tk, e in ev.items() if every[tk]["group"] in members
                         and e["evidence"] != "snapshot" and e["date"] <= d)
                 rec["listed"] = n if n else None
             if rec.get("vol") is None and rec.get("oi") is None and rec.get("listed") is None:
