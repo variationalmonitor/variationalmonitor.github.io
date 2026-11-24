@@ -146,6 +146,21 @@ function daily(dates, get) {
   }, 'd');
 }
 
+// ---------- half-hourly blocks ----------
+const hasPoints = it => !!it && Array.isArray(it.ts) && it.ts.length > 0;
+
+/** A file with half-hourly points and no daily date yet: a listing on its first UTC day. */
+export const snapshotsOnly = file => !!file && Array.isArray(file.dates) && !file.dates.length && hasPoints(file.intraday);
+
+/** The half-hourly block a snapshot-native card reads instead of the daily file, and the range it is read at:
+ *  the file's `intraday` at 7D, and at every range, read as at 7D, when the file has no daily date yet.
+ *  Null when the card reads the daily file. */
+export function snapshotBlock(file, range) {
+  if (!file || !hasPoints(file.intraday)) return null;
+  if (range === '7d') return { block: file.intraday, range };
+  return snapshotsOnly(file) ? { block: file.intraday, range: '7d' } : null;
+}
+
 // ---------- range windows ----------
 /** Index window [i0, i1] for a range on a frame; fixed-grain frames keep at least minPoints. */
 export function windowOf(fr, range, minPoints = 6) {

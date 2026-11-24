@@ -1,7 +1,7 @@
 // The one markets table (sort, filter, pages) and the market page a row opens:
 // five cards of one listing's history at `#/<markets page>/<TICKER>`.
 
-import { load } from './data.js';
+import { load, snapshotsOnly } from './data.js';
 import { fmt, fmtStamp, fmtDate, dayNum } from './format.js';
 import { Card } from './card.js';
 import { CLASSES, TYPES } from './catalog.js';
@@ -158,7 +158,8 @@ export class MarketPage {
     const [file, latest] = /^[A-Za-z0-9._-]{1,40}$/.test(ticker) ? await Promise.all([load(`market/${ticker}`), load('markets_latest')]) : [null, null];
     if (this.dead || seq !== this.seq) return;
     this.el.classList.remove('is-loading');
-    if (!file || !Array.isArray(file.dates) || !file.dates.length) {
+    // a listing on its first UTC day has no daily date yet, only half-hourly points (read by every card at every range)
+    if (!file || !Array.isArray(file.dates) || (!file.dates.length && !snapshotsOnly(file))) {
       this.drop();
       this.el.replaceChildren(h('div', { class: 'nodata span-12', text: 'No data yet' }));
       return;

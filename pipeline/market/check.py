@@ -41,6 +41,13 @@ def ratio_ok(got, num, den):
     return got is not None and abs(got - num / float(den)) <= 6e-5
 
 
+def has_history(f):
+    """A market file holds at least one daily date, or at least one intraday point: a listing on its first
+    UTC day has no sealed day yet."""
+    it = f.get("intraday")
+    return len(f["dates"]) > 0 or (isinstance(it, dict) and isinstance(it.get("ts"), list) and len(it["ts"]) > 0)
+
+
 def c(x):
     """Cents of a written figure. A null where a figure is required counts as 0 here; the null
     itself is reported by the field's own check."""
@@ -397,7 +404,7 @@ def _run(k):
         k.ok(f["type"] in ("perp", "swap") and f["group"] in GROUPS + ["unclassified"] and f["cls"] in CLASSES,
              "market/%s: type, group or cls" % t)
         n = len(f["dates"])
-        k.ok(n > 0, "market/%s: empty" % t)
+        k.ok(has_history(f), "market/%s: empty" % t)
         k.dates("market/" + t, f["dates"])
         k.same_len("market/" + t, n, dict({s: f[s] for s in MARKET_SERIES}, approx=f["approx"]))
         for i, ds in enumerate(f["dates"]):

@@ -442,7 +442,10 @@ def check_schema(rep, docs, now):
             continue
         if any(a >= b for a, b in zip(dates, dates[1:])):
             problems.append("%s.json: dates are not strictly ascending" % name)
-        if not dates and name != "treasury":
+        # a listing on its first UTC day has no sealed day yet: its market file holds intraday points only
+        first_day = name.startswith("market/") and isinstance(doc.get("intraday"), dict) \
+            and isinstance(doc["intraday"].get("ts"), list) and len(doc["intraday"]["ts"]) > 0
+        if not dates and name != "treasury" and not first_day:
             problems.append("%s.json: no dates" % name)
 
         def walk(node, path, dates):

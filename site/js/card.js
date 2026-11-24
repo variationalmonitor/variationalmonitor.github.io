@@ -1,7 +1,7 @@
 // The generic card renderer. A card is: title, ⓘ, view controls, one headline figure,
 // plot, legend. Source and as-of time live in the ⓘ. Everything is driven by the catalog entry.
 
-import { load, frame, windowOf, buckets, aggregate, barGran, sumRange, lastAt, firstIndex } from './data.js';
+import { load, frame, windowOf, buckets, aggregate, barGran, sumRange, lastAt, firstIndex, snapshotBlock } from './data.js';
 import { fmt, fmtDate, fmtDay, fmtPoint, fmtSpan, fmtMonth, fmtStamp, RANGE_LABEL, RANGE_DAYS, dayNum, isoDay } from './format.js';
 import { Chart, colorOf, ramp, rampAt, theme, lockup, MARK_PATH } from './chart.js';
 import { VENUE_COLOR, CLASSES } from './catalog.js';
@@ -885,9 +885,14 @@ export class Card {
     // a scoped card reads the block the page filters select; its title may follow the scope
     const sc = e.scoped && raw && raw.scopes ? raw.scopes[this.app.scopeKey()] : null;
     let file = e.scoped ? (sc ? { ...sc, as_of: raw.as_of, sources: raw.sources } : null) : raw;
-    // at 7D a snapshot-native card reads the file's half-hourly block, which carries the same names as the daily one
-    const snaps = e.intraday && file && this.app.G.range === '7d' ? file.intraday : null;
-    if (snaps && Array.isArray(snaps.ts) && snaps.ts.length) file = { ...snaps, as_of: file.as_of, sources: file.sources };
+    // at 7D a snapshot-native card reads the file's half-hourly block, which carries the same names as the daily one;
+    // a file with no daily date yet is read that way at every range, drawn as at 7D
+    const snaps = e.intraday ? snapshotBlock(file, this.app.G.range) : null;
+    let app = this.app;
+    if (snaps) {
+      file = { ...snaps.block, as_of: file.as_of, sources: file.sources };
+      if (snaps.range !== app.G.range) app = Object.create(app, { G: { value: { ...app.G, range: snaps.range } } });
+    }
     const by = e.titleBy && Object.values(this.app.G.f).find(v => e.titleBy[v]);
     this.titleEl.textContent = by ? e.titleBy[by] : e.title;
     if (!file) { this.file = null; this.empty(); return; }
@@ -907,7 +912,7 @@ export class Card {
     if (cfg.snapshotUntil && !(file.launch || []).some(l => (l.history || []).filter(v => v != null).length >= cfg.snapshotUntil)) cfg = { ...cfg, ...cfg.snapshot };
     if (cfg.dynamic && !cfg.series) cfg = { ...cfg, series: dynamicSeries(cfg, file) };
     this.cfg = cfg;
-    const view = (BUILD[cfg.form || 'time'] || buildTime)(cfg, file, this.cumOff ? { ...st, cum: false } : st, this.app);
+    const view = (BUILD[cfg.form || 'time'] || buildTime)(cfg, file, this.cumOff ? { ...st, cum: false } : st, app);
     this.view = view;
     // sampled days are drawn as they are (buildTime), so the file's running total does not stand in for them either
     if (view && view.scattered) this.cumLock = false;
@@ -917,7 +922,7 @@ export class Card {
     this.el.hidden = false;
     this.el.classList.toggle('is-stat', view.type === 'stat');   // a bare figure is a tile: title, value, label
     this.el.classList.toggle('is-fit', !!view.fit);              // content height; never stretched to match a neighbour
-    this.headline = view.headline !== undefined ? view.headline : headlineOf(e, cfg, file, this.app, { cumulative: this.cumLock, extra });
+    this.headline = view.headline !== undefined ? view.headline : headlineOf(e, cfg, file, app, { cumulative: this.cumLock, extra });
     const hd = e.headline;
     if (hd && hd.noCum && st.cum && (e.toggles || []).includes('cum') && !view.scattered) this.headline = null;
     // a sum over the range drawn on sampled days is the sum of those days: the label counts them, and there is no

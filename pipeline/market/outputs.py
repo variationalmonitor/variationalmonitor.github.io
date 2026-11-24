@@ -227,22 +227,34 @@ def latest_json(ref, classifier, first_day=None):
     return {"as_of": ref.key, "rows": rows}, platform, unresolved_fin
 
 
+def _blank_market(tk):
+    return {"ticker": tk, "name": None, "type": None, "group": None,
+            "cls": None, "dates": [], "vol24h": [], "oi": [], "oi_long": [],
+            "oi_short": [], "funding_ann": [], "fin_long_ann": [],
+            "fin_short_ann": [], "ba1k_bps": [], "ba100k_bps": [],
+            "ba1m_bps": [], "turnover": [], "long_share": [],
+            "slip1k_bps": [], "slip100k_bps": [], "slip1m_bps": [], "ls_ratio": [],
+            "approx": []}
+
+
+def _describe(f, tk, r):
+    f.update(name=r["name"] or tk.rsplit("-", 1)[0], type=r["type"], group=r["group"], cls=r["cls"])
+
+
 def market_files(days, order_hint, intra=None):
-    """({ticker: file}, index). One file per listing seen in any sealed day or in the intraday window."""
+    """({ticker: file}, index). One file per listing seen in any sealed day or in the intraday window.
+
+    A listing seen in the intraday window only (its first UTC day, which has not sealed yet) gets a file with
+    every daily array empty; its name, type, group and class come from the newest snapshot in the window that
+    lists it, derived as the daily rows derive them."""
     files = {}
     for ds in sorted(days):
         d = days[ds]
         for tk, r in d["rows"].items():
             if not SAFE_TICKER.match(tk):
                 continue
-            f = files.setdefault(tk, {"ticker": tk, "name": None, "type": None, "group": None,
-                                      "cls": None, "dates": [], "vol24h": [], "oi": [], "oi_long": [],
-                                      "oi_short": [], "funding_ann": [], "fin_long_ann": [],
-                                      "fin_short_ann": [], "ba1k_bps": [], "ba100k_bps": [],
-                                      "ba1m_bps": [], "turnover": [], "long_share": [],
-                                      "slip1k_bps": [], "slip100k_bps": [], "slip1m_bps": [], "ls_ratio": [],
-                                      "approx": []})
-            f.update(name=r["name"] or tk.rsplit("-", 1)[0], type=r["type"], group=r["group"], cls=r["cls"])
+            f = files.setdefault(tk, _blank_market(tk))
+            _describe(f, tk, r)
             f["dates"].append(ds)
             f["vol24h"].append(usd(r["vol_c"]))
             f["oi"].append(usd(r["long_c"] + r["short_c"]))      # one-sided total: long plus short
@@ -259,8 +271,12 @@ def market_files(days, order_hint, intra=None):
             f["ls_ratio"].append(ls_ratio(r["long_c"], r["short_c"]))
             f["approx"].append(d["approx"])
     from .intraday import empty_market
+    series = (intra or {}).get("markets") or {}
+    for tk, r in sorted(((intra or {}).get("listings") or {}).items()):
+        if tk not in files and SAFE_TICKER.match(tk) and (series.get(tk) or {}).get("ts"):
+            _describe(files.setdefault(tk, _blank_market(tk)), tk, r)
     for tk, f in files.items():
-        f["intraday"] = ((intra or {}).get("markets") or {}).get(tk) or empty_market()
+        f["intraday"] = series.get(tk) or empty_market()
     rank = {tk: i for i, tk in enumerate(order_hint)}
     tickers = sorted(files, key=lambda tk: (rank.get(tk, len(rank)), tk))
     return files, {"tickers": tickers}

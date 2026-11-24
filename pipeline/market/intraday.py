@@ -33,9 +33,11 @@ def empty_market():
 
 
 def collect(refs, platform_rows, classifier):
-    """{"ts": [...], "markets": {ticker: series}, "groups": [{group: (long, short) in cents}]}."""
+    """{"ts": [...], "markets": {ticker: series}, "groups": [{group: (long, short) in cents}],
+    "listings": {ticker: {name, type, group, cls}}}. `listings` is each ticker as the newest snapshot in the
+    window that lists it describes it (`store.listing_row`, the current classification)."""
     live = [r for r in refs if not platform_rows.get(r.key, {}).get("dup")]
-    out = {"ts": [], "markets": {}, "groups": []}
+    out = {"ts": [], "markets": {}, "groups": [], "listings": {}}
     if not live:
         return out
     window = [r for r in live if r.t > live[-1].t - WINDOW][-MAX_POINTS:]
@@ -55,6 +57,7 @@ def collect(refs, platform_rows, classifier):
             g = groups[sum_group(r["group"])]
             g[0] += lg
             g[1] += sh
+            out["listings"][l["ticker"]] = {k: r[k] for k in ("name", "type", "group", "cls")}
             m = out["markets"].setdefault(l["ticker"], empty_market())
             m["ts"].append(ts)
             m["vol24h"].append(usd(cents(r["vol24h"])))
