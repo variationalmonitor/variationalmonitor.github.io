@@ -1,7 +1,7 @@
 # AGENTS.md: Variational Monitor
 
-Read this before changing anything. It describes the system as it runs on 24 Nov 2026. `README.md` still describes
-the first version of the site and is out of date.
+Read this before changing anything. It describes the system as it runs on 24 Nov 2026. `README.md` is the public
+description of the site; this file is for whoever changes the code.
 
 ## What is live
 
@@ -59,7 +59,7 @@ How it works:
 - The Worker has no public address. Its schedule and code are in `timer/`; `wrangler deploy` from that folder
   updates it. Its runs and errors show in the Cloudflare dashboard under Workers & Pages.
 
-State on 24 Nov 2026, 13:30 UTC: `tick.yml` is in rehearsal. The repository variable `VM_CAPTURE` is not set, so
+State on 24 Nov 2026, 13:40 UTC: the Worker has its token and `tick.yml` is in rehearsal. The repository variable `VM_CAPTURE` is not set, so
 every tick run is a shadow: it waits like a real run, calls nothing, writes nothing, and prints one line with its
 timing. The loop still takes every reading. The switch is planned for the evening of 25 Nov (UTC+9) if a day of
 rehearsal shows the timing holds.
