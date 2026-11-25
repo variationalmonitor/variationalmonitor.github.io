@@ -1,6 +1,6 @@
 # AGENTS.md: Variational Monitor
 
-Read this before changing anything. It describes the system as it runs on 24 Nov 2026. `README.md` is the public
+Read this before changing anything. It describes the system as it runs on 25 Nov 2026. `README.md` is the public
 description of the site; this file is for whoever changes the code.
 
 ## What is live
@@ -14,8 +14,9 @@ description of the site; this file is for whoever changes the code.
 
 ## The jobs
 
-- `capture.yml`: the collector, as a loop that stays alive for about five hours and restarts itself. Being retired.
-- `tick.yml`: the collector as one short run per reading. It replaces the loop (see "The collector switch").
+- `tick.yml`: the collector, one short run per reading, started by a timer outside GitHub (see "The collector").
+- `capture.yml`: the old collector, a loop that stayed alive for hours and restarted itself. Retired and disabled on
+  25 Nov 2026; kept only for going back.
 - `publish.yml`: builds the data files, runs the gate, deploys. It runs after every on-the-hour reading and on a push.
   If the gate fails nothing is deployed, the last good site stays up, and an issue labelled `qa-gate` opens.
   An issue labelled `report-alert` opens when a biweekly update is overdue or could not be fully read.
@@ -28,8 +29,9 @@ description of the site; this file is for whoever changes the code.
 3. Only the collector calls the Omni stats API (`ci/capture.py`). Do not call it from tests, local scripts or new
    jobs: tests use stored readings and stubs. Never use Omni's private API and never work around its bot check.
 4. No figures, series or names taken from another analytics provider's dashboard. Rebuild from primary sources.
-5. No job that stays alive, restarts itself or sleeps on a runner, and no new `schedule:` trigger. GitHub's own
-   schedule fires about 2% of this repository's slots, so it is not a timer anyway.
+5. No job that stays alive for hours or restarts itself, and no new `schedule:` trigger. A tick run waits about
+   three minutes for its reading and exits. GitHub's own schedule fires about 2% of this repository's slots, so it
+   is not a timer anyway.
 6. Never write a token, key, account id or email address into the repository.
 7. History of volume and open interest comes from DefiLlama. CoinGecko is for token market data once the token trades.
 
@@ -42,10 +44,10 @@ description of the site; this file is for whoever changes the code.
 - Never a time axis with empty slots. Bars start at zero; line charts scale to the data.
 - The site credit is "by Ponyo", with "Independent analytics, not affiliated with Variational" in the footer.
 
-## The collector switch (in progress since 24 Nov 2026)
+## The collector (short runs since 25 Nov 2026)
 
 Why: one job per reading is smaller and simpler than a job that never ends, and a failed run costs one reading,
-not hours.
+not hours. It also uses about 3.5 minutes of runner time per reading in place of a runner held around the clock.
 
 How it works:
 - A Cloudflare Worker named `variational-monitor-timer` (`timer/worker.js`, `timer/wrangler.toml`) fires at minutes
@@ -58,21 +60,22 @@ How it works:
   here.
 - The Worker has no public address. Its schedule and code are in `timer/`; `wrangler deploy` from that folder
   updates it. Its runs and errors show in the Cloudflare dashboard under Workers & Pages.
+- A reading whose push to `data` fails is pushed again for up to 25 minutes after its boundary (`settle` in
+  `ci/capture.py`). If it still is not on the branch the run ends red and that reading is lost.
+- A tick run captures only when the repository variable `VM_CAPTURE` is exactly `tick` and no run of `capture.yml`
+  is queued or in progress (`ci/tick_mode.sh`). Otherwise it is a shadow: it waits like a real run, calls nothing,
+  writes nothing, and prints one line with its timing.
 
-State on 24 Nov 2026, 13:40 UTC: the Worker has its token and `tick.yml` is in rehearsal. The repository variable `VM_CAPTURE` is not set, so
-every tick run is a shadow: it waits like a real run, calls nothing, writes nothing, and prints one line with its
-timing. The loop still takes every reading. The switch is planned for the evening of 25 Nov (UTC+9) if a day of
-rehearsal shows the timing holds.
+State: switched on 25 Nov 2026 at 03:00 UTC, after 28 shadow runs had matched the loop's timing. `VM_CAPTURE` is
+`tick` and `capture.yml` is disabled. The loop took its last reading at 03:00 UTC; ticks have taken every reading
+since 03:30 UTC and dispatch the hourly publish.
 
-Switching, by hand and in this order: `gh variable set VM_CAPTURE --body tick`; `gh workflow disable capture.yml`;
-cancel the running loop by :05 or :35, right after one of its readings is on the branch. Until the loop has fully
-stopped, ticks stay in shadow by themselves.
-Going back: `gh variable delete VM_CAPTURE`; `gh workflow enable capture.yml`; `gh workflow run capture.yml`, and
-only when no tick run is active.
+Going back to the loop: `gh variable delete VM_CAPTURE`; `gh workflow enable capture.yml`;
+`gh workflow run capture.yml`, and only when no tick run is active.
 
-Until the switch is done, do not change `capture.yml`, `tick.yml`, `ci/capture.py`, `ci/datastore.py`,
-`ci/tick_mode.sh`, `ci/guard.sh`, `ci/handover.sh`, `timer/`, or the repository variables `VM_PUBLISH` and
-`VM_CAPTURE`.
+`tick.yml`, `ci/capture.py`, `ci/datastore.py`, `ci/tick_mode.sh`, `timer/` and the repository variables
+`VM_PUBLISH` and `VM_CAPTURE` decide whether readings are taken, and a missed reading is lost for good. Change them
+only with tests and a rehearsal against a copy of the `data` branch, and say so in the commit message.
 
 ## Changes on 24 Nov 2026
 
@@ -84,6 +87,14 @@ Until the switch is done, do not change `capture.yml`, `tick.yml`, `ci/capture.p
   build time; a post older than two days before its first reading does not date it.
 - `e543f2c`, `93895e7`, `5e2efca`, `5a2d291` `tick.yml`, `ci/capture.py once`, the timer Worker; when two jobs save
   the same reading the first one is kept.
+
+## Changes on 25 Nov 2026
+
+- `7e0c772` `ci/capture.py once` pushes a reading again until it is on the branch, else the run fails. Found in
+  rehearsal: GitHub refused the loop's 00:30 UTC push and the reading went out with the next one, which a short run
+  cannot do.
+- `d1607b1` A rejected push logs every line git and the remote gave, not only the last one.
+- The collector switched from the loop to ticks at 03:00 UTC.
 
 ## Checks before a push
 
