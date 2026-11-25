@@ -43,6 +43,7 @@ PERIOD = 1800
 class FakeClock:
     def __init__(self, now):
         self.now = float(now)
+        self.woke = []              # the moment every sleep ended
 
     def __call__(self):
         return self.now
@@ -50,6 +51,7 @@ class FakeClock:
     def sleep(self, seconds):
         assert seconds >= 0, seconds
         self.now += seconds
+        self.woke.append(self.now)
 
 
 def make_args(store, **kw):
@@ -108,14 +110,36 @@ class Once(unittest.TestCase):
         self.tmp.cleanup()
 
     def run_once(self, start, ticks=(True,), publish=None, window=True, reports=(), probe_error=None,
-                 sync_s=0.0, on_sync=None, **kw):
+                 sync_s=0.0, on_sync=None, git=False, unpushed=(), pushes=(), **kw):
+        """git: the store is a git checkout, so settling looks at it; unpushed: per tick, True when the tick's own
+        push failed and left its files in the checkout; pushes: what each commit_push made by settling does, a result
+        or an exception to raise, the last one repeating."""
         clock = FakeClock(start)
+        self.clock = clock
         events = []
         results = list(ticks)
+        left_by_tick = list(unpushed)
+        planned = list(pushes)
+        checkout = []                   # paths not on the branch
+        if git:
+            os.makedirs(os.path.join(self.store, ".git"), exist_ok=True)
 
         def safe_tick(args):
             events.append(("tick", clock.now))
+            if left_by_tick and left_by_tick.pop(0):
+                checkout[:] = ["snapshots/x.json.gz", "exec/x.jsonl", "capture/x.log"]
             return results.pop(0)
+
+        def changed_paths(store):
+            return list(checkout), []
+
+        def commit_push(store, message, **kw):
+            events.append(("push", clock.now))
+            outcome = planned.pop(0) if len(planned) > 1 else planned[0]
+            if isinstance(outcome, Exception):
+                raise outcome
+            checkout[:] = []
+            return outcome
 
         def sync(store):
             events.append(("sync", clock.now))
@@ -145,6 +169,7 @@ class Once(unittest.TestCase):
                 mock.patch.object(capture, "dispatch", dispatch), mock.patch.object(capture, "probe", probe), \
                 mock.patch.object(capture, "in_report_window", in_window), \
                 mock.patch.object(capture, "branch_names", side_effect=AssertionError("shadow only")), \
+                mock.patch.object(ds, "changed_paths", changed_paths), mock.patch.object(ds, "commit_push", commit_push), \
                 contextlib.redirect_stdout(out):
             rc = capture.once(make_args(self.store, **kw), clock=clock, sleep=clock.sleep)
         self.assertEqual(results, [], "every planned tick result was used")
@@ -280,6 +305,75 @@ class Once(unittest.TestCase):
         self.assertEqual(rc, 0)
         self.assertEqual([e[0] for e in events], ["probe", "sync", "tick"])
         self.assertIn("telegram probe failed", out)
+
+    # ---- settling: a reading the tick could not push has no next tick to take it along
+
+    PUSH_FAILED = RuntimeError("could not push to data after 6 attempts")
+
+    @staticmethod
+    def lines(out):
+        return [line[9:] for line in out.strip().splitlines()]     # without the HH:MM:SS of the log line
+
+    def test_a_reading_the_tick_could_not_push_is_pushed_again_before_the_hourly_dispatch(self):
+        rc, events, out = self.run_once(T0 - 60, publish="on", window=False, git=True, unpushed=(True,),
+                                        pushes=(self.PUSH_FAILED, "pushed"))
+        self.assertEqual(rc, 0)
+        self.assertEqual(events, [("sync", T0 - 60), ("tick", T0 + 1.5), ("push", T0 + 21.5), ("push", T0 + 61.5),
+                                  ("dispatch", T0 + 61.5, "publish.yml", "hourly")])
+        self.assertEqual(self.lines(out)[-4:], [
+            "  settle attempt 1 (3 paths not on the branch): failed, RuntimeError: could not push to data after 6 attempts",
+            "  settle attempt 2 (3 paths not on the branch): pushed",
+            "  settled after 2 attempts: nothing is left unpushed",
+            "once done: a snapshot was saved"])
+
+    def test_a_push_that_never_works_stops_at_the_deadline_dispatches_once_and_exits_1(self):
+        rc, events, out = self.run_once(T0 - 60, publish="on", window=False, git=True, unpushed=(True,),
+                                        pushes=(self.PUSH_FAILED,))
+        deadline = T0 + capture.ONCE_SETTLE_S
+        pushes = self.times(events, "push")
+        self.assertEqual(rc, 1)
+        self.assertEqual(pushes[:4], [T0 + 21.5, T0 + 61.5, T0 + 121.5, T0 + 181.5])
+        self.assertEqual((len(pushes), pushes[-1]), (26, deadline))     # every 60 s, the last one at the deadline
+        self.assertLessEqual(max(self.clock.woke), deadline)
+        self.assertEqual(self.clock.now, deadline)
+        self.assertEqual([e for e in events if e[0] == "dispatch"], [("dispatch", deadline, "publish.yml", "hourly")])
+        self.assertEqual(events[-1][0], "dispatch")
+        self.assertEqual(self.lines(out)[-2:], [
+            "  settling stopped at 10:25:00 UTC: 3 paths not on the branch",
+            "once done: a snapshot was saved, but the reading for the 10:00 UTC boundary could not be pushed and is lost"])
+
+    def test_a_tick_that_pushed_adds_no_push_no_wait_and_no_line(self):
+        _, plain_events, plain_out = self.run_once(T0 - 60, publish="on", window=False)    # not a git checkout
+        rc, events, out = self.run_once(T0 - 60, publish="on", window=False, git=True, pushes=(self.PUSH_FAILED,))
+        self.assertEqual(rc, 0)
+        self.assertEqual(events, [("sync", T0 - 60), ("tick", T0 + 1.5), ("dispatch", T0 + 1.5, "publish.yml", "hourly")])
+        self.assertEqual((events, self.lines(out)), (plain_events, self.lines(plain_out)))
+
+    def test_no_push_does_not_settle(self):
+        rc, events, out = self.run_once(T0 - 60, publish="on", window=False, git=True, unpushed=(True,),
+                                        pushes=(self.PUSH_FAILED,), no_push=True)
+        self.assertEqual(rc, 0)
+        self.assertEqual(events, [("tick", T0 + 1.5), ("dispatch", T0 + 1.5, "publish.yml", "hourly")])
+        self.assertNotIn("settl", out)
+
+    def test_an_unexpected_error_in_a_push_does_not_end_the_settling(self):
+        rc, events, out = self.run_once(HALF - 60, git=True, unpushed=(True,),
+                                        pushes=(OSError("no space left"), self.PUSH_FAILED, "pushed"))
+        self.assertEqual((rc, self.times(events, "push")), (0, [HALF + 21.5, HALF + 61.5, HALF + 121.5]))
+        self.assertIn("settle attempt 1 (3 paths not on the branch): failed, OSError: no space left", out)
+
+    def test_settling_after_a_failed_tick_stops_at_its_retry_time_and_the_retry_s_reading_goes_out(self):
+        rc, events, out = self.run_once(HALF - 120, ticks=(False, True), git=True, unpushed=(True, True),
+                                        pushes=[self.PUSH_FAILED] * 16 + ["pushed"])
+        retry_at = HALF + 900
+        pushes = self.times(events, "push")
+        self.assertEqual(rc, 0)
+        self.assertEqual(self.times(events, "tick"), [HALF + 1.5, retry_at])
+        self.assertEqual(len(pushes), 17)
+        self.assertEqual((pushes[15], pushes[16]), (retry_at, retry_at + 20))
+        self.assertIn("settling stopped at 10:45:00 UTC", out)
+        self.assertIn("retrying the failed tick", out)
+        self.assertEqual(self.lines(out)[-1], "once done: a snapshot was saved")
 
 
 def forbidden(name):
@@ -550,6 +644,43 @@ class ShadowAgainstGit(GitCase):
         self.assertEqual(git(store, "rev-parse", "HEAD"), head)
         self.assertEqual(git(store, "status", "--porcelain"), "")
         self.assertEqual(tree(os.path.join(store, "snapshots")), files)
+
+
+class SettleAgainstGit(GitCase):
+    """The real tick and commit_push: a push that fails (the remote cannot be reached) leaves the reading in the
+    checkout, and once pushes it when the remote is back instead of exiting with it unpushed."""
+
+    def test_the_reading_reaches_the_branch_with_a_later_attempt(self):
+        store = self.clone("store")
+        away = self.remote + ".away"
+        os.rename(self.remote, away)            # every push and fetch fails until it is back
+        clock = FakeClock(T0 - 60)
+
+        def sleep(seconds):
+            clock.sleep(seconds)
+            if clock.now >= T0 + 60 and os.path.exists(away):
+                os.rename(away, self.remote)
+
+        def fetch_stats(url, budget_s):
+            return b'{"reading":"1000"}', {"attempts": 1}
+        env = {k: v for k, v in os.environ.items() if k != "VM_PUBLISH"}
+        out = io.StringIO()
+        with mock.patch.dict(os.environ, env, clear=True), mock.patch.object(ds.time, "sleep"), \
+                mock.patch.object(capture, "fetch_stats", fetch_stats), \
+                mock.patch.object(capture, "utcnow", lambda: capture.dt.datetime(2026, 11, 24, 10, 0, 1)), \
+                contextlib.ExitStack() as stack, contextlib.redirect_stdout(out):
+            for name in ("http_get", "refresh", "dispatch", "probe"):
+                stack.enter_context(mock.patch.object(capture, name, forbidden(name)))
+            rc = capture.once(make_args(store), clock=clock, sleep=sleep)
+        log = out.getvalue()
+        self.assertEqual(rc, 0, log)
+        self.assertIn("commit or push failed, will retry with the next tick", log)
+        self.assertIn("settle attempt 1 (2 paths not on the branch): failed, RuntimeError: could not push", log)
+        self.assertIn("settle attempt 2 (2 paths not on the branch): pushed", log)
+        self.assertEqual(gzip.decompress(self.remote_file("snapshots/20261124T1000Z.json.gz")), b'{"reading":"1000"}')
+        self.assertEqual(len(self.remote_file("capture/2026-11-24.log").decode().splitlines()), 2)
+        self.assertEqual(git(store, "status", "--porcelain"), "")
+        self.assertEqual(git(store, "rev-parse", "HEAD"), git(self.remote, "rev-parse", "data"))
 
 
 if __name__ == "__main__":

@@ -60,6 +60,8 @@ PUBLISH_SWITCH = "VM_PUBLISH"
 REFRESH_SAMPLE_S = 60         # hard stop for sampling the books against a refreshed Omni reading
 ONCE_MAX_WAIT_S = 600         # once: wait for the next boundary only when it is at most this far away
 ONCE_LATE_S = 1200            # once: else capture a boundary that passed without a snapshot, up to this late
+ONCE_SETTLE_S = 1500          # once: push again what a tick could not push, up to this long after the boundary
+                              # (the next run's boundary is 1800 s after it)
 SYNC_BEFORE_S = 75            # the loop's numbers: bring the checkout to the branch tip in the last 75 s,
 TICK_AFTER_S = 1.5            # tick 1.5 s after the boundary,
 PROBE_MARGIN_S = 100          # and read Telegram before a boundary only while it is more than 100 s away
@@ -596,6 +598,38 @@ def shadow_run(args, case, target, started, why, clock, sleep):
     return 0
 
 
+def settle(args, target, until, clock, sleep):
+    """once: a tick whose push failed leaves its files (snapshot, book samples, log line) in the checkout, and no
+    later tick takes them along as in the loop. Commit and push them again until the checkout is clean or `until`
+    passes, waiting 20 s, 40 s, then 60 s between attempts and never sleeping past `until`; one log line per attempt
+    and one for the outcome. True when nothing is left unpushed. A clean checkout costs one git status and no line;
+    --no-push, or a store that is not a git checkout, costs nothing."""
+    if args.no_push or not os.path.isdir(os.path.join(args.store, ".git")):
+        return True
+    attempts = 0
+    while True:
+        try:
+            present, deleted = datastore.changed_paths(args.store)
+            waiting = "%d paths not on the branch" % (len(present) + len(deleted)) if present or deleted else None
+        except Exception as exc:    # a checkout that cannot be read counts as not pushed
+            waiting = "the checkout could not be read (%s: %s)" % (type(exc).__name__, str(exc)[:200])
+        if waiting is None:
+            if attempts:
+                log("  settled after %d attempt%s: nothing is left unpushed" % (attempts, "s" if attempts > 1 else ""))
+            return True
+        if clock() >= until:
+            log("  settling stopped at %s UTC: %s" % (dt.datetime.utcfromtimestamp(until).strftime("%H:%M:%S"), waiting))
+            return False
+        attempts += 1
+        sleep(min(20 * attempts, 60, until - clock()))
+        try:
+            result = datastore.commit_push(args.store, "capture %s, pushed again" % dt.datetime.utcfromtimestamp(
+                target).strftime("%Y%m%dT%H%MZ"))
+        except Exception as exc:    # RuntimeError once its own retries are spent; nothing may end the run early
+            result = "failed, %s: %s" % (type(exc).__name__, str(exc)[:200])
+        log("  settle attempt %d (%s): %s" % (attempts, waiting, result))
+
+
 def once(args, clock=time.time, sleep=time.sleep):
     """Capture the one boundary that is due, with the loop's own sync, safe_tick, dispatch and probe, so that its
     reading cannot be told from one the loop took. The case is picked at the start (choose):
@@ -604,11 +638,15 @@ def once(args, clock=time.time, sleep=time.sleep):
       b  else the boundary that just passed has no snapshot on the branch and passed at most --late-s ago:
          capture now, since a late reading beats none;
       c  else nothing to do: one log line, exit 0.
-    After the tick of a :00 boundary publish.yml is dispatched (reason=hourly) when the publish switch is on, as the
-    loop does, whether or not the tick saved a snapshot; a failed dispatch undoes only GitHub's inactivity disable of
-    publish.yml (dispatch_publish). A failed tick is tried once more at boundary + period/2, as
-    in the loop; when that moment has already passed (only a late capture gets there) there is no retry, so the run
-    ends before the next boundary, whose run waits behind this one. Exit 1 when no snapshot was saved.
+    A tick whose push failed leaves its files in the checkout, and unlike the loop no later tick takes them along:
+    after every tick they are pushed again (settle) until the checkout is clean or ONCE_SETTLE_S after the boundary
+    passes; after a failed tick that has a retry ahead, only until the retry time, so settling never costs the retry.
+    After the tick of a :00 boundary, and after settling, publish.yml is dispatched (reason=hourly) when the publish
+    switch is on, as the loop does, whether or not the tick saved a snapshot; a failed dispatch undoes only GitHub's
+    inactivity disable of publish.yml (dispatch_publish). A failed tick is tried once more at boundary + period/2, as
+    in the loop; when that moment had already passed as the tick ended (only a late capture gets there) there is no
+    retry, so the run ends before the next boundary, whose run waits behind this one. Exit 1 when no snapshot was
+    saved, or when something is still unpushed at the end: that reading is lost.
 
     Telegram, with the publish switch on and the report window open: one probe per run, before the wait while the
     boundary is more than 100 s away (as the loop), else right after the tick, so it never delays a capture. A new
@@ -659,14 +697,17 @@ def once(args, clock=time.time, sleep=time.sleep):
         sleep(TICK_AFTER_S)         # the stamp is taken after the response: keep it inside the boundary minute
     else:
         log("capturing the %s UTC boundary late: %s" % (hhmm(target), why))
+    deadline = target + ONCE_SETTLE_S
     ok = safe_tick(args)
+    retry_at = target + period / 2.0
+    retry = not ok and clock() < retry_at   # decided before settling, which may run up to the retry time
+    clean = settle(args, target, min(deadline, retry_at) if retry else deadline, clock, sleep)
     if publish and int(target) % 3600 == 0:
         dispatch_publish("hourly", args.dry_run_dispatch)
     if publish and not probed:
         report_probe(args, target, clock)
     if not ok:
-        retry_at = target + period / 2.0
-        if clock() >= retry_at:
+        if not retry:
             log("the tick failed and its retry time %s UTC has passed: no retry" % dt.datetime.utcfromtimestamp(
                 retry_at).strftime("%H:%M:%S"))
         else:
@@ -674,8 +715,18 @@ def once(args, clock=time.time, sleep=time.sleep):
             wait_until(retry_at, clock, sleep)
             log("retrying the failed tick")
             ok = safe_tick(args)
-    log("once done: %s" % ("a snapshot was saved" if ok else "no snapshot for the %s boundary" % hhmm(target)))
-    return 0 if ok else 1
+            clean = settle(args, target, deadline, clock, sleep)
+    if clean:       # nothing is left behind (a no-op when clean); after a give-up at the deadline there is no more time
+        clean = settle(args, target, deadline, clock, sleep)
+    if ok and clean:
+        log("once done: a snapshot was saved")
+    elif ok:
+        log("once done: a snapshot was saved, but the reading for the %s UTC boundary could not be pushed and is lost"
+            % hhmm(target))
+    else:
+        log("once done: no snapshot for the %s boundary%s" % (
+            hhmm(target), "" if clean else ", and what the run wrote could not be pushed"))
+    return 0 if ok and clean else 1
 
 
 def main():
