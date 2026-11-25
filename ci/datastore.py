@@ -194,7 +194,10 @@ def commit_push(d, message, daily_if_new=None, squash_if_due=False, force_squash
                 log("  pushed %s to %s%s (attempt %d)" % (git(d, "rev-parse", "--short", "HEAD").stdout.strip(), BRANCH,
                                                           ", history squashed" if squash else "", attempt))
                 return "pushed"
-            log("  push rejected (attempt %d): %s" % (attempt, (proc.stderr.strip().splitlines() or ["?"])[-1][:200]))
+            # every line git and the remote gave except the hints: the last line alone ("failed to push some refs")
+            # does not say whether the branch moved or the remote refused the update
+            said = [line.strip() for line in proc.stderr.splitlines() if line.strip() and not line.startswith(("hint:", "To "))]
+            log("  push rejected (attempt %d): %s" % (attempt, " | ".join(said)[:400] or "?"))
             time.sleep(min(30, 2 * attempt))
             fetch = git(d, "fetch", "-q", "--depth", "1", REMOTE, BRANCH, check=False)
             if fetch.returncode != 0:
