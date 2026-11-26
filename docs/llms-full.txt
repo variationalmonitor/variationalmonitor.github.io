@@ -2098,7 +2098,7 @@ Every signed request carries three headers.
 The signature covers one string of seven lines, joined by `\n`, with no newline after the last line.
 
 ```
-variational-trade-api/v1
+variational-omni-api/v1
 <environment>
 <public key>
 <timestamp in milliseconds>
@@ -2107,13 +2107,13 @@ variational-trade-api/v1
 <SHA-256 of the body, as 64 lowercase hexadecimal characters>
 ```
 
-The environment is the name of the deployment you are talking to, for example `prod`. The signature is Ed25519 over the UTF-8 bytes of that string. Ed25519 hashes its input itself, so do not hash the string first.
+The environment is either `testnet` or `mainnet`. The signature is Ed25519 over the UTF-8 bytes of that string. Ed25519 hashes its input itself, so do not hash the string first.
 
 In Python, the whole of it is this:
 
 ```python
 canonical = "\n".join([
-    "variational-trade-api/v1",
+    "variational-omni-api/v1",
     environment,
     public_key,
     str(timestamp_ms),
@@ -2126,31 +2126,19 @@ signature = "0x" + Ed25519PrivateKey.from_private_bytes(seed).sign(canonical.enc
 
 ## A worked example
 
-This is the first case in `vectors.json`. The seed is 32 bytes of `0x33`, a test fixture that controls nothing.
-
 ```
-request     GET /v1/orders?limit=10&symbol=BTC-PERP on the "test" environment, with no body
+request     GET /v1/orders?limit=10&symbol=BTC-PERP on the "testnet" environment, with no body
 
-canonical   variational-trade-api/v1
-            test
+canonical   variational-omni-api/v1
+            testnet
             0x17cb79fb2b4120f2b1ec65e4198d6e08b28e813feb01e4a400839b85e18080ce
             1790000000123
             GET
             /v1/orders?limit=10&symbol=BTC-PERP
             e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
 
-signature   0xda8dd8ca4923a2b75a7852df7dc3bd73bf3e5b079e3a24eef7536a917bb9e9f0c8fe39a3a501311a346df2147f6863420df0437c7a659607bd6e613be6198707
+signature   0x220cd5edab6547e74fb79110fe4c2fcd9a6cbd014ce96874d5c527d3d2a51010d3712df3af73ec76d7223b8a8c16567613b6f658d3db2dfeed75d79d2d5f790f
 ```
-
-## Testing your own signer
-
-Ed25519 signatures are deterministic: the same key and the same message always give the same signature. `vectors.json` therefore lists whole requests together with the exact canonical string and the exact signature each one must produce. The file is the one the server's own tests are held to.
-
-To test a signer in any language:
-
-1. Load `signing_seed` and check that it gives `public_key`.
-2. For each case, build the canonical string from `environment`, `public_key`, `timestamp_ms`, `method`, `path_and_query` and the UTF-8 bytes of `body`. Compare it with `canonical`. If they differ, the difference shows which line is wrong.
-3. Sign it and compare the result with `signature`.
 
 ## Common mistakes
 
