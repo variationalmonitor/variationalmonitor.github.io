@@ -666,7 +666,7 @@ To create a scale order, input Size, Start Price, End Price, Total Orders and Si
 * Size: The total value of the order.
 * Start Price: The price of the first order.
 * End Price: The price of the last order.
-* Total Orders: The number of individual orders (maximum 20 per scale order; 50 per instrument).
+* Total Orders: The number of individual orders (maximum 10 per scale order; 50 per instrument).
 * Size Skew: Position size weighting across the scale (0.1 to 10. A skew of ‘1’ creates a series of equal sized orders; a skew of 10 means that the last order will be 10x larger than the first order; 0.1 makes the last order one tenth the size of the first).
 
 {% hint style="info" %}
